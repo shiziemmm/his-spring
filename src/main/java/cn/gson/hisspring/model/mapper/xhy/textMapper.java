@@ -1,13 +1,16 @@
 package cn.gson.hisspring.model.mapper.xhy;
 
+import cn.gson.hisspring.model.pojos.ZyPay;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository//代表持久层
 @Mapper
-public interface textMapper {
+public interface textMapper extends BaseMapper<ZyPay> {
 
-    @Select("select py_price from zy_pay")
-    String selectString();
+    List<ZyPay> selectString(Integer id);
+
 }
