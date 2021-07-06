@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.xhy.textMapper">
 
-    <select resultType="cn.gson.hisspring.model.pojos.ZyPay" id="selectString">
+    <select resultType="cn.gson.hisspring.model.pojos.ZyPay" id="selectAllZyBed">
         select * from zy_pay where py_id = #{id}
     </select>
 
