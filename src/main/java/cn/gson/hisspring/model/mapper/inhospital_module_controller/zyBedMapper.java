@@ -1,4 +1,4 @@
-package cn.gson.hisspring.model.mapper.xhy;
+package cn.gson.hisspring.model.mapper.inhospital_module_controller;
 
 import cn.gson.hisspring.model.pojos.ZyBed;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
