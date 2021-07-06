@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/his-data?useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true
+    url: jdbc:mysql://127.0.0.1:3306/hisdata?useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true
     username: root
     password:
   jackson:
