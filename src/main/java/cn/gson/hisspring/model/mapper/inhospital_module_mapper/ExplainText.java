@@ -1,4 +1,4 @@
-package cn.gson.hisspring.model.mapper.inhospital_module_controller;
+package cn.gson.hisspring.model.mapper.inhospital_module_mapper;
 
 /**
  * 说明文档
