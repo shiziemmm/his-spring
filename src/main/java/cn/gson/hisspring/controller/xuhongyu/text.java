@@ -2,6 +2,7 @@ package cn.gson.hisspring.controller.xuhongyu;
 
 import cn.gson.hisspring.model.mapper.xhy.zyBedMapper;
 import cn.gson.hisspring.model.pojos.ZyBed;
+import cn.gson.hisspring.model.server.xhy.TextDemo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,10 @@ import java.util.List;
 public class text {
 
     @Autowired
-    zyBedMapper mapper;
+    TextDemo td;
 
     @RequestMapping("text")
     public List<ZyBed> shizi(){
-        return mapper.selectList(null);
-//        return "";
+        return td.selectPayAllPage();
     }
 }
