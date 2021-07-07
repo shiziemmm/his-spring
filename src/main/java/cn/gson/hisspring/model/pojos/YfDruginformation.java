@@ -2,6 +2,8 @@ package cn.gson.hisspring.model.pojos;
 
 import lombok.Data;
 
+//药房药品信息表
+
 @Data//get  set方法
 public class YfDruginformation {
 

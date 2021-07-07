@@ -2,6 +2,8 @@ package cn.gson.hisspring.model.pojos;
 
 import lombok.Data;
 
+//销毁申请表
+
 @Data//get  set方法
 public class YkDestroy {
 
@@ -11,6 +13,8 @@ public class YkDestroy {
   private String ykDestName;
   private long sId;
   private long ykDrvenId;
+
+  private Staff staff;//员工对象
 
 
 }
