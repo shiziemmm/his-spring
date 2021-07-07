@@ -1,6 +1,9 @@
 package cn.gson.hisspring.model.pojos;
 
 import lombok.Data;
+/**
+ * 门诊-病人资资料表
+ */
 
 @Data//get  set方法
 public class MzSick {
