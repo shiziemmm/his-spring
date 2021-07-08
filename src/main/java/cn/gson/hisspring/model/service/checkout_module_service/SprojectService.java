@@ -1,8 +1,8 @@
 package cn.gson.hisspring.model.service.checkout_module_service;
 
+import cn.gson.hisspring.model.mapper.checkout_module_mapper.AnaeMapper;
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper;
-import cn.gson.hisspring.model.pojos.SsOperationProject;
-import cn.gson.hisspring.model.pojos.ZyBed;
+import cn.gson.hisspring.model.pojos.*;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,17 +14,28 @@ import java.util.Map;
 @Service
 public class SprojectService {
     @Autowired
-    SprojectMapper sproject;
-//    public Map<String,Object> allProject(Integer pageNo, Integer size){
-//        Map<String,Object> map = new HashMap<>();
-//        //分页查询
-//        Page<Object> page = PageHelper.startPage(pageNo, size);
-//        map.put("rows",sproject.allProject());
-//        map.put("total",page.getTotal());
-//        return map;
-//    }
+    SprojectMapper sproject;//手术项目mapper
+    @Autowired
+    AnaeMapper ana;//麻醉项目mapper
+    //所有手术项目
     public List<SsOperationProject> allProject(){
-        Page<SsOperationProject> page = new Page<>(1,2);
-        return sproject.allProject(page);
+        List<SsOperationProject> listsp = sproject.allProject();
+        return listsp;
+    }
+    //单个手术项目详情
+    public List<SsOperationProject> singeProject(Integer projectId){
+        List<SsOperationProject> listssp = sproject.singleProject(projectId);
+        List<SsOperationAnaesthesia> listmp = ana.Ana(projectId);
+        return listssp;
+    }
+    //单个手术项目麻醉详情
+    public List<SsOperationAnaesthesia> AnaProject(Integer projectId){
+        List<SsOperationAnaesthesia> listmp = ana.Ana(projectId);
+        return listmp;
+    }
+    //所有麻醉
+    public List<SsOperationAnaesthesia> allAnaesthesia(){
+        List<SsOperationAnaesthesia> listmz = ana.allAnaesthesia();
+        return listmz;
     }
 }
