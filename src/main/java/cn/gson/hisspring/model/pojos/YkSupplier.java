@@ -2,6 +2,8 @@ package cn.gson.hisspring.model.pojos;
 
 import lombok.Data;
 
+//供应商表
+
 @Data//get  set方法
 public class YkSupplier {
 

@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data//get  set方法
 
+//出入库表
+
 public class YkStorage {
 
   private long ykStorageId;
