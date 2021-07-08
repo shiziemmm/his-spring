@@ -18,7 +18,14 @@ class HisSpringApplicationTests {
 
     @Test
     void contextLoads() {
-        List<ZyWard> list = wds.selectWardAllPage();
+        ZyWard ward = new ZyWard();
+//        ward.setWdId(3);
+        ward.setWdName("感染科");
+//        ward.setKsId(88898L);
+
+        wds.insertWard(ward);
+
+        List<ZyWard> list = wds.selectWardAllPage("骨");
         for (ZyWard z:list){
             System.out.println(z);
         }

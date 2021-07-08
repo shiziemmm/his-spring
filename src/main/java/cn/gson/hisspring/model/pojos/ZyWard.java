@@ -1,8 +1,6 @@
 package cn.gson.hisspring.model.pojos;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.github.dreamyoung.mprelation.JoinColumn;
 import com.github.dreamyoung.mprelation.Lazy;
 import com.github.dreamyoung.mprelation.OneToMany;
@@ -18,11 +16,17 @@ import java.util.List;
 @Data//get  set方法
 public class ZyWard{
 
-  @TableId("wd_id")
+  @TableId(value = "wd_id",type = IdType.AUTO)
   private long wdId;//病房编号
+
+//  @TableField(updateStrategy = FieldStrategy.NOT_NULL)
   private String wdName;//病房名称
-  private long ksId;//科室编号
-  private long sId;//员工编号
+
+//  @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+  private Long ksId;//科室编号
+
+//  @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+  private Long sId;//员工编号
 
   //关系
   @TableField(exist = false)
