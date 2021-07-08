@@ -2,6 +2,11 @@ package cn.gson.hisspring.model.pojos;
 
 import lombok.Data;
 
+import java.util.Date;
+/**
+ * 门诊-诊疗卡pojos
+ */
+
 @Data//get  set方法
 public class MzMedicalCard {
 
@@ -11,6 +16,6 @@ public class MzMedicalCard {
   private long mcSate;
   private long sickNumber;
   private String mcIdCard;
-
+  private Date mcTime;
 
 }
