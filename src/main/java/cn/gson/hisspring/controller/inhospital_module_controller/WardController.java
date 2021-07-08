@@ -3,6 +3,7 @@ package cn.gson.hisspring.controller.inhospital_module_controller;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper;
 import cn.gson.hisspring.model.pojos.ZyWard;
 import cn.gson.hisspring.model.service.inhospital_module_service.WardService;
+import cn.gson.hisspring.model.service.jurisdiction_module_service.DepartmentKsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,8 +39,6 @@ public class WardController {
     public boolean wardAddOrUpdate(@RequestBody ZyWard ward){
         return wds.wardInsertOrUpdate(ward);
     }
-
-    
 
 
 

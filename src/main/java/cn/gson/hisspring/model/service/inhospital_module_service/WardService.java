@@ -20,19 +20,18 @@ import java.util.List;
  */
 @Service
 public class WardService{
-
     @Autowired
     WardMapper wdm;//病房mapper
-
     @Autowired
     PatientBaseMapper pbm;
-
 
     /**
      * 查询所有病房
      * @return
      */
     public List<ZyWard> selectWardAllPage(String search){
+        QueryWrapper<ZyWard> qw = new QueryWrapper<>();
+        wdm.selectList(qw);
         List<ZyWard> listWard = wdm.selectWardAllPage(search);
         for(ZyWard wd : listWard){
             if(!wd.getListBed().isEmpty()){//判断该病房下面是否有病床 防止报空指针
@@ -50,7 +49,7 @@ public class WardService{
     /**
      * 新增病房
      * @return
-     */
+     */ 
     public boolean wardInsertOrUpdate(ZyWard ward){
         int is = 0;//判断是否新增成功
         if(ward.getWdId() == 0){//新增
