@@ -1,8 +1,7 @@
 package cn.gson.hisspring;
 
-import cn.gson.hisspring.model.mapper.inhospital_module_mapper.zyBedMapper;
-import cn.gson.hisspring.model.pojos.ZyBed;
-import cn.gson.hisspring.model.service.inhospital_module_service.ZyBedService;
+import cn.gson.hisspring.model.pojos.ZyWard;
+import cn.gson.hisspring.model.service.inhospital_module_service.WardService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ import java.util.List;
 class HisSpringApplicationTests {
 
     @Autowired
-    ZyBedService beds;
+    WardService wds;
 
     @Test
     void contextLoads() {
-        List<ZyBed> list = beds.selectPayAllPage();
-        for (ZyBed z:list){
+        List<ZyWard> list = wds.selectWardAllPage();
+        for (ZyWard z:list){
             System.out.println(z);
         }
 

@@ -54,6 +54,13 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- mprelation -->
+        <dependency>
+            <groupId>com.github.dreamyoung</groupId>
+            <artifactId>mprelation</artifactId>
+            <version>0.0.3.2-RELEASE</version>
+        </dependency>
+
         <!-- mybatis-puls -->
         <dependency>
             <groupId>com.baomidou</groupId>

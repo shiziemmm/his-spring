@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper">
+
+
+    <!--封装病房所有数据-->
+    <resultMap id="wardMap" type="cn.gson.hisspring.model.pojos.ZyWard">
+        <result column="wd_id" property="wdId"/>
+        <result column="wd_name" property="wdName"/>
+        <result column="ks_id" property="ksId"/>
+        <result column="s_id" property="sId"/>
+        <result column="ks_name" property="ksName"/>
+
+        <!--将员工结果封装到病房里面的实体-->
+        <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff" >
+            <result column="s_id" property="sId"/>
+            <result column="s_name" property="sName"/>
+            <result column="s_sore" property="sSore"/>
+            <result column="s_phone" property="sPhone"/>
+            <result column="s_data" property="sDate"/>
+        </association>
+
+        <!--将病床结果封装到病房里面的实体-->
+        <collection  resultMap="bedMap" property="listBed">
+        </collection>
+    </resultMap>
+
+    <!--封装病床数据-->
+    <resultMap id="bedMap" type="cn.gson.hisspring.model.pojos.ZyBed">
+        <result column="bd_id" property="bdId"/>
+        <result column="bd_name" property="bdName"/>
+        <result column="bd_price" property="bdPrice"/>
+        <result column="bd_is" property="bdIs"/>
+        <result column="pt_no" property="ptNo"/>
+    </resultMap>
+
+
+
+
+    <select resultMap="wardMap" id="selectWardAllPage">
+       SELECT
+            *
+            FROM
+            zy_ward
+            LEFT JOIN zy_bed ON zy_ward.wd_id = zy_bed.Wd_id
+            INNER JOIN staff ON staff.s_id = zy_ward.s_id
+            INNER JOIN department_ks ON zy_ward.ks_id = department_ks.ks_id
+    </select>
+
+
+
+</mapper>
