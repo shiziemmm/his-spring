@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface MzMedicalCard_Mapper extends BaseMapper<MzMedicalCard> {
+public interface MzMedicalCardMapper extends BaseMapper<MzMedicalCard> {
 
 }
