@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin
+/**
+ * 手术项目controll
+ */
 @RestController
+@CrossOrigin
 public class SsobjectControll {
     @Autowired
-    SprojectService sprojectService;
-    @RequestMapping("sproject")
+    SprojectService sprojectService;//手术项目
+
+    @RequestMapping("sprot")
     public List<SsOperationProject> ssOperationProjects(){
         return  sprojectService.allProject();
     }
