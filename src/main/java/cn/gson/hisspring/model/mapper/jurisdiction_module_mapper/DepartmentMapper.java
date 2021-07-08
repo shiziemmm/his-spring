@@ -11,5 +11,6 @@ import java.util.List;
 
 @Mapper
 public interface DepartmentMapper extends BaseMapper<Department> {
+    List<Department> selectlike(Department dept);
 
 }

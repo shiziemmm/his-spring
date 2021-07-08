@@ -9,6 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface DepartmentKsMapper extends BaseMapper<DepartmentKs> {
+    /*
+    * 查询部门
+    */
     @Select("SELECT * FROM department_ks k , department d WHERE d.de_id =k.de_id")
     List<DepartmentKs> selectlist();
 }
