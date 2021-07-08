@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.">
+<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSick_Mapper">
     <resultMap id="MzSickMap" type="cn.gson.hisspring.model.pojos.MzSick">
         <id column="" property="sickNumber"></id>
-        <result column="sickIdCard" property="sickIdCard"></result>
-        <result column="sickName" property="sickName"></result>
-        <result column="sickPhone" property="sickPhone"></result>
-        <result column="sickAge" property="sickAge"></result>
-        <result column="sickSex" property="sickSex"></result>
-        <result column="sickSite" property="sickSite"></result>
-        <result column="sickHistory" property="sickHistory"></result>
+        <result column="sick_name" property="sickName"></result>
+        <result column="sick_id_card" property="sickIdCard"></result>
+        <result column="sick_phone" property="sickPhone"></result>
+        <result column="sick_age" property="sickAge"></result>
+        <result column="sick_sex" property="sickSex"></result>
+        <result column="sick_site" property="sickSite"></result>
+        <result column="sick_Time" property="sickTime"></result>
     </resultMap>
+<!--    改掉它本身的新增方法，这个新增同时返回自增的id值过来，
+useGeneratedKeys：设置为true表示开启主键自增 ，keyProperty：指定数据库主键对应的实体类属性，将自增的主键赋值给传入的实体类参数-->
+<!--    <insert id="insert" useGeneratedKeys="true" keyProperty="sickNumber" >-->
+<!--        INSERT INTO mz_sick-->
+<!--        SET-->
+<!--        <if test="sickName!=null">-->
+<!--            sick_name = #{sickName},-->
+<!--        </if>-->
+<!--        <if test="sickIdCard!=null">-->
+<!--            sick_id_card = #{sickIdCard},-->
+<!--        </if>-->
+<!--        <if test="sickPhone!=null">-->
+<!--            sick_phone = #{sickPhone},-->
+<!--        </if>-->
+<!--        <if test="sickAge!=null">-->
+<!--            sick_age = #{sickAge},-->
+<!--        </if>-->
+<!--        <if test="sickSex!=null">-->
+<!--            sick_Sex = #{sickSex},-->
+<!--        </if>-->
+<!--        <if test="sickSite!=null">-->
+<!--            sick_site=#{sickSite},-->
+<!--        </if>-->
+<!--        sick_time = #{sickTime}-->
+<!--    </insert>-->
 </mapper>

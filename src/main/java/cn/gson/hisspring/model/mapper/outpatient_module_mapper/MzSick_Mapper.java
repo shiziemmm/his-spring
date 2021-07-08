@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface MzSickMapper extends BaseMapper<MzSick> {
-//    //新增病人资料
-//    public MzSick addMzSick(MzSick mzSick);
+public interface MzSick_Mapper extends BaseMapper<MzSick> {
+
 }
