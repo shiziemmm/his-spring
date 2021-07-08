@@ -25,6 +25,8 @@ public class WardController {
         return wds.selectWardAllPage();
     }
 
+    
+
 
 
 
