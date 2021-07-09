@@ -1,9 +1,9 @@
 package cn.gson.hisspring.model.pojos;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 /**
@@ -12,8 +12,9 @@ import java.util.Date;
 
 @Data//get  set方法
 public class MzSick {
-  @TableId(type = IdType.ASSIGN_UUID)
-  private String sickNumber;
+  @TableId(type = IdType.AUTO)//自增同时返回主键
+  private Long sickNumber;
+
   private String sickIdCard;
   private String sickName;
   private String sickPhone;
@@ -21,4 +22,6 @@ public class MzSick {
   private String sickSex;
   private String sickSite;
   private Date sickTime;
+  @TableField(exist = false)//标注这个字段不是数据库字段
+  private Long mcNumberCard;//诊疗卡字段
 }

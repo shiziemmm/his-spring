@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface MzSick_Mapper extends BaseMapper<MzSick> {
+public interface MzSickMapper extends BaseMapper<MzSick> {
 
 }
