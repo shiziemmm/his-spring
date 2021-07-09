@@ -3,6 +3,7 @@ package cn.gson.hisspring;
 import cn.gson.hisspring.model.pojos.ZyWard;
 import cn.gson.hisspring.model.service.inhospital_module_service.WardService;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalCardService;
+import cn.gson.hisspring.model.service.outpatient_module_service.MzSickService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ class HisSpringApplicationTests {
         ward.setWdName("感染科");
 //        ward.setKsId(88898L);
 
-        wds.insertWard(ward);
+//        wds.insertWard(ward);
 
         List<ZyWard> list = wds.selectWardAllPage("骨");
         for (ZyWard z:list){
@@ -35,10 +36,12 @@ class HisSpringApplicationTests {
 
     @Autowired
     MzMedicalCardService ms;
+    @Autowired
+    MzSickService mzSick;
 
     @Test
     void test(){
-        ms.selectCardCreateTime(1,5);
+        ms.selectAllCards();
     }
 
 }

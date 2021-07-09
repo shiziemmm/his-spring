@@ -4,12 +4,14 @@ import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapp
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper;
 import cn.gson.hisspring.model.pojos.MzMedicalCard;
 import cn.gson.hisspring.model.pojos.MzSick;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,6 +54,12 @@ public class MzSickService {
             }
         }
     }
+
+
+
+
+
+
     //判断非空
     public boolean isNull(Object obj){
         if(obj == null || "".equals(obj.toString())){
