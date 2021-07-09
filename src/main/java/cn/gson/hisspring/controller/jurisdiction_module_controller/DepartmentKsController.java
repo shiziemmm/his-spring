@@ -23,6 +23,7 @@ public class DepartmentKsController {
     @Autowired
     DepartmentService dept;
 
+    //
     @RequestMapping("ks-list")
     public List<DepartmentKs> dome(){
 

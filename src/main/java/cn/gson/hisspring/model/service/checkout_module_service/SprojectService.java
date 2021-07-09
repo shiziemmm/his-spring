@@ -28,6 +28,11 @@ public class SprojectService {
         List<SsOperationAnaesthesia> listmp = ana.Ana(projectId);
         return listssp;
     }
+    //手术项目删除
+    public void delet(Integer  projectId){
+         sproject.delet(projectId);
+    }
+
     //单个手术项目麻醉详情
     public List<SsOperationAnaesthesia> AnaProject(Integer projectId){
         List<SsOperationAnaesthesia> listmp = ana.Ana(projectId);

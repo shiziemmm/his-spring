@@ -27,7 +27,7 @@ public class WardController {
      * @return
      */
     @RequestMapping("zyWard")
-    public List<ZyWard> selectWardAllPage(String search){
+    public List<ZyWard> selectWardAllPage(String search)  {
         return wds.selectWardAllPage(search);
     }
 
