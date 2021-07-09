@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.Supplier_Mapper">
+
+    <resultMap id="SupplierMap" type="cn.gson.hisspring.model.pojos.YkSupplier">
+        <result column="Supplier_id" property="supplierId"></result>
+        <result column="Supplier_name" property="supplierName"></result>
+        <result column="Supplier_site" property="supplierSite"></result>
+        <result column="Supplier_phone" property="supplierPhone"></result>
+        <result column="Supplier_linkman" property="supplierLinkman"></result>
+    </resultMap>
+
+    <!--查询全部的供应商-->
+    <select id="selectAllSupplier" resultMap="SupplierMap">
+        select * from yk_supplier
+    </select>
+    <!--新增供应商-->
+    <insert id="insertSupplier" parameterType="cn.gson.hisspring.model.pojos.YkSupplier">
+        INSERT INTO yk_supplier(Supplier_id,Supplier_name,Supplier_site,Supplier_phone,Supplier_linkman) VALUES
+        (#{supplierId},#{supplierName},#{supplierSite},#{supplierPhone},#{supplierLinkman})
+    </insert>
+    <!--修改供应商信息-->
+    <update id="updateSupplier" parameterType="cn.gson.hisspring.model.pojos.YkSupplier">
+        update yk_supplier set Supplier_name=#{supplierName},Supplier_site=#{supplierSite},
+                               Supplier_phone=#{supplierPhone},Supplier_linkman=#{supplierLinkman}
+                                WHERE Supplier_id=#{supplierId}
+    </update>
+
+</mapper>
