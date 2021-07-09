@@ -9,6 +9,7 @@
   <sql id="Base_Column_List">
     de_id, de_name, de_date
   </sql>
+<!--    模糊查询-->
   <select id="selectlike" resultMap="BaseResultMap">
    select * from department
 <where>

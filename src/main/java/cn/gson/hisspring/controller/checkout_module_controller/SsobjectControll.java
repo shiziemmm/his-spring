@@ -4,13 +4,8 @@ import cn.gson.hisspring.model.pojos.SsOperationAnaesthesia;
 import cn.gson.hisspring.model.pojos.SsOperationProject;
 import cn.gson.hisspring.model.service.checkout_module_service.SprojectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Map;
-
 /**
  * 手术项目controll
  */
@@ -28,6 +23,17 @@ public class SsobjectControll {
     @RequestMapping("ssprot")
     public List<SsOperationProject> singeProject(Integer projectId){
         return  sprojectService.singeProject(projectId);
+    }
+//    删除手术项目
+    @PostMapping("delet-sprot")
+    public String deletlist(Integer projectId){
+        try {
+            sprojectService.delet(projectId);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
     }
     //单个项目可选麻醉
     @RequestMapping("mzprot")

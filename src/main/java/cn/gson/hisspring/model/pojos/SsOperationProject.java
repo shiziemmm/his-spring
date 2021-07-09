@@ -17,5 +17,6 @@ public class SsOperationProject {
   private String projectTaboo;
   private String projectMatters;
   private String ksName;
+  private String projectNumber;
   private List<SsOperationAnaesthesia> ssAn;
 }
