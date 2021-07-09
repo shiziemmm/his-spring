@@ -12,6 +12,6 @@ public interface DepartmentKsMapper extends BaseMapper<DepartmentKs> {
     /*
     * 查询部门
     */
-    @Select("SELECT * FROM department_ks k , department d WHERE d.de_id =k.de_id")
+    @Select("select * from  department_ks k left JOIN department d on k.de_id= d.de_id")
     List<DepartmentKs> selectlist();
 }
