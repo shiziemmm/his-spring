@@ -1,7 +1,7 @@
 package cn.gson.hisspring.controller.outpatient_module_controller;
 
 import cn.gson.hisspring.model.pojos.MzSick;
-import cn.gson.hisspring.model.service.outpatient_module_service.MzSick_Service;
+import cn.gson.hisspring.model.service.outpatient_module_service.MzSickService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-public class MzSick_Controller {
+public class MzSickController {
     @Autowired
-    MzSick_Service mzSickService;
+    MzSickService mzSickService;
 
     @PostMapping("/addMzSick")
     public String addMzSick(@RequestBody MzSick mzSick){
