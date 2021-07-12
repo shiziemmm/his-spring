@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper">
+    <resultMap id="allCard" type="cn.gson.hisspring.model.pojos.MzMedicalCard">
+        <id column="mc_Number" property="mcNumber"></id>
+        <result  column="mc_Card" property="mcCard"></result>
+        <result  column="mc_Pawd" property="mcPawd"></result>
+        <result  column="mc_Balance" property="mcBalance"></result>
+        <result  column="mc_Sate" property="mcSate"></result>
+        <result  column="sick_Number" property="sickNumber"></result>
+        <result  column="mc_Id_Card" property="mcIdCard"></result>
+        <result  column="create_Time" property="createTime"></result>
+        <result  column="update_Time" property="updateTime"></result>
+        <association property="mzSick" javaType="cn.gson.hisspring.model.pojos.MzSick">
+            <id column="sick_Number" property="sickNumber"></id>
+            <result column="sick_name" property="sickName"></result>
+            <result column="sick_id_card" property="sickIdCard"></result>
+            <result column="sick_phone" property="sickPhone"></result>
+            <result column="sick_age" property="sickAge"></result>
+            <result column="sick_sex" property="sickSex"></result>
+            <result column="sick_site" property="sickSite"></result>
+            <result column="sick_Time" property="sickTime"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectAllMzMedicalCard" resultMap="allCard">
+        select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number
+        <where>
+            <if test ="mcCard !=null and '' != mcCard"> /*卡号like*/
+                    and mc_Card like'${mcCard}'
+            </if>
+            <if test ="mcIdCard !=null and '' != mcIdCard">/*身份证like*/
+                and mc_Id_Card like'${mcIdCard}'
+            </if>
+            <if test ="sickName !=null and '' != sickName">/*姓名like*/
+                and sick_Name like'${sickName}'
+            </if>
+            <if test ="sickPhone !=null and '' != sickPhone">/*电话like*/
+                and sick_Phone like'${sickPhone}'
+            </if>
+        </where>
+            ORDER BY create_time desc
+    </select>
+</mapper>

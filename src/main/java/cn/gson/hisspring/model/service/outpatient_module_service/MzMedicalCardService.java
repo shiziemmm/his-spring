@@ -18,11 +18,6 @@ public class MzMedicalCardService {
     @Autowired
     MzMedicalCardMapper meCardMapper;
 
-
-
-//        public static void main(String[] args) {
-//            System.out.println(getNum("258852",5));
-//        }
     //生成随机卡号
     public Long inserCard(){
         List<MzMedicalCard> mzMedicalCards = meCardMapper.selectList(null);
@@ -54,7 +49,7 @@ public class MzMedicalCardService {
         }
         return firstPart + numStr;
     }
-
+    //分页排序查询数据库病人信息
     public IPage<MzMedicalCard> selectCardCreateTime(Integer index, Integer pageSize) {
         System.out.println("按创建时间排序。。。。。。。。。。。。。。");
         QueryWrapper<MzMedicalCard> wrapper = new QueryWrapper<>();
@@ -63,4 +58,11 @@ public class MzMedicalCardService {
         IPage<MzMedicalCard> page = new Page<>(index, pageSize, count);
         return  meCardMapper.selectPage(page, wrapper);
     }
+    //查询所有加排序
+    public List<MzMedicalCard> selectAllCards(){
+        System.out.println("按创建时间排序。。。。。。。。。。。。。。");
+        List<MzMedicalCard> mzMedicalCards = meCardMapper.selectAllMzMedicalCard();
+        return mzMedicalCards;
+    }
+
 }

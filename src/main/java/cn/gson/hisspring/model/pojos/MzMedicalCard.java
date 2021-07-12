@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Data//get  set方法
 public class MzMedicalCard {
-  @TableId(type = IdType.INPUT)
+  @TableId(type = IdType.AUTO)
   private Long mcNumber;
   private Long mcCard;
   private String mcPawd;
@@ -27,5 +27,7 @@ public class MzMedicalCard {
   @TableField(fill = FieldFill.UPDATE) // 注解到 handler 处理器里进行时间的新增方便后期诊疗卡密码的修改
   private Date updateTime;
 
+  @TableField(exist = false)//不是数据库对象
+  private MzSick mzSick;//诊疗卡对应的病人资料
 
 }
