@@ -17,6 +17,6 @@ public interface AnaeMapper extends BaseMapper<SsOperationAnaesthesia> {
             "where b.project_id=#{projectId}")
     List<SsOperationAnaesthesia> Ana(Integer projectId );
     //查询所有麻醉项目
-    @Select("SELECT operation_anaesthesia FROM ss_operation_anaesthesia")
+    @Select("SELECT * FROM ss_operation_anaesthesia")
     List<SsOperationAnaesthesia> allAnaesthesia();
 }

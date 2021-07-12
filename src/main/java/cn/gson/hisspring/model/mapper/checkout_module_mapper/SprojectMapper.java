@@ -24,4 +24,7 @@ public interface SprojectMapper extends BaseMapper<SsOperationProject> {
     //查询所有手术项目对象
     @Delete("delete from ss_operation_project where project_id=#{projectId}")
     public void delet(Integer projectId);
+
+
+    int insertSsObject(long proId,List<Integer> listArr);
 }

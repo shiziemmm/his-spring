@@ -1,6 +1,7 @@
 package cn.gson.hisspring.model.service.checkout_module_service;
 
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.AnaeMapper;
+import cn.gson.hisspring.model.mapper.checkout_module_mapper.SchangeMapper;
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper;
 import cn.gson.hisspring.model.pojos.*;
 import com.github.pagehelper.Page;
@@ -17,6 +18,8 @@ public class SprojectService {
     SprojectMapper sproject;//手术项目mapper
     @Autowired
     AnaeMapper ana;//麻醉项目mapper
+    @Autowired
+    SchangeMapper mid;//麻醉中间项目mapper
     //所有手术项目
     public List<SsOperationProject> allProject(){
         List<SsOperationProject> listsp = sproject.allProject();
@@ -27,6 +30,23 @@ public class SprojectService {
         List<SsOperationProject> listssp = sproject.singleProject(projectId);
         List<SsOperationAnaesthesia> listmp = ana.Ana(projectId);
         return listssp;
+    }
+    /**
+     * 新增手术项目
+     * @return
+     */
+    public boolean projectUpdate(SsOperationProject proj){
+        int is = 0;//判断是否新增成功
+        if(proj.getProjectId() == 0){//新增
+            is = sproject.insert(proj);
+            proj.getSsAn();
+            System.out.println("新增编号"+proj.getProjectId());
+            sproject.insertSsObject(proj.getProjectId(),proj.getSsAn());
+        }else{//修改
+            is = sproject.updateById(proj);
+        }
+
+        return is == 0?false:true;
     }
     //手术项目删除
     public void delet(Integer  projectId){
@@ -43,4 +63,5 @@ public class SprojectService {
         List<SsOperationAnaesthesia> listmz = ana.allAnaesthesia();
         return listmz;
     }
+
 }

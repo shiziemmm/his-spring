@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper">
+
+    <insert id="insertSsObject">
+        insert into ss_change_anaesthesia values
+                                                 <foreach collection="listArr" index="index"  item="i" separator=", ">
+                                                    (#{proId},#{i})
+                                                 </foreach>
+    </insert>
+</mapper>
