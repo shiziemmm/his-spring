@@ -52,7 +52,20 @@
                     zy_ward.wd_name LIKE '%${search}%' or
                     staff.s_name LIKE '%${search}%' or department_ks.ks_name like '%${search}%'
                 </if>
+                <if test="ksId != ''">
+                    department_ks.ks_id = #{ksId}
+                </if>
             </where>
     </select>
+
+<!--    <select resultMap="wardMap" id="selectWardByKsId">-->
+<!--        SELECT-->
+<!--            *-->
+<!--            FROM-->
+<!--            zy_ward-->
+<!--            LEFT JOIN zy_bed ON zy_ward.wd_id = zy_bed.Wd_id-->
+<!--            INNER JOIN staff ON staff.s_id = zy_ward.s_id-->
+<!--            INNER JOIN department_ks ON zy_ward.ks_id = department_ks.ks_id-->
+<!--    </select>-->
 
 </mapper>

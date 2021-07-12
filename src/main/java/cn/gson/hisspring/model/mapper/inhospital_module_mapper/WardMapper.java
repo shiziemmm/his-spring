@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 public interface WardMapper extends BaseMapper<ZyWard> {
 
-    List<ZyWard> selectWardAllPage(String search);
+    List<ZyWard> selectWardAllPage(String search,String ksId);
 
 
 }

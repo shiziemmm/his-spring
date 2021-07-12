@@ -30,9 +30,6 @@ public class ZyWard{
 
   //关系
   @TableField(exist = false)
-  @OneToMany
-  @JoinColumn(name="wd_id",referencedColumnName = "wd_id")
-  @Lazy(true)
   private List<ZyBed> listBed;//病床集合
 
   @TableField(exist = false)
