@@ -23,18 +23,26 @@ public class DepartmentKsController {
     @Autowired
     DepartmentService dept;
 
-    //
+    /*
+    科室查询
+     */
     @RequestMapping("ks-list")
     public List<DepartmentKs> dome(){
 
         List<DepartmentKs> selectlist = dm.selectlist();
         return selectlist;
     }
+    /*
+    部门查询
+     */
     @RequestMapping("bm-list")
     public List<Department> dept(){
         List<Department> bm = dept.selectList();
         return bm;
     }
+    /*
+    部门新增
+     */
     @PostMapping("add-list")
     public String addlist(@RequestBody Department de){
         int i=dept.add(de);
@@ -44,6 +52,9 @@ public class DepartmentKsController {
           return "fasle";
       }
     }
+    /*
+    部门修改
+     */
     @PostMapping("upa-list")
     public String upalist(@RequestBody Department de){
         int i=dept.upa(de);
@@ -53,6 +64,7 @@ public class DepartmentKsController {
             return "false";
         }
     }
+
     @PostMapping("delet-list")
     public String deletlist(@RequestBody Department de){
         int i=dept.dete(de.getDeId());
@@ -62,10 +74,15 @@ public class DepartmentKsController {
             return "false";
         }
     }
+    /*
+    部门模糊查询
+     */
     @RequestMapping("selectlike")
     public List<Department> selectlike(@RequestBody Department d){
+        System.out.println(d);
         List<Department> selectlike = dept.selectlike(d);
       return selectlike;
 
     }
+
 }
