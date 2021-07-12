@@ -40,7 +40,13 @@ public class WardController {
     }
 
 
-
-
+    /**
+     * 根据科室编号查询病房信息
+     *
+     */
+    @RequestMapping("wardByKsId")
+    public List<ZyWard> selectWardByKsId(String ksId){
+        return wds.selectWardByKsId(ksId);
+    }
 
 }

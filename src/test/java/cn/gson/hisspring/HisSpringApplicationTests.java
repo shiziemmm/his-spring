@@ -1,6 +1,11 @@
 package cn.gson.hisspring;
 
+import cn.gson.hisspring.model.mapper.inhospital_module_mapper.BedMapper;
+import cn.gson.hisspring.model.pojos.ZyBed;
+import cn.gson.hisspring.model.pojos.ZyInhospitalApply;
 import cn.gson.hisspring.model.pojos.ZyWard;
+import cn.gson.hisspring.model.service.inhospital_module_service.BedService;
+import cn.gson.hisspring.model.service.inhospital_module_service.InHospitalApplyService;
 import cn.gson.hisspring.model.service.inhospital_module_service.WardService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
@@ -12,19 +17,59 @@ import java.util.List;
 @SpringBootTest
 @MapperScan("cn.gson.hisspring.model.mapper")
 class HisSpringApplicationTests {
+    @Autowired
+    InHospitalApplyService ihas;
+
+    @Test
+    void text3(){
+        List<ZyInhospitalApply> list = ihas.selectHspApply();
+        list.forEach(i->{
+            System.out.println(i);
+        });
+    }
+
 
     @Autowired
     WardService wds;
 
+    @Autowired
+    BedMapper bm;
+
+    @Autowired
+    BedService bs;
+
+    @Test
+    void text4(){
+        List<ZyBed> list = bs.bedSelectByWdId(1);
+        list.forEach(i->{
+            System.out.println(i);
+        });
+    }
+
+
+    @Test
+    void text2(){
+        bs.bedUpdateBdIs(1,3);
+    }
+
+    @Test
+    void text1(){
+        ZyBed b = new ZyBed();
+        b.setBdId(16);
+        b.setBdName("shisihsizii");
+        bm.updateById(b);
+    }
+
     @Test
     void contextLoads() {
-        ZyWard ward = new ZyWard();
+//        ZyWard ward = new ZyWard();
 //        ward.setWdId(3);
-        ward.setWdName("感染科");
+//        ward.setWdName("感染科");
 //        ward.setKsId(88898L);
 
 
-        List<ZyWard> list = wds.selectWardAllPage("骨");
+
+        List<ZyWard> list = wds.selectWardByKsId("1");
         for (ZyWard z:list){
             System.out.println(z);
         }

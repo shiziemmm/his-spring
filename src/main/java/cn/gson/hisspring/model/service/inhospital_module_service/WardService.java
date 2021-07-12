@@ -32,7 +32,7 @@ public class WardService{
     public List<ZyWard> selectWardAllPage(String search){
         QueryWrapper<ZyWard> qw = new QueryWrapper<>();
         wdm.selectList(qw);
-        List<ZyWard> listWard = wdm.selectWardAllPage(search);
+        List<ZyWard> listWard = wdm.selectWardAllPage(search,"");
         for(ZyWard wd : listWard){
             if(!wd.getListBed().isEmpty()){//判断该病房下面是否有病床 防止报空指针
                 for (ZyBed b : wd.getListBed()){
@@ -58,6 +58,15 @@ public class WardService{
             is = wdm.updateById(ward);
         }
         return is == 0?false:true;
+    }
+
+    /**
+     * 根据科室查询病房信息
+     */
+    public List<ZyWard> selectWardByKsId(String ksId){
+        List<ZyWard> list = wdm.selectWardAllPage("",ksId);
+
+        return list.isEmpty() ? null : list;
     }
 
 }
