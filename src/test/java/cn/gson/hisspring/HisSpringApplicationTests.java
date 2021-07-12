@@ -67,7 +67,6 @@ class HisSpringApplicationTests {
 //        ward.setWdName("感染科");
 //        ward.setKsId(88898L);
 
-        wds.insertWard(ward);
 
 
         List<ZyWard> list = wds.selectWardByKsId("1");
