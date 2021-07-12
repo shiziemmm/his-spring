@@ -6,14 +6,14 @@ import lombok.Data;
 public class ZyInhospitalApply {
 
   private long inId;
-  private long sickNumber;
+  private Long sickNumber;
   private String inDiagnosis;
   private java.sql.Timestamp inApplyDate;
-  private long ksId;
+  private Long ksId;
   private String ksName;
-  private long inProposer;
-  private long sId;
-  private long inIs;
+  private Long inProposer;
+  private Long sId;
+  private Long inIs;
 
 
 }

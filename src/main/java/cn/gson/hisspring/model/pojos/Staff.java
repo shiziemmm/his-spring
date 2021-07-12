@@ -16,9 +16,9 @@ public class Staff {
   private String sSore;
   private String sPhone;
   private java.sql.Timestamp sDate;
-  private long uId;
-  private long ksId;
-  private long tId;
+  private Long uId;
+  private Long ksId;
+  private Long tId;
 
 
 
