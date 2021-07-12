@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper">
+  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.DepartmentKs">
+    <id column="ks_id" jdbcType="INTEGER" property="ksId" />
+    <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
+    <result column="de_id" jdbcType="TIMESTAMP" property="deId" />
+    <association property="dept"  javaType="cn.gson.hisspring.model.pojos.Department">
+      <id column="de_id" jdbcType="INTEGER" property="deId" />
+      <result column="de_name" jdbcType="VARCHAR" property="deName" />
+      <result column="de_date" jdbcType="TIMESTAMP" property="deDate" />
+    </association>
+  </resultMap>
+<select id="selectlist" resultMap="BaseResultMap">
+  select * from  department_ks k left JOIN department d on k.de_id= d.de_id
+</select>
+
+
+</mapper>

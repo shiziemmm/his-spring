@@ -17,54 +17,39 @@ import java.util.List;
 @CrossOrigin//跨域
 @Controller
 @ResponseBody
+/*
+科室
+
+ */
 public class DepartmentKsController {
     @Autowired
     DepartmentKsService dm;
-    @Autowired
-    DepartmentService dept;
+
 
     @RequestMapping("ks-list")
     public List<DepartmentKs> dome(){
 
         List<DepartmentKs> selectlist = dm.selectlist();
+        System.out.println(selectlist);
         return selectlist;
     }
-    @RequestMapping("bm-list")
-    public List<Department> dept(){
-        List<Department> bm = dept.selectList();
-        return bm;
-    }
-    @PostMapping("add-list")
-    public String addlist(@RequestBody Department de){
-        int i=dept.add(de);
-      if(i>0){
-          return "ok";
-      }else{
-          return "fasle";
-      }
-    }
-    @PostMapping("upa-list")
-    public String upalist(@RequestBody Department de){
-        int i=dept.upa(de);
-        if(i>0){
-            return "ok";
+    @PostMapping("add-ks")
+    public int addlist(@RequestBody DepartmentKs departmentKs){
+        int addlist = dm.addlist(departmentKs);
+        if(addlist>0){
+            return 1;
         }else{
-            return "false";
+            return 0;
         }
     }
-    @PostMapping("delet-list")
-    public String deletlist(@RequestBody Department de){
-        int i=dept.dete(de.getDeId());
-        if(i>0){
-            return "ok";
-        }else{
-            return "false";
-        }
-    }
-    @RequestMapping("selectlike")
-    public List<Department> selectlike(@RequestBody Department d){
-        List<Department> selectlike = dept.selectlike(d);
-      return selectlike;
 
+    @PostMapping("upa-ks")
+    public int upalist(@RequestBody DepartmentKs departmentKs){
+        int upalist = dm.upalist(departmentKs);
+        if(upalist>0){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }

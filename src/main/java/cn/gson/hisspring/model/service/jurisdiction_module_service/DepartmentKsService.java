@@ -15,4 +15,11 @@ public class DepartmentKsService {
     public List<DepartmentKs> selectlist(){
         return d.selectlist();
     };
+
+    public int addlist(DepartmentKs departmentKs){
+        return d.insert(departmentKs);
+    }
+    public int upalist(DepartmentKs departmentKs){
+        return d.updateById(departmentKs);
+    }
 }
