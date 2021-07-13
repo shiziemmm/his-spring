@@ -3,9 +3,11 @@ package cn.gson.hisspring;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.BedMapper;
 import cn.gson.hisspring.model.pojos.ZyBed;
 import cn.gson.hisspring.model.pojos.ZyInhospitalApply;
+import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import cn.gson.hisspring.model.pojos.ZyWard;
 import cn.gson.hisspring.model.service.inhospital_module_service.BedService;
 import cn.gson.hisspring.model.service.inhospital_module_service.InHospitalApplyService;
+import cn.gson.hisspring.model.service.inhospital_module_service.PatientBaseService;
 import cn.gson.hisspring.model.service.inhospital_module_service.WardService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
@@ -25,6 +27,22 @@ class HisSpringApplicationTests {
         List<ZyInhospitalApply> list = ihas.selectHspApply();
         list.forEach(i->{
             System.out.println(i);
+        });
+    }
+
+    @Autowired
+    PatientBaseService pbs;
+
+    @Test
+    void Text6(){
+        pbs.PatientUpdateBdIdAndBedUpdateBdIsAndPtNo(3L,101L,200d);
+    }
+
+    @Test
+    void text5(){
+        List<ZyPatientBase> list = pbs.selectPatientNoBed();
+        list.forEach(b->{
+            System.out.println(b);
         });
     }
 

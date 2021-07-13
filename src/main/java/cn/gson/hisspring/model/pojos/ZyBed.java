@@ -49,4 +49,10 @@ public class ZyBed {
     this.bdId = bdId;
     this.bdIs = bdIs;
   }
+
+  public ZyBed(long bdId, Long bdIs, Long ptNo) {
+    this.bdId = bdId;
+    this.bdIs = bdIs;
+    this.ptNo = ptNo;
+  }
 }

@@ -38,6 +38,9 @@ public class ZyWard{
   @TableField(exist = false)
   private String ksName;//科室名称
 
+  @TableField(exist = false)
+  private Integer bedCount;//该病房的入住病人数量
+
 
 
 

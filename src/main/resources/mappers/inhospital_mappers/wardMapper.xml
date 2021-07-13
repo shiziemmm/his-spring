@@ -56,6 +56,7 @@
                     department_ks.ks_id = #{ksId}
                 </if>
             </where>
+        order by department_ks.ks_name
     </select>
 
 <!--    <select resultMap="wardMap" id="selectWardByKsId">-->

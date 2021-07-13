@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data//get  set方法
-public class DepartmentKs  extends  Department{
+public class DepartmentKs{
 
   private long ksId;
   private String ksName;
