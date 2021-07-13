@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.FunctionJurisdiction">
+    <id column="Fction_id" jdbcType="INTEGER" property="fctionId" />
+    <result column="Fction_name" jdbcType="VARCHAR" property="fctionName" />
+    <result column="Fction_assembly" jdbcType="VARCHAR" property="fctionAssembly" />
+    <result column="Fction_src" jdbcType="VARCHAR" property="fctionSrc" />
+    <result column="Fction_icon" jdbcType="VARCHAR" property="fctionIcon" />
+    <result column="Fction_state" jdbcType="VARCHAR" property="fctionState" />
+    <result column="Fction_cid" jdbcType="INTEGER" property="fctionCid" />
+  </resultMap>
+    <resultMap id="funs" type="cn.gson.hisspring.model.pojos.FunctionJurisdiction">
+      <id column="id" jdbcType="INTEGER" property="fctionId" />
+      <result column="name" jdbcType="VARCHAR" property="fctionName" />
+      <result column="assembly" jdbcType="VARCHAR" property="fctionAssembly" />
+      <result column="src" jdbcType="VARCHAR" property="fctionSrc" />
+      <result column="icon" jdbcType="VARCHAR" property="fctionIcon" />
+      <result column="state" jdbcType="VARCHAR" property="fctionState" />
+      <result column="cid" jdbcType="INTEGER" property="fctionCid" />
+      <collection property="list" ofType="cn.gson.hisspring.model.pojos.FunctionJurisdiction" resultMap="BaseResultMap">
+      </collection>
+    </resultMap>
+  <select id="select" resultMap="funs">
+    select f.Fction_id id,f.Fction_assembly assembly,f.Fction_src src,f.Fction_name name,f.Fction_icon icon,f.Fction_state state ,j.* from function_jurisdiction f
+        inner join function_jurisdiction j on f.Fction_id = j.Fction_cid where f.Fction_cid is null
+
+  </select>
+</mapper>
+
+
+
+
+
+
+
+
