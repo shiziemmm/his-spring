@@ -4,5 +4,5 @@ GET http://localhost:8089/descCard?index=1&pageSize=5
 Accept: application/json
 
 ###
-GET  http://localhost:8089/allDescCard
+GET  http://localhost:8089/allDescCard?mzSickTest=""
 Accept: application/json

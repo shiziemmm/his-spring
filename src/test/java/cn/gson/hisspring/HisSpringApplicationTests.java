@@ -1,5 +1,7 @@
 package cn.gson.hisspring;
 
+import cn.gson.hisspring.model.pojos.MzMedicalCard;
+import cn.gson.hisspring.model.pojos.MzSick;
 import cn.gson.hisspring.model.pojos.ZyWard;
 import cn.gson.hisspring.model.service.inhospital_module_service.WardService;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalCardService;
@@ -41,7 +43,6 @@ class HisSpringApplicationTests {
 
     @Test
     void test(){
-        ms.selectAllCards();
     }
 
 }

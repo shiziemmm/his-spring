@@ -22,9 +22,10 @@ public class MzMedicalCard {
   private long mcSate;
   private long sickNumber;
   private String mcIdCard;
+
   @TableField(fill = FieldFill.INSERT) // 注解到 handler 处理器里进行时间的新增方便后期诊疗卡密码的修改
   private Date createTime;
-  @TableField(fill = FieldFill.UPDATE) // 注解到 handler 处理器里进行时间的新增方便后期诊疗卡密码的修改
+  @TableField(fill = FieldFill.INSERT_UPDATE) // 注解到 handler 处理器里进行时间的新增方便后期诊疗卡密码的修改
   private Date updateTime;
 
   @TableField(exist = false)//不是数据库对象
