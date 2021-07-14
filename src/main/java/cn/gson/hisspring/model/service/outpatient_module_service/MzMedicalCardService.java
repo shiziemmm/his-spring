@@ -48,14 +48,15 @@ public class MzMedicalCardService {
                 meCardMapper.updateById(card);
             }
         }
-
     }
     //挂失卡号，--修改卡状态
-
-
-
-
-
+    public void reportTheLossOf(String mcNumber){
+        MzMedicalCard card = meCardMapper.selectById(mcNumber);
+        if (card!=null){
+            card.setMcSate(1L);
+            meCardMapper.updateById(card);
+        }
+    }
 
 
 
