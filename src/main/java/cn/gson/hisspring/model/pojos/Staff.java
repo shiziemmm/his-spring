@@ -1,6 +1,12 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.github.dreamyoung.mprelation.JoinColumn;
+import com.github.dreamyoung.mprelation.Lazy;
+import com.github.dreamyoung.mprelation.OneToMany;
 import lombok.Data;
+
+import java.util.List;
 
 @Data//get  set方法
 public class Staff {
@@ -10,9 +16,11 @@ public class Staff {
   private String sSore;
   private String sPhone;
   private java.sql.Timestamp sDate;
-  private long uId;
-  private long ksId;
-  private long tId;
+  private Long uId;
+  private Long ksId;
+  private Long tId;
+
+
 
 
 }

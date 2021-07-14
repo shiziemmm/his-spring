@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper">
+    <resultMap id="allProject" type="cn.gson.hisspring.model.pojos.SsOperationProject">
+        <id column="project_id" property="projectId"></id>
+        <result  column="project_name" property="projectName"></result>
+        <result  column="project_pay" property="projectPay"></result>
+        <result  column="project_type" property="projectType"></result>
+        <result  column="Project_position" property="projectPosition"></result>
+        <result  column="Project_indication" property="projectIndication"></result>
+        <result  column="Project_taboo" property="projectTaboo"></result>
+        <result  column="Project_matters" property="projectMatters"></result>
+        <result  column="Project_number" property="projectNumber"></result>
+        <result  column="ks_id" property="ksId"></result>
+        <result  column="ks_name" property="ksName"></result>
+<!--        <association property="ksNan" javaType="cn.gson.hisspring.model.pojos.DepartmentKs">-->
+<!--            <id column="ks_id" property="ksId"></id>-->
+<!--            -->
+<!--            <result  column="de_id" property="deId"></result>-->
+<!--        </association>-->
+    </resultMap>
+<!--    麻醉中间表批量新增-->
+    <insert id="insertSsObject">
+        insert into ss_change_anaesthesia values
+                                                 <foreach collection="listArr" index="index"  item="i" separator=", ">
+                                                    (#{proId},#{i})
+                                                 </foreach>
+    </insert>
+    <select id="selectAllSsObject" resultMap="allProject">
+        select * from  ss_operation_project a left join department_ks b on a.ks_id=b.ks_id
+        <where>
+            <if test ="projectNumber !=null and '' != projectNumber"> /*卡号like*/
+                and Project_number like'${projectNumber}'
+            </if>
+            <if test ="projectType !=null and '' != projectType">/*手术类别like*/
+                and project_type like'${projectType}'
+            </if>
+            <if test ="projectName !=null and '' != projectName">/*手术名称like*/
+                and project_name like'${projectName}'
+            </if>
+            <if test ="ksId !=null and '' != ksId">/*科室*/
+                and a.ks_id like'${ksId}'
+            </if>
+        </where>
+        ORDER BY a.ks_id desc
+    </select>
+</mapper>

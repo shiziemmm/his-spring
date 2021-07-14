@@ -30,9 +30,6 @@ public class ZyWard{
 
   //关系
   @TableField(exist = false)
-  @OneToMany
-  @JoinColumn(name="wd_id",referencedColumnName = "wd_id")
-  @Lazy(true)
   private List<ZyBed> listBed;//病床集合
 
   @TableField(exist = false)
@@ -40,6 +37,9 @@ public class ZyWard{
 
   @TableField(exist = false)
   private String ksName;//科室名称
+
+  @TableField(exist = false)
+  private Integer bedCount;//该病房的入住病人数量
 
 
 

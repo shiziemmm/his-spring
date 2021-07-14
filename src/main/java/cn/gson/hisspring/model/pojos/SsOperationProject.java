@@ -1,12 +1,17 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 @Data//get  set方法
 public class SsOperationProject {
 
+  @TableId(value = "project_id",type = IdType.AUTO)
   private long projectId;
   private String projectName;
   private double projectPay;
@@ -16,7 +21,13 @@ public class SsOperationProject {
   private String projectIndication;
   private String projectTaboo;
   private String projectMatters;
-  private String ksName;
   private String projectNumber;
-  private List<SsOperationAnaesthesia> ssAn;
+
+  @TableField(exist = false)
+  private String ksName;
+
+  @TableField(exist = false)
+  private List<Integer>  ssAn;
+
+
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.User">
+    <id column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="u_name" jdbcType="VARCHAR" property="uName" />
+    <result column="u_pswd" jdbcType="VARCHAR" property="uPswd" />
+    <association property="list" javaType="cn.gson.hisspring.model.pojos.Staff">
+      <id column="s_id" jdbcType="INTEGER" property="sId" />
+      <result column="s_name" jdbcType="VARCHAR" property="sName" />
+      <result column="s_sore" jdbcType="VARCHAR" property="sSore" />
+      <result column="s_phone" jdbcType="VARCHAR" property="sPhone" />
+        <result column="s_date" jdbcType="TIMESTAMP" property="sDate" />
+      <result column="u_id" jdbcType="INTEGER" property="uId" />
+        <result column="ks_id" jdbcType="INTEGER" property="ksId" />
+      <result column="t_id" jdbcType="INTEGER" property="tId" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    u_id, u_name, u_pswd
+  </sql>
+  <select id="login" resultMap="BaseResultMap">
+    select * from user where u_name="${uName}" and u_pswd="${uPswd}"
+  </select>
+  <select id="cha" resultMap="BaseResultMap">
+    select * from user d left join staff e on d.u_id = e.u_id where d.u_name=#{uName} and d.u_pswd=#{uPswd}
+  </select>
+
+</mapper>
