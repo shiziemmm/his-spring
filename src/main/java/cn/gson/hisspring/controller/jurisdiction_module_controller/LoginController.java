@@ -18,9 +18,9 @@ public class LoginController {
         */
     @PostMapping("login")
     public Object user(User us){
-        List<User> cha = userService.cha(us);
+       User cha = userService.cha(us);
         System.out.println(cha);
-        if(cha.size()>0){
+        if(cha!=null){
             return cha;
         }else{
             return 0;

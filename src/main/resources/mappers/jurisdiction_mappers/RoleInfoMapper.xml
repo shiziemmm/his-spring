@@ -5,9 +5,12 @@
     <id column="r_id" jdbcType="INTEGER" property="rId" />
     <result column="r_name" jdbcType="INTEGER" property="fctionId" />
   </resultMap>
-<!--  <select id="selectlist" resultMap="BaseResultMap">-->
-<!--&#45;&#45;     select  * from role-->
-<!--  </select>-->
+<insert id="addRoleInfo">
+  insert into role_middle_jurisdiction values 
+            <foreach collection="funs" item="i" separator=", ">
+              (#{rId},#{i})
+            </foreach>
+</insert>
 </mapper>
 
 

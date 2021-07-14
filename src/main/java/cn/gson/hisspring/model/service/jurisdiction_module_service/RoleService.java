@@ -28,16 +28,10 @@ public class RoleService {
         return roleMapper.select();
     }
 
-    public void saceGrant(Integer roleId, List<Integer> funs) {
-        System.out.println(roleId+"==="+funs);
-//        RoleMiddleJurisdiction role = f.selectById(roleId);
-//        List<FunctionJurisdiction> allById =
-//                (List<FunctionJurisdiction>) f.selectById((Serializable) funs);
-//        List<FunctionJurisdiction> functions = role.getFuns();
-//        if(functions == null){
-//            functions = new ArrayList<>();
-//        }
-//        functions.clear();//把原来的全部清空
-//        functions.addAll(allById);
+    public List<Integer> roleFuns(Integer roleId){
+       return  roleMapper.roleFuns(roleId);
+    }
+    public List<FunctionJurisdiction> homeMenu(Integer userId){
+        return roleMapper.homeMenu(userId);
     }
 }

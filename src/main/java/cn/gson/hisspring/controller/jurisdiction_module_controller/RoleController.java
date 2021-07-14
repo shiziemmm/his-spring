@@ -1,8 +1,10 @@
 package cn.gson.hisspring.controller.jurisdiction_module_controller;
 
+import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.RoleMiddleJurisdictionMapper;
 import cn.gson.hisspring.model.pojos.FunctionJurisdiction;
 
 import cn.gson.hisspring.model.pojos.Role;
+import cn.gson.hisspring.model.service.jurisdiction_module_service.RoleMiddleJurisdictionService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.RoleService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -20,6 +22,9 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
+    @Autowired
+    RoleMiddleJurisdictionService roleinfo;
+
     /*
     查询角色
      */
@@ -36,11 +41,29 @@ public class RoleController {
         List<FunctionJurisdiction> select = roleService.select();
         return select;
     }
+    /*
+    批量新增角色-权限中间表
+     */
     @RequestMapping("save-grant")
     public void saceGrant(@RequestParam("grant") String grant){
         JSONObject o = JSONObject.parseObject(grant);
         Integer roleId = Integer.parseInt(o.get("roleId").toString());
         List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(),Integer.TYPE);
-        roleService.saceGrant(roleId,funs);
+        System.out.println(roleId+"==== "+funs);
+        roleinfo.addRoleInfo(roleId,funs);
+    }
+    /*
+    查看角色拥有权限
+     */
+    @RequestMapping("role-funs")
+    public List<Integer> allGrantFuns(Integer roleId){
+        return roleService.roleFuns(roleId);
+    }
+    /*
+    查询页面权限
+     */
+    @RequestMapping("home-menus")
+    public List<FunctionJurisdiction> homeMenu(Integer userId){
+        return roleService.homeMenu(userId);
     }
 }
