@@ -5,6 +5,7 @@ import cn.gson.hisspring.model.pojos.ZyBed;
 import cn.gson.hisspring.model.pojos.ZyInhospitalApply;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import cn.gson.hisspring.model.pojos.ZyWard;
+import cn.gson.hisspring.model.pojos.pojos_vo.PatientUpdateBedVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.BedService;
 import cn.gson.hisspring.model.service.inhospital_module_service.InHospitalApplyService;
 import cn.gson.hisspring.model.service.inhospital_module_service.PatientBaseService;
@@ -32,6 +33,16 @@ class HisSpringApplicationTests {
 
     @Autowired
     PatientBaseService pbs;
+
+    @Test
+    void text7(){
+        PatientUpdateBedVo vo = new PatientUpdateBedVo();
+        vo.setPtNo(101L);
+        vo.setBcCurrentBdId(1L);
+        vo.setBcLaterBdId(20L);
+        vo.setBdPrice(200d);
+        pbs.PatientUpdateBed(vo);
+    }
 
     @Test
     void Text6(){

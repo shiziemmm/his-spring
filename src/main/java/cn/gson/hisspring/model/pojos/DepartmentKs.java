@@ -15,6 +15,8 @@ public class DepartmentKs {
   private long ksId;
   private String ksName;
   private long deId;
+
+  @TableField(exist = false)
   private Department dept;
 
 }

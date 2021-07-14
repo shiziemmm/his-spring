@@ -19,12 +19,16 @@ public class ZyBedUseRecord {
   private Double urBedPrice;
 
 
-  public ZyBedUseRecord(Long bdId, Long ptNo, Timestamp urUseDate, Timestamp urEndDate, Double urBedPrice) {
+  public ZyBedUseRecord(Long bdId, Long ptNo, Timestamp urUseDate, Double urBedPrice) {
     this.bdId = bdId;
     this.ptNo = ptNo;
     this.urUseDate = urUseDate;
-    this.urEndDate = urEndDate;
     this.urBedPrice = urBedPrice;
+  }
+
+  public ZyBedUseRecord(long urId, Timestamp urEndDate) {
+    this.urId = urId;
+    this.urEndDate = urEndDate;
   }
 
   public ZyBedUseRecord() {
