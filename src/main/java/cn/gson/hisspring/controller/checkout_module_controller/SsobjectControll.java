@@ -1,5 +1,6 @@
 package cn.gson.hisspring.controller.checkout_module_controller;
 
+import cn.gson.hisspring.model.pojos.MzMedicalCard;
 import cn.gson.hisspring.model.pojos.SsOperationAnaesthesia;
 import cn.gson.hisspring.model.pojos.SsOperationProject;
 import cn.gson.hisspring.model.pojos.ZyWard;
@@ -25,14 +26,25 @@ public class SsobjectControll {
     public List<SsOperationProject> ssOperationProjects(){
         return  sprojectService.allProject();
     }
-//    单个
+//    单个手术项目
     @RequestMapping("ssprot")
     public List<SsOperationProject> singeProject(Integer projectId){
         return  sprojectService.singeProject(projectId);
     }
+    //    单个手术项目主表
+    @RequestMapping("alone-pro")
+    public List<SsOperationProject> aloneProject(Integer projectId){
+        return  sprojectService.aloneProject(projectId);
+    }
+
+    @RequestMapping("allDescSpro") //排序所有手术信息
+    public List<SsOperationProject> descSpro(String input){
+        return sprojectService.selectAllSsObject(input);
+    }
     /**
      * 新增修改手术项目
      */
+
     @RequestMapping("addOrUpdataProj")
     public boolean projAddOrUpdate(@RequestBody String projstr){
         System.out.println(projstr);

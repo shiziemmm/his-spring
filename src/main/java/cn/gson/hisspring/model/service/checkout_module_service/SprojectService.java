@@ -31,6 +31,11 @@ public class SprojectService {
         List<SsOperationAnaesthesia> listmp = ana.Ana(projectId);
         return listssp;
     }
+    //单个手术项目表
+    public List<SsOperationProject> aloneProject(Integer projectId){
+        List<SsOperationProject> listalone = sproject.aloneProject(projectId);
+        return listalone;
+    }
     /**
      * 新增手术项目
      * @return
@@ -43,6 +48,7 @@ public class SprojectService {
             System.out.println("新增编号"+proj.getProjectId());
             sproject.insertSsObject(proj.getProjectId(),proj.getSsAn());
         }else{//修改
+//            sproject.delet((int) proj.getProjectId());
             is = sproject.updateById(proj);
         }
 
@@ -57,6 +63,11 @@ public class SprojectService {
     public List<SsOperationAnaesthesia> AnaProject(Integer projectId){
         List<SsOperationAnaesthesia> listmp = ana.Ana(projectId);
         return listmp;
+    }
+    //模糊查询
+    public List<SsOperationProject> selectAllSsObject(String input){
+        List<SsOperationProject> listap = sproject.selectAllSsObject(input);
+        return  listap;
     }
     //所有麻醉
     public List<SsOperationAnaesthesia> allAnaesthesia(){
