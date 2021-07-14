@@ -25,10 +25,10 @@ class HisSpringApplicationTests {
 
     @Test
     void text3(){
-        List<ZyInhospitalApply> list = ihas.selectHspApply();
-        list.forEach(i->{
-            System.out.println(i);
-        });
+//        List<ZyInhospitalApply> list = ihas.selectHspApply();
+//        list.forEach(i->{
+//            System.out.println(i);
+//        });
     }
 
     @Autowired
@@ -51,7 +51,7 @@ class HisSpringApplicationTests {
 
     @Test
     void text5(){
-        List<ZyPatientBase> list = pbs.selectPatientNoBed();
+        List<ZyPatientBase> list = pbs.selectPatientNoBed("");
         list.forEach(b->{
             System.out.println(b);
         });
