@@ -21,8 +21,10 @@ public class SsOperationProject {
   private String projectIndication;
   private String projectTaboo;
   private String projectMatters;
-  private String ksName;
   private String projectNumber;
+
+  @TableField(exist = false)
+  private String ksName;
 
   @TableField(exist = false)
   private List<Integer>  ssAn;
