@@ -9,6 +9,8 @@ import com.github.dreamyoung.mprelation.ManyToOne;
 import com.github.dreamyoung.mprelation.OneToMany;
 import lombok.Data;
 
+import static com.baomidou.mybatisplus.annotation.FieldStrategy.IGNORED;
+
 
 /**
  * 病床实体类
@@ -44,6 +46,7 @@ public class ZyBed {
   public ZyBed() {
 
   }
+
 
   public ZyBed(long bdId, Long bdIs) {
     this.bdId = bdId;
