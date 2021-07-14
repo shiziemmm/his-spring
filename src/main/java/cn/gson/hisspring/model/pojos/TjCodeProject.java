@@ -10,5 +10,8 @@ public class TjCodeProject {
   private double checkPay;
   private long indexId;
 
+  private String indexName;
+  private String indexSignificance;
+
 
 }

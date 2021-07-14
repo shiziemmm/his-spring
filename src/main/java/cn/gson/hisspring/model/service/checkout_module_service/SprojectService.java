@@ -49,6 +49,8 @@ public class SprojectService {
             sproject.insertSsObject(proj.getProjectId(),proj.getSsAn());
         }else{//修改
 //            sproject.delet((int) proj.getProjectId());
+            mid.delet((int) proj.getProjectId());
+            sproject.insertSsObject(proj.getProjectId(),proj.getSsAn());
             is = sproject.updateById(proj);
         }
 
@@ -64,7 +66,7 @@ public class SprojectService {
         List<SsOperationAnaesthesia> listmp = ana.Ana(projectId);
         return listmp;
     }
-    //模糊查询
+    //模糊查询手术项目
     public List<SsOperationProject> selectAllSsObject(String input){
         List<SsOperationProject> listap = sproject.selectAllSsObject(input);
         return  listap;
