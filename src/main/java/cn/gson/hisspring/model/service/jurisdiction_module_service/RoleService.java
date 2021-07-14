@@ -21,7 +21,7 @@ public class RoleService {
     RoleMiddleJurisdictionMapper f;
 
     public List<Role> selectList() {
-        return roleMapper.selectList(null);
+        return roleMapper.selectAll();
     }
 
     public List<FunctionJurisdiction> select() {

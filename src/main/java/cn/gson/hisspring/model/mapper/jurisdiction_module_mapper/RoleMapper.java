@@ -11,5 +11,7 @@ import java.util.List;
 
 @Mapper
 public interface RoleMapper extends BaseMapper<Role> {
+    @Select("select * from role")
+    public List<Role> selectAll();
     public List<FunctionJurisdiction> select();
 }
