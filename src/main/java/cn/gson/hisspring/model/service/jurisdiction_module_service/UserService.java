@@ -16,7 +16,7 @@ public class UserService {
     public List<User> login(User user){
         return us.login(user);
     }
-    public List<User> cha(User user){
+    public User cha(User user){
         return us.cha(user);
     }
 }

@@ -2,6 +2,8 @@ package cn.gson.hisspring.model.pojos;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data//get  set方法
 public class FunctionJurisdiction {
 
@@ -12,6 +14,7 @@ public class FunctionJurisdiction {
   private String fctionIcon;
   private String fctionState;
   private long fctionCid;
+  private List<FunctionJurisdiction> list;
 
 
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.FunctionJurisdiction">
+    <id column="Fction_id" jdbcType="INTEGER" property="fctionId" />
+    <result column="Fction_name" jdbcType="VARCHAR" property="fctionName" />
+    <result column="Fction_assembly" jdbcType="VARCHAR" property="fctionAssembly" />
+    <result column="Fction_src" jdbcType="VARCHAR" property="fctionSrc" />
+    <result column="Fction_icon" jdbcType="VARCHAR" property="fctionIcon" />
+    <result column="Fction_state" jdbcType="VARCHAR" property="fctionState" />
+    <result column="Fction_cid" jdbcType="INTEGER" property="fctionCid" />
+  </resultMap>
+
+    <resultMap id="funs" type="cn.gson.hisspring.model.pojos.FunctionJurisdiction">
+      <id column="pid" jdbcType="INTEGER" property="fctionId" />
+      <result column="pname" jdbcType="VARCHAR" property="fctionName" />
+      <result column="aname" jdbcType="VARCHAR" property="fctionAssembly" />
+      <result column="psrc" jdbcType="VARCHAR" property="fctionSrc" />
+      <result column="picon" jdbcType="VARCHAR" property="fctionIcon" />
+      <result column="pstate" jdbcType="VARCHAR" property="fctionState" />
+      <collection property="list" ofType="cn.gson.hisspring.model.pojos.FunctionJurisdiction" resultMap="BaseResultMap">
+      </collection>
+    </resultMap>
+  <select id="select" resultMap="funs">
+    SELECT j.Fction_id pid,j.Fction_name pname,j.Fction_assembly aname,j.Fction_src psrc,j.Fction_icon picon,f.Fction_state pstate,f.* FROM function_jurisdiction j
+        inner join function_jurisdiction f on j.Fction_id = f.Fction_cid WHERE j.Fction_cid is  null
+
+  </select>
+  <select id="roleFuns"  resultType="int">
+    select f.Fction_id from function_jurisdiction f inner join role_middle_jurisdiction rf on f.Fction_id = rf.Fction_id
+    where rf.r_id = #{rId} and f.Fction_id is not null
+  </select>
+  <select id="homeMenu" resultMap="funs">
+    select p.Fction_id pid,p.Fction_name pname,p.Fction_assembly aname,p.Fction_src psrc,p.Fction_icon picon,p.Fction_state pstate,f.* from function_jurisdiction p inner join function_jurisdiction f on f.Fction_cid = p.Fction_id inner join
+        role_middle_jurisdiction rf on f.Fction_id = rf.Fction_id inner join role_middle_user ur on rf.r_id = ur.r_id where ur.U_id = #{uId}
+  </select>
+</mapper>
+
+
+
+
+
+
+
+
