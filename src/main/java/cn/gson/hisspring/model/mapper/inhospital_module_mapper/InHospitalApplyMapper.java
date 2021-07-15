@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 住院申请mapper层
  */
 @Mapper
 @Repository
-public interface inHospitalApplyMapper extends BaseMapper<ZyInhospitalApply> {
+public interface InHospitalApplyMapper extends BaseMapper<ZyInhospitalApply> {
 
+
+    List<ZyInhospitalApply> selectHspApplyByInIs(String inIs);
 }

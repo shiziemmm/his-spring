@@ -10,5 +10,5 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     List<User> login(User user);
-    List<User> cha(User us);
+    User cha(User us);
 }

@@ -28,9 +28,8 @@ public class DepartmentKsController {
 
     @RequestMapping("ks-list")
     public List<DepartmentKs> dome(){
-
         List<DepartmentKs> selectlist = dm.selectlist();
-        System.out.println(selectlist);
+     ;
         return selectlist;
     }
     @PostMapping("add-ks")
