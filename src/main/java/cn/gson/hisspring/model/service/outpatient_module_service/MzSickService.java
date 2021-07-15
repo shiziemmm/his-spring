@@ -32,11 +32,10 @@ public class MzSickService {
             //拿传过来的值去查询一遍看是否存在存在就修改。不存在就新增
             MzSick mzSick1 = mzSickMapper.selectById(mzSick.getSickIdCard());
             if(isNull(mzSick1)){//如果不存在就新增
-
+                //新增病人时间
                 mzSick.setSickTime(new Timestamp(System.currentTimeMillis()));//赋值当前系统时间
                 mzSickMapper.insert(mzSick);
-                System.out.println("新增");
-
+                //新增卡号
                 MzMedicalCard card = new MzMedicalCard();
                 card.setMcCard(mzSick.getMcNumberCard());
                 System.out.println("卡号"+mzSick.getMcNumberCard());
@@ -45,8 +44,6 @@ public class MzSickService {
                 card.setMcBalance(0);
                 card.setSickNumber(mzSick.getSickNumber());
                 card.setMcSate(0);
-                System.out.println("后6位"+getIdCard(mzSick.getSickIdCard()));
-                System.out.println("病人id"+mzSick.getSickNumber());
                 mzMedicalCardMapper.insert(card);
             }else{
 //                mzSickMapper.updateById(mzSick);

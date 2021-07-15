@@ -56,4 +56,29 @@ public class MzMedicalCardController {
         System.out.println(mzSickTest);
         return medicalCardService.selectAllCards(mzSickTest);
     }
+    @PostMapping("cardState")//挂失补办
+    public String cardState(@RequestBody String str){
+        System.err.println(str);
+        Map map = JSON.parseObject(str, Map.class);
+        try {
+            medicalCardService.cardState(map.get("mcNumber").toString(),map.get("mcCard").toString());
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+    @PostMapping("cardQuit")//挂失退额
+    public String cardQuit(@RequestBody String str){
+        System.err.println(str);
+        Map map = JSON.parseObject(str, Map.class);
+        System.err.println(map.get("mcNumber").toString());
+        try {
+            medicalCardService.cardState(map.get("mcNumber").toString(),null);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
 }

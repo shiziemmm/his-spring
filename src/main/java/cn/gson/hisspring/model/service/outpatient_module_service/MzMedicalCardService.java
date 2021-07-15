@@ -3,12 +3,15 @@ package cn.gson.hisspring.model.service.outpatient_module_service;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper;
 import cn.gson.hisspring.model.pojos.MzMedicalCard;
 import cn.gson.hisspring.model.pojos.MzSick;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 /**
  * 门诊-诊疗卡Service
@@ -49,12 +52,27 @@ public class MzMedicalCardService {
             }
         }
     }
-    //挂失卡号，--修改卡状态
-    public void reportTheLossOf(String mcNumber){
+    //挂失卡号，--挂失补办&挂失退额
+    public void cardState(String mcNumber,String mcCard){
         MzMedicalCard card = meCardMapper.selectById(mcNumber);
         if (card!=null){
-            card.setMcSate(1L);
-            meCardMapper.updateById(card);
+            if(mcCard!=null){ // 卡号！=null就进入挂失补办
+                MzMedicalCard cards = new MzMedicalCard();//新政卡
+                cards.setMcCard(Long.parseLong(mcCard));
+                cards.setMcIdCard(card.getMcIdCard());
+                cards.setMcBalance(card.getMcBalance());
+                cards.setMcPawd(card.getMcPawd());
+                cards.setMcSate(0);
+                cards.setSickNumber(card.getSickNumber());
+                meCardMapper.insert(cards);
+                card.setMcSate(1L);//修改卡状态
+                card.setMcBalance(0);//清空余额转到新卡去
+                meCardMapper.updateById(card);
+            }else{//进入挂失退额
+                card.setMcSate(1L);//修改卡状态
+                card.setMcBalance(0);//清空卡余额
+                meCardMapper.updateById(card);
+            }
         }
     }
 
