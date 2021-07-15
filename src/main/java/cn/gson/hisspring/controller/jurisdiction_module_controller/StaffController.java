@@ -26,4 +26,12 @@ public class StaffController {
     public List<Staff> selectStaffAll(Integer ksId){
         return ss.selectStaffAll(ksId);
     }
+    /*
+    查询员工所有有信息
+     */
+    @RequestMapping("selectall-staff")
+    public  List<Staff>  selectALl(){
+        List<Staff> staff = ss.selectALl();
+        return staff;
+    }
 }

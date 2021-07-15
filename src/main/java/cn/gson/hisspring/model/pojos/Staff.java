@@ -19,7 +19,9 @@ public class Staff {
   private Long uId;
   private Long ksId;
   private Long tId;
-
+  private User user;
+  private DepartmentKs ks;
+  private  Title t;
 
 
 
