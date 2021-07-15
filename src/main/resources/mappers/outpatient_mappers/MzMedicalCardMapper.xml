@@ -25,21 +25,14 @@
     </resultMap>
 
     <select id="selectAllMzMedicalCard" resultMap="allCard">
-        select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number
-        <where>
-            <if test ="mcCard !=null and '' != mcCard"> /*卡号like*/
-                    and mc_Card like'${mcCard}'
+        select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
+            <if test =" mzSickTest!=null and '' != mzSickTest"> /*一个mzSickTest模糊查询全部like*/
+                and mc_Card like "%"#{mzSickTest}"%"
+                or sick_Phone like "%"#{mzSickTest}"%"
+                or mc_Id_Card like "%"#{mzSickTest}"%"
+                or sick_Name like "%"#{mzSickTest}"%"
             </if>
-            <if test ="mcIdCard !=null and '' != mcIdCard">/*身份证like*/
-                and mc_Id_Card like'${mcIdCard}'
-            </if>
-            <if test ="sickName !=null and '' != sickName">/*姓名like*/
-                and sick_Name like'${sickName}'
-            </if>
-            <if test ="sickPhone !=null and '' != sickPhone">/*电话like*/
-                and sick_Phone like'${sickPhone}'
-            </if>
-        </where>
+            and mc_Sate = 0
             ORDER BY create_time desc
     </select>
 </mapper>

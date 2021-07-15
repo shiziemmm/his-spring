@@ -2,6 +2,7 @@ package cn.gson.hisspring.model.service.outpatient_module_service;
 
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper;
 import cn.gson.hisspring.model.pojos.MzMedicalCard;
+import cn.gson.hisspring.model.pojos.MzSick;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,6 +18,51 @@ import java.util.List;
 public class MzMedicalCardService {
     @Autowired
     MzMedicalCardMapper meCardMapper;
+
+    @Autowired
+    MzSickService mzSick;
+    //分页排序查询数据库病人信息
+    public IPage<MzMedicalCard> selectCardCreateTime(Integer index, Integer pageSize) {
+        System.out.println("按创建时间排序。。。。。。。。。。。。。。");
+        QueryWrapper<MzMedicalCard> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_time");
+        long count=meCardMapper.selectCount(wrapper);
+        IPage<MzMedicalCard> page = new Page<>(index, pageSize, count);
+        return  meCardMapper.selectPage(page, wrapper);
+    }
+    //查询所有加排序
+    public List<MzMedicalCard> selectAllCards(String mzSickTest){
+        System.out.println("按创建时间排序。。。。。。。。。。。。。。");
+        List<MzMedicalCard> mzMedicalCards = meCardMapper.selectAllMzMedicalCard(mzSickTest);
+        return mzMedicalCards;
+    }
+    //重置密码卡密码和修改卡密码
+    public void pawdReset(String mcNumber,String pawd1){
+        MzMedicalCard card = meCardMapper.selectById(mcNumber);
+        if (card!=null){
+            if(pawd1!=null){//修改密码
+                card.setMcPawd(pawd1);
+                meCardMapper.updateById(card);
+            }else{//重置密码
+                card.setMcPawd(mzSick.getIdCard(card.getMcIdCard()));
+                meCardMapper.updateById(card);
+            }
+        }
+    }
+    //挂失卡号，--修改卡状态
+    public void reportTheLossOf(String mcNumber){
+        MzMedicalCard card = meCardMapper.selectById(mcNumber);
+        if (card!=null){
+            card.setMcSate(1L);
+            meCardMapper.updateById(card);
+        }
+    }
+
+
+
+
+
+
 
     //生成随机卡号
     public Long inserCard(){
@@ -49,20 +95,4 @@ public class MzMedicalCardService {
         }
         return firstPart + numStr;
     }
-    //分页排序查询数据库病人信息
-    public IPage<MzMedicalCard> selectCardCreateTime(Integer index, Integer pageSize) {
-        System.out.println("按创建时间排序。。。。。。。。。。。。。。");
-        QueryWrapper<MzMedicalCard> wrapper = new QueryWrapper<>();
-        wrapper.orderByDesc("create_time");
-        long count=meCardMapper.selectCount(wrapper);
-        IPage<MzMedicalCard> page = new Page<>(index, pageSize, count);
-        return  meCardMapper.selectPage(page, wrapper);
-    }
-    //查询所有加排序
-    public List<MzMedicalCard> selectAllCards(){
-        System.out.println("按创建时间排序。。。。。。。。。。。。。。");
-        List<MzMedicalCard> mzMedicalCards = meCardMapper.selectAllMzMedicalCard();
-        return mzMedicalCards;
-    }
-
 }

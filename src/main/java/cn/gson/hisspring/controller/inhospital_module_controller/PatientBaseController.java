@@ -26,7 +26,7 @@ public class PatientBaseController {
      */
     @RequestMapping("selectPBNoBed")
     public List<ZyPatientBase> selectPatientBaseNoBed(){
-        return pbs.selectPatientNoBed();
+        return pbs.selectPatientNoBed("1");
     }
 
 
@@ -50,6 +50,37 @@ public class PatientBaseController {
             return false;
         }
        return pbs.PatientUpdateBdIdAndBedUpdateBdIsAndPtNo(bdId,ptNo,price);
+    }
+
+
+    /**
+     * 查询所有未出院的病人住院信息
+     * @return
+     */
+    @RequestMapping("patientAll")
+    public List<ZyPatientBase> selectPatientAll(){
+        return pbs.selectPatientNoBed("");
+    }
+
+
+    /**
+     * 新增住院登记信息
+     * @return
+     */
+    @RequestMapping("addPatient")
+    public boolean insertPatient(@RequestBody String str){
+        System.out.println(str);
+        ZyPatientBase patientBase = JSON.parseObject(str, ZyPatientBase.class);
+        return pbs.insertPatient(patientBase);
+    }
+
+
+    /**
+     * 查询住院病人信息以及病人缴费详细
+     */
+    @RequestMapping("PatientAndPay")
+    public List<ZyPatientBase> selectPatientAndPay(){
+        return pbs.selectPatientAndPay();
     }
 
 }
