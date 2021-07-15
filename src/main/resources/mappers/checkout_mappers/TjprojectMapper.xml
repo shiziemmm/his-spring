@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.TjprojectMapper">
+    <resultMap id="Tjproject" type="cn.gson.hisspring.model.pojos.TjCodeProject">
+        <id column="check_id" property="checkId"></id>
+        <result  column="check_name" property="checkName"></result>
+        <result  column="check_pay" property="checkPay"></result>
+        <result  column="index_id" property="indexId"></result>
+        <result  column="index_name" property="indexName"></result>
+        <result  column="index_significance" property="indexSignificance"></result>
+    </resultMap>
+    <select id="selectAllTjObject" resultMap="Tjproject">
+        SELECT * FROM tj_code_project a  left join  tj_code_index b on b.index_id=a.index_id
+        <where>
+            <if test ="checkName !=null and '' != checkName"> /*名称like*/
+                check_name like'%${checkName}%'
+            </if>
+            <if test ="indexName !=null and '' != indexName">/*指标*/
+                or project_type like'%${indexName}%'
+            </if>
+        </where>
+        ORDER BY a.check_pay desc
+    </select>
+</mapper>
