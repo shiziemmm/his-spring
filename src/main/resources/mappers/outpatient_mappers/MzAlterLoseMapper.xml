@@ -25,6 +25,7 @@
             or sick_Phone like "%"#{like}"%"
             or al_Card like "%"#{like}
             or mc_Id_Card like "%"#{like}"%"
+            or sick_id_card like "%"#{like}"%"
             or sick_Name like "%"#{like}"%")
         </if>
         ORDER BY al_time desc
