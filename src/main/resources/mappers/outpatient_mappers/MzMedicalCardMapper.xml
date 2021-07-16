@@ -12,15 +12,7 @@
         <result  column="mc_Id_Card" property="mcIdCard"></result>
         <result  column="create_Time" property="createTime"></result>
         <result  column="update_Time" property="updateTime"></result>
-        <association property="mzSick" javaType="cn.gson.hisspring.model.pojos.MzSick">
-            <id column="sick_Number" property="sickNumber"></id>
-            <result column="sick_name" property="sickName"></result>
-            <result column="sick_id_card" property="sickIdCard"></result>
-            <result column="sick_phone" property="sickPhone"></result>
-            <result column="sick_age" property="sickAge"></result>
-            <result column="sick_sex" property="sickSex"></result>
-            <result column="sick_site" property="sickSite"></result>
-            <result column="sick_Time" property="sickTime"></result>
+        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap" property="mzSick" javaType="cn.gson.hisspring.model.pojos.MzSick">
         </association>
     </resultMap>
 

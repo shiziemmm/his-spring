@@ -39,7 +39,6 @@ public class WardController {
         return wds.wardInsertOrUpdate(ward);
     }
 
-
     /**
      * 根据科室编号查询病房信息
      *
