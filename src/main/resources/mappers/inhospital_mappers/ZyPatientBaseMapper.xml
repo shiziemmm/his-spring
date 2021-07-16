@@ -3,6 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper">
 
+
+
     <!--封装住院登记信息-->
     <resultMap id="patientMap" type="cn.gson.hisspring.model.pojos.ZyPatientBase">
         <result column="Pt_no" property="ptNo"/>
@@ -31,50 +33,82 @@
 
         <!--缴费信息-->
         <collection property="listPay" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PayMapper.payMap"></collection>
+
+        <!--病人关系联系人-->
+        <collection property="listContacts" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.ContactsMapper.contactsMap"></collection>
     </resultMap>
-    
+
+    <!--封装住院登记信息-->
+    <resultMap id="patientAndPayMap" type="cn.gson.hisspring.model.pojos.ZyPatientBase">
+        <result column="Pt_no" property="ptNo"/>
+        <result column="pt_In_date" property="ptInDate"/>
+        <result column="Pt_name" property="ptName"/>
+        <result column="pt_sex" property="ptSex"/>
+        <result column="Pt_Birth_date" property="ptBirthDate"/>
+        <result column="Pt_Capacity_no" property="ptCapacityNo"/>
+        <result column="Pt_Home_adder" property="ptHomeAdder"/>
+        <result column="ks_id" property="ksId"/>
+        <result column="Pt_Diagnose_name" property="ptDiagnoseName"/>
+        <result column="Bd_id" property="bdId"/>
+        <result column="Pt_Out_date" property="ptOutDate"/>
+        <result column="Pt_age" property="ptAge"/>
+        <result column="pt_pay_money" property="ptPayMoney"/>
+        <result column="pt_price" property="ptPrice"/>
+        <result column="pt_iphone" property="ptIphone"/>
+        <result column="ks_name" property="ksName"/>
+
+        <!--缴费信息-->
+        <collection property="listPay" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PayMapper.payMap"></collection>
+    </resultMap>
+
 
 
     <!--查询没有入住病床的病人信息-->
     <select id="selectPatientNoBed" resultMap="patientMap">
         SELECT
-            zy_patient_base.Pt_no,
-            zy_patient_base.pt_In_date,
-            zy_patient_base.Pt_name,
-            zy_patient_base.pt_sex,
-            zy_patient_base.Pt_Birth_date,
-            zy_patient_base.Pt_Capacity_no,
-            zy_patient_base.Pt_Home_adder,
-            zy_patient_base.ks_id,
-            zy_patient_base.Pt_Diagnose_name,
-            zy_patient_base.Bd_id,
-            zy_patient_base.Pt_Out_date,
-            zy_patient_base.Pt_age,
-            zy_patient_base.pt_pay_money,
-            zy_patient_base.pt_price,
-            zy_patient_base.pt_iphone,
-            zy_patient_base.s_id,
-            staff.s_id,
-            staff.s_name,
-            staff.s_sore,
-            staff.s_phone,
-            staff.s_date,
-            staff.u_id,
-            staff.ks_id,
-            department_ks.ks_id,
-            department_ks.ks_name,
-            staff.t_id,
-            zy_bed.Bd_id,
-            zy_bed.Bd_name,
-            zy_bed.Wd_id,
-            zy_bed.bd_price,
-            zy_bed.Bd_is,
-            zy_bed.Pt_no
+        zy_patient_base.Pt_no,
+        zy_patient_base.pt_In_date,
+        zy_patient_base.Pt_name,
+        zy_patient_base.pt_sex,
+        zy_patient_base.Pt_Birth_date,
+        zy_patient_base.Pt_Capacity_no,
+        zy_patient_base.Pt_Home_adder,
+        zy_patient_base.ks_id,
+        zy_patient_base.Pt_Diagnose_name,
+        zy_patient_base.Bd_id,
+        zy_patient_base.Pt_Out_date,
+        zy_patient_base.Pt_age,
+        zy_patient_base.pt_pay_money,
+        zy_patient_base.pt_price,
+        zy_patient_base.pt_iphone,
+        zy_patient_base.s_id,
+        staff.s_id,
+        staff.s_name,
+        staff.s_sore,
+        staff.s_phone,
+        staff.s_date,
+        staff.u_id,
+        staff.ks_id,
+        department_ks.ks_id,
+        department_ks.ks_name,
+        staff.t_id,
+        zy_bed.Bd_id,
+        zy_bed.Bd_name,
+        zy_bed.Wd_id,
+        zy_bed.bd_price,
+        zy_bed.Bd_is,
+        zy_bed.Pt_no,
+        zy_contacts.Cts_id,
+        zy_contacts.Cts_name,
+        zy_contacts.Cts_iphone,
+        zy_contacts.Cts_relation
         FROM
         zy_patient_base
-        left JOIN staff ON zy_patient_base.s_id = staff.s_id
-        left JOIN department_ks ON zy_patient_base.ks_id = department_ks.ks_id
-        left JOIN zy_bed ON zy_patient_base.Bd_id = zy_bed.Bd_id
+        LEFT JOIN staff ON zy_patient_base.s_id = staff.s_id
+        LEFT JOIN department_ks ON zy_patient_base.ks_id = department_ks.ks_id
+        LEFT JOIN zy_bed ON zy_patient_base.Bd_id = zy_bed.Bd_id
+        LEFT JOIN zy_contacts ON zy_patient_base.Pt_no = zy_contacts.pt_no
+
 
 
         <where>
@@ -89,7 +123,7 @@
     </select>
 
     <!--查询病人住院信息以及缴费信息-->
-    <select id="selectPatientAndPay" resultMap="patientMap">
+    <select id="selectPatientAndPay" resultMap="patientAndPayMap">
         select * from seltPatientAndPay
     </select>
 

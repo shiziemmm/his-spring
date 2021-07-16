@@ -7,8 +7,12 @@
         <result  column="check_name" property="checkName"></result>
         <result  column="check_pay" property="checkPay"></result>
         <result  column="index_id" property="indexId"></result>
-        <result  column="index_name" property="indexName"></result>
-        <result  column="index_significance" property="indexSignificance"></result>
+        <association property="tjCodeIndex"  javaType="cn.gson.hisspring.model.pojos.TjCodeIndex">
+            <id column="index_id" jdbcType="INTEGER" property="indexId" />
+            <result  column="index_name" property="indexName"></result>
+            <result  column="index_significance" property="indexSignificance"></result>
+        </association>
+
     </resultMap>
     <select id="selectAllTjObject" resultMap="Tjproject">
         SELECT * FROM tj_code_project a  left join  tj_code_index b on b.index_id=a.index_id
@@ -17,7 +21,7 @@
                 check_name like'%${checkName}%'
             </if>
             <if test ="indexName !=null and '' != indexName">/*指标*/
-                or project_type like'%${indexName}%'
+                or index_name like'%${indexName}%'
             </if>
         </where>
         ORDER BY a.check_pay desc
