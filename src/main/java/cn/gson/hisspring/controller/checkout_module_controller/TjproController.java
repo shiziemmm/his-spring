@@ -32,6 +32,10 @@ public class TjproController {
     public List<TjCodeMeal> allMeal(String search){
         return major.selectAllTjMeal(search);
     }
+    @RequestMapping("aloneProt") //体检套餐所含检查指标
+    public List<TjCodeProject> allPro(Integer codeId){
+        return major.selectTjpro(codeId);
+    }
     /**
      * 新增修改检查项目
      */

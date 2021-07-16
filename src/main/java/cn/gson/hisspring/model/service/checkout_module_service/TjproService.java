@@ -27,9 +27,14 @@ public class TjproService {
         List<TjCodeProject> listjc = major.selectAllTjObject(seach);
         return  listjc;
     }
-    //检查项目模糊查询与传参
+    //体检套餐模糊查询与传参
     public List<TjCodeMeal> selectAllTjMeal(String search){
         List<TjCodeMeal> listm = crd.selectAllTjMeal(search);
+        return  listm;
+    }
+    //体检套餐所含检查项目
+    public List<TjCodeProject> selectTjpro(Integer codeId){
+        List<TjCodeProject> listm = major.inspect(codeId);
         return  listm;
     }
 
