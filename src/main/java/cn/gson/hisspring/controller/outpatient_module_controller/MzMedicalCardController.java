@@ -28,7 +28,7 @@ public class MzMedicalCardController {
     @GetMapping("pawdReset")//重置密码
     public String pawdReset(String mcNumber){
         try {
-            medicalCardService.pawdReset(mcNumber,null);
+            medicalCardService.pawdReset(mcNumber,null,null);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,7 +39,7 @@ public class MzMedicalCardController {
     public String updatePawd(@RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
         try {
-            medicalCardService.pawdReset(map.get("mcNumber").toString(),map.get("pawd1").toString());
+            medicalCardService.pawdReset(map.get("mcNumber").toString(),map.get("pawd1").toString(),map.get("userId").toString());
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +53,32 @@ public class MzMedicalCardController {
 
     @GetMapping("allDescCard") //排序所有病人信息
     public List<MzMedicalCard> descCard(String mzSickTest){
-        System.out.println(mzSickTest);
+        System.err.println(mzSickTest+"aaaaaaaaaaa");
         return medicalCardService.selectAllCards(mzSickTest);
+    }
+    @PostMapping("cardState")//挂失补办
+    public String cardState(@RequestBody String str){
+        System.err.println(str);
+        Map map = JSON.parseObject(str, Map.class);
+        try {
+            medicalCardService.cardState(map.get("mcNumber").toString(),map.get("mcCard").toString(),map.get("userId").toString());
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+    @PostMapping("cardQuit")//挂失退额
+    public String cardQuit(@RequestBody String str){
+        System.err.println(str);
+        Map map = JSON.parseObject(str, Map.class);
+        System.err.println(map.get("mcNumber").toString());
+        try {
+            medicalCardService.cardState(map.get("mcNumber").toString(),null,map.get("userId").toString());
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
     }
 }

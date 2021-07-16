@@ -12,25 +12,17 @@
         <result  column="mc_Id_Card" property="mcIdCard"></result>
         <result  column="create_Time" property="createTime"></result>
         <result  column="update_Time" property="updateTime"></result>
-        <association property="mzSick" javaType="cn.gson.hisspring.model.pojos.MzSick">
-            <id column="sick_Number" property="sickNumber"></id>
-            <result column="sick_name" property="sickName"></result>
-            <result column="sick_id_card" property="sickIdCard"></result>
-            <result column="sick_phone" property="sickPhone"></result>
-            <result column="sick_age" property="sickAge"></result>
-            <result column="sick_sex" property="sickSex"></result>
-            <result column="sick_site" property="sickSite"></result>
-            <result column="sick_Time" property="sickTime"></result>
+        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap" property="mzSick" javaType="cn.gson.hisspring.model.pojos.MzSick">
         </association>
     </resultMap>
 
     <select id="selectAllMzMedicalCard" resultMap="allCard">
         select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
             <if test =" mzSickTest!=null and '' != mzSickTest"> /*一个mzSickTest模糊查询全部like*/
-                and mc_Card like "%"#{mzSickTest}"%"
+                and (mc_Card like "%"#{mzSickTest}"%"
                 or sick_Phone like "%"#{mzSickTest}"%"
                 or mc_Id_Card like "%"#{mzSickTest}"%"
-                or sick_Name like "%"#{mzSickTest}"%"
+                or sick_Name like "%"#{mzSickTest}"%")
             </if>
             and mc_Sate = 0
             ORDER BY create_time desc

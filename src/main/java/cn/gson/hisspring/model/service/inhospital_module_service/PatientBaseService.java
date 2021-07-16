@@ -42,6 +42,9 @@ public class PatientBaseService {
     @Autowired
     PayMapper pm;//缴费mapper
 
+    @Autowired
+    ContactsMapper cm;//病人关系mapper
+
 
     /**
      * 查询住院登记里面没有分配病床的信息或者是查询所有
@@ -129,6 +132,13 @@ public class PatientBaseService {
             //修改住院申请信息
             ZyInhospitalApply ha = new ZyInhospitalApply(patientBase.getInId(),2L);
             ham.updateById(ha);//根据住院申请编号修改状态
+
+            //新增病人关系信息
+            List<ZyContacts> ctaList = patientBase.getListContacts().isEmpty() ? null : patientBase.getListContacts();
+            if(ctaList != null){
+                int i = cm.insertContactsList(ctaList, patientBase.getPtNo());
+                System.out.println("========================================="+i);
+            }
 
 
             //新增一条缴费记录

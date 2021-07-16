@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.ContactsMapper">
+    
+    <resultMap id="contactsMap" type="cn.gson.hisspring.model.pojos.ZyContacts">
+        <result column="cts_id" property="ctsId" />
+        <result column="cts_iphone" property="ctsIphone" />
+        <result column="cts_name" property="ctsName" />
+        <result column="cts_relation" property="ctsRelation" />
+        <result column="pt_no" property="ptNo" />
+    </resultMap>
+    
+    <insert id="insertContactsList">
+        insert into zy_contacts(cts_name,cts_iphone,cts_relation,pt_no) values 
+        <foreach collection="list" item="cts" separator=",">
+            (#{cts.ctsName},#{cts.ctsIphone},#{cts.ctsRelation},#{ptNo})
+        </foreach>
+    </insert>
+</mapper>
