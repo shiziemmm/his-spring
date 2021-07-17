@@ -8,6 +8,7 @@
         <result column="s_sore" jdbcType="VARCHAR" property="sSore" />
         <result column="s_phone" jdbcType="VARCHAR" property="sPhone" />
         <result column="s_date" jdbcType="VARCHAR" property="sDate" />
+        <result column="s_zt" jdbcType="VARCHAR" property="sZt" />
         <association property="user" javaType="cn.gson.hisspring.model.pojos.User">
             <id column="u_id" jdbcType="INTEGER" property="uId" />
             <result column="u_name" jdbcType="VARCHAR" property="uName" />

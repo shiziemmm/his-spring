@@ -23,7 +23,9 @@ public class RoleService {
     public List<Role> selectList() {
         return roleMapper.selectAll();
     }
-
+    public List<Role> chaxun() {
+        return roleMapper.chaxun();
+    }
     public List<FunctionJurisdiction> select() {
         return roleMapper.select();
     }
@@ -34,4 +36,8 @@ public class RoleService {
     public List<FunctionJurisdiction> homeMenu(Integer userId){
         return roleMapper.homeMenu(userId);
     }
+    public int addRole(Role role){
+        return roleMapper.insert(role);
+    };
+    public int addRoles(Role role){return roleMapper.insert(role);}
 }

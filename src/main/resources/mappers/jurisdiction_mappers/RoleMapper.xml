@@ -21,6 +21,15 @@
       <collection property="list" ofType="cn.gson.hisspring.model.pojos.FunctionJurisdiction" resultMap="BaseResultMap">
       </collection>
     </resultMap>
+  <resultMap id="role" type="cn.gson.hisspring.model.pojos.Role">
+    <id column="rid" jdbcType="INTEGER" property="rId" />
+    <result column="rname" jdbcType="VARCHAR" property="rName" />
+   <association property="roles" javaType="cn.gson.hisspring.model.pojos.Role">
+     <id column="eid" jdbcType="INTEGER" property="rId" />
+     <result column="ename" jdbcType="VARCHAR" property="rName" />
+   </association>
+  </resultMap>
+
   <select id="select" resultMap="funs">
     SELECT j.Fction_id pid,j.Fction_name pname,j.Fction_assembly aname,j.Fction_src psrc,j.Fction_icon picon,f.Fction_state pstate,f.* FROM function_jurisdiction j
         inner join function_jurisdiction f on j.Fction_id = f.Fction_cid WHERE j.Fction_cid is  null
@@ -34,6 +43,12 @@
     select p.Fction_id pid,p.Fction_name pname,p.Fction_assembly aname,p.Fction_src psrc,p.Fction_icon picon,p.Fction_state pstate,f.* from function_jurisdiction p inner join function_jurisdiction f on f.Fction_cid = p.Fction_id inner join
         role_middle_jurisdiction rf on f.Fction_id = rf.Fction_id inner join role_middle_user ur on rf.r_id = ur.r_id where ur.U_id = #{uId}
   </select>
+  <select id="chaxun" resultMap="role">
+    SELECT r.R_id rid,r.R_name rname,e.R_id eid,e.R_name ename from role r left join role e on r.Ro_id=e.R_id ORDER BY r.R_id
+  </select>
+  <insert id="addRoles">
+    insert into role values (#{rname},#(roid))
+  </insert>
 </mapper>
 
 
