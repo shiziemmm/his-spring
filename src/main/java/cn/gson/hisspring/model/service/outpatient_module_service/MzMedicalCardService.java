@@ -1,19 +1,17 @@
 package cn.gson.hisspring.model.service.outpatient_module_service;
 
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzAlterLoseMapper;
+import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMcRechargeMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper;
 import cn.gson.hisspring.model.pojos.MzAlterLose;
+import cn.gson.hisspring.model.pojos.MzMcRecharge;
 import cn.gson.hisspring.model.pojos.MzMedicalCard;
-import cn.gson.hisspring.model.pojos.MzSick;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 /**
  * 门诊-诊疗卡Service
@@ -29,6 +27,11 @@ public class MzMedicalCardService {
 
     @Autowired
     MzAlterLoseMapper mzAlterLose;//挂失修改记录mapper
+
+    @Autowired
+    MzMcRechargeService rechargeService;//recharge业务层
+    @Autowired
+    MzMcRechargeMapper rechargeMapper;//recharge层级mapper
 
     //分页排序查询数据库病人信息--暂时没用到
     public IPage<MzMedicalCard> selectCardCreateTime(Integer index, Integer pageSize) {
@@ -114,9 +117,38 @@ public class MzMedicalCardService {
         }
     }
 
-
-
-
+    //诊疗卡的充值记录表
+    public void setCardPrice(String mcNumber, String upPrice,String payment, String userId, Integer index){
+        MzMedicalCard card = meCardMapper.selectById(mcNumber);
+        if (card!=null){
+            if(index == 1  ){ // 充值卡余额 1就充值2就退钱
+                //诊疗卡余额修改
+                card.setMcBalance(card.getMcBalance()+Double.parseDouble(upPrice));//卡余额 +
+                meCardMapper.updateById(card);//修改余额--充值
+                //新增到记录表去
+                MzMcRecharge mzMcRecharge = new MzMcRecharge();
+                mzMcRecharge.setSId(Long.parseLong(userId));
+                mzMcRecharge.setMcNumber(card.getMcNumber());
+                mzMcRecharge.setMcrcPayment(payment);
+                mzMcRecharge.setMcrcState("诊卡充值");
+                mzMcRecharge.setMcrcPrice(Double.parseDouble(upPrice));
+                rechargeMapper.insert(mzMcRecharge);
+            }else{
+                System.err.println("111111111111111111111111111111111111111111");
+                //诊疗卡余额修改
+                card.setMcBalance(card.getMcBalance()-Double.parseDouble(upPrice));//卡余额 -
+                meCardMapper.updateById(card);//修改余额--退款
+                //新增到记录表去
+                MzMcRecharge mzMcRecharge = new MzMcRecharge();
+                mzMcRecharge.setSId(Long.parseLong(userId));
+                mzMcRecharge.setMcNumber(card.getMcNumber());
+                mzMcRecharge.setMcrcPayment(null);
+                mzMcRecharge.setMcrcState("诊卡退款");
+                mzMcRecharge.setMcrcPrice(Double.parseDouble(upPrice));
+                rechargeMapper.insert(mzMcRecharge);
+            }
+        }
+    }
 
 
 

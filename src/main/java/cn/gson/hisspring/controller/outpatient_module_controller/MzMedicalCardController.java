@@ -81,4 +81,22 @@ public class MzMedicalCardController {
             return "fail";
         }
     }
+
+    //诊疗卡充值 ------------------------------------------------------------------------------------
+    @RequestMapping("setCardPrcie")
+    public String setCardPrcie(@RequestBody  String str){
+        Map map = JSON.parseObject(str, Map.class);
+        System.err.println(str+"1111111111");
+        System.err.println(map+"2222222222");
+        try {
+            medicalCardService.setCardPrice(map.get("mcNumber").toString(),map.get("upPrice").toString(),
+            map.get("payment").toString(),map.get("userId").toString(), Integer.valueOf(map.get("index").toString()));
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+
+
 }
