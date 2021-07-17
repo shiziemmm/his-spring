@@ -2,15 +2,21 @@ package cn.gson.hisspring.model.pojos;
 
 import lombok.Data;
 
-@Data//get  set方法
+/**
+ * 医嘱表
+ */
+@Data
 public class ZyDoctorEnjoin {
 
   private long deId;
-  private long deLongorshort;
-  private long ptNo;
-  private long sId;
+  private Long deLongorshort;
+  private Long ptNo;
+  private Long sId;
   private String deDoctorName;
   private java.sql.Timestamp deDate;
+  private Long deIs;
+
+
 
 
 }

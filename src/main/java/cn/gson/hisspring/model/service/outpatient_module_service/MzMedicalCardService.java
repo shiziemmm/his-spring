@@ -1,14 +1,19 @@
 package cn.gson.hisspring.model.service.outpatient_module_service;
 
+import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzAlterLoseMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper;
+import cn.gson.hisspring.model.pojos.MzAlterLose;
 import cn.gson.hisspring.model.pojos.MzMedicalCard;
 import cn.gson.hisspring.model.pojos.MzSick;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 /**
  * 门诊-诊疗卡Service
@@ -17,11 +22,15 @@ import java.util.List;
 @Service
 public class MzMedicalCardService {
     @Autowired
-    MzMedicalCardMapper meCardMapper;
+    MzMedicalCardMapper meCardMapper;//诊疗卡mapper
 
     @Autowired
-    MzSickService mzSick;
-    //分页排序查询数据库病人信息
+    MzSickService mzSick;//病人信息service
+
+    @Autowired
+    MzAlterLoseMapper mzAlterLose;//挂失修改记录mapper
+
+    //分页排序查询数据库病人信息--暂时没用到
     public IPage<MzMedicalCard> selectCardCreateTime(Integer index, Integer pageSize) {
         System.out.println("按创建时间排序。。。。。。。。。。。。。。");
         QueryWrapper<MzMedicalCard> wrapper = new QueryWrapper<>();
@@ -37,24 +46,71 @@ public class MzMedicalCardService {
         return mzMedicalCards;
     }
     //重置密码卡密码和修改卡密码
-    public void pawdReset(String mcNumber,String pawd1){
+    public void pawdReset(String mcNumber,String pawd1,String userId){
         MzMedicalCard card = meCardMapper.selectById(mcNumber);
         if (card!=null){
             if(pawd1!=null){//修改密码
+
                 card.setMcPawd(pawd1);
                 meCardMapper.updateById(card);
+                MzAlterLose lose = new MzAlterLose();
+                lose.setAlCard(card.getMcCard());
+                lose.setAlPrice(null);
+                lose.setAlCause("密码修改");
+                lose.setSId(Long.parseLong(userId));
+                lose.setSickNumber(card.getSickNumber());
+                lose.setMcNumber(null);
+
+                this.mzAlterLose.insert(lose);
+
             }else{//重置密码
                 card.setMcPawd(mzSick.getIdCard(card.getMcIdCard()));
                 meCardMapper.updateById(card);
             }
         }
     }
-    //挂失卡号，--修改卡状态
-    public void reportTheLossOf(String mcNumber){
+    //挂失卡号，--挂失补办&挂失退额
+    public void cardState(String mcNumber,String mcCard,String userId){
         MzMedicalCard card = meCardMapper.selectById(mcNumber);
         if (card!=null){
-            card.setMcSate(1L);
-            meCardMapper.updateById(card);
+            if(mcCard!=null){ // 卡号！=null就进入挂失补办
+
+                MzMedicalCard cards = new MzMedicalCard();//新增卡
+                cards.setMcCard(Long.parseLong(mcCard));
+                cards.setMcIdCard(card.getMcIdCard());
+                cards.setMcBalance(card.getMcBalance());
+                cards.setMcPawd(card.getMcPawd());
+                cards.setMcSate(0);
+                cards.setSickNumber(card.getSickNumber());
+                meCardMapper.insert(cards);
+
+                card.setMcSate(1L);//修改卡状态
+                card.setMcBalance(0);//清空余额转到新卡去
+                meCardMapper.updateById(card);
+
+                MzAlterLose lose = new MzAlterLose();//新增到记录表去
+                lose.setAlCard(card.getMcCard());//旧卡卡号
+                lose.setAlPrice(cards.getMcBalance());//转到新卡的金额
+                lose.setAlCause("挂失补办");
+                lose.setSId(Long.parseLong(userId));//操作人id
+                lose.setSickNumber(cards.getSickNumber());//病人id
+                lose.setMcNumber(cards.getMcNumber());//新增新卡的id
+                this.mzAlterLose.insert(lose);
+
+            }else{//进入挂失退额
+                card.setMcSate(1L);//修改卡状态
+                card.setMcBalance(0);//清空卡余额
+                meCardMapper.updateById(card);
+                //新增到记录表去
+                MzAlterLose lose = new MzAlterLose();
+                lose.setAlCard(card.getMcCard());//退额卡号
+                lose.setAlPrice(card.getMcBalance());//退额金额
+                lose.setAlCause("挂失退额");
+                lose.setSId(Long.parseLong(userId));//操作人id
+                lose.setSickNumber(card.getSickNumber());//病人id
+                lose.setMcNumber(null);//新增新卡的id
+                this.mzAlterLose.insert(lose);
+            }
         }
     }
 

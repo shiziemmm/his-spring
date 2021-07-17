@@ -40,7 +40,10 @@ public class ZyPatientBase {
   private Long inId;//住院申请编号
 
   @TableField(exist = false)
-  private String ksName;
+  private String ksName;//科室名称
+
+  @TableField(exist = false)
+  private List<ZyContacts> listContacts;//联系人集合
 
   @TableField(exist = false)
   private Staff staff;//医生对象
@@ -51,7 +54,11 @@ public class ZyPatientBase {
   @TableField(exist = false)
   private List<ZyPay> listPay;//病人缴费记录集合
 
-
+  public ZyPatientBase(long ptNo, Double ptPayMoney, Double ptPrice) {
+    this.ptNo = ptNo;
+    this.ptPayMoney = ptPayMoney;
+    this.ptPrice = ptPrice;
+  }
 
   public ZyPatientBase(long ptNo, Long bdId) {
     this.ptNo = ptNo;

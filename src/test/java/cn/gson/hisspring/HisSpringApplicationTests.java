@@ -1,15 +1,9 @@
 package cn.gson.hisspring;
 
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.BedMapper;
-import cn.gson.hisspring.model.pojos.ZyBed;
-import cn.gson.hisspring.model.pojos.ZyInhospitalApply;
-import cn.gson.hisspring.model.pojos.ZyPatientBase;
-import cn.gson.hisspring.model.pojos.ZyWard;
+import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientUpdateBedVo;
-import cn.gson.hisspring.model.service.inhospital_module_service.BedService;
-import cn.gson.hisspring.model.service.inhospital_module_service.InHospitalApplyService;
-import cn.gson.hisspring.model.service.inhospital_module_service.PatientBaseService;
-import cn.gson.hisspring.model.service.inhospital_module_service.WardService;
+import cn.gson.hisspring.model.service.inhospital_module_service.*;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +14,21 @@ import java.util.List;
 @SpringBootTest
 @MapperScan("cn.gson.hisspring.model.mapper")
 class HisSpringApplicationTests {
+
+    @Autowired
+    PayService ps;
+
+    @Test
+    void text9(){
+        ZyPay py = new ZyPay();
+        py.setPtNo(101L);
+        py.setPyPrice(2990d);
+        py.setSId(2L);
+
+        ps.addPay(py);
+    }
+
+
     @Autowired
     InHospitalApplyService ihas;
 
