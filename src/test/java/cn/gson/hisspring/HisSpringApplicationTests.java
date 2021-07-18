@@ -4,6 +4,7 @@ import cn.gson.hisspring.model.mapper.inhospital_module_mapper.BedMapper;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientUpdateBedVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.*;
+import cn.gson.hisspring.model.service.outpatient_module_service.MzDepartmentKsService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +114,16 @@ class HisSpringApplicationTests {
             System.out.println(z);
         }
 
+    }
+
+    @Autowired
+    MzDepartmentKsService departmentKsService;
+    @Test
+    void  yy (){
+        List<DepartmentKs> departmentKs = departmentKsService.selectDepartmentKs();
+        for (DepartmentKs departmentK : departmentKs) {
+            System.out.println(departmentK);
+        }
     }
 
 }

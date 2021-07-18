@@ -4,6 +4,7 @@ import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMcRechargeMappe
 import cn.gson.hisspring.model.pojos.MzMcRecharge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 /**
@@ -11,6 +12,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class MzMcRechargeService {
     @Autowired
     MzMcRechargeMapper rechargeMapper;
