@@ -17,6 +17,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("updateTime",new Date(),metaObject);
         this.setFieldValByName("alTime",new Date(),metaObject);//门诊 补卡，修改记录-pojos
         this.setFieldValByName("mcrcTime",new Date(),metaObject);//门诊 诊疗卡充值记录表-pojos
+        this.setFieldValByName("rtTime",new Date(),metaObject);//门诊 挂号表-pojos
+
     }
 
     @Override
