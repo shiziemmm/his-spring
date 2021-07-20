@@ -37,7 +37,7 @@ public class SprojectService {
         return listalone;
     }
     /**
-     * 新增手术项目
+     * 新增修改手术项目
      * @return
      */
     public boolean projectUpdate(SsOperationProject proj){

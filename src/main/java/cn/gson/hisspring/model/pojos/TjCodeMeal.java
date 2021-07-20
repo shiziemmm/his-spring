@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
+import java.util.List;
+
 //体检套餐表
 @Data//get  set方法
 public class TjCodeMeal {
@@ -14,4 +17,6 @@ public class TjCodeMeal {
   private String codeType;
   @TableField(exist = false)
   private String checkIndex;
+  @TableField(exist = false)
+  private List<Integer> tjAn;
 }
