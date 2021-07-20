@@ -16,6 +16,12 @@
         <result column="s_Id" property="sId"></result>
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
+        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap" property="sickObject">
+        </association>
+        <association resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper.staffMap" property="staffObject">
+        </association>
+        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper.allCard" property="cardObject">
+        </association>
     </resultMap>
 
     <select id="selectMzRegistration" resultMap="regMap">

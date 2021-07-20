@@ -33,6 +33,10 @@ public class MzRegistration {
   private long sickNumber;
   private long mcNumber;
 
-  @TableField(exist = false)//不是数据库字段
+  @TableField(exist = false)//不是数据库字段--诊疗卡对象
   private MzMedicalCard cardObject;
+  @TableField(exist = false)//不是数据库字段--病人对象
+  private MzSick sickObject;
+  @TableField(exist = false)//不是数据库字段--员工对象
+  private Staff staffObject;
 }
