@@ -33,5 +33,6 @@ public class MzRegistration {
   private long sickNumber;
   private long mcNumber;
 
-
+  @TableField(exist = false)//不是数据库字段
+  private MzMedicalCard cardObject;
 }

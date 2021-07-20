@@ -35,6 +35,11 @@ public class MzMedicalCardService {
     @Autowired
     MzMcRechargeMapper rechargeMapper;//recharge层级mapper
 
+    //查询单卡
+    public MzMedicalCard selectById(String mcCard){
+        return meCardMapper.selectByIdObject(mcCard);
+    }
+
     //分页排序查询数据库病人信息--暂时没用到
     public IPage<MzMedicalCard> selectCardCreateTime(Integer index, Integer pageSize) {
         System.out.println("按创建时间排序。。。。。。。。。。。。。。");
