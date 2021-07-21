@@ -26,6 +26,14 @@ public class DepartmentKsController {
     DepartmentKsService dm;
 
 
+    /**
+     * 查询住院部的科室名称
+     */
+    @RequestMapping("zy-ks-list")
+   public List<DepartmentKs> DepartmentKsMapper(){
+       return dm.selectZyKs();
+   }
+
     @RequestMapping("ks-list")
     public List<DepartmentKs> dome(){
         List<DepartmentKs> selectlist = dm.selectlist();

@@ -17,13 +17,16 @@ public class ZyBedChangeRecord {
   private Long bcLaterBdId;
   private java.sql.Timestamp bcDate;
   private Long ptNo;
+  private String bcCause;//调换原因
+  private Long sId;//操作人
 
-  public ZyBedChangeRecord(Long bcCurrentBdId, Long bcLaterBdId, Timestamp bcDate, Long ptNo) {
-    this.bcId = bcId;
+  public ZyBedChangeRecord(Long bcCurrentBdId, Long bcLaterBdId, Timestamp bcDate, Long ptNo,Long sId,String bcCause) {
     this.bcCurrentBdId = bcCurrentBdId;
     this.bcLaterBdId = bcLaterBdId;
     this.bcDate = bcDate;
     this.ptNo = ptNo;
+    this.sId = sId;
+    this.bcCause = bcCause;
   }
 
   public ZyBedChangeRecord() {

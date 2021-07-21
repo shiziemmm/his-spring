@@ -11,9 +11,14 @@
       <result column="de_date" jdbcType="TIMESTAMP" property="deDate" />
     </association>
   </resultMap>
+
+
 <select id="selectlist" resultMap="BaseResultMap">
   select * from  department_ks k left JOIN department d on k.de_id= d.de_id
 </select>
 
+<select id="selectZyKs" resultMap="BaseResultMap">
+  select * from department_ks where de_id =  (select de_id from department where de_name = '住院部')
+</select>
 
 </mapper>

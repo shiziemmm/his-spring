@@ -24,6 +24,7 @@
         <result column="pt_iphone" property="ptIphone"/>
         <result column="s_id" property="sId"/>
         <result column="ks_name" property="ksName"/>
+        <result column="pt_is" property="ptIs"/>
 
         <!--医生信息-->
         <association property="staff" resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper.staffMap"></association>
@@ -101,7 +102,8 @@
         zy_contacts.Cts_id,
         zy_contacts.Cts_name,
         zy_contacts.Cts_iphone,
-        zy_contacts.Cts_relation
+        zy_contacts.Cts_relation,
+        zy_patient_base.pt_is
         FROM
         zy_patient_base
         LEFT JOIN staff ON zy_patient_base.s_id = staff.s_id
@@ -113,7 +115,7 @@
 
         <where>
             <if test="is != ''">
-                zy_patient_base.Bd_id = 0 and zy_patient_base.Pt_Out_date is null
+                zy_patient_base.Bd_id = 0 and zy_patient_base.Pt_Out_date is null and zy_patient_base.pt_is = 1
             </if>
 
             <if test="is == ''">

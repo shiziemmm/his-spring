@@ -17,4 +17,9 @@ public interface DepartmentKsMapper extends BaseMapper<DepartmentKs> {
 
     List<DepartmentKs> selectlist();
 
+    /**
+     * 根据住院部查询科室
+     */
+    List<DepartmentKs> selectZyKs();
+
 }

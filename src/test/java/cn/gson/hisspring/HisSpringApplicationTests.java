@@ -9,6 +9,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -28,6 +30,13 @@ class HisSpringApplicationTests {
         ps.addPay(py);
     }
 
+    @Autowired
+    DischargeApplyService das;
+    @Test
+    void text11(){
+        das.callPatientApply(101L,"还需要留院观察");
+    }
+
 
     @Autowired
     InHospitalApplyService ihas;
@@ -42,6 +51,20 @@ class HisSpringApplicationTests {
 
     @Autowired
     PatientBaseService pbs;
+
+    @Test
+    void text10(){
+        ZyChangeDeptRecord c = new ZyChangeDeptRecord();
+        c.setCdrBeforeKs(1L);
+        c.setCdrAfterKs(2L);
+        c.setCdrCause("太吵了");
+        c.setCdrDate(new Timestamp(new Date().getTime()));
+        c.setPtNo(101L);
+        c.setDoctorId(1L);
+        c.setSId(100L);
+        c.setBdId(25L);
+        pbs.patientChangeDept(c);
+    }
 
     @Test
     void text7(){

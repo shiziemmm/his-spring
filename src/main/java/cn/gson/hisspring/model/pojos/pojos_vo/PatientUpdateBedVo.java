@@ -17,6 +17,8 @@ public class PatientUpdateBedVo {
     private Timestamp cDate;
     private Long ptNo;//住院编号
     private Double bdPrice;//病床价格
+    private Long sId;//操作人
+    private String bcCause;//调换原因
 
 
 }
