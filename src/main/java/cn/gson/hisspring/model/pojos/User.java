@@ -1,6 +1,7 @@
 package cn.gson.hisspring.model.pojos;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ public class User {
   private long uId;
   private String uName;
   private String uPswd;
+  @TableField(exist = false)
   private Staff list;
 
 

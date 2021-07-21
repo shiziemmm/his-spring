@@ -32,9 +32,8 @@
         </association>
     </resultMap>
     <select id="selectALl" resultMap="BaseResultMap">
-        SELECT  * FROM staff s inner join `user` u on s.u_id=u.u_id inner join
-            department_ks d on s.ks_id=d.ks_id INNER join title t on s.t_id=t.t_id inner join
-            role_middle_user ru on u.u_id=ru.U_id inner join role
-            r on r.R_id=ru.R_id inner join department dept on d.de_id=dept.de_id
+        SELECT  * FROM staff s inner join `user` u on s.u_id=u.u_id inner join department_ks d on
+            s.ks_id=d.ks_id INNER join title t on s.t_id=t.t_id inner join department dept on
+            d.de_id=dept.de_id
     </select>
 </mapper>

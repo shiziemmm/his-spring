@@ -44,22 +44,18 @@ public class StaffController {
     }
     //新增员工
     @RequestMapping("add-staff")
-    public void dome(String staff, String user,String rId){
+    public void dome(String staff, String user){
         Staff staff1 = JSONObject.parseObject(staff, Staff.class);
         User user1 = JSONObject.parseObject(user, User.class);
         System.out.println(staff1);
         System.out.println(user1);
-        System.out.println(rId);
         us.addStaff(user1);
         staff1.setUId(user1.getUId());
         ss.addStaff(staff1);
-        RoleMiddleUser r=new RoleMiddleUser();
-        r.setUId(user1.getUId());
-        r.setRId(Long.parseLong(rId));
-        ro.addRoleMinddle(r);
+
     }
     @RequestMapping("upa-staff")
-    public void upa(String staff, String user,String rId){
+    public void upa(String staff, String user){
         Staff staff1 = JSONObject.parseObject(staff, Staff.class);
         User user1 = JSONObject.parseObject(user, User.class);
         staff1.setUId(user1.getUId());
@@ -67,6 +63,5 @@ public class StaffController {
         System.out.println(user1);
         ss.upa(staff1);
         us.upa(user1);
-        ro.upa(user1.getUId(),Long.parseLong(rId));
     }
 }

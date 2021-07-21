@@ -9,4 +9,13 @@
 <update id="upa">
   update role_middle_user set r_id=#{rId} where u_id=#{uId}
 </update>
+  <insert id="addStaff">
+    insert into role_middle_user values
+    <foreach collection="funs" item="i" separator=", ">
+      (#{uId},#{i})
+    </foreach>
+  </insert>
+  <select id="select" resultMap="BaseResultMap">
+    select * from role_middle_user where u_id=#{uId}
+  </select>
 </mapper>

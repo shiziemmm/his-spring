@@ -32,12 +32,9 @@
   </resultMap>
 <!-- 员工授权 -->
   <resultMap id="rols" type="cn.gson.hisspring.model.pojos.Role">
-    <id column="rid" jdbcType="INTEGER" property="rId" />
-    <result column="rname" jdbcType="VARCHAR" property="rName" />
-  <collection property="role" ofType="cn.gson.hisspring.model.pojos.Role">
     <id column="r_id" jdbcType="INTEGER" property="rId" />
     <result column="r_name" jdbcType="VARCHAR" property="rName" />
-  </collection>
+    <result column="ro_id" jdbcType="INTEGER" property="roId" />
   </resultMap>
   <select id="select" resultMap="funs">
     SELECT j.Fction_id pid,j.Fction_name pname,j.Fction_assembly aname,j.Fction_src psrc,j.Fction_icon picon,f.Fction_state pstate,f.* FROM function_jurisdiction j
@@ -60,7 +57,11 @@
   </insert>
 
   <select id="selectStaff" resultMap="rols">
-    SELECT r.R_id rid,r.R_name rname,ro.* FROM role r left join role ro on r.R_id=ro.Ro_id WHERE r.Ro_id is  null
+    SELECT * from role
+  </select>
+  <select id="staffFuns"  resultType="int">
+    select f.r_id from role f inner join role_middle_user rf on f.r_id = rf.r_id
+    where rf.u_id =#{uId} and f.r_id is not null
   </select>
 </mapper>
 

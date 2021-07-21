@@ -5,6 +5,8 @@ import cn.gson.hisspring.model.pojos.RoleMiddleUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleMinddleUserService {
     @Autowired
@@ -15,4 +17,5 @@ public class RoleMinddleUserService {
     public int upa(long uId,long rId){
         return ro.upa(uId,rId);
     }
+    public List<RoleMiddleUser> select(Integer uId){return ro.select(uId);};
 }

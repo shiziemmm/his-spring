@@ -2,10 +2,7 @@ package cn.gson.hisspring.model.service.jurisdiction_module_service;
 
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.RoleMapper;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.RoleMiddleJurisdictionMapper;
-import cn.gson.hisspring.model.pojos.FunctionJurisdiction;
-import cn.gson.hisspring.model.pojos.Jurisdiction;
-import cn.gson.hisspring.model.pojos.Role;
-import cn.gson.hisspring.model.pojos.RoleMiddleJurisdiction;
+import cn.gson.hisspring.model.pojos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,4 +38,7 @@ public class RoleService {
     };
     public int addRoles(Role role){return roleMapper.insert(role);}
     public List<Role> selectStaff(){return roleMapper.selectStaff();}
+    public List<Integer> staffFuns(Integer id){return roleMapper.staffFuns(id);}
+
+
 }

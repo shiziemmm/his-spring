@@ -4,7 +4,9 @@ import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.RoleMiddleJuris
 import cn.gson.hisspring.model.pojos.FunctionJurisdiction;
 
 import cn.gson.hisspring.model.pojos.Role;
+import cn.gson.hisspring.model.pojos.RoleMiddleUser;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.RoleMiddleJurisdictionService;
+import cn.gson.hisspring.model.service.jurisdiction_module_service.RoleMinddleUserService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.RoleService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -22,6 +24,10 @@ public class RoleController {
 
     @Autowired
     RoleMiddleJurisdictionService roleinfo;
+
+    @Autowired
+    RoleMinddleUserService roleMinddleUserService;
+
 
     /*
     查询角色
@@ -92,6 +98,18 @@ public class RoleController {
     public List<Role> selectStaff(){
         List<Role> roles = roleService.selectStaff();
         return roles;
+    }
+    @RequestMapping("staff-funs")
+    public List<Integer> staffFuns(Integer rId){
+            return roleService.staffFuns(rId);
+    }
+    @RequestMapping("save-staff")
+    public void saceStaff(@RequestParam("grant") String grant){
+        JSONObject o = JSONObject.parseObject(grant);
+        Integer roleId = Integer.parseInt(o.get("rId").toString());
+        List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(),Integer.TYPE);
+        System.out.println(roleId+"==== "+funs);
+        roleinfo.addStaff(roleId,funs);
     }
 
 }
