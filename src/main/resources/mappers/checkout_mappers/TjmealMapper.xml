@@ -12,13 +12,23 @@
     <select id="selectAllTjMeal" resultMap="TjMeal">
         SELECT * FROM tj_code_meal a  left join  tj_code_type b on b.type_id=a.code_type
         <where>
-            <if test ="checkName !=null and '' != checkName"> /*名称like*/
-                check_name like'%${codeName}%'
-            </if>
             <if test ="codeType !=null and '' != codeType">/*指标*/
-                or Code_type like'%${codeType}%'
+                  Code_type like'%${codeType}%'
+            </if>
+            <if test ="codeName !=null and '' != codeName"> /*名称like*/
+                and Code_name like'%${codeName}%'
+            </if>
+            <if test ="checkIndex !=null and '' != checkIndex">/*指标*/
+                or check_index like'%${checkIndex}%'
             </if>
         </where>
-        ORDER BY a.Code_type desc
+        ORDER BY a.Code_id desc
     </select>
+    <!--    体检套餐中间表批量新增-->
+    <insert id="insertTjmid">
+        insert into tj_code_middle values
+        <foreach collection="listArr" index="index"  item="i" separator=",">
+            (#{i},#{codeId})
+        </foreach>
+    </insert>
 </mapper>

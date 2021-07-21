@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import java.util.Date;
 /**
- * 充值操作记录表
+ * 充值操作记录表-pojos
  */
 
 

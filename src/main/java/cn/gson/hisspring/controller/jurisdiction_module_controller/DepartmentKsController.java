@@ -25,7 +25,17 @@ public class DepartmentKsController {
     @Autowired
     DepartmentKsService dm;
 
-//查询所有科室
+
+    /**
+     * 查询住院部的科室名称
+     */
+    @RequestMapping("zy-ks-list")
+   public List<DepartmentKs> DepartmentKsMapper(){
+       return dm.selectZyKs();
+   }
+
+
+    //查询所有科室
     @RequestMapping("ks-list")
     public List<DepartmentKs> dome(){
         List<DepartmentKs> selectlist = dm.selectlist();
@@ -37,8 +47,8 @@ public class DepartmentKsController {
     public List<DepartmentKs> select(Long id){
         System.out.println("部门id"+id);
 
-            List<DepartmentKs> dome = dm.selectId(id);
-            return dome;
+        List<DepartmentKs> dome = dm.selectId(id);
+        return dome;
 
 
 

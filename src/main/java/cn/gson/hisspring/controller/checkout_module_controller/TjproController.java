@@ -1,9 +1,6 @@
 package cn.gson.hisspring.controller.checkout_module_controller;
 
-import cn.gson.hisspring.model.pojos.SsOperationProject;
-import cn.gson.hisspring.model.pojos.TjCodeIndex;
-import cn.gson.hisspring.model.pojos.TjCodeMeal;
-import cn.gson.hisspring.model.pojos.TjCodeProject;
+import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.service.checkout_module_service.TjproService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +25,13 @@ public class TjproController {
     public List<TjCodeIndex> allIndex(){
         return major.allIndex();
     }
-    @RequestMapping("allMeal") //所有检查指标
-    public List<TjCodeMeal> allMeal(String search){
-        return major.selectAllTjMeal(search);
+    @RequestMapping("allTJtype") //所有套餐类型
+    public List<TjCodeType> allTJtype(){
+        return major.allType();
+    }
+    @RequestMapping("allMeal") //所有套餐
+    public List<TjCodeMeal> allMeal(String checkIndex,String codeName,String codeType){
+        return major.selectAllTjMeal(checkIndex,codeName,codeType);
     }
     @RequestMapping("aloneProt") //体检套餐所含检查指标
     public List<TjCodeProject> allPro(Integer codeId){
@@ -46,6 +47,17 @@ public class TjproController {
         TjCodeProject troj = JSON.parseObject(map.get("troj").toString(), TjCodeProject.class);
         System.out.println(troj);
         return major.tprojectUpdate(troj);
+    }
+    /**
+     * 新增修改体检套餐
+     */
+    @RequestMapping("addOrUpdataMroj")
+    public boolean mrolddOrUpdate(@RequestBody String projstr){
+        System.out.println(projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将项目对象字符串转换为检查对象
+        TjCodeMeal mroj = JSON.parseObject(map.get("mroj").toString(), TjCodeMeal.class);
+        System.out.println(mroj);
+        return major.tjmealUpdate(mroj);
     }
     //    删除检查项目
     @PostMapping("delet-troj")

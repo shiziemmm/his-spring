@@ -25,6 +25,13 @@
                 or sick_Name like "%"#{mzSickTest}"%")
             </if>
             and mc_Sate = 0
-            ORDER BY create_time desc
+            ORDER BY mc_number desc
+    </select>
+    <select id="selectByIdObject" resultMap="allCard">
+        select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
+
+        <if test =" mcCard!=null and '' != mcCard"> /*一个mzSickTest模糊查询全部like*/
+               and mc_Card = #{mcCard}
+        </if>
     </select>
 </mapper>

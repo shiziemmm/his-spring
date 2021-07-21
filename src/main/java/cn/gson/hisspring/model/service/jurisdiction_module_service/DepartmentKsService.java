@@ -29,4 +29,7 @@ public class DepartmentKsService {
     public List<DepartmentKs> selectName(){
         return d.selectName();
     }
+    public List<DepartmentKs> selectZyKs(){
+        return d.selectZyKs();
+    }
 }
