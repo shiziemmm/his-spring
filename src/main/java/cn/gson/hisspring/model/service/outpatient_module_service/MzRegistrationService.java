@@ -26,13 +26,14 @@ public class MzRegistrationService {
     @Autowired
     MzCardBillService billService; // 诊疗卡账单记录表 service
     //查询全部或like
-    public List<MzRegistration> selectMzRegistration(String like){
-        return mzRegistrationMapper.selectMzRegistration(like);
+    public List<MzRegistration> selectMzRegistration(String reg){
+        return mzRegistrationMapper.selectMzRegistration(reg);
     }
 
     // 新增挂号表
     public void addReg(MzRegistration mzRegistration){
         //新增挂号记录表
+        mzRegistration.setRtState(0);//0为进行中，未完成
         MzMedicalCard cardObject = mzRegistration.getCardObject();
         mzRegistration.setMcNumber(cardObject.getMcNumber());//新增mc_NUmber
         mzRegistration.setSickNumber(cardObject.getSickNumber());//新镇sick_Number

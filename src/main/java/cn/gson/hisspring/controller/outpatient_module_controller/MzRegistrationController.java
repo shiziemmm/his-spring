@@ -43,8 +43,9 @@ public class MzRegistrationController {
     }
     //查询挂号记录表
     @GetMapping("selectReg")
-    public List<MzRegistration> selectReg(String like){
-         return registrationService.selectMzRegistration(like);
+    public List<MzRegistration> selectReg(String reg){
+        System.err.println(reg);
+         return registrationService.selectMzRegistration(reg);
     }
 
 }

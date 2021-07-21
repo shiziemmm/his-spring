@@ -1,4 +1,4 @@
 
 ###
-GET http://localhost:8089/allAepartmentKs
+GET http://localhost:8089/selectReg
 Accept: application/json
