@@ -41,7 +41,7 @@ public class MzRegistrationService {
         for (MzRegistration mzRegistration : mzRegistrations) {
             System.err.println(sf.format(mzRegistration.getRtOnsetTime())+"--------------date1");
             System.err.println(sf.format(c.getTime())+"--------------date2");
-            if(sf.format(mzRegistration.getRtOnsetTime()).equals(sf.format(c.getTime()) )){
+            if(sf.format(mzRegistration.getRtOnsetTime()).equals(sf.format(c.getTime()) )){//如果查询到的是时间和当前系统时间对应那就改它type
                 mzRegistration.setRtType("当天挂号");
                 mzRegistrationMapper.updateById(mzRegistration);
             }
