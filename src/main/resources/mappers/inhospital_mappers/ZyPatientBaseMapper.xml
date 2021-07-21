@@ -27,7 +27,7 @@
         <result column="pt_is" property="ptIs"/>
 
         <!--医生信息-->
-        <association property="staff" resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper.staffMap"></association>
+        <association property="staff" resultMap="staffMaps"></association>
 
         <!--病床信息-->
         <association property="bed" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper.bedMap"></association>
@@ -37,6 +37,15 @@
 
         <!--病人关系联系人-->
         <collection property="listContacts" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.ContactsMapper.contactsMap"></collection>
+    </resultMap>
+
+    <resultMap id="staffMaps" type="cn.gson.hisspring.model.pojos.Staff">
+        <id column="s_id" jdbcType="INTEGER" property="sId" />
+        <result column="s_name" jdbcType="VARCHAR" property="sName" />
+        <result column="s_sore" jdbcType="VARCHAR" property="sSore" />
+        <result column="s_phone" jdbcType="VARCHAR" property="sPhone" />
+        <result column="s_date" jdbcType="VARCHAR" property="sDate" />
+        <result column="s_zt" jdbcType="VARCHAR" property="sZt" />
     </resultMap>
 
     <!--封装住院登记信息-->
