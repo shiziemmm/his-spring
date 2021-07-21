@@ -2,6 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRegistrationMapper">
+    <resultMap id="regMaps" type="cn.gson.hisspring.model.pojos.MzRegistration">
+        <id column="rt_Number" property="rtNumber"></id>
+        <result column="rt_Price" property="rtPrice"></result>
+        <result column="rt_State" property="rtState"></result>
+        <result column="rt_Type" property="rtType"></result>
+        <result column="rt_Class" property="rtClass"></result>
+        <result column="rt_Science" property="rtScience"></result>
+        <result column="rt_Doctor" property="rtDoctor"></result>
+        <result column="rt_Doctor_Genre" property="rtDoctorGenre"></result>
+        <result column="rt_Time" property="rtTime"></result>
+        <result column="rt_Onset_Time" property="rtOnsetTime"></result>
+        <result column="rt_Over_Ks_Name" property="rtOverKsName"></result>
+        <result column="s_Id" property="sId"></result>
+        <result column="sick_Number" property="sickNumber"></result>
+        <result column="mc_Number" property="mcNumber"></result>
+    </resultMap>
     <resultMap id="regMap" type="cn.gson.hisspring.model.pojos.MzRegistration">
         <id column="rt_Number" property="rtNumber"></id>
         <result column="rt_Price" property="rtPrice"></result>
