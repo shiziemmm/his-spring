@@ -16,5 +16,6 @@ public interface DepartmentKsMapper extends BaseMapper<DepartmentKs> {
     */
 
     List<DepartmentKs> selectlist();
-
+    List<DepartmentKs> selectId(Long id);
+    List<DepartmentKs>selectName();
 }

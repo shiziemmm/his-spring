@@ -22,8 +22,19 @@
             <id column="t_id" jdbcType="INTEGER" property="tId" />
             <result column="t_name" jdbcType="VARCHAR" property="tName" />
         </association>
+        <association property="role" javaType="cn.gson.hisspring.model.pojos.Role">
+            <id column="r_id" jdbcType="INTEGER" property="rId" />
+            <result column="r_name" jdbcType="VARCHAR" property="rName" />
+        </association>
+        <association property="dept" javaType="cn.gson.hisspring.model.pojos.Department">
+            <id column="de_id" jdbcType="INTEGER" property="deId" />
+            <result column="de_name" jdbcType="VARCHAR" property="deName" />
+        </association>
     </resultMap>
     <select id="selectALl" resultMap="BaseResultMap">
-        SELECT  * FROM staff s inner join `user` u on s.u_id=u.u_id inner join department_ks d on s.ks_id=d.de_id INNER join title t on s.t_id=t.t_id
+        SELECT  * FROM staff s inner join `user` u on s.u_id=u.u_id inner join
+            department_ks d on s.ks_id=d.ks_id INNER join title t on s.t_id=t.t_id inner join
+            role_middle_user ru on u.u_id=ru.U_id inner join role
+            r on r.R_id=ru.R_id inner join department dept on d.de_id=dept.de_id
     </select>
 </mapper>

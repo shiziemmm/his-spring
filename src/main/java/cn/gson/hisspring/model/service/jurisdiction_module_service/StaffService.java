@@ -29,5 +29,13 @@ public class StaffService{
     public  List<Staff>  selectALl(){
        return sm.selectALl();
     };
+    //新增元员工
+    public int addStaff(Staff staff){
+        return sm.insert(staff);
+    }
+    //修改员工信息
+    public int upa(Staff staff){
+        return sm.updateById(staff);
+    }
 
 }

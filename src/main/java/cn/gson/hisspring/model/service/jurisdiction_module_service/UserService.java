@@ -19,4 +19,10 @@ public class UserService {
     public User cha(User user){
         return us.cha(user);
     }
+    public int addStaff(User user){
+        return us.insert(user);
+    }
+    public int upa(User user){
+        return  us.updateById(user);
+    }
 }
