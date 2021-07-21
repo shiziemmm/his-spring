@@ -26,11 +26,37 @@ public class DepartmentKsController {
     DepartmentKsService dm;
 
 
+    /**
+     * 查询住院部的科室名称
+     */
+    @RequestMapping("zy-ks-list")
+   public List<DepartmentKs> DepartmentKsMapper(){
+       return dm.selectZyKs();
+   }
+
+
+    //查询所有科室
     @RequestMapping("ks-list")
     public List<DepartmentKs> dome(){
         List<DepartmentKs> selectlist = dm.selectlist();
-     ;
         return selectlist;
+    }
+    //查询没有部门科室
+    //查询有部门的科室
+    @RequestMapping("bmks-list")
+    public List<DepartmentKs> select(Long id){
+        System.out.println("部门id"+id);
+
+        List<DepartmentKs> dome = dm.selectId(id);
+        return dome;
+
+
+
+    }
+    @RequestMapping("ksname-list")
+    public List<DepartmentKs> dome1(){
+        List<DepartmentKs> list=dm.selectName();
+        return list;
     }
     @PostMapping("add-ks")
     public int addlist(@RequestBody DepartmentKs departmentKs){

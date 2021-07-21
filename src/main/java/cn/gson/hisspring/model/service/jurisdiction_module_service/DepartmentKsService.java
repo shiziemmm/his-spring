@@ -22,4 +22,14 @@ public class DepartmentKsService {
     public int upalist(DepartmentKs departmentKs){
         return d.updateById(departmentKs);
     }
+
+    public List<DepartmentKs> selectId(Long id) {
+        return d.selectId(id);
+    }
+    public List<DepartmentKs> selectName(){
+        return d.selectName();
+    }
+    public List<DepartmentKs> selectZyKs(){
+        return d.selectZyKs();
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -43,8 +44,66 @@ public class PatientBaseService {
     PayMapper pm;//缴费mapper
 
     @Autowired
-    ContactsMapper cm;//病人关系mapper
+    ContactsService cs;//病人关系mapper
 
+    @Autowired
+    ChangeDeptMapper cdm;//病人转科记录mapper
+
+
+    /**
+     * 根据病人编号进行转科
+     */
+    public boolean patientChangeDept(ZyChangeDeptRecord deptRecord){
+        System.err.println("==========================================="+deptRecord.getBdId());
+       try {
+           //=======================新增转科记录
+           cdm.insert(deptRecord);//新增
+
+           //==============================根据病人病床为空以及修改管理护士
+           ZyPatientBase pb = new ZyPatientBase(deptRecord.getPtNo(),0L,deptRecord.getDoctorId(),deptRecord.getCdrAfterKs());
+           pbm.updateById(pb);//修改
+
+           //===================================修改病床使用记录的结束时间
+           if(deptRecord.getBdId() != 0 || !deptRecord.getBdId().equals("")){//判断是否入住病床
+               ZyBedUseRecord bedUseRecord = selectBedUseRecord(deptRecord.getPtNo());//查询
+               if(bedUseRecord != null){
+                   ZyBedUseRecord zbr = new ZyBedUseRecord(bedUseRecord.getUrId(),new Timestamp(new Date().getTime()));
+                   burm.updateById(zbr);//修改
+               }
+
+               //===========================================根据病床编号修改病床住院号为0
+               ZyBed bed = new ZyBed(deptRecord.getBdId(),1L,0L);
+               bm.updateById(bed);//修改
+           }
+
+
+           if(deptRecord.getCdrDoctorIs() == 1){//=============医嘱跟随
+           }else{//============================医嘱不跟随
+           }
+           return true;
+
+       }catch (Exception e){
+            return false;
+       }
+    }
+
+
+    /**
+     * 根据病人住院号查询出该病人最后一条使用记录
+     */
+    public ZyBedUseRecord selectBedUseRecord(Long ptNo){
+        //===================添加当前病床记录里面的结束时间
+        QueryWrapper<ZyBedUseRecord> qwb = new QueryWrapper<>();//条件构造器
+        qwb
+                .eq("pt_no",ptNo)//根据住院号查询病床记录
+                .orderBy(true,false,"ur_use_date");
+        List<ZyBedUseRecord> list = burm.selectList(qwb);//查询
+
+        if(list.isEmpty()){//如果没有病床使用记录就不继续走
+            return null;
+        }
+        return list.get(0);//选中第一条数据
+    }
 
     /**
      * 查询住院登记里面没有分配病床的信息或者是查询所有
@@ -136,7 +195,7 @@ public class PatientBaseService {
             //新增病人关系信息
             List<ZyContacts> ctaList = patientBase.getListContacts().isEmpty() ? null : patientBase.getListContacts();
             if(ctaList != null){
-                int i = cm.insertContactsList(ctaList, patientBase.getPtNo());
+                int i = cs.insertContactsList(ctaList, patientBase.getPtNo());
                 System.out.println("========================================="+i);
             }
 
@@ -167,21 +226,24 @@ public class PatientBaseService {
      */
     public boolean PatientUpdateBed(PatientUpdateBedVo puvo){
         //=====================新增病床调换记录
-        ZyBedChangeRecord bcr = new ZyBedChangeRecord(puvo.getBcCurrentBdId(),puvo.getBcLaterBdId(),new Timestamp(new Date().getTime()),puvo.getPtNo());
+        ZyBedChangeRecord bcr = new ZyBedChangeRecord(puvo.getBcCurrentBdId(),puvo.getBcLaterBdId(),new Timestamp(new Date().getTime()),puvo.getPtNo(),puvo.getSId(),puvo.getBcCause());
         bdrm.insert(bcr);
 
 
         //===================添加当前病床记录里面的结束时间
-        QueryWrapper<ZyBedUseRecord> qwb = new QueryWrapper<>();//条件构造器
-        qwb
-                .eq("pt_no",puvo.getPtNo())//根据住院号查询病床记录
-                .orderBy(true,false,"ur_use_date");
-        List<ZyBedUseRecord> list = burm.selectList(qwb);//查询
-
-        if(list.isEmpty()){//如果没有病床使用记录就不继续走
+//        QueryWrapper<ZyBedUseRecord> qwb = new QueryWrapper<>();//条件构造器
+//        qwb
+//                .eq("pt_no",puvo.getPtNo())//根据住院号查询病床记录
+//                .orderBy(true,false,"ur_use_date");
+//        List<ZyBedUseRecord> list = burm.selectList(qwb);//查询
+//
+//        if(list.isEmpty()){//如果没有病床使用记录就不继续走
+//            return false;
+//        }
+        ZyBedUseRecord bedUseRecord = selectBedUseRecord(puvo.getPtNo());//选中第一条数据
+        if(bedUseRecord == null){
             return false;
         }
-        ZyBedUseRecord bedUseRecord = list.get(0);//选中第一条数据
 
         ZyBedUseRecord zbr = new ZyBedUseRecord(bedUseRecord.getUrId(),new Timestamp(new Date().getTime()));
         burm.updateById(zbr);//修改

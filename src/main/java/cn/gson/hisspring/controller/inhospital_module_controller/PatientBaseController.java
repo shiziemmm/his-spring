@@ -1,5 +1,6 @@
 package cn.gson.hisspring.controller.inhospital_module_controller;
 
+import cn.gson.hisspring.model.pojos.ZyChangeDeptRecord;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import cn.gson.hisspring.model.service.inhospital_module_service.PatientBaseService;
 import com.alibaba.fastjson.JSON;
@@ -19,6 +20,14 @@ public class PatientBaseController {
     @Autowired
     PatientBaseService pbs;
 
+
+
+    @RequestMapping("patient-changeDept")
+    public boolean patientChangeDept(@RequestBody String str){
+        System.out.println(str);
+        ZyChangeDeptRecord deptRecord = JSON.parseObject(str, ZyChangeDeptRecord.class);
+        return pbs.patientChangeDept(deptRecord);
+    }
 
     /**
      * 查询没有病床信息以及没有出院的病人登记信息

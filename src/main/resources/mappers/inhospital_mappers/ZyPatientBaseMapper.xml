@@ -24,9 +24,10 @@
         <result column="pt_iphone" property="ptIphone"/>
         <result column="s_id" property="sId"/>
         <result column="ks_name" property="ksName"/>
+        <result column="pt_is" property="ptIs"/>
 
         <!--医生信息-->
-        <association property="staff" resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper.staffMap"></association>
+        <association property="staff" resultMap="staffMaps"></association>
 
         <!--病床信息-->
         <association property="bed" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper.bedMap"></association>
@@ -36,6 +37,15 @@
 
         <!--病人关系联系人-->
         <collection property="listContacts" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.ContactsMapper.contactsMap"></collection>
+    </resultMap>
+
+    <resultMap id="staffMaps" type="cn.gson.hisspring.model.pojos.Staff">
+        <id column="s_id" jdbcType="INTEGER" property="sId" />
+        <result column="s_name" jdbcType="VARCHAR" property="sName" />
+        <result column="s_sore" jdbcType="VARCHAR" property="sSore" />
+        <result column="s_phone" jdbcType="VARCHAR" property="sPhone" />
+        <result column="s_date" jdbcType="VARCHAR" property="sDate" />
+        <result column="s_zt" jdbcType="VARCHAR" property="sZt" />
     </resultMap>
 
     <!--封装住院登记信息-->
@@ -101,7 +111,8 @@
         zy_contacts.Cts_id,
         zy_contacts.Cts_name,
         zy_contacts.Cts_iphone,
-        zy_contacts.Cts_relation
+        zy_contacts.Cts_relation,
+        zy_patient_base.pt_is
         FROM
         zy_patient_base
         LEFT JOIN staff ON zy_patient_base.s_id = staff.s_id
@@ -113,7 +124,7 @@
 
         <where>
             <if test="is != ''">
-                zy_patient_base.Bd_id = 0 and zy_patient_base.Pt_Out_date is null
+                zy_patient_base.Bd_id = 0 and zy_patient_base.Pt_Out_date is null and zy_patient_base.pt_is = 1
             </if>
 
             <if test="is == ''">

@@ -13,7 +13,7 @@
         <result column="ks_name" property="ksName"/>
 
         <!--将员工结果封装到病房里面的实体-->
-        <association property="staff" resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper.staffMap" javaType="cn.gson.hisspring.model.pojos.Staff" >
+        <association property="staff" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps" javaType="cn.gson.hisspring.model.pojos.Staff" >
         </association>
 
         <!--将病床结果封装到病房里面的实体-->

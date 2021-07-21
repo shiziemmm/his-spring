@@ -9,15 +9,13 @@ import cn.gson.hisspring.model.service.jurisdiction_module_service.RoleService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin
 @RestController
+@ResponseBody
 public class RoleController {
     @Autowired
     RoleService roleService;
@@ -30,8 +28,29 @@ public class RoleController {
      */
     @RequestMapping("role-list")
     public List<Role> selectList(){
-        List<Role> roles = roleService.selectList();
+//        List<Role> list=new List;
+        List<Role> roles = roleService.chaxun();
+       roles.forEach(s->{
+           System.out.println(s);
+       });
         return roles;
+    }
+    @RequestMapping("roles-list")
+    public List<Role> selectAll(){
+        return roleService.selectList();
+    }
+    /*
+    新增角色
+     */
+    @PostMapping("add-role")
+    public int addRole(@RequestBody Role role){
+        System.out.println(role);
+        int i=roleService.addRoles(role);
+        if(i>0){
+            return 1;
+        }else{
+            return 0;
+        }
     }
     /*
     查询权限组
@@ -66,4 +85,13 @@ public class RoleController {
     public List<FunctionJurisdiction> homeMenu(Integer userId){
         return roleService.homeMenu(userId);
     }
+    /**
+     * 查询员工权限
+     */
+    @RequestMapping("staff-menus")
+    public List<Role> selectStaff(){
+        List<Role> roles = roleService.selectStaff();
+        return roles;
+    }
+
 }
