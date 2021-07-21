@@ -40,4 +40,5 @@ public class RoleService {
         return roleMapper.insert(role);
     };
     public int addRoles(Role role){return roleMapper.insert(role);}
+    public List<Role> selectStaff(){return roleMapper.selectStaff();}
 }

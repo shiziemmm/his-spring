@@ -85,5 +85,13 @@ public class RoleController {
     public List<FunctionJurisdiction> homeMenu(Integer userId){
         return roleService.homeMenu(userId);
     }
+    /**
+     * 查询员工权限
+     */
+    @RequestMapping("staff-menus")
+    public List<Role> selectStaff(){
+        List<Role> roles = roleService.selectStaff();
+        return roles;
+    }
 
 }

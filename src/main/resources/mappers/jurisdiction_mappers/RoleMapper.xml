@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.RoleMapper">
+  <!-- 角色授权 -->
   <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.FunctionJurisdiction">
     <id column="Fction_id" jdbcType="INTEGER" property="fctionId" />
     <result column="Fction_name" jdbcType="VARCHAR" property="fctionName" />
@@ -29,7 +30,15 @@
      <result column="ename" jdbcType="VARCHAR" property="rName" />
    </association>
   </resultMap>
-
+<!-- 员工授权 -->
+  <resultMap id="rols" type="cn.gson.hisspring.model.pojos.Role">
+    <id column="rid" jdbcType="INTEGER" property="rId" />
+    <result column="rname" jdbcType="VARCHAR" property="rName" />
+  <collection property="role" ofType="cn.gson.hisspring.model.pojos.Role">
+    <id column="r_id" jdbcType="INTEGER" property="rId" />
+    <result column="r_name" jdbcType="VARCHAR" property="rName" />
+  </collection>
+  </resultMap>
   <select id="select" resultMap="funs">
     SELECT j.Fction_id pid,j.Fction_name pname,j.Fction_assembly aname,j.Fction_src psrc,j.Fction_icon picon,f.Fction_state pstate,f.* FROM function_jurisdiction j
         inner join function_jurisdiction f on j.Fction_id = f.Fction_cid WHERE j.Fction_cid is  null
@@ -49,6 +58,10 @@
   <insert id="addRoles">
     insert into role values (#{rname},#(roid))
   </insert>
+
+  <select id="selectStaff" resultMap="rols">
+    SELECT r.R_id rid,r.R_name rname,ro.* FROM role r left join role ro on r.R_id=ro.Ro_id WHERE r.Ro_id is  null
+  </select>
 </mapper>
 
 

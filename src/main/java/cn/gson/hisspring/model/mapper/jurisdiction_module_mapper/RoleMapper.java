@@ -19,5 +19,6 @@ public interface RoleMapper extends BaseMapper<Role> {
     public  List<Integer> roleFuns(Integer roId);
     public List<FunctionJurisdiction> homeMenu(Integer userId);
      int addRoles(Role role);
+     public List<Role> selectStaff();
 
 }

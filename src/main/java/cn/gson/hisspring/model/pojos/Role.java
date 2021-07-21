@@ -15,4 +15,6 @@ public class Role {
   private long roId;
   @TableField(exist = false)
   private Role roles;
+  @TableField(exist = false)
+  private List<Role> role;
 }
