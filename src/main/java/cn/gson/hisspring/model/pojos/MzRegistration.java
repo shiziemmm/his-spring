@@ -26,6 +26,7 @@ public class MzRegistration {
   @TableField( fill = FieldFill.INSERT)//注解到 handler 处理器里进行时间的新增方便后期诊疗卡密码的修改
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Date rtTime;
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Date rtOnsetTime;
 
   private String rtOverKsName;

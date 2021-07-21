@@ -33,7 +33,7 @@
         <result column="s_Id" property="sId"></result>
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
-        <association resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper.staffMap" property="staffObject">
+        <association resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps" property="staffObject">
         </association>
         <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper.allCard" property="cardObject">
         </association>
@@ -48,6 +48,16 @@
                 and (c.mc_Card = #{reg}
                 or c.mc_Id_Card = #{reg} )
             </if>
-            ORDER BY reg.rt_time desc
+            <if test=" index==1 ">
+                and date_format(reg.rt_Onset_Time,'%Y-%m-%d') = #{dates}
+            </if>
+            <if test=" index==2 ">
+                and date_format(reg.rt_Onset_Time,'%Y-%m-%d') > #{dates}
+            </if>
+            <if test="index !=1 and index !=2">
+                and date_format(reg.rt_Onset_Time,'%Y-%m-%d') >= date_format(now(),'%Y-%m-%d')
+            </if>
+
+            ORDER BY reg.rt_Onset_Time desc
     </select>
 </mapper>

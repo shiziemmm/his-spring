@@ -5,10 +5,14 @@ import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRegistrationMap
 import cn.gson.hisspring.model.pojos.MzCardBill;
 import cn.gson.hisspring.model.pojos.MzMedicalCard;
 import cn.gson.hisspring.model.pojos.MzRegistration;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,11 +29,25 @@ public class MzRegistrationService {
     MzMedicalCardMapper cardMapper;// 诊疗卡卡号mapper
     @Autowired
     MzCardBillService billService; // 诊疗卡账单记录表 service
-    //查询全部或like
-    public List<MzRegistration> selectMzRegistration(String reg){
-        return mzRegistrationMapper.selectMzRegistration(reg);
+    //查询全部或like或者点击当天和预约
+    public List<MzRegistration> selectMzRegistration(String reg,Integer index ,String dates){
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        Calendar c = Calendar.getInstance();
+        if(index != null && index !=0){
+            dates= sf.format(c.getTime());
+            System.err.println("当前日期:"+sf.format(c.getTime()));
+        }
+        List<MzRegistration> mzRegistrations = mzRegistrationMapper.selectMzRegistration(reg, index, dates);
+        for (MzRegistration mzRegistration : mzRegistrations) {
+            System.err.println(sf.format(mzRegistration.getRtOnsetTime())+"--------------date1");
+            System.err.println(sf.format(c.getTime())+"--------------date2");
+            if(sf.format(mzRegistration.getRtOnsetTime()).equals(sf.format(c.getTime()) )){
+                mzRegistration.setRtType("当天挂号");
+                mzRegistrationMapper.updateById(mzRegistration);
+            }
+        }
+        return mzRegistrations;
     }
-
     // 新增挂号表
     public void addReg(MzRegistration mzRegistration){
         //新增挂号记录表

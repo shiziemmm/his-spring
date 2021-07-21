@@ -13,5 +13,5 @@ import java.util.List;
 @Mapper
 public interface MzRegistrationMapper extends BaseMapper<MzRegistration> {
     //查询全部或like
-    public List<MzRegistration> selectMzRegistration(String reg);
+    public List<MzRegistration> selectMzRegistration(String reg,Integer index ,String dates);
 }
