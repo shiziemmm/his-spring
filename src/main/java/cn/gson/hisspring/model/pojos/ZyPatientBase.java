@@ -32,6 +32,7 @@ public class ZyPatientBase {
   private Double ptPrice;
   private String ptIphone;
   private Long sId;//主治医生
+  private Long ptIs;//是否出院
 
 
   //关系
@@ -63,6 +64,13 @@ public class ZyPatientBase {
   public ZyPatientBase(long ptNo, Long bdId) {
     this.ptNo = ptNo;
     this.bdId = bdId;
+  }
+
+  public ZyPatientBase(long ptNo, Long bdId, Long sId,Long ksId) {
+    this.ptNo = ptNo;
+    this.bdId = bdId;
+    this.sId = sId;
+    this.ksId = ksId;
   }
 
   public ZyPatientBase() {

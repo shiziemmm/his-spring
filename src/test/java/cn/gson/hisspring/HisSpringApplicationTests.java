@@ -4,11 +4,14 @@ import cn.gson.hisspring.model.mapper.inhospital_module_mapper.BedMapper;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientUpdateBedVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.*;
+import cn.gson.hisspring.model.service.outpatient_module_service.MzDepartmentKsService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -28,6 +31,13 @@ class HisSpringApplicationTests {
         ps.addPay(py);
     }
 
+    @Autowired
+    DischargeApplyService das;
+    @Test
+    void text11(){
+        das.callPatientApply(101L,"还需要留院观察");
+    }
+
 
     @Autowired
     InHospitalApplyService ihas;
@@ -42,6 +52,20 @@ class HisSpringApplicationTests {
 
     @Autowired
     PatientBaseService pbs;
+
+    @Test
+    void text10(){
+        ZyChangeDeptRecord c = new ZyChangeDeptRecord();
+        c.setCdrBeforeKs(1L);
+        c.setCdrAfterKs(2L);
+        c.setCdrCause("太吵了");
+        c.setCdrDate(new Timestamp(new Date().getTime()));
+        c.setPtNo(101L);
+        c.setDoctorId(1L);
+        c.setSId(100L);
+        c.setBdId(25L);
+        pbs.patientChangeDept(c);
+    }
 
     @Test
     void text7(){
@@ -113,6 +137,16 @@ class HisSpringApplicationTests {
             System.out.println(z);
         }
 
+    }
+
+    @Autowired
+    MzDepartmentKsService departmentKsService;
+    @Test
+    void  yy (){
+        List<DepartmentKs> departmentKs = departmentKsService.selectDepartmentKs();
+        for (DepartmentKs departmentK : departmentKs) {
+            System.out.println(departmentK);
+        }
     }
 
 }

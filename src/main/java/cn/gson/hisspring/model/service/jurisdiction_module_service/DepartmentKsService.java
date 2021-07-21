@@ -16,6 +16,10 @@ public class DepartmentKsService {
         return d.selectlist();
     };
 
+    public List<DepartmentKs> selectZyKs(){
+        return d.selectZyKs();
+    }
+
     public int addlist(DepartmentKs departmentKs){
         return d.insert(departmentKs);
     }

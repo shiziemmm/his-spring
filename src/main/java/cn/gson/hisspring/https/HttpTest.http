@@ -1,4 +1,4 @@
 
 ###
-GET http://localhost:8089/descCard
+GET http://localhost:8089/allAepartmentKs
 Accept: application/json

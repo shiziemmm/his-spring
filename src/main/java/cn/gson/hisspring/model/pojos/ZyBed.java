@@ -58,4 +58,6 @@ public class ZyBed {
     this.bdIs = bdIs;
     this.ptNo = ptNo;
   }
+
+
 }

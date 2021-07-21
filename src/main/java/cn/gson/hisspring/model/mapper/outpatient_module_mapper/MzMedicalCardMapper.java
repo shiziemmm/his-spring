@@ -15,4 +15,6 @@ import java.util.List;
 public interface MzMedicalCardMapper extends BaseMapper<MzMedicalCard> {
     //连表查询门诊病人资料可就诊卡
     List<MzMedicalCard> selectAllMzMedicalCard(String mzSickTest);
+    //查询单个卡号
+    MzMedicalCard selectByIdObject(String mcCard);
 }

@@ -18,9 +18,9 @@ public class MzAlterLoseController {
     @Autowired
     MzAlterLoseService loseService;
 
+    //查询所有诊疗卡操作记录like不等于null就模糊查询
     @GetMapping("likeAlterLose")
     public List<MzAlterLose> likeAlterLose(String like){
-        System.err.println(like+"ssssssssssssssssssssssssss");
         return loseService.allLikeAlterLose(like);
     }
 
