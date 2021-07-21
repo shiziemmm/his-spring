@@ -10,15 +10,28 @@
         <result column="rt_Class" property="rtClass"></result>
         <result column="rt_Science" property="rtScience"></result>
         <result column="rt_Doctor" property="rtDoctor"></result>
+        <result column="rt_Doctor_Genre" property="rtDoctorGenre"></result>
         <result column="rt_Time" property="rtTime"></result>
         <result column="rt_Onset_Time" property="rtOnsetTime"></result>
         <result column="rt_Over_Ks_Name" property="rtOverKsName"></result>
         <result column="s_Id" property="sId"></result>
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
+        <association resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper.staffMap" property="staffObject">
+        </association>
+        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper.allCard" property="cardObject">
+        </association>
     </resultMap>
 
     <select id="selectMzRegistration" resultMap="regMap">
-
+        select * from mz_registration reg
+            LEFT JOIN mz_medical_card c on reg.mc_number=c.mc_number
+            LEFT JOIN mz_sick k on reg.sick_number=k.sick_number
+            LEFT JOIN staff s on reg.s_id = s.s_id where 1=1
+            <if test="reg != null and '' != reg">
+                and (c.mc_Card = #{reg}
+                or c.mc_Id_Card = #{reg} )
+            </if>
+            ORDER BY reg.rt_time desc
     </select>
 </mapper>

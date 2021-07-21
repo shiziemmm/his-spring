@@ -12,7 +12,7 @@ public class MzCardBillService {
     @Autowired
     MzCardBillMapper cardBillMapper;
 
-    //新增账号记录表
+    //新增账单记录表
     public void addMzCardBill(MzCardBill bill){
         cardBillMapper.insert(bill);
     }

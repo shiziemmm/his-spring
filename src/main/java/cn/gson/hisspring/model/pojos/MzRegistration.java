@@ -21,8 +21,8 @@ public class MzRegistration {
   private String rtClass;
   private String rtScience;
   private String rtDoctor;
-
-  private String rtState;
+  private String rtDoctorGenre;
+  private long rtState;
   @TableField( fill = FieldFill.INSERT)//注解到 handler 处理器里进行时间的新增方便后期诊疗卡密码的修改
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Date rtTime;
@@ -33,6 +33,8 @@ public class MzRegistration {
   private long sickNumber;
   private long mcNumber;
 
-  @TableField(exist = false)//不是数据库字段
+  @TableField(exist = false)//不是数据库字段--诊疗卡对象
   private MzMedicalCard cardObject;
+  @TableField(exist = false)//不是数据库字段--员工对象
+  private Staff staffObject;
 }
