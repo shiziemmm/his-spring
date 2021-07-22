@@ -121,7 +121,6 @@
         LEFT JOIN zy_contacts ON zy_patient_base.Pt_no = zy_contacts.pt_no
 
 
-
         <where>
             <if test="is != ''">
                 zy_patient_base.Bd_id = 0 and zy_patient_base.Pt_Out_date is null and zy_patient_base.pt_is = 1
@@ -131,6 +130,8 @@
                 zy_patient_base.Pt_Out_date is null
             </if>
         </where>
+
+
     </select>
 
     <!--查询病人住院信息以及缴费信息-->
