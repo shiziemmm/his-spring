@@ -39,6 +39,8 @@
         </association>
     </resultMap>
 
+
+    <!--查询挂号表所有-->
     <select id="selectMzRegistration" resultMap="regMap">
         select * from mz_registration reg
             LEFT JOIN mz_medical_card c on reg.mc_number=c.mc_number
@@ -57,7 +59,18 @@
             <if test="index !=1 and index !=2">
                 and date_format(reg.rt_Onset_Time,'%Y-%m-%d') >= date_format(now(),'%Y-%m-%d')
             </if>
-
+            and reg.rt_state = 0
             ORDER BY reg.rt_Onset_Time desc
+    </select>
+    <!--查询科室挂号信息-->
+    <select id="selectWzCount" resultMap="regMap">
+        select * from mz_registration reg
+        LEFT JOIN mz_medical_card c on reg.mc_number=c.mc_number
+        LEFT JOIN mz_sick k on reg.sick_number=k.sick_number
+        LEFT JOIN staff s on reg.s_id = s.s_id where 1=1
+        <if test="test!=null and '' !=test">
+            and reg.rt_over_ks_name = #{test} order by reg.rt_time
+        </if>
+
     </select>
 </mapper>

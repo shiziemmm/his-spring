@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -38,4 +39,5 @@ public class MzRegistration {
   private MzMedicalCard cardObject;
   @TableField(exist = false)//不是数据库字段--员工对象
   private Staff staffObject;
+
 }

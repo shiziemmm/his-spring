@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class MyUtilCardConfig {
 
     public static void main(String[] args) throws InterruptedException {
-
+        System.err.println("FK"+numberNot(1)); //后面的1是表示后面要几位数
     }
     public static String numberNot(int i) {
         SerialNumber serial = new FileEveryDaySerialNumber(i, "EveryDaySerialNumber.dat");

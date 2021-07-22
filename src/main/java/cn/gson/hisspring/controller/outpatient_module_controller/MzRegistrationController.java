@@ -22,7 +22,7 @@ public class MzRegistrationController {
 
     @Autowired
     MzMedicalCardService cardService;
-    //查询单个卡
+    //查询单个诊疗卡
     @GetMapping("byIdCard")
     public MzMedicalCard selectById(String mcCard){
         MzMedicalCard mzMedicalCard = cardService.selectById(mcCard);
@@ -47,7 +47,6 @@ public class MzRegistrationController {
     public List<MzRegistration> selectReg(String reg,Integer index ,String dates){
         System.err.println(reg);
         System.err.println(index);
-         return registrationService.selectMzRegistration(reg,index,dates);
+        return registrationService.selectMzRegistration(reg,index,dates);
     }
-
 }

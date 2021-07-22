@@ -14,4 +14,6 @@ import java.util.List;
 public interface MzRegistrationMapper extends BaseMapper<MzRegistration> {
     //查询全部或like
     public List<MzRegistration> selectMzRegistration(String reg,Integer index ,String dates);
+    // 查询科室挂号信息
+    public List<MzRegistration> selectWzCount(String test);
 }
