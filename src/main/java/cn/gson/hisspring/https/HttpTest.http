@@ -1,4 +1,4 @@
 
 ###
-GET http://localhost:8089/selectReg
+GET http://localhost:8089/allMzOpcNumber
 Accept: application/json

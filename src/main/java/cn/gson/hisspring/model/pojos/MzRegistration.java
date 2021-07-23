@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -26,6 +27,7 @@ public class MzRegistration {
   @TableField( fill = FieldFill.INSERT)//注解到 handler 处理器里进行时间的新增方便后期诊疗卡密码的修改
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Date rtTime;
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Date rtOnsetTime;
 
   private String rtOverKsName;
@@ -37,4 +39,5 @@ public class MzRegistration {
   private MzMedicalCard cardObject;
   @TableField(exist = false)//不是数据库字段--员工对象
   private Staff staffObject;
+
 }

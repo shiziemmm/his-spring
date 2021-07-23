@@ -22,7 +22,7 @@ public class MzRegistrationController {
 
     @Autowired
     MzMedicalCardService cardService;
-    //查询单个卡
+    //查询单个诊疗卡
     @GetMapping("byIdCard")
     public MzMedicalCard selectById(String mcCard){
         MzMedicalCard mzMedicalCard = cardService.selectById(mcCard);
@@ -31,6 +31,7 @@ public class MzRegistrationController {
     //新增挂号表
     @PostMapping("addReg")
     public String addReg(@RequestBody String regArr){
+        System.err.println(regArr);
         MzRegistration mzRegistration = JSON.parseObject(regArr, MzRegistration.class);
         System.err.println(mzRegistration);
         try {
@@ -43,9 +44,9 @@ public class MzRegistrationController {
     }
     //查询挂号记录表
     @GetMapping("selectReg")
-    public List<MzRegistration> selectReg(String reg){
+    public List<MzRegistration> selectReg(String reg,Integer index ,String dates){
         System.err.println(reg);
-         return registrationService.selectMzRegistration(reg);
+        System.err.println(index);
+        return registrationService.selectMzRegistration(reg,index,dates);
     }
-
 }

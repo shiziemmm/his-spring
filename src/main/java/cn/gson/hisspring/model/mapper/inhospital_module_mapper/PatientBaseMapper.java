@@ -3,6 +3,7 @@ package cn.gson.hisspring.model.mapper.inhospital_module_mapper;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,5 +18,7 @@ public interface PatientBaseMapper extends BaseMapper<ZyPatientBase> {
     List<ZyPatientBase> selectPatientNoBed(String is);
 
     List<ZyPatientBase> selectPatientAndPay();
+
+    List<ZyPatientBase> selectPatientBySId(@Param("sId") Long sId, @Param("ksId") Long ksId,@Param("text") String text);
 
 }

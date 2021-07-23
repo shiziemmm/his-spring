@@ -14,7 +14,7 @@ spring:
     username: root
     password:
   jackson:
-    date-format: yyyy-MM-dd
+    date-format: yyyy-MM-dd hh:mm
 
 mybatis-plus:
   mapper-locations: classpath:mappers/*/*.xml
