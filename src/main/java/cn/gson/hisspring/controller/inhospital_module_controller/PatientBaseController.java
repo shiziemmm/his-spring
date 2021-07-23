@@ -84,6 +84,15 @@ public class PatientBaseController {
     }
 
 
+    @RequestMapping("select-patient-sId")
+    public List<ZyPatientBase> selectPatientBySId(Long sId,Long ksId,String text){
+        System.err.println(sId);
+        System.out.println(ksId);
+        System.err.println("搜索"+text);
+      return   pbs.selectPatientBySId(sId,ksId,text);
+    }
+
+
     /**
      * 查询住院病人信息以及病人缴费详细
      */

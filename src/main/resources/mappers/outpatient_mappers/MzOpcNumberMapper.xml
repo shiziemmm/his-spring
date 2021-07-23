@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzOpcNumberMapper">
+
+    <resultMap id="opcNumberMap" type="cn.gson.hisspring.model.pojos.MzOpcNumber">
+        <id column="bn_Number" property="bnNumber"></id>
+
+        <result column="bn_State" property="bnState"></result>
+        <result column="bn_Count" property="bnCount"></result>
+        <result column="bn_Time" property="bnTime"></result>
+        <result column="bn_Id_Card" property="bnIdCard"></result>
+        <result column="bn_Ks_Name" property="bnKsName"></result>
+        <result column="bn_Science" property="bnScience"></result>
+        <result column="bn_Sick_Name" property="bnSickName"></result>
+        <result column="rt_Number" property="rtNumber"></result>
+        <result column="mr_Number" property="mrNumber"></result>
+
+
+        <association property="rtRegObject"  resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRegistrationMapper.regMap">
+        </association>
+
+    </resultMap>
+
+    <select id="selectMzOpcNumber" resultMap="opcNumberMap">
+        select * from mz_opc_number opn
+        LEFT JOIN mz_registration reg on opn.rt_number= reg.rt_number
+        LEFT JOIN mz_medical_card c on reg.mc_number=c.mc_number
+        LEFT JOIN mz_sick k on reg.sick_number=k.sick_number
+        LEFT JOIN staff s on reg.s_id = s.s_id where 1=1
+        <if test="ksName!=null and '' !=ksName">
+            and opn.bn_ks_name = #{ksName}
+        </if>
+        <if test="science !=null and ''!=science">
+            and opn.bn_science = #{science}
+        </if>
+        order by reg.rt_time
+    </select>
+</mapper>

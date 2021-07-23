@@ -51,6 +51,18 @@ public class PatientBaseService {
 
 
     /**
+     * 根据条件查询病人集合
+     * @param sId
+     * @param ksId
+     * @param text
+     * @return
+     */
+    public List<ZyPatientBase> selectPatientBySId(Long sId,Long ksId,String text){
+       return pbm.selectPatientBySId(sId,ksId,text);
+    }
+
+
+    /**
      * 根据病人编号进行转科
      */
     public boolean patientChangeDept(ZyChangeDeptRecord deptRecord){

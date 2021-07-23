@@ -22,10 +22,20 @@ public class Staff {
   private Long ksId;
   private Long tId;
   private long sZt;
+
+  @TableField(exist = false)
   private User user;
+
+  @TableField(exist = false)
   private DepartmentKs ks;
+
+  @TableField(exist = false)
   private  Title t;
+
+  @TableField(exist = false)
   private Role role;
+
+  @TableField(exist = false)
   private Department dept;
 
 
