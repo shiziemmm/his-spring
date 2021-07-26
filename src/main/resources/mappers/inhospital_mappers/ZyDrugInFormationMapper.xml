@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.ZyDrugInFormationMapper">
+    <resultMap id="zyDrugMaps" type="cn.gson.hisspring.model.pojos.pojos_vo.DrugVo">
+        <result property="drugId" column="Drug_id" />
+        <result property="drugName" column="Drug_name" />
+        <result property="drugBarCode" column="Drug_barCode" />
+        <result property="drugPrice" column="Drug_price" />
+        <result property="drugUsage" column="Drug_usage" />
+        <result property="ykSpecId" column="YK_spec_id" />
+        <result property="ykSupplierId" column="YK_Supplier_id" />
+        <result property="yfDrcaId" column="YF_drca_id" />
+        <result property="drugUpper" column="Drug_upper" />
+        <result property="drugRemark" column="Drug_remark" />
+        <result property="drugUnit" column="Drug_unit" />
+        <result property="drugSpecification" column="Drug_specification" />
+        <result property="yfDrcaName" column="yf_drca_name"/>
+        <result property="specSpecification" column="spec_specification"/>
+    </resultMap>
+
+    <select id="selectDrugByDrugName" resultMap="zyDrugMaps">
+        SELECT
+        yf_druginformation.Drug_id,
+        yf_druginformation.Drug_name,
+        yf_druginformation.Drug_barCode,
+        yf_druginformation.Drug_price,
+        yf_druginformation.Drug_usage,
+        yf_druginformation.YK_spec_id,
+        yf_druginformation.YK_Supplier_id,
+        yf_druginformation.YF_drca_id,
+        yf_druginformation.Drug_upper,
+        yf_druginformation.Drug_remark,
+        yf_druginformation.Drug_unit,
+        yf_druginformation.Drug_specification,
+        yf_druginformation.Drug_pastDate,
+        yf_drugcategory.YF_drca_id,
+        yf_drugcategory.YF_drca_name,
+        yk_drugspecifcations.spec_specification
+        FROM
+        yf_druginformation
+        INNER JOIN yf_drugcategory ON yf_druginformation.YF_drca_id = yf_drugcategory.YF_drca_id
+        INNER JOIN yk_drugspecifcations ON yk_drugspecifcations.spec_id = yf_druginformation.YK_spec_id
+
+            <where>
+                <if test="drugNameSearch != '' and drugNameSearch != null">
+                    and yf_druginformation.Drug_name like '%${drugNameSearch}%'
+                </if>
+
+
+                <if test="searchYfDrcaName != '' and searchYfDrcaName != null">
+                    and yf_drugcategory.yf_drca_name = #{searchYfDrcaName}
+                </if>
+
+                <if test="searchSpecId != '' and searchSpecId != null">
+                    and yf_druginformation.YK_spec_id = #{searchSpecId}
+                </if>
+
+                <if test="searchDrugUsage != '' and searchDrugUsage != null">
+                    and yf_druginformation.Drug_usage = #{searchDrugUsage}
+                </if>
+            </where>
+    </select>
+
+
+    <!--查询药品单位去重-->
+    <select id="selectDrugUnit" resultType="string">
+        select distinct Drug_unit  from yf_druginformation
+    </select>
+
+    <!--查询药品用法去重-->
+    <select id="selectDrugUsage" resultType="string">
+        select distinct Drug_usage  from yf_druginformation
+    </select>
+
+</mapper>

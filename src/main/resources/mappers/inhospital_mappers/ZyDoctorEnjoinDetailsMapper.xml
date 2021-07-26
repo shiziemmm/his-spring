@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinDetailsMapper">
+
+    <insert id="insertDeDetailsFor">
+        insert into zy_doctor_enjoin_details(
+                                            De_id,
+                                            des_drug_id,
+                                            des_drug_is,
+                                            Des_drug_name,
+                                            Des_text,
+                                            Des_specification,
+                                            Des_measure,
+                                            Des_frequency,
+                                            Des_unit,
+                                            Des_usage,
+                                            des_entering_date,
+                                            des_count,
+                                            Des_price,
+                                            Des_is,
+                                            Des_present_date)
+
+                                            values
+                                        <foreach collection="dedList" separator="," item="des">
+                                            (#{deId},
+                                            #{des.desDrugId},
+                                            #{des.desDrugIs},
+                                            #{des.desDrugName},
+                                            #{des.desText},
+                                            #{des.desSpecification},
+                                            #{des.desMeasure},
+                                            #{des.desFrequency},
+                                            #{des.desUnit},
+                                            #{des.desUsage},
+                                            #{des.desEnteringDate},
+                                            #{des.desCount},
+                                            #{des.desPrice},
+                                            1,
+                                            current_timestamp
+                                            )
+                                        </foreach>
+    </insert>
+</mapper>

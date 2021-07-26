@@ -21,6 +21,18 @@ class HisSpringApplicationTests {
     @Autowired
     PayService ps;
 
+    @Autowired
+    ZyDrugInFormationService zds;
+
+    @Test
+    void test123(){
+        List<Object> objects = zds.selectDrugUnit();
+        objects.forEach(s->{
+            System.out.println(s);
+        });
+
+    }
+
     @Test
     void text9(){
         ZyPay py = new ZyPay();
