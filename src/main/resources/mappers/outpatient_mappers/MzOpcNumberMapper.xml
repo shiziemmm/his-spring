@@ -34,6 +34,7 @@
         <if test="science !=null and ''!=science">
             and opn.bn_science = #{science}
         </if>
-        order by reg.rt_time
+        and date_format(opn.bn_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
+        order by opn.bn_time
     </select>
 </mapper>

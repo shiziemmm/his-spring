@@ -24,7 +24,6 @@ public class MzOpcNumberController {
     //排号表查询
     @RequestMapping("allMzOpcNumber")
     public List<MzOpcNumber> allMzOpcNumber(@RequestBody String str){
-
         Map map = JSON.parseObject(str, Map.class);
         System.err.println(map);
         String ksName = map.get("ksName").toString();
