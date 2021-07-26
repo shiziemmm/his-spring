@@ -27,4 +27,7 @@ public class DrugVo {
     //关系
     @TableField(exist = false)
     private String yfDrcaName;//药品类别
+
+    @TableField(exist = false)
+    private String specSpecification;
 }
