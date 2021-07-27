@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YkDrugpurchasePlanMapper">
+    <!--药品采购计划表-->
+    <resultMap id="PlanMap" type="cn.gson.hisspring.model.pojos.YkDrugpurchasePlan">
+        <result property="ykPurchaseId" column="YK_purchase_id"/>
+        <result property="ykPurchaseName" column="YK_purchase_name"/>
+        <result property="ykPurchaseTime" column="YK_purchase_time"/>
+        <result property="sId" column="S_id"/>
+        <result property="ykPurchaseSName" column="YK_purchase_sName"/>
+        <result property="ykPurchaseIs" column="YK_purchase_is"/>
+            <!--员工表-->
+            <!--association property对应采购计划表实体类里面staff字段-->
+            <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
+                <result property="sId" column="s_id"/>
+                <result property="sName" column="s_name"/>
+                <result property="sSore" column="s_sore"/>
+                <result property="sPhone" column="s_phone"/>
+                <result property="sDate" column="s_date"/>
+                <result property="uId" column="u_id"/>
+                <result property="ksId" column="ks_id"/>
+                <result property="tId" column="t_id"/>
+            </association>
+            <!--药品采购计划详单-->
+            <collection property="ykDrugpurchasePlanDetails" resultMap="allPlanDetails">
+            </collection>
+            <!--药品信息查询-->
+            <collection property="yfDruginformation" resultMap="DrugMap"/>
+    </resultMap>
+
+    <!--员工mapper-->
+    <resultMap id="allstaffMap" type="cn.gson.hisspring.model.pojos.Staff">
+        <result property="sId" column="s_id"/>
+        <result property="sName" column="s_name"/>
+        <result property="sSore" column="s_sore"/>
+        <result property="sPhone" column="s_phone"/>
+        <result property="sDate" column="s_date"/>
+        <result property="uId" column="u_id"/>
+        <result property="ksId" column="ks_id"/>
+        <result property="tId" column="t_id"/>
+    </resultMap>
+    <!--查询药品采购计划详单-->
+    <resultMap id="allPlanDetails" type="cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails">
+        <result property="ykChaseId" column="YK_chase_id"/>
+        <result property="drugId" column="Drug_id"/>
+        <result property="ykPurchaseId" column="YK_purchase_id"/>
+        <result property="ykDrugName" column="YK_drug_name"/>
+        <result property="ykChaseCount" column="YK_chase_count"/>
+        <result property="drugPrice" column="Drug_price"/>
+        <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
+            <result property="drugId" column="Drug_id" />
+            <result property="drugName" column="Drug_name" />
+            <result property="drugBarCode" column="Drug_barCode" />
+            <result property="drugPrice" column="Drug_price" />
+            <result property="drugUsage" column="Drug_usage" />
+            <result property="ykSpecId" column="YK_spec_id" />
+            <result property="ykSupplierId" column="YK_Supplier_id" />
+            <result property="yfDrcaId" column="YF_drca_id" />
+            <result property="drugUpper" column="Drug_upper" />
+            <result property="drugRemark" column="Drug_remark" />
+            <result property="drugUnit" column="Drug_unit" />
+            <result property="drugSpecification" column="Drug_specification" />
+            <result property="drugPastDate" column="Drug_pastDate" />
+        </association>
+    </resultMap>
+    <!--药品信息查询-->
+    <resultMap id="DrugMap" type="cn.gson.hisspring.model.pojos.YfDruginformation">
+        <result property="drugId" column="Drug_id" />
+        <result property="drugName" column="Drug_name" />
+        <result property="drugBarCode" column="Drug_barCode" />
+        <result property="drugPrice" column="Drug_price" />
+        <result property="drugUsage" column="Drug_usage" />
+        <result property="ykSpecId" column="YK_spec_id" />
+        <result property="ykSupplierId" column="YK_Supplier_id" />
+        <result property="yfDrcaId" column="YF_drca_id" />
+        <result property="drugUpper" column="Drug_upper" />
+        <result property="drugRemark" column="Drug_remark" />
+        <result property="drugUnit" column="Drug_unit" />
+        <result property="drugSpecification" column="Drug_specification" />
+        <result property="drugPastDate" column="Drug_pastDate" />
+        <association property="ykSupplier" javaType="cn.gson.hisspring.model.pojos.YkSupplier">
+            <result property="supplierId" column="Supplier_id"/>
+            <result property="supplierName" column="Supplier_name"/>
+            <result property="supplierSite" column="Supplier_site"/>
+            <result property="supplierPhone" column="Supplier_phone"/>
+            <result property="supplierLinkman" column="Supplier_linkman"/>
+        </association>
+    </resultMap>
+    <!--供应商-->
+    <resultMap id="suppMap" type="cn.gson.hisspring.model.pojos.YkSupplier">
+        <result property="supplierId" column="Supplier_id"/>
+        <result property="supplierName" column="Supplier_name"/>
+        <result property="supplierSite" column="Supplier_site"/>
+        <result property="supplierPhone" column="Supplier_phone"/>
+        <result property="supplierLinkman" column="Supplier_linkman"/>
+    </resultMap>
+
+    <!--查询员工-->
+    <select id="staff" resultMap="allstaffMap">
+        select * from staff
+    </select>
+
+    <!--查询药品采购计划-->
+    <select id="allplan" resultMap="PlanMap">
+        select * from yk_drugpurchase_plan ykd
+            LEFT JOIN staff sta on ykd.S_id = sta.s_id
+            LEFT JOIN yk_drugpurchase_plan_details ydpd on ykd.YK_purchase_id = ydpd.YK_purchase_id
+    </select>
+
+    <!--查询采购计划详单-->
+    <select id="allydpd" resultMap="allPlanDetails">
+        select * from yk_drugpurchase_plan_details ydpd left join yf_drugInformation drug on ydpd.drug_id = drug.drug_id
+    </select>
+
+    <!--查询药品信息-->
+    <select id="allDrug" resultMap="DrugMap">
+        select * from yf_drugInformation yp left join yk_supplier gys on yp.YK_Supplier_id = gys.Supplier_id
+    </select>
+
+    <!--新增采购计划-->
+    <insert id="addplan" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlan">
+        insert ignore  yk_drugpurchase_plan(YK_purchase_id,YK_purchase_name,YK_purchase_time,s_id,YK_purchase_sName) value (#{ykPurchaseId},#{ykPurchaseName},#{ykPurchaseTime},#{sId},#{ykPurchaseSName})
+    </insert>
+
+    <!--新增详表-->
+    <insert id="addplandeta" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails">
+        insert ignore  yk_drugpurchase_plan_details(drug_id,YK_purchase_id,YK_chase_count,Drug_price) value (#{drugId},#{ykPurchaseId},#{ykChaseCount},#{DrugPrice})
+    </insert>
+</mapper>

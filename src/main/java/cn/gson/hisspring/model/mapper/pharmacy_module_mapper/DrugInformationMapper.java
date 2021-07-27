@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface DrugInformation_Mapper {
+public interface DrugInformationMapper {
     //查询药品信息
     List <YfDruginformation> queryById();
     //新增药品信息

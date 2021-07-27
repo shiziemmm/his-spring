@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 @Mapper
-public interface Supplier_Mapper {
+public interface SupplierMapper {
     //    查询供应商
     List <YkSupplier> selectAllSupplier();
     //  新增供应商

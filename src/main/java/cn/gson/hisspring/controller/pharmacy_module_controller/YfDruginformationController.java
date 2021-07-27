@@ -4,7 +4,7 @@ import cn.gson.hisspring.model.pojos.YfDrugcategory;
 import cn.gson.hisspring.model.pojos.YfDruginformation;
 import cn.gson.hisspring.model.pojos.YkDrugspecifcations;
 import cn.gson.hisspring.model.pojos.YkSupplier;
-import cn.gson.hisspring.model.service.pharmacy_module_service.YfDruginformation_Service;
+import cn.gson.hisspring.model.service.pharmacy_module_service.YfDruginformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +15,9 @@ import java.util.List;
 
 @RestController
 @CrossOrigin /*跨域*/
-public class YfDruginformation_Controller {
+public class YfDruginformationController {
     @Autowired
-    YfDruginformation_Service information_service;
+    YfDruginformationService information_service;
     //查询所有药品
     @RequestMapping("yp-all")
     public List<YfDruginformation> yfDruginformations(){
