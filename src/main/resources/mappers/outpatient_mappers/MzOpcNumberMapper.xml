@@ -35,6 +35,6 @@
             and opn.bn_science = #{science}
         </if>
         and date_format(opn.bn_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
-        order by opn.bn_time
+        order by opn.bn_count
     </select>
 </mapper>
