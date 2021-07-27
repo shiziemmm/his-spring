@@ -1,6 +1,6 @@
 package cn.gson.hisspring.model.service.pharmacy_module_service;
 
-import cn.gson.hisspring.model.mapper.pharmacy_module_mapper.Supplier_Mapper;
+import cn.gson.hisspring.model.mapper.pharmacy_module_mapper.SupplierMapper;
 import cn.gson.hisspring.model.pojos.YkSupplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,9 @@ import java.util.List;
  */
 
 @Service
-public class Supplier_Service {
+public class SupplierService {
     @Autowired
-    Supplier_Mapper supplier_mapper;
+    SupplierMapper supplier_mapper;
 
     /*查询供应商*/
     public List<YkSupplier> selectAllSupplier(){

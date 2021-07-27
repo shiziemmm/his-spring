@@ -45,15 +45,15 @@ public class YfDruginformation {
     return drugUsage;
   }
 
-  public long getYkSpecId() {
+  public Long getYkSpecId() {
     return ykSpecId;
   }
 
-  public long getYkSupplierId() {
+  public Long getYkSupplierId() {
     return ykSupplierId;
   }
 
-  public long getYfDrcaId() {
+  public Long getYfDrcaId() {
     return yfDrcaId;
   }
 
@@ -109,15 +109,15 @@ public class YfDruginformation {
     this.drugUsage = drugUsage;
   }
 
-  public void setYkSpecId(long ykSpecId) {
+  public void setYkSpecId(Long ykSpecId) {
     this.ykSpecId = ykSpecId;
   }
 
-  public void setYkSupplierId(long ykSupplierId) {
+  public void setYkSupplierId(Long ykSupplierId) {
     this.ykSupplierId = ykSupplierId;
   }
 
-  public void setYfDrcaId(long yfDrcaId) {
+  public void setYfDrcaId(Long yfDrcaId) {
     this.yfDrcaId = yfDrcaId;
   }
 

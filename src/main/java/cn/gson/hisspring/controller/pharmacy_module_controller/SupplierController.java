@@ -1,12 +1,10 @@
 package cn.gson.hisspring.controller.pharmacy_module_controller;
 
 import cn.gson.hisspring.model.pojos.YkSupplier;
-import cn.gson.hisspring.model.service.pharmacy_module_service.Supplier_Service;
+import cn.gson.hisspring.model.service.pharmacy_module_service.SupplierService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +18,7 @@ import java.util.List;
 @CrossOrigin /*跨域*/
 public class SupplierController {
     @Autowired
-    Supplier_Service supser;
+    SupplierService supser;
     /*查询供应商*/
     @RequestMapping("gys-all")
     public List<YkSupplier> Allgys(){

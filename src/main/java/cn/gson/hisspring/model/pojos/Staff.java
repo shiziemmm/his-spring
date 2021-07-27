@@ -39,5 +39,23 @@ public class Staff {
   private Department dept;
 
 
-
+  @Override
+  public String toString() {
+    return "Staff{" +
+            "sId=" + sId +
+            ", sName='" + sName + '\'' +
+            ", sSore='" + sSore + '\'' +
+            ", sPhone='" + sPhone + '\'' +
+            ", sDate=" + sDate +
+            ", uId=" + uId +
+            ", ksId=" + ksId +
+            ", tId=" + tId +
+            ", sZt=" + sZt +
+            ", user=" + user +
+            ", ks=" + ks +
+            ", t=" + t +
+            ", role=" + role +
+            ", dept=" + dept +
+            '}';
+  }
 }
