@@ -2,6 +2,7 @@ package cn.gson.hisspring.model.mapper.checkout_module_mapper;
 
 import cn.gson.hisspring.model.pojos.SsOperationAnaesthesia;
 import cn.gson.hisspring.model.pojos.SsOperationProject;
+import cn.gson.hisspring.model.pojos.TjCodeMan;
 import cn.gson.hisspring.model.pojos.TjCodeProject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Delete;
@@ -29,4 +30,10 @@ public interface TjprojectMapper extends BaseMapper<TjCodeProject> {
             "inner join tj_code_type c on k.code_type=c.type_id\n" +
             "where k.code_id=#{codeId}")
     List<TjCodeProject> inspect(Integer codeId );
+    //体检人员所含项目查询-->
+    @Select("select * from tj_code_man a\n" +
+            "inner join tj_man_middle b on a.man_id =b.man_id\n" +
+            "inner join tj_code_project c on b.check_id =c.check_id\n" +
+            "where a.man_id =#{manId}")
+    List<TjCodeProject> selectAlonMp(Integer manId);
 }
