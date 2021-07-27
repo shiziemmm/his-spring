@@ -33,9 +33,31 @@ public class TjproController {
     public List<TjCodeMeal> allMeal(String checkIndex,String codeName,String codeType){
         return major.selectAllTjMeal(checkIndex,codeName,codeType);
     }
+    @RequestMapping("allMan") //体检人员排序
+    public List<TjCodeMan> allMan(Integer manState,String sermen){
+        return major.selectAllman(manState,sermen);
+    }
+    @RequestMapping("aloneMp") //体检人员所含
+    public List<TjCodeProject> allManp(Integer manId){
+        return major.selectAlonMm(manId);
+    }
     @RequestMapping("aloneProt") //体检套餐所含检查指标
     public List<TjCodeProject> allPro(Integer codeId){
         return major.selectTjpro(codeId);
+    }
+    @RequestMapping("aloneRes") //体检套餐所含检查指标
+    public List<TjManResult> allMan(Integer manId){
+        return major.AllRes(manId);
+    }
+    /**
+     * 批量新增检查结果
+     */
+    @RequestMapping("resAdd")
+    public boolean reaa(@RequestBody String projstr){
+        System.out.println("222"+projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将项目对象字符串转换为检查对象
+        System.out.println("111"+map);
+        return major.inserjg((List) map.get("listArr"));
     }
     /**
      * 新增修改检查项目
@@ -58,6 +80,28 @@ public class TjproController {
         TjCodeMeal mroj = JSON.parseObject(map.get("mroj").toString(), TjCodeMeal.class);
         System.out.println(mroj);
         return major.tjmealUpdate(mroj);
+    }
+    /**
+     * 新增修改体检人员
+     */
+    @RequestMapping("addOrUpdataMan")
+    public boolean TjmanUpdate(@RequestBody String projstr){
+        System.out.println(projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将项目对象字符串转换为检查对象
+        TjCodeMan manj = JSON.parseObject(map.get("manj").toString(), TjCodeMan.class);
+        System.out.println(manj);
+        return major.tjmanUpdate(manj);
+    }
+    //    修改检查人员状态
+    @PostMapping("upde-tman")
+    public String updetman(Integer manState,Integer manId){
+        try {
+            major.updamzt(manState,manId);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
     }
     //    删除检查项目
     @PostMapping("delet-troj")

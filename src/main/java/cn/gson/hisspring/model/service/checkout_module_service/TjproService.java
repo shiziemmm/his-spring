@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /*
 体检项目service
@@ -20,8 +21,14 @@ public class TjproService {
     TjIndexMapper sed;
     @Autowired//套餐表mapper
     TjmealMapper crd;
-    @Autowired//中间表mapper
+    @Autowired//体检项目套餐中间表mapper
     TjMiddleMapper midd;
+    @Autowired//体检人员表mapper
+    TjManMapper man;
+    @Autowired//体检项目人员中间表mapper
+    TjMiddlemMapper sen;
+    @Autowired//体检结果表mapper
+    TjResultMapper ent;
 //检查项目模糊查询与传参
     public List<TjCodeProject> selectAllTjObject(String seach){
         List<TjCodeProject> listjc = major.selectAllTjObject(seach);
@@ -42,6 +49,24 @@ public class TjproService {
         List<TjCodeProject> listm = major.inspect(codeId);
         return  listm;
     }
+    //体检人员模糊查询与传参
+    public List<TjCodeMan> selectAllman(Integer manState,String sermen){
+        List<TjCodeMan> listman = man.selectAllMan(manState,sermen);
+        System.out.println(listman);
+        return  listman;
+    }
+    //查体检人员所含项目
+    public List<TjCodeProject> selectAlonMm(Integer manId){
+        List<TjCodeProject> listman = major.selectAlonMp(manId);
+        System.out.println(listman);
+        return  listman;
+    }
+    //体检结果传参
+    public List<TjManResult> AllRes(Integer manId){
+        List<TjManResult> listres = ent.allmresult(manId);
+        System.out.println(listres);
+        return  listres;
+    }
     /**
      * 新增修改套惨
      * @return
@@ -61,6 +86,40 @@ public class TjproService {
             is = crd.updateById(mroj);
         }
 
+        return is == 0?false:true;
+    }
+    /**
+     * 新增修改体检人员
+     * @return
+     */
+    public boolean tjmanUpdate(TjCodeMan manj){
+        int is = 0;//判断是否新增成功
+        if(manj.getManId() != 0){//新增
+            //修改
+            //删除原本中间表
+            sen.delet(manj.getManId().intValue());
+//            重新新增中间表
+            man.insertTjman(manj.getManId(),manj.getJcXm());
+            is = man.updateById(manj);
+        }else{
+            is = man.insert(manj);
+            System.out.println("新增编号"+manj.getManId());
+            man.insertTjman(manj.getManId(),manj.getJcXm());
+        }
+
+        return is == 0?false:true;
+    }
+    //修改体检人员状态
+    public void updamzt(Integer manState,Integer manId){
+        man.updatezt(manState,manId);
+    }
+//    批量新增结果
+    public boolean inserjg(List listArr){
+        int is = 0;//判断是否新增成功
+        listArr.forEach(v->{
+            System.err.println(v);
+        });
+        is=ent.insertTjmres(listArr);
         return is == 0?false:true;
     }
     /**

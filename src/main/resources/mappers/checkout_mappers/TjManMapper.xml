@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--体检人员xml-->
+<mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.TjManMapper">
+    <resultMap id="TjMan" type="cn.gson.hisspring.model.pojos.TjCodeMan">
+        <id column="man_id" property="manId"></id>
+        <result  column="man_name" property="manName"></result>
+        <result  column="man_sid" property="manSid"></result>
+        <result  column="man_gender" property="manGender"></result>
+        <result column="man_time" property="manTime"></result>
+        <result column="man_birthtime" property="manBirthtime"></result>
+        <result column="man_age" property="manAge"></result>
+        <result column="man_phone" property="manPhone"></result>
+        <result column="man_phy" property="manPhy"></result>
+        <result column="man_state" property="manState"></result>
+    </resultMap>
+<!--    //体检人员模糊查询-->
+    <select id="selectAllMan" resultMap="TjMan">
+        select * from tj_code_man
+        <where>   man_state  = '${manState}'
+            <if test ="sermen !=null and '' != sermen"> /*名称like*/
+                and man_name like '%${sermen}%'
+            </if>
+            <if test ="sermen !=null and '' != sermen">/*身份证*/
+                or man_sid like '%${sermen}%'
+            </if>
+            <if test ="sermen !=null and '' != sermen">/*手机号*/
+                or man_phone like '%${sermen}%'
+            </if>
+        </where>
+        order by TO_DAYS(man_time) = TO_DAYS(NOW()) desc
+    </select>
+
+
+    <!--    体检人员检查项目中间表批量新增-->
+    <insert id="insertTjman">
+        insert into tj_man_middle values
+        <foreach collection="listArr" index="index"  item="i" separator=",">
+            (#{manId},#{i})
+        </foreach>
+    </insert>
+</mapper>
