@@ -32,4 +32,5 @@ public class DepartmentKsService {
     public List<DepartmentKs> selectZyKs(){
         return d.selectZyKs();
     }
+   public List<DepartmentKs> selectdome(DepartmentKs departmentKs){return d.selectdome(departmentKs);}
 }

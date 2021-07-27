@@ -3,6 +3,43 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinDetailsMapper">
 
+    <!--封装医嘱详情信息map-->
+    <resultMap id="desMap" type="cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails">
+        <result column="Des_id" property="desId"/>
+        <result column="De_id" property="deId"/>
+        <result column="des_drug_id" property="desDrugId"/>
+        <result column="des_drug_is" property="desDrugIs"/>
+        <result column="Des_drug_name" property="desDrugName"/>
+        <result column="Des_text" property="desText"/>
+        <result column="Des_specification" property="desSpecification"/>
+        <result column="Des_measure" property="desMeasure"/>
+        <result column="Des_frequency" property="desFrequency"/>
+        <result column="Des_unit" property="desUnit"/>
+        <result column="Des_usage" property="desUsage"/>
+        <result column="des_entering_date" property="desEnteringDate"/>
+        <result column="des_count" property="desCount"/>
+        <result column="Des_price" property="desPrice" />
+        <result column="Des_is" property="desIs" />
+        <result column="Des_present_date" property="desPresentDate" />
+    </resultMap>
+
+    
+    <update id="updateDesByDeIdOrDesId">
+        update zy_doctor_enjoin_details set Des_is = 2 
+        <where>
+            <if test="desId != '' and desId != null">
+                des_id = #{desId}
+            </if>
+
+            <if test="deId != '' and deId != null">
+                de_id = #{deId}
+            </if>
+        </where>
+    </update>
+
+
+
+    <!--循环新增医嘱详表数据-->
     <insert id="insertDeDetailsFor">
         insert into zy_doctor_enjoin_details(
                                             De_id,
