@@ -10,5 +10,6 @@ public class Frequency {
   private String fFrequency;
   private String fStartTime;
   private String fEndTime;
+  private long fZt;
 
 }

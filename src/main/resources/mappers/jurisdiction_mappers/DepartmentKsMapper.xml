@@ -26,4 +26,14 @@
   <select id="selectName" resultMap="BaseResultMap">
     select * from  department_ks k left JOIN department d on k.de_id= d.de_id where k.de_id is null
   </select>
+  <select id="selectdome" resultMap="BaseResultMap">
+    select * from department_ks
+    <where>
+
+      <if test="ksName!=null">
+        or ks_name like '%${ksName}%'
+      </if>
+
+    </where>
+  </select>
 </mapper>

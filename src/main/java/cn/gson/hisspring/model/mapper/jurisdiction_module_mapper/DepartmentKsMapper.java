@@ -23,5 +23,6 @@ public interface DepartmentKsMapper extends BaseMapper<DepartmentKs> {
     List<DepartmentKs> selectZyKs();
     List<DepartmentKs> selectId(Long id);
     List<DepartmentKs>selectName();
+    List<DepartmentKs> selectdome(DepartmentKs departmentKs);
 
 }

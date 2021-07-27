@@ -77,4 +77,9 @@ public class DepartmentKsController {
             return 0;
         }
     }
+    @PostMapping("select-ks")
+    public List<DepartmentKs> selectAll(@RequestBody DepartmentKs departmentKs){
+//        System.out.println(departmentKs);
+       return dm.selectdome(departmentKs);
+    }
 }

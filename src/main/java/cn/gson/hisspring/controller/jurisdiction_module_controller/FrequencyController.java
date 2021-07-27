@@ -21,6 +21,11 @@ public class FrequencyController {
         return fs.selectAll();
     }
 
+    /**
+     *
+     * @param
+     * @return 新增班次
+     */
     @RequestMapping("add-fre")
     public int addFre(Frequency frequency){
         int i=fs.addFre(frequency);
@@ -28,6 +33,35 @@ public class FrequencyController {
             return 1;
         }else{
             return 0;
+        }
+    }
+
+    /**
+     *
+     * @param frequency
+     * @return 编辑班次
+     */
+    @RequestMapping("edit-fre")
+    public int editFre(Frequency frequency){
+        int i= fs.editFre(frequency);
+        if(i>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    /**
+     * 删除班次
+     */
+    @RequestMapping("delet-fre")
+    public int deletFre(long fid){
+        List<Frequency> list=fs.selectById(fid);
+        System.out.println(list);
+        if(list.get(0).getFZt()==0){
+            int i=fs.deletFre(fid);
+            return 0;
+        }else {
+            return 1;
         }
     }
 }

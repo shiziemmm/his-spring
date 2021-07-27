@@ -15,4 +15,11 @@ public class FrequencyService {
         return frequencyMapper.selectList(null);
     }
     public int addFre(Frequency frequency){return frequencyMapper.insert(frequency);}
+    //修改班次信息
+    public int editFre(Frequency frequency){return frequencyMapper.updateById(frequency);}
+    //删除班次
+    public int deletFre(long fid){return frequencyMapper.updateById(fid);}
+    public List<Frequency> selectById(long fid){
+        return frequencyMapper.selectById(fid);
+    }
 }
