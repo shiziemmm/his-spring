@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * 医嘱controller层
  */
@@ -23,9 +25,18 @@ public class DoctorEnjoinController {
     public boolean addDoctorEnjoin(@RequestBody String str){
         System.err.println(str);
         ZyDoctorEnjoin zyDoctorEnjoin = JSON.parseObject(str, ZyDoctorEnjoin.class);
-        System.err.println(zyDoctorEnjoin);
         return des.addDoctorEnjoin(zyDoctorEnjoin);
     }
 
+
+    /**
+     * 根据住院号查询医嘱信息
+     * @return
+     */
+    @RequestMapping("select-doctorEnjoin-ByPtNo")
+    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(Long ptNo){
+        System.err.println("住院号"+ptNo);
+       return des.doctorEnjoinSelectByPtId(ptNo);
+    }
 
 }

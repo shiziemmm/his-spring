@@ -15,4 +15,6 @@ public interface DoctorEnjoinDetailsMapper extends BaseMapper<ZyDoctorEnjoinDeta
 
 
     int insertDeDetailsFor(@Param("dedList") List<ZyDoctorEnjoinDetails> doctorEnjoinDetails, @Param("deId") Long deId);
+
+    int updateDesByDeIdOrDesId(@Param("desId") Long desId,@Param("deId") Long deId);
 }

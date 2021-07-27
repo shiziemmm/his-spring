@@ -7,6 +7,8 @@ import cn.gson.hisspring.model.pojos.ZyDoctorEnjoin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 医嘱service
  */
@@ -38,8 +40,17 @@ public class DoctorEnjoinService {
             dedm.insertDeDetailsFor(zyDoctorEnjoin.getDedList(),zyDoctorEnjoin.getDeId());//循环新增
             return true;
         }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
+    }
+
+
+    /**
+     * 根据住院号查询医嘱信息
+     */
+    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(Long ptNo){
+        return dem.doctorEnjoinSelectByPtId(ptNo);
     }
 
 
