@@ -23,6 +23,7 @@ public class DrugVo {
     private String drugUnit;
     private String drugSpecification;
     private String drugPastDate;
+    private Long iss;//1是药品 2是耗材
 
     //关系
     @TableField(exist = false)

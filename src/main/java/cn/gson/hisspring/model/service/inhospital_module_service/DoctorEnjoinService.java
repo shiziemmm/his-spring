@@ -37,7 +37,7 @@ public class DoctorEnjoinService {
 
 
             //===================================新增医嘱详情表
-            dedm.insertDeDetailsFor(zyDoctorEnjoin.getDedList(),zyDoctorEnjoin.getDeId());//循环新增
+            dedm.insertDeDetailsFor(zyDoctorEnjoin.getDedList(),zyDoctorEnjoin.getDeId(),zyDoctorEnjoin.getDeExecuteDate());//循环新增
             return true;
         }catch (Exception e){
             e.printStackTrace();
