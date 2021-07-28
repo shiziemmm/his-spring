@@ -1,17 +1,14 @@
 package cn.gson.hisspring.model.pojos;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 /**
- *  西药处方-pojos
+ *  西药处方表
  */
-
-
-@Data//get  set方法
+@Data
 public class MzXprescription {
-  @TableId(type = IdType.AUTO)
+
   private long rdNumber;
+  private String rdName;
   private long rdCount;
   private String rdDosage;
   private String rdFrequency;
@@ -21,6 +18,8 @@ public class MzXprescription {
   private long rdSkin;
   private String rdSkinResult;
   private String rdGrouping;
+  private String rdEntrust;
+    private String rdNotes;
   private long drugId;
   private long recipeNumber;
 
