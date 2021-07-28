@@ -1,25 +1,28 @@
 package cn.gson.hisspring.model.pojos;
 
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.util.Date;
 /**
  * 就诊记录表
  */
-
-@Data//get  set方法
+@Data
 public class MzMedicalRecord {
   @TableId(type = IdType.AUTO)
   private long mrNumber;
+  private String mrCount;
   private String mrDoctorName;
   private String mrDiagnoseRecord;
-  private java.sql.Timestamp mrSection;
+  private Date mrSection;
   private String mrKsName;
   private String mrPhone;
+  private long mrState;
   private long sId;
   private String sickNumber;
-  private String mcNumberCard;
-
+  private long bnNumber;
+  private String mcNumber;
 
 }
