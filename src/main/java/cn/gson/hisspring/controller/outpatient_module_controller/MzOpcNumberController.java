@@ -33,5 +33,15 @@ public class MzOpcNumberController {
         List<MzOpcNumber> mzOpcNumbers = countService.selectMzOpcNumber(ksName, science);
         return mzOpcNumbers;
     }
-
+    //过号
+    @RequestMapping("jumpMark")
+    public String jumpMark(@RequestBody MzOpcNumber opcNumber){
+        try {
+            countService.jumpMark(opcNumber);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
 }

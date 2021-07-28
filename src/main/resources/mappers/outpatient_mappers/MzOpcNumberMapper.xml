@@ -21,7 +21,7 @@
         </association>
 
     </resultMap>
-
+    <!--查询本科室的排号信息表  根据 科室，职称，状态0，系统时间 -->
     <select id="selectMzOpcNumber" resultMap="opcNumberMap">
         select * from mz_opc_number opn
         LEFT JOIN mz_registration reg on opn.rt_number= reg.rt_number
@@ -34,6 +34,7 @@
         <if test="science !=null and ''!=science">
             and opn.bn_science = #{science}
         </if>
+        and opn.bn_state = 0
         and date_format(opn.bn_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by opn.bn_count
     </select>

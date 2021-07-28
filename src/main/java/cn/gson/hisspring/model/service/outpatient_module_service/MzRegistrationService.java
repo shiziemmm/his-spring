@@ -78,7 +78,7 @@ public class MzRegistrationService {
         opcNumber.setBnIdCard(cardObject.getMcIdCard());
         opcNumber.setBnKsName(mzRegistration.getRtOverKsName());
         opcNumber.setBnSickName(cardObject.getMzSick().getSickName());
-        opcNumber.setBnState(0L);
+        opcNumber.setBnState(0L);//排号状态默认为0
         opcNumber.setBnScience(mzRegistration.getRtScience());
         //日期格式来加个判断
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
@@ -88,11 +88,11 @@ public class MzRegistrationService {
         wp.eq("bn_ks_name",mzRegistration.getRtOverKsName());
         wp.eq("bn_science",mzRegistration.getRtScience());
         wp.eq("date_format(bn_time ,'%Y-%m-%d')",sf.format(mzRegistration.getRtOnsetTime()));// 日期
-        System.err.println(sf.format(c.getTime())+"==111111111111111111111111111111111111111111111");
+        System.err.println(sf.format(c.getTime())+"==生成排号号码");
         List<MzOpcNumber> opcCount = opcNumberMapper.selectList(wp);
-        if(opcCount.isEmpty()){//如果他是第一个就1
+        if(opcCount.isEmpty()){//如果没有数据，他是第一个就1
             opcNumber.setBnCount(1L);
-        }else{//不是就号码加1
+        }else{//有就号码加1
             opcNumber.setBnCount(maxCount(mzRegistration.getRtOverKsName(),mzRegistration.getRtScience(),mzRegistration.getRtOnsetTime())+1);
         }
         opcNumberMapper.insert(opcNumber);
@@ -105,6 +105,7 @@ public class MzRegistrationService {
         QueryWrapper<MzOpcNumber> wp = new QueryWrapper<>();
         wp.eq("bn_ks_name",ksName);// 科室
         wp.eq("bn_science",science);// 医生职称
+//        wp.eq("bn_state",0);// 排号状态
         wp.eq("date_format(bn_time ,'%Y-%m-%d')",sf.format(date));// 日期
         wp.orderByDesc("bn_count").last("limit 1");
         MzOpcNumber opcCount = opcNumberMapper.selectOne(wp);
