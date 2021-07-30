@@ -1,7 +1,9 @@
 package cn.gson.hisspring.model.service.jurisdiction_module_service;
 
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.FrequencyMapper;
+import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMapper;
 import cn.gson.hisspring.model.pojos.Frequency;
+import cn.gson.hisspring.model.pojos.Scheduling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import java.util.List;
 public class FrequencyService {
     @Autowired
     FrequencyMapper frequencyMapper;
+
     public List<Frequency> selectAll(){
         return frequencyMapper.selectList(null);
     }
@@ -22,4 +25,6 @@ public class FrequencyService {
     public List<Frequency> selectById(long fid){
         return frequencyMapper.selectById(fid);
     }
+
+
 }

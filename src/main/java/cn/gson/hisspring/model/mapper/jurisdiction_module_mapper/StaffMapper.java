@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface StaffMapper extends BaseMapper<Staff> {
     List<Staff> selectALl();
+    List<Staff> selectksId(long ksId);
 
 }
