@@ -11,6 +11,8 @@ import java.util.List;
  */
 @Mapper
 public interface MzAlterLoseMapper extends BaseMapper<MzAlterLose> {
-    //连表查询
+    /**
+        连表查询
+     */
     List<MzAlterLose> selectMzAlterLose(String mzSickTest);
 }

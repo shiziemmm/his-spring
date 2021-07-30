@@ -1,7 +1,9 @@
 package cn.gson.hisspring.model.pojos;
 
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -16,13 +18,18 @@ public class MzMedicalRecord {
   private String mrCount;
   private String mrDoctorName;
   private String mrDiagnoseRecord;
+  @TableField(fill = FieldFill.INSERT)//丢到处理器handler中新增去
   private Date mrSection;
   private String mrKsName;
-  private String mrPhone;
+  private String mrIdCard;
   private long mrState;
   private long sId;
   private String sickNumber;
   private long bnNumber;
   private String mcNumber;
+
+  @TableField(exist = false)//不是数据库的
+  private MzRecipe recipeObject;//处方表
+
 
 }

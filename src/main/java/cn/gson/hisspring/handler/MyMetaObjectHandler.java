@@ -19,6 +19,10 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("mcrcTime",new Date(),metaObject);//门诊 诊疗卡充值记录表-pojos
         this.setFieldValByName("rtTime",new Date(),metaObject);//门诊 挂号表-pojos
         this.setFieldValByName("cbTime",new Date(),metaObject);//门诊 账单记录表-pojos
+
+        this.setFieldValByName("mrSection",new Date(),metaObject); // 门诊就诊记录表-pojos
+        this.setFieldValByName("recipeTime",new Date(),metaObject); // 门诊处方表-pojos
+
     }
 
     @Override

@@ -17,5 +17,10 @@
         <result column="bn_Number" property="bnNumber"></result>
 
     </resultMap>
-    <select id="selectMzMedicalRecord" resultMap="recordMap"></select>
+    <select id="selectMzMedicalRecord" resultMap="recordMap">
+        select * from jiuz
+        <if test="index !=null and index !=''">
+            mr_state = #{index}
+        </if>
+    </select>
 </mapper>

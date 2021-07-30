@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * 处方表mapper
  */
-
 @Mapper
 public interface MzRecipeMapper extends BaseMapper<MzRecipe> {
 }
