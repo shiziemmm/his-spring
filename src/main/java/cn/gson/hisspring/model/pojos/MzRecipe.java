@@ -32,4 +32,11 @@ public class MzRecipe {
   @TableField(exist = false)//不是数据库对象
   private List<MzZprescription> zpList;//中药处方对象
 
+  public long getsId() {
+    return sId;
+  }
+  public void setsId(long sId) {
+    this.sId = sId;
+  }
+
 }

@@ -25,11 +25,8 @@ public class MzOpcNumberController {
     @RequestMapping("allMzOpcNumber")
     public List<MzOpcNumber> allMzOpcNumber(@RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
-        System.err.println(map);
         String ksName = map.get("ksName").toString();
         String science = map.get("science").toString();
-        System.err.println(ksName+"==11");
-        System.err.println(science+"==22");
         List<MzOpcNumber> mzOpcNumbers = countService.selectMzOpcNumber(ksName, science);
         return mzOpcNumbers;
     }

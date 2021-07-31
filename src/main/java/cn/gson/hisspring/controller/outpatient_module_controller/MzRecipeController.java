@@ -18,15 +18,15 @@ public class MzRecipeController {
     MzRecipeService recipeService;
 
 
-    @RequestMapping("addRecipe")
-    public String addRecipe(@RequestBody RecordVo recordVo){
-        try {
-            System.err.println(recordVo);
-            recipeService.addRecipe(recordVo);
-            return "ok";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "fail";
-        }
-    }
+//    @RequestMapping("addRecipe")
+//    public String addRecipe(@RequestBody RecordVo recordVo){
+//        try {
+//            System.err.println(recordVo);
+//            recipeService.addRecipe(recordVo);
+//            return "ok";
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "fail";
+//        }
+//    }
 }

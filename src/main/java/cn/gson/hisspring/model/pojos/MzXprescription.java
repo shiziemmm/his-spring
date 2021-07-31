@@ -15,7 +15,7 @@ public class MzXprescription {
   private String rdWay;
   private double rdPrice;
   private String rdTyppe;
-  private long rdSkin;
+  private Long  rdSkin;
   private String rdGrouping;
   private String rdEntrust;
   private String rdNotes;

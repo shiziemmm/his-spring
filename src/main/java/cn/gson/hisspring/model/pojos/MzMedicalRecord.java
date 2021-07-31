@@ -23,6 +23,9 @@ public class MzMedicalRecord {
   private String mrKsName;
   private String mrIdCard;
   private long mrState;
+  private String mrSickType;
+  private Double mrTotalMoney;
+
   private long sId;
   private String sickNumber;
   private long bnNumber;
@@ -31,5 +34,11 @@ public class MzMedicalRecord {
   @TableField(exist = false)//不是数据库的
   private MzRecipe recipeObject;//处方表
 
+  public long getsId() {
+    return sId;
+  }
+  public void setsId(long sId) {
+    this.sId = sId;
+  }
 
 }

@@ -1,7 +1,6 @@
 package cn.gson.hisspring.model.service.outpatient_module_service;
 
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper;
-import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.TitleMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzOpcNumberMapper;
 import cn.gson.hisspring.model.pojos.DepartmentKs;
@@ -29,16 +28,6 @@ public class MzOpcNumberService {
     @Autowired
     MzRegistrationService registrationService;//挂号表service
 
-    /**
-     * 生成问诊号 - 问诊号的生成规则为接诊时间加科室id加职称id加排号号码
-     * @return
-     */
-//    public String returnMrCount(){
-//
-//    }
-
-
-
 
 
     //排号列表查询
@@ -60,10 +49,6 @@ public class MzOpcNumberService {
         }
         ksName = ks.getKsName();
         List<MzOpcNumber> mzOpcNumbers = countMapper.selectMzOpcNumber(ksName,science);
-        for (MzOpcNumber mzOpcNumber : mzOpcNumbers) {
-            System.err.println(mzOpcNumber.getBnTime());
-        }
-
         return mzOpcNumbers;
     }
 
