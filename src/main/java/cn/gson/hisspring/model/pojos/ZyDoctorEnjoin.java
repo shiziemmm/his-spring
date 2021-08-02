@@ -23,6 +23,7 @@ public class ZyDoctorEnjoin {
   private Long ptNo;
   private Long sId;
   private String deDoctorName;
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private java.sql.Timestamp deDate;
   private String deChineseMethod;
   private String deText;//嘱托

@@ -2,17 +2,19 @@ package cn.gson.hisspring.model.pojos;
 
 import lombok.Data;
 
-@Data//get  set方法
+/**
+ * 医嘱停用记录表
+ */
+
+@Data
 public class ZyStopDoctorEnjoin {
 
   private long sdeId;
-  private long derId;
-  private long sId;
+  private Long derId;
+  private Long sId;
   private String sdeDoctorName;
   private String sdeStopCause;
-  private long drugId;
-  private String sdeDrugName;
-  private long ptNo;
-
+  private java.sql.Timestamp sdeDate;
+  private Long ptNo;
 
 }

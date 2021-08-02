@@ -56,7 +56,10 @@
                                             des_count,
                                             Des_price,
                                             Des_is,
-                                            Des_present_date)
+                                            Des_present_date,
+                                            Des_execute_date,
+                                            Des_end_date
+                                            )
 
                                             values
                                         <foreach collection="dedList" separator="," item="des">
@@ -74,7 +77,9 @@
                                             #{des.desCount},
                                             #{des.desPrice},
                                             1,
-                                            current_timestamp
+                                            current_timestamp,
+                                            #{DesExecuteDate},
+                                            null
                                             )
                                         </foreach>
     </insert>

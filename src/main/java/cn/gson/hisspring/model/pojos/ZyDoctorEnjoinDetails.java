@@ -3,6 +3,8 @@ package cn.gson.hisspring.model.pojos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 /**
  * 医嘱详表
  */
@@ -22,6 +24,10 @@ public class ZyDoctorEnjoinDetails {
   private String desUsage;
   private Long desCount;
   private Double desPrice;
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
+  private Timestamp DesExecuteDate;
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
+  private Timestamp DesEndDate;
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private java.sql.Timestamp desEnteringDate;//录入时间
   private Long desIs;
