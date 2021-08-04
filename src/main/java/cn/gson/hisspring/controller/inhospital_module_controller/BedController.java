@@ -71,7 +71,6 @@ public class BedController {
     @RequestMapping("bedUpdatePatient")
     public boolean patientUpdateBed(@RequestBody String str){
         System.out.println(str);
-
         PatientUpdateBedVo bedVo = JSON.parseObject(str, PatientUpdateBedVo.class);
         System.out.println(bedVo);
         return pbs.PatientUpdateBed(bedVo);
