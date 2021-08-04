@@ -1,18 +1,14 @@
 package cn.gson.hisspring.model.service.outpatient_module_service;
 
-import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalRecordMapper;
-import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper;
-import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzXprescriptionMapper;
-import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzZprescriptionMapper;
-import cn.gson.hisspring.model.pojos.MzMedicalRecord;
-import cn.gson.hisspring.model.pojos.MzRecipe;
-import cn.gson.hisspring.model.pojos.MzXprescription;
-import cn.gson.hisspring.model.pojos.MzZprescription;
+import cn.gson.hisspring.model.mapper.outpatient_module_mapper.*;
+import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -30,7 +26,8 @@ public class MzMedicalRecordService {
     MzXprescriptionMapper xpMapper;//西药
     @Autowired
     MzZprescriptionMapper zpMapper;//中药
-
+    @Autowired
+    MzOpcNumberMapper opcNumberMapper;//排号
     /**
      添加处方表--只做处方 和就诊记录的添加
      */
@@ -38,9 +35,16 @@ public class MzMedicalRecordService {
         MzMedicalRecord medicalRecordObject = recordVo.getMedicalRecordObject();
 
         MzRecipe recipeObject = recordVo.getRecipeObject();
-        //新增就诊记录表
+        //新增就诊记录表 和修改排号表状态
         if(recordVo.getMedicalRecordObject() !=null){
-
+            //修改排号表状态
+//            long bnNumber = medicalRecordObject.getBnNumber();
+//            QueryWrapper qw = new QueryWrapper();
+//            qw.eq("bn_number",bnNumber);
+//            MzOpcNumber opcNumber = opcNumberMapper.selectOne(qw);
+//            opcNumber.setBnState(1);
+//            opcNumberMapper.updateById(opcNumber);
+            medicalRecordObject.setMrOverTime(new Timestamp(System.currentTimeMillis()));//这个是修改时间，就是结束就诊时间对应时间，
             medicalRecordMapper.insert(medicalRecordObject);
         }
         //新增处方
@@ -71,11 +75,9 @@ public class MzMedicalRecordService {
     /**
      *  查询就诊记录表
      */
-    public void selectMedicalRecord(Long index){
-        medicalRecordMapper.selectMzMedicalRecord(index);
+    public List<MzMedicalRecord> selectMedicalRecord(Long index){
+       return medicalRecordMapper.selectMzMedicalRecord(index);
     }
-
-
 
 
 }

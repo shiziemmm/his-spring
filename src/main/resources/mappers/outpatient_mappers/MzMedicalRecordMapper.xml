@@ -10,17 +10,21 @@
         <result column="mr_Diagnose_Record" property="mrDiagnoseRecord"></result>
         <result column="mr_Section" property="mrSection"></result>
         <result column="mr_Ks_Name" property="mrKsName"></result>
-        <result column="mr_Phone" property="mrPhone"></result>
+        <result column="mr_Id_Card" property="mrIdCard"></result>
+        <result column="mr_State" property="mrState"></result>
+        <result column="mr_Sick_Type" property="mrSickType"></result>
+        <result column="mr_Total_Money" property="mrTotalMoney"></result>
         <result column="s_Id" property="sId"></result>
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
         <result column="bn_Number" property="bnNumber"></result>
 
+        <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap"></association>
     </resultMap>
     <select id="selectMzMedicalRecord" resultMap="recordMap">
-        select * from jiuz
-        <if test="index !=null and index !=''">
-            mr_state = #{index}
+        select * from mzmedicalrecord where 1=1
+        <if test="index != null and ''!=index">
+            and mr_state = #{index}
         </if>
     </select>
 </mapper>

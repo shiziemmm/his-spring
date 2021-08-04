@@ -16,7 +16,6 @@ public class MzZprescription {
   private String zpUsage;
   private double zpPrice;
   private String zpEntrust;
-  private String zpNotes;
   private long drugId;
   private long recipeNumber;
 

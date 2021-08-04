@@ -22,6 +22,8 @@ public class MzRecipe {
   private String recipeSickName;
   private String recipeDoctorName;
   private String recipeDoctorText;
+  private String  xpNotes;
+  private String zpNotes;
   private String sickNumber;
   private long sId;
   private long mrNumber;

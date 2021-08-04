@@ -18,7 +18,6 @@ public class MzXprescription {
   private Long  rdSkin;
   private String rdGrouping;
   private String rdEntrust;
-  private String rdNotes;
   private long drugId;
   private long recipeNumber;
 
