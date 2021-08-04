@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.Frequency">
     <id column="f_id" jdbcType="INTEGER" property="fId" />
     <result column="f_frequency" jdbcType="VARCHAR" property="fFrequency" />
-    <result column="f_start_time" jdbcType="VARCHAR" property="fEndTime" />
+    <result column="f_start_time" jdbcType="VARCHAR" property="fStartTime" />
     <result column="f_end_time" jdbcType="VARCHAR" property="fEndTime"/>
     <result column="f_zt" jdbcType="INTEGER" property="fZt"></result>
   </resultMap>
@@ -16,4 +16,10 @@
   <delete id="updateById">
     delete from frequency where f_id=#{fId}
   </delete>
+  <insert id="addRoleInfo" parameterType="java.util.List">
+    insert into frequency values()
+    <foreach collection="funs" item="i" separator=", ">
+      (#{rId},#{i})
+    </foreach>
+  </insert>
 </mapper>

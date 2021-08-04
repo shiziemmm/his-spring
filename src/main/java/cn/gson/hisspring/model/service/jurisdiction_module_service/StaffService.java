@@ -37,5 +37,9 @@ public class StaffService{
     public int upa(Staff staff){
         return sm.updateById(staff);
     }
+    //根据科室查员工
+    public List<Staff> selectksId(long ksId){
+        return sm.selectksId(ksId);
+    }
 
 }

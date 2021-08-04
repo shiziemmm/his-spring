@@ -17,47 +17,34 @@
         <result property="drugSpecification" column="Drug_specification" />
         <result property="yfDrcaName" column="yf_drca_name"/>
         <result property="specSpecification" column="spec_specification"/>
+        <result property="iss" column="iss"/>
     </resultMap>
+
 
     <select id="selectDrugByDrugName" resultMap="zyDrugMaps">
         SELECT
-        yf_druginformation.Drug_id,
-        yf_druginformation.Drug_name,
-        yf_druginformation.Drug_barCode,
-        yf_druginformation.Drug_price,
-        yf_druginformation.Drug_usage,
-        yf_druginformation.YK_spec_id,
-        yf_druginformation.YK_Supplier_id,
-        yf_druginformation.YF_drca_id,
-        yf_druginformation.Drug_upper,
-        yf_druginformation.Drug_remark,
-        yf_druginformation.Drug_unit,
-        yf_druginformation.Drug_specification,
-        yf_druginformation.Drug_pastDate,
-        yf_drugcategory.YF_drca_id,
-        yf_drugcategory.YF_drca_name,
-        yk_drugspecifcations.spec_specification
+        *
         FROM
-        yf_druginformation
-        INNER JOIN yf_drugcategory ON yf_druginformation.YF_drca_id = yf_drugcategory.YF_drca_id
-        INNER JOIN yk_drugspecifcations ON yk_drugspecifcations.spec_id = yf_druginformation.YK_spec_id
-
+        seltDrugInformationAndConsumables
             <where>
                 <if test="drugNameSearch != '' and drugNameSearch != null">
-                    and yf_druginformation.Drug_name like '%${drugNameSearch}%'
+                    and Drug_name like '%${drugNameSearch}%'
                 </if>
 
+                <if test="searchYfDrcaName != '' and searchYfDrcaName != null and searchYfDrcaName != '外用药'">
+                    and yf_drca_name = #{searchYfDrcaName}
+                </if>
 
-                <if test="searchYfDrcaName != '' and searchYfDrcaName != null">
-                    and yf_drugcategory.yf_drca_name = #{searchYfDrcaName}
+                <if test="searchYfDrcaName != '' and searchYfDrcaName != null and searchYfDrcaName == '外用药'">
+                    and iss = 2
                 </if>
 
                 <if test="searchSpecId != '' and searchSpecId != null">
-                    and yf_druginformation.YK_spec_id = #{searchSpecId}
+                    and YK_spec_id = #{searchSpecId}
                 </if>
 
                 <if test="searchDrugUsage != '' and searchDrugUsage != null">
-                    and yf_druginformation.Drug_usage = #{searchDrugUsage}
+                    and Drug_usage = #{searchDrugUsage}
                 </if>
             </where>
     </select>

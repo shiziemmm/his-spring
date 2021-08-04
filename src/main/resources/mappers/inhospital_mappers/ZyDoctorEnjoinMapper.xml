@@ -20,6 +20,7 @@
         <collection property="dedList" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinDetailsMapper.desMap"></collection>
     </resultMap>
 
+    <!--封装医嘱信息-->
     <select resultMap="deMap" id="doctorEnjoinSelectByPtId">
         select * from seltDoctorEnjoin
         <where>
@@ -27,6 +28,17 @@
                 pt_no  = #{ptNo}
             </if>
         </where>
+        order by de_execute_date desc,De_end_date desc
     </select>
+
+    <!--封装医嘱信息-->
+<!--    <select resultMap="deMap" id="doctorEnjoinDetailsSelectByPtId">-->
+<!--        select * from seltDoctorEnjoin-->
+<!--        <where>-->
+<!--            <if test=" ptNo != '' and ptNo != null">-->
+<!--                pt_no  = #{ptNo}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
 
 </mapper>
