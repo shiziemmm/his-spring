@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /*
 体检项目service
@@ -126,6 +125,10 @@ public class TjproService {
     //修改体检人员状态
     public void updamzt(Integer manState,Integer manId){
         man.updatezt(manState,manId);
+    }
+    //修改体检人员医生建议
+    public void updamanY(String manProposal,Integer manId){
+        man.updTjmanY(manProposal,manId);
     }
     //修改诊疗卡金额根据身份证
     public void updMoney(Integer mcBalance,String mcIdCard){car.updMoney(mcBalance,mcIdCard);}

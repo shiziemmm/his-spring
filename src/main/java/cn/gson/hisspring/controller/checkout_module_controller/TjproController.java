@@ -121,6 +121,17 @@ public class TjproController {
             return "fail";
         }
     }
+    //    修改检查人员医生建议
+    @PostMapping("upd-manY")
+    public String updetman(String manProposal,Integer manId){
+        try {
+            major.updamanY(manProposal,manId);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    } 
     //修改诊疗卡金额根据身份证
     @PostMapping("updeMoney")
     public String updMoney(Integer mcBalance,String mcIdCard){
