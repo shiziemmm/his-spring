@@ -15,4 +15,10 @@ public class SchedulingService {
     public List<Scheduling> selectList(){
         return schedulingMapper.selectList(null);
     }
+    public boolean addSch(Scheduling scheduling,List<Integer> list){
+        return schedulingMapper.addSch(scheduling,list) < 0 ? false : true;
+    }
+    public List<Scheduling> selectAll(String star,String end){
+        return schedulingMapper.selectAll(star,end);
+    }
 }
