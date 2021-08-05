@@ -22,7 +22,11 @@ public class TjCodeMan {
   private String manPhone;
   private double manPhy;
   private Long manState;
+  private String  manProposal;
 
   @TableField(exist = false)
   private List<Integer> jcXm;
+
+  @TableField(exist = false)
+  private Double mcBalance;
 }

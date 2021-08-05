@@ -6,24 +6,33 @@
         <id column="check_id" property="checkId"></id>
         <result  column="check_name" property="checkName"></result>
         <result  column="check_pay" property="checkPay"></result>
-        <result  column="index_id" property="indexId"></result>
-        <association property="tjCodeIndex"  javaType="cn.gson.hisspring.model.pojos.TjCodeIndex">
-            <id column="index_id" jdbcType="INTEGER" property="indexId" />
-            <result  column="index_name" property="indexName"></result>
-            <result  column="index_significance" property="indexSignificance"></result>
+        <result  column="index_name" property="indexName"></result>
+        <result  column="index_significance" property="indexSignificance"></result>
+        <association property="deptks"  javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
+            <id column="ks_id" jdbcType="INTEGER" property="ksId" />
+            <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
+            <result column="de_id" jdbcType="TIMESTAMP" property="deId" />
+<!--            <result column="ks_dz" jdbcType="TIMESTAMP" property="ksDz" />-->
         </association>
-
     </resultMap>
     <select id="selectAllTjObject" resultMap="Tjproject">
-        SELECT * FROM tj_code_project a  left join  tj_code_index b on b.index_id=a.index_id
+        SELECT * FROM tj_code_project a  left join  department_ks b on b.ks_id=a.ks_id
         <where>
-            <if test ="checkName !=null and '' != checkName"> /*名称like*/
+            <if test ="seach !=null and '' != seach"> /*名称like*/
                 check_name like'%${checkName}%'
             </if>
-            <if test ="indexName !=null and '' != indexName">/*指标*/
+            <if test ="seach !=null and '' != seach">/*指标*/
                 or index_name like'%${indexName}%'
             </if>
         </where>
         ORDER BY a.check_pay desc
+    </select>
+<!--    体检人员所含项目查询-->
+    <select id="selectAlonMp" resultMap="Tjproject">
+        select * from tj_code_man a
+        inner join tj_man_middle b on a.man_id =b.man_id
+         inner join tj_code_project c on b.check_id =c.check_id
+         inner join department_ks d on c.ks_id =d.ks_id
+        where a.man_id =#{manId}
     </select>
 </mapper>
