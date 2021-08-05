@@ -6,6 +6,7 @@ import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * 医嘱service
  */
 @Service
+@Transactional
 public class DoctorEnjoinService {
 
     @Autowired

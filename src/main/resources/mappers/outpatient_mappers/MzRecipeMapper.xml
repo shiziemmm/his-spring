@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--处方表-->
+<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper">
+    <resultMap id="recipeMaps" type="cn.gson.hisspring.model.pojos.MzRecipe">
+        <id column="recipe_Number" property="recipeNumber"></id>
+        <result column="recipe_Time" property="recipeTime"></result>
+        <result column="recipe_Sick_Name" property="recipeSickName"></result>
+        <result column="recipe_Doctor_Name" property="recipeDoctorName"></result>
+        <result column="recipe_Doctor_Text" property="recipeDoctorText"></result>
+        <result column="xp_Notes" property="xpNotes"></result>
+        <result column="zp_Notes" property="zpNotes"></result>
+        <result column="sick_Number" property="sickNumber"></result>
+        <result column="s_Id" property="sId"></result>
+        <result column="mr_Number" property="mrNumber"></result>
+        <result column="recipe_State_Price" property="recipeStatePrice"></result>
+    </resultMap>
+
+    <resultMap id="recipeMap" type="cn.gson.hisspring.model.pojos.MzRecipe">
+        <id column="recipe_Number" property="recipeNumber"></id>
+        <result column="recipe_Time" property="recipeTime"></result>
+        <result column="recipe_Sick_Name" property="recipeSickName"></result>
+        <result column="recipe_Doctor_Name" property="recipeDoctorName"></result>
+        <result column="recipe_Doctor_Text" property="recipeDoctorText"></result>
+        <result column="xp_Notes" property="xpNotes"></result>
+        <result column="zp_Notes" property="zpNotes"></result>
+        <result column="sick_Number" property="sickNumber"></result>
+        <result column="s_Id" property="sId"></result>
+        <result column="mr_Number" property="mrNumber"></result>
+        <result column="recipe_State_Price" property="recipeStatePrice"></result>
+
+        <collection property="xpList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzXprescriptionMapper.xpMaps">
+
+        </collection>
+        <collection property="zpList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzZprescriptionMapper.zmMaps">
+
+        </collection>
+
+    </resultMap>
+
+</mapper>

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -36,4 +37,11 @@ public class ZyDoctorEnjoin {
   @TableField(exist = false)
   private List<ZyDoctorEnjoinDetails> dedList;//医嘱详情集合
 
+  public ZyDoctorEnjoin(long deId, Timestamp deEndDate) {
+    this.deId = deId;
+    this.deEndDate = deEndDate;
+  }
+
+  public ZyDoctorEnjoin() {
+  }
 }

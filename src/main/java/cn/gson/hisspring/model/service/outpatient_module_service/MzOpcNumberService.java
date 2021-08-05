@@ -1,7 +1,6 @@
 package cn.gson.hisspring.model.service.outpatient_module_service;
 
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper;
-import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.TitleMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzOpcNumberMapper;
 import cn.gson.hisspring.model.pojos.DepartmentKs;
@@ -21,11 +20,17 @@ import java.util.List;
 @Transactional
 public class MzOpcNumberService {
     @Autowired
-    MzOpcNumberMapper countMapper;
+    MzOpcNumberMapper countMapper; // 排号表mapper
     @Autowired
-    DepartmentKsMapper ksMapper;
+    DepartmentKsMapper ksMapper; //科室mapper
     @Autowired
-    TitleMapper titleMapper;
+    TitleMapper titleMapper; //职称表mapper
+    @Autowired
+    MzRegistrationService registrationService;//挂号表service
+
+
+
+    //排号列表查询
     public List<MzOpcNumber> selectMzOpcNumber(String ksName,String science){
         //查询科室
         QueryWrapper qw1 = new QueryWrapper();
@@ -36,16 +41,28 @@ public class MzOpcNumberService {
         qw2.eq("t_id",science);
         Title title = titleMapper.selectOne(qw2);
         if(title!=null){
-            if(title.getTName().equals("主任医师") || title.getTName().equals("副主任医师")){
-                science = "普通号";
-            }else{
+            if(title.getTName().equals("教授") || title.getTName().equals("副教授")){
                 science = "专家号";
+            }else{
+                science = "普通号";
             }
         }
         ksName = ks.getKsName();
-        System.err.println(ksName);
-        System.err.println(science);
         List<MzOpcNumber> mzOpcNumbers = countMapper.selectMzOpcNumber(ksName,science);
         return mzOpcNumbers;
     }
+
+    // 过号
+    public void jumpMark(MzOpcNumber opcNumber){
+        Long aLong = registrationService.maxCount(opcNumber.getBnKsName(), opcNumber.getBnScience(), opcNumber.getBnTime());
+        opcNumber.setBnCount(aLong+1);
+        countMapper.updateById(opcNumber);//修改掉他的卡号
+    }
+    //删除排号
+    public void delecteOpcCount(Long bnNumber){
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("bn_number",bnNumber);
+        countMapper.delete(qw);
+    }
+
 }

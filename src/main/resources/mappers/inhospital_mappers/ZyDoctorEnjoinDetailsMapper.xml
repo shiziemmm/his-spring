@@ -5,6 +5,15 @@
 
     <!--封装医嘱详情信息map-->
     <resultMap id="desMap" type="cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails">
+        <result column="De_id" property="deId"/>
+        <result column="De_longorshort" property="deLongorshort"/>
+        <result column="Pt_no" property="ptNo"/>
+        <result column="S_id" property="sId"/>
+        <result column="De_doctor_name" property="deDoctorName"/>
+        <result column="des_Execute_Date" property="desExecuteDate" />
+        <result column="des_end_date" property="desEndDate"/>
+
+
         <result column="Des_id" property="desId"/>
         <result column="De_id" property="deId"/>
         <result column="des_drug_id" property="desDrugId"/>
@@ -23,7 +32,19 @@
         <result column="Des_present_date" property="desPresentDate" />
     </resultMap>
 
-    
+    <select id="doctorEnjoinDetailsSelectByPtId" resultMap="desMap">
+        select * from seltDoctorEnjoin
+        <where>
+            <if test=" ptNo != '' and ptNo != null">
+                pt_no  = #{ptNo}
+            </if>
+        </where>
+        order by des_execute_date desc , des_end_date desc
+    </select>
+
+
+
+
     <update id="updateDesByDeIdOrDesId">
         update zy_doctor_enjoin_details set Des_is = 2 
         <where>
@@ -60,7 +81,6 @@
                                             Des_execute_date,
                                             Des_end_date
                                             )
-
                                             values
                                         <foreach collection="dedList" separator="," item="des">
                                             (#{deId},
@@ -83,4 +103,12 @@
                                             )
                                         </foreach>
     </insert>
+
+
+
+
+    <!--批量修改停嘱日期-->
+    <update id="updateDoctorEnjoinDetailsFor">
+        update zy_doctor_enjoin_details set Des_end_date = #{sde.sdeDate} where des_end_date is null and de_id = #{sde.derId}
+    </update>
 </mapper>

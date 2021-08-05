@@ -19,12 +19,15 @@
             <result column="man_phone" property="manPhone"></result>
             <result column="man_phy" property="manPhy"></result>
             <result column="man_state" property="manState"></result>
+            <result column="mc_balance" property="mcBalance"></result>
+            <result column="man_proposal" property="manProposal"></result>
         </association>
         <association property="pro"  javaType="cn.gson.hisspring.model.pojos.TjCodeProject">
             <id column="check_id" property="checkId"></id>
             <result  column="check_name" property="checkName"></result>
             <result  column="check_pay" property="checkPay"></result>
-            <result  column="index_id" property="indexId"></result>
+            <result  column="index_name" property="indexName"></result>
+            <result  column="index_significance" property="indexSignificance"></result>
         </association>
     </resultMap>
     <select id="allmresult" resultMap="TjMres">
