@@ -65,4 +65,13 @@ public class StaffController {
         ss.upa(staff1);
 
     }
+    @RequestMapping("quit-staff")
+    public String quit(long id){
+       int i= ss.upa(id);
+       if(i>0){
+           return "ok";
+       }else{
+           return "false";
+       }
+    }
 }
