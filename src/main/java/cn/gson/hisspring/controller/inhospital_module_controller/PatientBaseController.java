@@ -21,7 +21,6 @@ public class PatientBaseController {
     PatientBaseService pbs;
 
 
-
     @RequestMapping("patient-changeDept")
     public boolean patientChangeDept(@RequestBody String str){
         System.out.println(str);
@@ -85,11 +84,12 @@ public class PatientBaseController {
 
 
     @RequestMapping("select-patient-sId")
-    public List<ZyPatientBase> selectPatientBySId(Long sId,Long ksId,String text){
+    public List<ZyPatientBase> selectPatientBySId(Long sId,Long ksId,String text,Long is){
         System.err.println(sId);
         System.out.println(ksId);
         System.err.println("搜索"+text);
-      return   pbs.selectPatientBySId(sId,ksId,text);
+        System.out.println("iss"+is);
+      return   pbs.selectPatientBySId(sId,ksId,text,is);
     }
 
 

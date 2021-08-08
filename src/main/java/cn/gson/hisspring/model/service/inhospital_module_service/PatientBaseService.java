@@ -50,6 +50,8 @@ public class PatientBaseService {
     ChangeDeptMapper cdm;//病人转科记录mapper
 
 
+
+
     /**
      * 根据条件查询病人集合
      * @param sId
@@ -57,8 +59,11 @@ public class PatientBaseService {
      * @param text
      * @return
      */
-    public List<ZyPatientBase> selectPatientBySId(Long sId,Long ksId,String text){
-       return pbm.selectPatientBySId(sId,ksId,text);
+    public List<ZyPatientBase> selectPatientBySId(Long sId,Long ksId,String text,Long is){
+        if(is == 1){
+            return pbm.selectPatientBySId(sId,ksId,text);
+        }
+            return pbm.doctorEnjoinExecute(sId,ksId,text);
     }
 
 

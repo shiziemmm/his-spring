@@ -31,7 +31,16 @@
         <result column="Des_is" property="desIs" />
         <result column="Des_present_date" property="desPresentDate" />
     </resultMap>
+    
+    <update id="doctorEnjoinDetailsExecuteFor">
+        update ZY_doctor_enjoin_details set Des_present_date = current_timestamp where Des_id in(
+        <foreach collection="list" item="des" separator=",">
+            #{des.desId}
+        </foreach>
+        )
+    </update>
 
+    <!--根据病人编号查询医嘱详情-->
     <select id="doctorEnjoinDetailsSelectByPtId" resultMap="desMap">
         select * from seltDoctorEnjoin
         <where>
@@ -42,6 +51,16 @@
         order by des_execute_date desc , des_end_date desc
     </select>
 
+
+    <!--根据病人编号查询医嘱详情-->
+    <select resultMap="desMap" id="patientDoctorByPtNo">
+        select * from seltdoctorenjoinexecute
+        <where>
+            <if test="ptNo != '' and ptNo != null">
+                pt_no = #{ptNo}
+            </if>
+        </where>
+    </select>
 
 
 
@@ -97,7 +116,7 @@
                                             #{des.desCount},
                                             #{des.desPrice},
                                             1,
-                                            current_timestamp,
+                                            null,
                                             #{DesExecuteDate},
                                             null
                                             )

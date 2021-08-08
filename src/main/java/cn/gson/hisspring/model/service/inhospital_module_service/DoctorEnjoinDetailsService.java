@@ -35,5 +35,13 @@ public class DoctorEnjoinDetailsService {
     }
 
 
+    /**
+     * 根据住院号查询医嘱详情
+     */
+    public List<ZyDoctorEnjoinDetails> patientDoctorByPtNo(Long ptNo){
+        return dedm.patientDoctorByPtNo(ptNo) ;
+    }
+
+
 
 }
