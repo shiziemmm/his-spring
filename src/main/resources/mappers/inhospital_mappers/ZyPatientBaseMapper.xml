@@ -72,6 +72,58 @@
     </resultMap>
 
 
+    <!--查询病人以及病人下面的医嘱信息map-->
+    <!--封装住院登记信息-->
+    <resultMap id="patientsMap" type="cn.gson.hisspring.model.pojos.ZyPatientBase">
+        <result column="Pt_no" property="ptNo"/>
+        <result column="pt_In_date" property="ptInDate"/>
+        <result column="Pt_name" property="ptName"/>
+        <result column="pt_sex" property="ptSex"/>
+        <result column="Pt_Birth_date" property="ptBirthDate"/>
+        <result column="Pt_Capacity_no" property="ptCapacityNo"/>
+        <result column="Pt_Home_adder" property="ptHomeAdder"/>
+        <result column="ks_id" property="ksId"/>
+        <result column="Pt_Diagnose_name" property="ptDiagnoseName"/>
+        <result column="Bd_id" property="bdId"/>
+        <result column="Pt_Out_date" property="ptOutDate"/>
+        <result column="Pt_age" property="ptAge"/>
+        <result column="pt_pay_money" property="ptPayMoney"/>
+        <result column="pt_price" property="ptPrice"/>
+        <result column="pt_iphone" property="ptIphone"/>
+        <result column="s_id" property="sId"/>
+        <result column="ks_name" property="ksName"/>
+        <result column="pt_is" property="ptIs"/>
+
+        <!--医生信息-->
+        <association property="staff" resultMap="staffMaps"></association>
+
+        <!--病床信息-->
+        <association property="bed" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper.bedMap"></association>
+    </resultMap>
+
+    <!--修改余额-->
+    <update id="updatePatientBasePrice">
+        update Zy_patient_base set pt_price = pt_price - #{price} where pt_no = #{ptNo}
+    </update>
+
+    <!--查询病人以及病人下面的医嘱信息-->
+    <select resultMap="patientsMap" id="doctorEnjoinExecute">
+       select * from seltpatientdoctorenjoin
+        <where>
+            <if test="sId != null">
+                and s_id = #{sId}
+            </if>
+            <if test="ksId != null ">
+                and ks_id = #{ksId}
+            </if>
+            <if test="text != null">
+                and (pt_no like '%${text}%' or pt_name like '%{text}%')
+            </if>
+            and pt_is = 1
+        </where>
+    </select>
+
+
 
     <!--根据治疗医生查询病人-->
     <select id="selectPatientBySId" resultMap="patientMap">

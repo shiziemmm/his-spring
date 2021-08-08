@@ -24,4 +24,9 @@ public class DoctorEnjoinDetailsController {
     public List<ZyDoctorEnjoinDetails> doctorEnjoinDetailsSelectByPtId(Long ptNo){
         return deds.doctorEnjoinDetailsSelectByPtId(ptNo);
     }
+
+    @RequestMapping("selectDoctorEnjoinDetailsByPtNo")
+    public List<ZyDoctorEnjoinDetails> patientDoctorByPtNo(Long ptNo){
+        return deds.patientDoctorByPtNo(ptNo);
+    }
 }

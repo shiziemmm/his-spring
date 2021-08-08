@@ -41,5 +41,8 @@ public class StaffService{
     public List<Staff> selectksId(long ksId){
         return sm.selectksId(ksId);
     }
+    public int upa(long id){
+        return sm.upa(id);
+    }
 
 }

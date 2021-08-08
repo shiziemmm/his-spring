@@ -14,6 +14,7 @@ public class DepartmentKs {
   @TableId(value = "ks_id")
   private long ksId;
   private String ksName;
+  private String ksDz;
   private long deId;
 
   @TableField(exist = false)

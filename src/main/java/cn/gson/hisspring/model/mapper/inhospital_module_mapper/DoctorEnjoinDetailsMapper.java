@@ -1,6 +1,7 @@
 package cn.gson.hisspring.model.mapper.inhospital_module_mapper;
 
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails;
+import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import cn.gson.hisspring.model.pojos.ZyStopDoctorEnjoin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,4 +24,9 @@ public interface DoctorEnjoinDetailsMapper extends BaseMapper<ZyDoctorEnjoinDeta
     List<ZyDoctorEnjoinDetails> doctorEnjoinDetailsSelectByPtId(Long ptNo);
 
     int updateDoctorEnjoinDetailsFor(@Param("sde")ZyStopDoctorEnjoin sde);
+
+    List<ZyDoctorEnjoinDetails> patientDoctorByPtNo(Long ptNo);
+
+    int doctorEnjoinDetailsExecuteFor(List<ZyDoctorEnjoinDetails> list);
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ public class MzMedicalRecordService {
     MzZprescriptionMapper zpMapper;//中药
     @Autowired
     MzOpcNumberMapper opcNumberMapper;//排号
+    @Autowired
+    MzCaseHistoryMapper historyMapper;//病历表
     /**
      添加处方表--只做处方 和就诊记录的添加
      */
@@ -38,14 +41,21 @@ public class MzMedicalRecordService {
         //新增就诊记录表 和修改排号表状态
         if(recordVo.getMedicalRecordObject() !=null){
             //修改排号表状态
-//            long bnNumber = medicalRecordObject.getBnNumber();
-//            QueryWrapper qw = new QueryWrapper();
-//            qw.eq("bn_number",bnNumber);
-//            MzOpcNumber opcNumber = opcNumberMapper.selectOne(qw);
-//            opcNumber.setBnState(1);
-//            opcNumberMapper.updateById(opcNumber);
+            long bnNumber = medicalRecordObject.getBnNumber();
+            QueryWrapper qw = new QueryWrapper();
+            qw.eq("bn_number",bnNumber);
+            MzOpcNumber opcNumber = opcNumberMapper.selectOne(qw);
+            opcNumber.setBnState(1);
+            opcNumberMapper.updateById(opcNumber);
             medicalRecordObject.setMrOverTime(new Timestamp(System.currentTimeMillis()));//这个是修改时间，就是结束就诊时间对应时间，
             medicalRecordMapper.insert(medicalRecordObject);
+        }
+        //新增病历表
+        MzCaseHistory historyObject = recordVo.getHistoryObject();
+        if(historyObject!=null){
+            historyObject.setSickNumber(recipeObject.getSickNumber());//新增病人外键
+            historyObject.setMrNumber(medicalRecordObject.getMrNumber());//新增就诊记录表
+            historyMapper.insert(historyObject);
         }
         //新增处方
         if(recordVo.getRecipeObject() !=null){
@@ -75,9 +85,9 @@ public class MzMedicalRecordService {
     /**
      *  查询就诊记录表
      */
-    public List<MzMedicalRecord> selectMedicalRecord(Long index){
+    public List<MzMedicalRecord> selectMedicalRecord(Long index,String texts){
         System.err.println(index);
-       return medicalRecordMapper.selectMzMedicalRecord(index);
+       return medicalRecordMapper.selectMzMedicalRecord(index, texts);
     }
 
 
