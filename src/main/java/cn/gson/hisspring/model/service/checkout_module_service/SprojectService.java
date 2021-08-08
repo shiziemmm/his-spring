@@ -44,6 +44,24 @@ public class SprojectService {
         List<SsOperationProject> listalone = sproject.aloneProject(projectId);
         return listalone;
     }
+    //修改手术室状态
+    public void updazt(Integer operationZt,Integer operationId){
+        sss.updSroom(operationZt,operationId);
+    }
+    /**
+     * 新增修改手术室
+     * @return
+     */
+    public boolean sssUpdate(SsOperationRoom proj){
+        int is = 0;//判断是否新增成功
+        if(proj.getOperationId() == 0){//新增
+            sss.insert(proj);
+        }else{//修改
+            is = sss.updateById(proj);
+        }
+
+        return is == 0?false:true;
+    }
     /**
      * 新增修改手术项目
      * @return
