@@ -61,7 +61,8 @@ public class StaffController {
         staff1.setUId(user1.getUId());
         System.out.println(staff1);
         System.out.println(user1);
-        ss.upa(staff1);
         us.upa(user1);
+        ss.upa(staff1);
+
     }
 }

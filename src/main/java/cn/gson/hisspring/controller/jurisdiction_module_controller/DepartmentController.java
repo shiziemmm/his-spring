@@ -1,15 +1,21 @@
 package cn.gson.hisspring.controller.jurisdiction_module_controller;
 
 import cn.gson.hisspring.model.pojos.Department;
+import cn.gson.hisspring.model.pojos.User;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.DepartmentService;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @CrossOrigin
 @RestController
+
 /*
     部门
  */
@@ -23,9 +29,12 @@ public class DepartmentController {
         List<Department> bm = dept.selectList();
         return bm;
     }
-    @PostMapping("add-list")
-    public String addlist(@RequestBody Department de){
-        int i=dept.add(de);
+    @RequestMapping("add-dept")
+    public String addlist(String depts){
+        System.out.println(depts);
+        Department user1 = JSONObject.parseObject(depts, Department.class);
+        System.out.println(user1);
+        int i=dept.add(user1);
         if(i>0){
             return "ok";
         }else{
