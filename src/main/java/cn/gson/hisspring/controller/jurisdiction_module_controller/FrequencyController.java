@@ -54,7 +54,7 @@ public class FrequencyController {
      * 删除班次
      */
     @RequestMapping("delet-fre")
-    public int deletFre(long fid){
+    public int deletFre(Integer fid){
         List<Frequency> list=fs.selectById(fid);
         System.out.println(list);
         if(list.get(0).getFZt()==0){

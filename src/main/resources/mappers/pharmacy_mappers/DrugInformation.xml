@@ -16,7 +16,10 @@
         <result property="drugRemark" column="Drug_remark" />
         <result property="drugUnit" column="Drug_unit" />
         <result property="drugSpecification" column="Drug_specification" />
-        <result property="drugPastdate" column="Drug_pastDate" />
+        <result property="drugPastDate" column="Drug_pastDate" />
+        <result property="drugParticle" column="Drug_particle"/>
+        <result property="drugQuantity" column="Drug_quantity"/>
+        <result property="drugPrescription" column="Drug_prescription"/>
             <!--药品规格-->
             <association property="ykDrugspecifcations" javaType="cn.gson.hisspring.model.pojos.YkDrugspecifcations">
                 <result property="specId" column="spec_id"/>
@@ -37,6 +40,7 @@
                 <result property="yfDrcaName" column="YF_drca_name"/>
             </association>
     </resultMap>
+
     <!--药品规格-->
     <resultMap id="specMap" type="cn.gson.hisspring.model.pojos.YkDrugspecifcations">
         <result property="specId" column="spec_id"/>
@@ -56,31 +60,36 @@
         <result property="yfDrcaId" column="YF_drca_id"/>
         <result property="yfDrcaName" column="YF_drca_name"/>
     </resultMap>
+
    <!-- 查询药品规格-->
     <select id="allspec" resultMap="specMap">
         select * from yk_drugSpecifcations where 1 = 1
     </select>
+
     <!--查询供应商-->
     <select id="allsupp" resultMap="suppMap">
         select * from yk_supplier where 1 = 1
     </select>
+
     <!--查询类别-->
     <select id="alldrca" resultMap="drcaMap">
         select * from yf_drugcategory where 1 = 1
     </select>
+
     <!--查询药品信息-->
     <select id="queryById" resultMap="DrugInforMap">
         select * from yf_drugInformation yp left join
             yk_drugSpecifcations gg on yp.YK_spec_id = gg.spec_id
         left join yk_supplier gys on yp.YK_Supplier_id = gys.Supplier_id
         left join yf_drugcategory lb on yp.YF_drca_id = lb.YF_drca_id
-
     </select>
+
     <!--新增药品-->
     <insert id="addDrug" parameterType="cn.gson.hisspring.model.pojos.YfDruginformation">
         insert into YF_DrugInformation value (null ,#{drugName},#{drugBarCode},#{drugPrice},#{drugUsage},#{ykSpecId},
-            #{ykSupplierId},#{yfDrcaId},#{drugUpper},#{drugRemark},#{drugUnit},#{drugSpecification},#{drugPastDate})
+            #{ykSupplierId},#{yfDrcaId},#{drugUpper},#{drugRemark},#{drugUnit},#{drugSpecification},#{drugPastDate},#{drugParticle},#{drugQuantity},#{drugPrescription})
     </insert>
+
     <!--修改药品信息-->
     <update id="updaDrug" parameterType="cn.gson.hisspring.model.pojos.YfDruginformation">
         update YF_DrugInformation set Drug_name=#{drugName},Drug_barCode=#{drugBarCode},
@@ -88,8 +97,10 @@
                                       YK_spec_id=#{ykSpecId},YK_Supplier_id=#{ykSupplierId},
                                       YF_drca_id=#{yfDrcaId},Drug_upper=#{drugUpper},
                                       Drug_remark=#{drugRemark},Drug_unit=#{drugUnit},
-                                      Drug_specification=#{drugSpecification},Drug_pastDate=#{drugPastDate}
-                                    where Drug_id=#{drugId}
+                                      Drug_specification=#{drugSpecification},Drug_pastDate=#{drugPastDate},
+                                      Drug_particle=#{drugParticle},Drug_quantity=#{drugQuantity},
+                                      Drug_prescription=#{drugPrescription}
+                                      where Drug_id=#{drugId}
     </update>
 
 </mapper>

@@ -11,16 +11,17 @@
     </resultMap>
     <select id="selectAllTjMeal" resultMap="TjMeal">
         SELECT * FROM tj_code_meal a  left join  tj_code_type b on b.type_id=a.code_type
-        <where>
-            <if test ="codeType !=null and '' != codeType">/*指标*/
-                  Code_type like'%${codeType}%'
+        <where> 1=1
+            <if test ="codeType !=null and '' != codeType">/*类型*/
+                and Code_type like'%${codeType}%'
             </if>
             <if test ="codeName !=null and '' != codeName"> /*名称like*/
-                and Code_name like'%${codeName}%'
+                or Code_name like'%${codeName}%'
             </if>
             <if test ="checkIndex !=null and '' != checkIndex">/*指标*/
                 or check_index like'%${checkIndex}%'
             </if>
+
         </where>
         ORDER BY a.Code_id desc
     </select>

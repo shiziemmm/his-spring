@@ -14,22 +14,25 @@
         <result column="man_phone" property="manPhone"></result>
         <result column="man_phy" property="manPhy"></result>
         <result column="man_state" property="manState"></result>
+        <result column="mc_balance" property="mcBalance"></result>
+        <result column="man_proposal" property="manProposal"></result>
     </resultMap>
 <!--    //体检人员模糊查询-->
     <select id="selectAllMan" resultMap="TjMan">
-        select * from tj_code_man
-        <where>   man_state  = '${manState}'
+        select *,(select mc_balance from  mz_medical_card where mc_Id_Card=tj.man_sid) mc_balance
+        from tj_code_man tj
+        <where>   tj.man_state  = '${manState}'
             <if test ="sermen !=null and '' != sermen"> /*名称like*/
-                and man_name like '%${sermen}%'
+                and tj.man_name like '%${sermen}%'
             </if>
             <if test ="sermen !=null and '' != sermen">/*身份证*/
-                or man_sid like '%${sermen}%'
+                or tj.man_sid like '%${sermen}%'
             </if>
             <if test ="sermen !=null and '' != sermen">/*手机号*/
-                or man_phone like '%${sermen}%'
+                or tj.man_phone like '%${sermen}%'
             </if>
         </where>
-        order by TO_DAYS(man_time) = TO_DAYS(NOW()) desc
+        order by TO_DAYS(tj.man_time) = TO_DAYS(NOW()) desc
     </select>
 
 
@@ -40,4 +43,31 @@
             (#{manId},#{i})
         </foreach>
     </insert>
+<!--    &lt;!&ndash;    体检人员批量修改&ndash;&gt;-->
+<!--    <update id="updTjman">-->
+<!--        <foreach collection="listArr" index="index" open="" close=""  item="i" separator=";">-->
+<!--        update  tj_code_man-->
+<!--        <set>-->
+<!--            man_time=#{i.manTime,jdbcType=TIMESTAMP}-->
+<!--        </set>-->
+<!--        where man_id=#{i.manId}-->
+<!--        </foreach>-->
+<!--    </update>-->
+<!--    <update id="updatePublishByIds" parameterType="java.util.Map">-->
+<!--        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">-->
+<!--            update INDEX_PRODCUT-->
+<!--            <set>-->
+<!--                <if test="item.status != null and item.status !='' ">-->
+<!--                    status=#{item.status,jdbcType=VARCHAR},-->
+<!--                </if>-->
+<!--                <if test="item.mdate != null ">-->
+<!--                    mdate=#{item.mdate,jdbcType=TIMESTAMP},-->
+<!--                </if>-->
+<!--                <if test="item.muser_id != null and item.muser_id !=''  ">-->
+<!--                    muser_id=#{item.muser_id,jdbcType=VARCHAR}-->
+<!--                </if>-->
+<!--            </set>-->
+<!--            where id = #{item.id}-->
+<!--        </foreach>-->
+<!--    </update>-->
 </mapper>

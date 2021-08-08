@@ -11,6 +11,7 @@ import java.util.List;
  */
 @Mapper
 public interface TjmealMapper extends BaseMapper<TjCodeMeal> {
+    //查询套餐
     List<TjCodeMeal> selectAllTjMeal(String checkIndex,String codeName,String codeType);
 //    批量新增体检套餐与检查项目中间表、
     int insertTjmid(List<Integer> listArr,long codeId);
