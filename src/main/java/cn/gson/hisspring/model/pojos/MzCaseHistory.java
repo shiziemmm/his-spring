@@ -1,16 +1,28 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-@Data//get  set方法
-public class MzCaseHistory {
+import java.util.Date;
 
+/**
+ * 病历表
+ */
+
+@Data
+public class MzCaseHistory {
+  @TableId(type = IdType.AUTO)
   private long chNumber;
-  private String chCause;
-  private java.sql.Timestamp chTime;
-  private String chText;
+  private Date chTime;
   private String chDoctor;
-  private long sickNumber;
+  private String chComplaint;
+  private String chHistory;
+  private String chFamilyHistory;
+  private String chOe;
+  private String chCause;
+  private String chDoctorText;
+  private long mrNumber;
 
 
 }

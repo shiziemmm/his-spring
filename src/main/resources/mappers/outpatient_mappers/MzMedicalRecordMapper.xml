@@ -29,5 +29,7 @@
         <if test="index != null">
             and mr_state = #{index}
         </if>
+        and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
+        order by mr_number
     </select>
 </mapper>
