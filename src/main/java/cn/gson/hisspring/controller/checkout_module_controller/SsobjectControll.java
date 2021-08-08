@@ -1,9 +1,6 @@
 package cn.gson.hisspring.controller.checkout_module_controller;
 
-import cn.gson.hisspring.model.pojos.MzMedicalCard;
-import cn.gson.hisspring.model.pojos.SsOperationAnaesthesia;
-import cn.gson.hisspring.model.pojos.SsOperationProject;
-import cn.gson.hisspring.model.pojos.ZyWard;
+import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.service.checkout_module_service.SprojectService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,11 @@ public class SsobjectControll {
     @RequestMapping("sprot")
     public List<SsOperationProject> ssOperationProjects(){
         return  sprojectService.allProject();
+    }
+    //所有手术室
+    @RequestMapping("sssRoom")
+    public List<SsOperationRoom> allSroom(){
+        return  sprojectService.allSroom();
     }
 //    单个手术项目
     @RequestMapping("ssprot")
