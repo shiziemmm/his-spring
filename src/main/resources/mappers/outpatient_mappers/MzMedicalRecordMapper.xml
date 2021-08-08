@@ -9,11 +9,14 @@
         <result column="mr_Doctor_Name" property="mrDoctorName"></result>
         <result column="mr_Diagnose_Record" property="mrDiagnoseRecord"></result>
         <result column="mr_Section" property="mrSection"></result>
+        <result column="mr_Over_Time" property="mrOverTime"></result>
+
         <result column="mr_Ks_Name" property="mrKsName"></result>
         <result column="mr_Id_Card" property="mrIdCard"></result>
         <result column="mr_State" property="mrState"></result>
         <result column="mr_Sick_Type" property="mrSickType"></result>
         <result column="mr_Total_Money" property="mrTotalMoney"></result>
+        <result column="mr_mc_card" property="mrMcCard"></result>
         <result column="s_Id" property="sId"></result>
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
@@ -23,7 +26,7 @@
     </resultMap>
     <select id="selectMzMedicalRecord" resultMap="recordMap">
         select * from mzmedicalrecord where 1=1
-        <if test="index != null and ''!=index">
+        <if test="index != null">
             and mr_state = #{index}
         </if>
     </select>
