@@ -85,9 +85,9 @@ public class MzMedicalRecordService {
     /**
      *  查询就诊记录表
      */
-    public List<MzMedicalRecord> selectMedicalRecord(Long index){
+    public List<MzMedicalRecord> selectMedicalRecord(Long index,String texts){
         System.err.println(index);
-       return medicalRecordMapper.selectMzMedicalRecord(index);
+       return medicalRecordMapper.selectMzMedicalRecord(index, texts);
     }
 
 

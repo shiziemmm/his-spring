@@ -30,9 +30,10 @@
         <if test="index != null">
             and mr_state = #{index}
         </if>
-<!--        <if test="">-->
-
-<!--        </if>-->
+        <if test="texts !=null and ''!=texts ">
+            and  (mr_mc_card = #{texts}
+            or mr_id_card = #{texts})
+        </if>
         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_number
     </select>

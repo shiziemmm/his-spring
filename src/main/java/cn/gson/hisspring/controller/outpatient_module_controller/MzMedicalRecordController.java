@@ -39,6 +39,8 @@ public class MzMedicalRecordController {
     public List<MzMedicalRecord> selectMedicalRecord( @RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
         String index = map.get("index").toString();
-        return recordService.selectMedicalRecord(Long.parseLong(index));
+        String texts = map.get("texts").toString();
+        System.err.println(texts);
+        return recordService.selectMedicalRecord(Long.parseLong(index),texts);
     }
 }

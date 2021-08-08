@@ -156,7 +156,7 @@ class HisSpringApplicationTests {
     MzMedicalRecordService se;
     @Test
     void  yy (){
-        List<MzMedicalRecord> mzMedicalRecords = se.selectMedicalRecord(1L);
+        List<MzMedicalRecord> mzMedicalRecords = se.selectMedicalRecord(1L,null);
         for (MzMedicalRecord mzMedicalRecord : mzMedicalRecords) {
             System.err.println(mzMedicalRecord);
         }
