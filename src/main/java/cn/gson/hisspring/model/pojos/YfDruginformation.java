@@ -7,7 +7,7 @@ import lombok.Data;
 @Data//get  set方法
 public class YfDruginformation {
 
-  private Long drugId;
+  private Integer drugId;
   private String drugName;
   private String drugBarCode;
   private Double drugPrice;
@@ -52,11 +52,11 @@ public class YfDruginformation {
     this.drugPrescription = drugPrescription;
   }
 
-  public Long getDrugId() {
+  public Integer getDrugId() {
     return drugId;
   }
 
-  public void setDrugId(Long drugId) {
+  public void setDrugId(Integer drugId) {
     this.drugId = drugId;
   }
 
