@@ -28,7 +28,8 @@ public class YfDruginformationController {
     public String addDrug(@RequestBody YfDruginformation yfDruginformation){
         System.err.println(yfDruginformation);
         try {
-            if(yfDruginformation.getDrugId()==0){
+            if(yfDruginformation.getDrugId()==0
+            ){
                 System.out.println("走新增");
                 information_service.addDrug(yfDruginformation);
             }else{

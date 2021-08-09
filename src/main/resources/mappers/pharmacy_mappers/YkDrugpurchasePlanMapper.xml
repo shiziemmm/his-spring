@@ -23,8 +23,7 @@
                 <result property="tId" column="t_id"/>
             </association>
             <!--药品采购计划详单-->
-            <collection property="ykDrugpurchasePlanDetails" resultMap="allPlanDetails">
-            </collection>
+            <collection property="ykDrugpurchasePlanDetails" resultMap="allPlanDetails"/>
             <!--药品信息查询-->
             <collection property="yfDruginformation" resultMap="DrugMap"/>
     </resultMap>
@@ -104,8 +103,9 @@
     <!--查询药品采购计划-->
     <select id="allplan" resultMap="PlanMap">
         select * from yk_drugpurchase_plan ykd
-            LEFT JOIN staff sta on ykd.S_id = sta.s_id
-            LEFT JOIN yk_drugpurchase_plan_details ydpd on ykd.YK_purchase_id = ydpd.YK_purchase_id
+                          LEFT JOIN staff sta on ykd.S_id = sta.s_id
+                          LEFT JOIN yk_drugpurchase_plan_details ydpd on ykd.YK_purchase_id = ydpd.YK_purchase_id
+                          left join yf_drugInformation drug on ydpd.drug_id = drug.drug_id
     </select>
 
     <!--查询采购计划详单-->
