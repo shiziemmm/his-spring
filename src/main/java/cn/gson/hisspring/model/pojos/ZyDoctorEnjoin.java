@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -23,6 +24,7 @@ public class ZyDoctorEnjoin {
   private Long ptNo;
   private Long sId;
   private String deDoctorName;
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private java.sql.Timestamp deDate;
   private String deChineseMethod;
   private String deText;//嘱托
@@ -35,4 +37,11 @@ public class ZyDoctorEnjoin {
   @TableField(exist = false)
   private List<ZyDoctorEnjoinDetails> dedList;//医嘱详情集合
 
+  public ZyDoctorEnjoin(long deId, Timestamp deEndDate) {
+    this.deId = deId;
+    this.deEndDate = deEndDate;
+  }
+
+  public ZyDoctorEnjoin() {
+  }
 }

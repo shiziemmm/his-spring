@@ -26,9 +26,10 @@ public class YfDruginformationController {
     //新增药品
     @RequestMapping("yp-add")
     public String addDrug(@RequestBody YfDruginformation yfDruginformation){
-        System.out.println(yfDruginformation);
+        System.err.println(yfDruginformation);
         try {
-            if(yfDruginformation.getDrugId()==0){
+            if(yfDruginformation.getDrugId()==0
+            ){
                 System.out.println("走新增");
                 information_service.addDrug(yfDruginformation);
             }else{

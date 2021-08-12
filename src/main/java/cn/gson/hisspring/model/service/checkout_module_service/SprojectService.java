@@ -3,6 +3,7 @@ package cn.gson.hisspring.model.service.checkout_module_service;
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.AnaeMapper;
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.SchangeMapper;
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper;
+import cn.gson.hisspring.model.mapper.checkout_module_mapper.SsRoomMapper;
 import cn.gson.hisspring.model.pojos.*;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,17 @@ public class SprojectService {
     AnaeMapper ana;//麻醉项目mapper
     @Autowired
     SchangeMapper mid;//麻醉中间项目mapper
+    @Autowired
+    SsRoomMapper sss;//手术室mapper
     //所有手术项目
     public List<SsOperationProject> allProject(){
         List<SsOperationProject> listsp = sproject.allProject();
         return listsp;
+    }
+    //所有手术室
+    public List<SsOperationRoom> allSroom(){
+        List<SsOperationRoom> listss = sss.allSroom();
+        return listss;
     }
     //单个手术项目详情
     public List<SsOperationProject> singeProject(Integer projectId){
@@ -35,6 +43,24 @@ public class SprojectService {
     public List<SsOperationProject> aloneProject(Integer projectId){
         List<SsOperationProject> listalone = sproject.aloneProject(projectId);
         return listalone;
+    }
+    //修改手术室状态
+    public void updazt(Integer operationZt,Integer operationId){
+        sss.updSroom(operationZt,operationId);
+    }
+    /**
+     * 新增修改手术室
+     * @return
+     */
+    public boolean sssUpdate(SsOperationRoom proj){
+        int is = 0;//判断是否新增成功
+        if(proj.getOperationId() == 0){//新增
+            sss.insert(proj);
+        }else{//修改
+            is = sss.updateById(proj);
+        }
+
+        return is == 0?false:true;
     }
     /**
      * 新增修改手术项目

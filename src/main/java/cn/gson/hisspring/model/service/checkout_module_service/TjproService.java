@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /*
 体检项目service
@@ -29,6 +28,8 @@ public class TjproService {
     TjMiddlemMapper sen;
     @Autowired//体检结果表mapper
     TjResultMapper ent;
+    @Autowired
+    MzMedicalCardMapper1 car;//诊疗卡体检用mapper
 //检查项目模糊查询与传参
     public List<TjCodeProject> selectAllTjObject(String seach){
         List<TjCodeProject> listjc = major.selectAllTjObject(seach);
@@ -66,6 +67,12 @@ public class TjproService {
         List<TjManResult> listres = ent.allmresult(manId);
         System.out.println(listres);
         return  listres;
+    }
+    //根据编号查询诊疗卡
+    public List<MzMedicalCard> alomCaed(String mcIdCard){
+        List<MzMedicalCard> listcard = car.allmzmidCard(mcIdCard);
+        System.out.println(listcard);
+        return  listcard;
     }
     /**
      * 新增修改套惨
@@ -109,10 +116,22 @@ public class TjproService {
 
         return is == 0?false:true;
     }
+    //    批量修改体检人员
+    public void updTjman(String manTime,Integer manId){
+        int is = 0;//判断是否修改成功
+        man.updTjman(manTime,manId);
+    }
+
     //修改体检人员状态
     public void updamzt(Integer manState,Integer manId){
         man.updatezt(manState,manId);
     }
+    //修改体检人员医生建议
+    public void updamanY(String manProposal,Integer manId){
+        man.updTjmanY(manProposal,manId);
+    }
+    //修改诊疗卡金额根据身份证
+    public void updMoney(Integer mcBalance,String mcIdCard){car.updMoney(mcBalance,mcIdCard);}
 //    批量新增结果
     public boolean inserjg(List listArr){
         int is = 0;//判断是否新增成功
@@ -122,6 +141,7 @@ public class TjproService {
         is=ent.insertTjmres(listArr);
         return is == 0?false:true;
     }
+
     /**
      * 新增修改检查项目
      * @return
@@ -129,15 +149,14 @@ public class TjproService {
     public boolean tprojectUpdate(TjCodeProject troj){
         int is = 0;//判断是否新增成功
         if(troj.getCheckId() == 0){//新增
-            TjCodeIndex tjCodeIndex = new TjCodeIndex();
-
-            sed.insert(troj.getTjCodeIndex());
-            System.err.println("新增进去"+troj.getTjCodeIndex().getIndexId());
-            troj.setIndexId(troj.getTjCodeIndex().getIndexId());
-            System.out.println(troj.getTjCodeIndex().getIndexId());
+//            TjCodeIndex tjCodeIndex = new TjCodeIndex();
+//            sed.insert(troj.getTjCodeIndex());
+//            System.err.println("新增进去"+troj.getTjCodeIndex().getIndexId());
+//            troj.setIndexId(troj.getTjCodeIndex().getIndexId());
+//            System.out.println(troj.getTjCodeIndex().getIndexId());
             is = major.insert(troj);
         }else{//修改
-            sed.updateById(troj.getTjCodeIndex());
+//            sed.updateById(troj.getTjCodeIndex());
             is = major.updateById(troj);
         }
 

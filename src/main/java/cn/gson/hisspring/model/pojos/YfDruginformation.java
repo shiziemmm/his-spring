@@ -7,151 +7,176 @@ import lombok.Data;
 @Data//get  set方法
 public class YfDruginformation {
 
-  private Long drugId;
+  private Integer drugId;
   private String drugName;
   private String drugBarCode;
   private Double drugPrice;
-  private String drugUsage;
+  private String drugUsage;//用法
   private Long ykSpecId;
   private Long ykSupplierId;
   private Long yfDrcaId;
   private String drugUpper;
-  private String drugRemark;
+  private String drugRemark;//药品功效
   private String drugUnit;
   private String drugSpecification;
-  private String drugPastDate;
-
+  private String drugPastDate;//保质期
+  private Long drugParticle;//单粒价格
+  private String drugQuantity;//每瓶数量
+  private Long drugPrescription;//处方药
+  
   private YkDrugspecifcations ykDrugspecifcations;//规格表
   private YkSupplier ykSupplier;//供应商表
   private YfDrugcategory yfDrugcategory;//类别表
 
-  public long getDrugId() {
+  public Long getDrugParticle() {
+    return drugParticle;
+  }
+
+  public void setDrugParticle(Long drugParticle) {
+    this.drugParticle = drugParticle;
+  }
+
+  public String getDrugQuantity() {
+    return drugQuantity;
+  }
+
+  public void setDrugQuantity(String drugQuantity) {
+    this.drugQuantity = drugQuantity;
+  }
+
+  public Long getDrugPrescription() {
+    return drugPrescription;
+  }
+
+  public void setDrugPrescription(Long drugPrescription) {
+    this.drugPrescription = drugPrescription;
+  }
+
+  public Integer getDrugId() {
     return drugId;
+  }
+
+  public void setDrugId(Integer drugId) {
+    this.drugId = drugId;
   }
 
   public String getDrugName() {
     return drugName;
   }
 
-  public String getDrugBarCode() {
-    return drugBarCode;
-  }
-
-  public double getDrugPrice() {
-    return drugPrice;
-  }
-
-  public String getDrugUsage() {
-    return drugUsage;
-  }
-
-  public Long getYkSpecId() {
-    return ykSpecId;
-  }
-
-  public Long getYkSupplierId() {
-    return ykSupplierId;
-  }
-
-  public Long getYfDrcaId() {
-    return yfDrcaId;
-  }
-
-  public String getDrugUpper() {
-    return drugUpper;
-  }
-
-  public String getDrugRemark() {
-    return drugRemark;
-  }
-
-  public String getDrugUnit() {
-    return drugUnit;
-  }
-
-  public String getDrugSpecification() {
-    return drugSpecification;
-  }
-
-  public String getDrugPastDate() {
-    return drugPastDate;
-  }
-
-  public YkDrugspecifcations getYkDrugspecifcations() {
-    return ykDrugspecifcations;
-  }
-
-  public YkSupplier getYkSupplier() {
-    return ykSupplier;
-  }
-
-  public YfDrugcategory getYfDrugcategory() {
-    return yfDrugcategory;
-  }
-
-  public void setDrugId(long drugId) {
-    this.drugId = drugId;
-  }
-
   public void setDrugName(String drugName) {
     this.drugName = drugName;
+  }
+
+  public String getDrugBarCode() {
+    return drugBarCode;
   }
 
   public void setDrugBarCode(String drugBarCode) {
     this.drugBarCode = drugBarCode;
   }
 
-  public void setDrugPrice(double drugPrice) {
+  public Double getDrugPrice() {
+    return drugPrice;
+  }
+
+  public void setDrugPrice(Double drugPrice) {
     this.drugPrice = drugPrice;
+  }
+
+  public String getDrugUsage() {
+    return drugUsage;
   }
 
   public void setDrugUsage(String drugUsage) {
     this.drugUsage = drugUsage;
   }
 
+  public Long getYkSpecId() {
+    return ykSpecId;
+  }
+
   public void setYkSpecId(Long ykSpecId) {
     this.ykSpecId = ykSpecId;
+  }
+
+  public Long getYkSupplierId() {
+    return ykSupplierId;
   }
 
   public void setYkSupplierId(Long ykSupplierId) {
     this.ykSupplierId = ykSupplierId;
   }
 
+  public Long getYfDrcaId() {
+    return yfDrcaId;
+  }
+
   public void setYfDrcaId(Long yfDrcaId) {
     this.yfDrcaId = yfDrcaId;
+  }
+
+  public String getDrugUpper() {
+    return drugUpper;
   }
 
   public void setDrugUpper(String drugUpper) {
     this.drugUpper = drugUpper;
   }
 
+  public String getDrugRemark() {
+    return drugRemark;
+  }
+
   public void setDrugRemark(String drugRemark) {
     this.drugRemark = drugRemark;
+  }
+
+  public String getDrugUnit() {
+    return drugUnit;
   }
 
   public void setDrugUnit(String drugUnit) {
     this.drugUnit = drugUnit;
   }
 
+  public String getDrugSpecification() {
+    return drugSpecification;
+  }
+
   public void setDrugSpecification(String drugSpecification) {
     this.drugSpecification = drugSpecification;
+  }
+
+  public String getDrugPastDate() {
+    return drugPastDate;
   }
 
   public void setDrugPastDate(String drugPastDate) {
     this.drugPastDate = drugPastDate;
   }
 
+  public YkDrugspecifcations getYkDrugspecifcations() {
+    return ykDrugspecifcations;
+  }
+
   public void setYkDrugspecifcations(YkDrugspecifcations ykDrugspecifcations) {
     this.ykDrugspecifcations = ykDrugspecifcations;
+  }
+
+  public YkSupplier getYkSupplier() {
+    return ykSupplier;
   }
 
   public void setYkSupplier(YkSupplier ykSupplier) {
     this.ykSupplier = ykSupplier;
   }
 
+  public YfDrugcategory getYfDrugcategory() {
+    return yfDrugcategory;
+  }
+
   public void setYfDrugcategory(YfDrugcategory yfDrugcategory) {
     this.yfDrugcategory = yfDrugcategory;
   }
-
-
 }

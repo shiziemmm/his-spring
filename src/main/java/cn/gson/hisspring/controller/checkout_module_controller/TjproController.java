@@ -37,7 +37,7 @@ public class TjproController {
     public List<TjCodeMan> allMan(Integer manState,String sermen){
         return major.selectAllman(manState,sermen);
     }
-    @RequestMapping("aloneMp") //体检人员所含
+    @RequestMapping("aloneMp") //体检人员所含项目
     public List<TjCodeProject> allManp(Integer manId){
         return major.selectAlonMm(manId);
     }
@@ -48,6 +48,10 @@ public class TjproController {
     @RequestMapping("aloneRes") //体检套餐所含检查指标
     public List<TjManResult> allMan(Integer manId){
         return major.AllRes(manId);
+    }
+    @RequestMapping("aloneCard") //体检套餐诊疗卡检查指标
+    public List<MzMedicalCard> allMan(String sId){
+        return major.alomCaed(sId);
     }
     /**
      * 批量新增检查结果
@@ -92,11 +96,47 @@ public class TjproController {
         System.out.println(manj);
         return major.tjmanUpdate(manj);
     }
+    /**
+     * 批量修改体检时间
+     */
+    @RequestMapping("updTjman")
+    public String updman(String manTime,Integer manId){
+        //将项目对象字符串转换为检查对象
+        try {
+            major.updTjman(manTime,manId);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
     //    修改检查人员状态
     @PostMapping("upde-tman")
     public String updetman(Integer manState,Integer manId){
         try {
             major.updamzt(manState,manId);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+    //    修改检查人员医生建议
+    @PostMapping("upd-manY")
+    public String updetman(String manProposal,Integer manId){
+        try {
+            major.updamanY(manProposal,manId);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    } 
+    //修改诊疗卡金额根据身份证
+    @PostMapping("updeMoney")
+    public String updMoney(Integer mcBalance,String mcIdCard){
+        try {
+            major.updMoney(mcBalance,mcIdCard);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();

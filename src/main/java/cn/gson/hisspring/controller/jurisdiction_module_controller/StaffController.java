@@ -61,7 +61,17 @@ public class StaffController {
         staff1.setUId(user1.getUId());
         System.out.println(staff1);
         System.out.println(user1);
-        ss.upa(staff1);
         us.upa(user1);
+        ss.upa(staff1);
+
+    }
+    @RequestMapping("quit-staff")
+    public String quit(long id){
+       int i= ss.upa(id);
+       if(i>0){
+           return "ok";
+       }else{
+           return "false";
+       }
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.ConsumableMapper">
+
+    <resultMap id="HcIndConsumables" type="cn.gson.hisspring.model.pojos.HcIndConsumables">
+        <result column="Consumables_id" property="consumablesId"/>
+        <result column="Consumables_name" property="consumablesName"/>
+        <result column="Consumables_phy" property="consumablesPhy"/>
+        <result column="Consumables_Purchase" property="consumablesPurchase"/>
+        <result column="Consumables_unit" property="consumablesUnit"/>
+        <result column="Consumables_price" property="consumablesPrice"/>
+    </resultMap>
+
+    <select id="allConsumables" resultMap="HcIndConsumables">
+        select * from hc_ind_consumables
+    </select>
+
+    <insert id="addConsumables" parameterType="cn.gson.hisspring.model.pojos.HcIndConsumables">
+        insert into hc_ind_consumables (Consumables_name,Consumables_Purchase,Consumables_unit,Consumables_price)
+        values (#{consumablesName},#{consumablesPurchase},#{consumablesUnit},#{consumablesPrice})
+    </insert>
+
+    <update id="updateConsumables" parameterType="cn.gson.hisspring.model.pojos.HcIndConsumables">
+        update hc_ind_consumables set consumables_name=#{consumablesName},consumables_Purchase=#{consumablesPurchase},
+                                      consumables_unit=#{consumablesUnit},consumables_price=#{consumablesPrice} where consumables_id=#{consumablesId}
+    </update>
+</mapper>

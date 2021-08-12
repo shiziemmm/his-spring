@@ -38,6 +38,9 @@ public class ZyPatientBase {
   //关系
 
   @TableField(exist = false)
+  private ZyDoctorEnjoin zyDoctorEnjoinList;//病人医嘱信息
+
+  @TableField(exist = false)
   private Long inId;//住院申请编号
 
   @TableField(exist = false)

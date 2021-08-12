@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--中药处方表-->
+<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzZprescriptionMapper">
+    <resultMap id="zmMaps" type="cn.gson.hisspring.model.pojos.MzZprescription">
+        <id column="zp_Number" property="zpNumber"></id>
+        <result column="zp_Name" property="zpName"></result>
+        <result column="zp_Specification" property="zpSpecification"></result>
+        <result column="zp_Count" property="zpCount"></result>
+        <result column="zp_Usage" property="zpUsage"></result>
+        <result column="zp_Price" property="zpPrice"></result>
+        <result column="zp_Entrust" property="zpEntrust"></result>
+        <result column="drug_Id" property="drugId"></result>
+        <result column="recipe_Number" property="recipeNumber"></result>
+    </resultMap>
+
+
+    <insert id="addListZp">
+        insert  into Mz_Zprescription(
+            zp_name,
+            Zp_specification,
+            Zp_Count,
+            Zp_usage,
+            Zp_Price,
+            zp_entrust,
+            drug_id,
+            recipe_number
+        ) values
+        <foreach collection="list" separator=","  item="zp">
+            (
+            #{zp.zpName},
+            #{zp.zpSpecification},
+            #{zp.zpCount},
+            #{zp.zpUsage},
+            #{zp.zpPrice},
+            #{zp.zpEntrust},
+            #{zp.drugId},
+            #{zp.recipeNumber}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

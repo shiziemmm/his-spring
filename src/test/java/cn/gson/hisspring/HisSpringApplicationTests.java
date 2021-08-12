@@ -5,6 +5,7 @@ import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientUpdateBedVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.*;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzDepartmentKsService;
+import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalRecordService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,13 +153,14 @@ class HisSpringApplicationTests {
     }
 
     @Autowired
-    MzDepartmentKsService departmentKsService;
+    MzMedicalRecordService se;
     @Test
     void  yy (){
-        List<DepartmentKs> departmentKs = departmentKsService.selectDepartmentKs();
-        for (DepartmentKs departmentK : departmentKs) {
-            System.out.println(departmentK);
+        List<MzMedicalRecord> mzMedicalRecords = se.selectMedicalRecord(1L,null);
+        for (MzMedicalRecord mzMedicalRecord : mzMedicalRecords) {
+            System.err.println(mzMedicalRecord);
         }
+
     }
 
 }

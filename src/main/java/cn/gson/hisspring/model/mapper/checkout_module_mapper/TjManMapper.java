@@ -14,7 +14,12 @@ import java.util.List;
 public interface TjManMapper extends BaseMapper<TjCodeMan> {
     //体检人员查询
     List<TjCodeMan> selectAllMan(Integer manState,String sermen);
-
+    //修改体检人员时间
+    @Update("update tj_code_man set man_time=#{manTime} where man_id=#{manId}")
+    public void  updTjman(String manTime,Integer manId);
+    //修改体检人员医生指导意见
+    @Update("update tj_code_man set man_proposal=#{manProposal} where man_id=#{manId}")
+    public void  updTjmanY(String manProposal,Integer manId);
     //批量新增体检人员项目中间表
     int insertTjman(long manId,List<Integer> listArr);
     //状态修改

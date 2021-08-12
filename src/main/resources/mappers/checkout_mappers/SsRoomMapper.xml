@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.SsRoomMapper">
+    <resultMap id="Ssroom" type="cn.gson.hisspring.model.pojos.SsOperationRoom">
+        <id column="operation_id" property="operationId"></id>
+        <result  column="operation_name" property="operationName"></result>
+        <result  column="Operation_zt" property="operationZt"></result>
+        <result  column="Operation_room_address" property="operationRoomAddress"></result>
+        <result column="s_id" property="sId"></result>
+        <result column="Operation_type" property="operationType"></result>
+        <result column="ks_id" property="ksId"></result>
+        <association property="deptks"  javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
+            <id column="ks_id" jdbcType="INTEGER" property="ksId" />
+            <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
+            <result column="de_id" jdbcType="TIMESTAMP" property="deId" />
+            <!--            <result column="ks_dz" jdbcType="TIMESTAMP" property="ksDz" />-->
+        </association>
+        <association property="BaseResultMap" javaType="cn.gson.hisspring.model.pojos.Staff">
+            <id column="s_id" jdbcType="INTEGER" property="sId" />
+            <result column="s_name" jdbcType="VARCHAR" property="sName" />
+            <result column="s_sore" jdbcType="VARCHAR" property="sSore" />
+            <result column="s_phone" jdbcType="VARCHAR" property="sPhone" />
+            <result column="s_date" jdbcType="VARCHAR" property="sDate" />
+            <result column="s_zt" jdbcType="VARCHAR" property="sZt" />
+            <association property="user" javaType="cn.gson.hisspring.model.pojos.User">
+                <id column="u_id" jdbcType="INTEGER" property="uId" />
+                <result column="u_name" jdbcType="VARCHAR" property="uName" />
+                <result column="u_pswd" jdbcType="VARCHAR" property="uPswd" />
+            </association>
+            <association property="ks" javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
+                <id column="ks_id" jdbcType="INTEGER" property="ksId" />
+                <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
+            </association>
+            <association property="t" javaType="cn.gson.hisspring.model.pojos.Title">
+                <id column="t_id" jdbcType="INTEGER" property="tId" />
+                <result column="t_name" jdbcType="VARCHAR" property="tName" />
+            </association>
+            <association property="role" javaType="cn.gson.hisspring.model.pojos.Role">
+                <id column="r_id" jdbcType="INTEGER" property="rId" />
+                <result column="r_name" jdbcType="VARCHAR" property="rName" />
+            </association>
+            <association property="dept" javaType="cn.gson.hisspring.model.pojos.Department">
+                <id column="de_id" jdbcType="INTEGER" property="deId" />
+                <result column="de_name" jdbcType="VARCHAR" property="deName" />
+            </association>
+        </association>
+    </resultMap>
+
+    <select id="allSroom" resultMap="Ssroom">
+        SELECT * FROM ss_operation_room a
+        inner join  department_ks b on b.ks_id=a.ks_id
+        inner join  staff c on c.s_id=a.s_id
+    </select>
+</mapper>

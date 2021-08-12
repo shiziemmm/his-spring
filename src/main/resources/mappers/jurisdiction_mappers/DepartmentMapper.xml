@@ -9,24 +9,24 @@
   <sql id="Base_Column_List">
     de_id, de_name, de_date
   </sql>
-  <!--    模糊查询-->
+<!--    模糊查询-->
   <select id="selectlike" resultMap="BaseResultMap">
-    select * from department d
-    <where>
-      <if test="deName!=null">
-        trim(
-        REPLACE (d.de_name, ' ', '')
-        ) LIKE trim(
-        REPLACE (
-        CONCAT(
-        '%',
-        #{deName},'%'),' ',''))
-      </if>
+   select * from department d
+<where>
+  <if test="deName!=null">
+    trim(
+    REPLACE (d.de_name, ' ', '')
+    ) LIKE trim(
+    REPLACE (
+    CONCAT(
+    '%',
+    #{deName},'%'),' ',''))
+  </if>
 
-    </where>
+</where>
   </select>
-  <insert id="add">
-    insert department(de_name) values (#{deName})
-  </insert>
+<insert id="add">
+  insert department(de_name) values (#{deName})
+</insert>
 
 </mapper>

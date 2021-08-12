@@ -25,11 +25,12 @@ public class DoctorEnjoinController {
     public boolean addDoctorEnjoin(@RequestBody String str){
         System.err.println(str);
         ZyDoctorEnjoin zyDoctorEnjoin = JSON.parseObject(str, ZyDoctorEnjoin.class);
+        System.err.println(zyDoctorEnjoin);
         return des.addDoctorEnjoin(zyDoctorEnjoin);
     }
 
 
-    /**
+    /**VC
      * 根据住院号查询医嘱信息
      * @return
      */

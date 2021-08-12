@@ -11,13 +11,13 @@ public class TjCodeProject {
   private long checkId;
   private String checkName;
   private double checkPay;
-  private long indexId;
-
+  private String indexName;
+  private String indexSignificance;
+  private long ksId;
   @TableField(exist = false)
-  private TjCodeIndex tjCodeIndex;
+  private DepartmentKs deptks;
   @TableField(exist = false)
   private long codeId;
-  @TableField(exist = false)
-  private String indexName;
+
 
 }

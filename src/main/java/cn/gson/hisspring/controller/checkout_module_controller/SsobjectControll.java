@@ -1,9 +1,6 @@
 package cn.gson.hisspring.controller.checkout_module_controller;
 
-import cn.gson.hisspring.model.pojos.MzMedicalCard;
-import cn.gson.hisspring.model.pojos.SsOperationAnaesthesia;
-import cn.gson.hisspring.model.pojos.SsOperationProject;
-import cn.gson.hisspring.model.pojos.ZyWard;
+import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.service.checkout_module_service.SprojectService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,11 @@ public class SsobjectControll {
     @RequestMapping("sprot")
     public List<SsOperationProject> ssOperationProjects(){
         return  sprojectService.allProject();
+    }
+    //所有手术室
+    @RequestMapping("sssRoom")
+    public List<SsOperationRoom> allSroom(){
+        return  sprojectService.allSroom();
     }
 //    单个手术项目
     @RequestMapping("ssprot")
@@ -52,11 +54,33 @@ public class SsobjectControll {
         SsOperationProject proj = JSON.parseObject(map.get("proj").toString(), SsOperationProject.class);
         System.out.println(proj);
 
-
 //        System.out.println("实体"+proj);
         return sprojectService.projectUpdate(proj);
     }
-//    删除手术项目
+    /**
+     * 新增修改手术室
+     */
+
+    @RequestMapping("aOrUroom")
+    public boolean roomjAddOrUpdate(@RequestBody String projstr){
+        System.out.println(projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将病房对象字符串转换为病房对象
+        SsOperationRoom proj = JSON.parseObject(map.get("proj").toString(), SsOperationRoom.class);
+        System.out.println(proj);
+        return sprojectService.sssUpdate(proj);
+    }
+    //    修改手术室状态
+    @PostMapping("upd-roomzt")
+    public String updetroom(Integer operationZt,Integer operationId){
+        try {
+            sprojectService.updazt(operationZt,operationId);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+    //    删除手术项目
     @PostMapping("delet-sprot")
     public String deletlist(Integer projectId){
         try {

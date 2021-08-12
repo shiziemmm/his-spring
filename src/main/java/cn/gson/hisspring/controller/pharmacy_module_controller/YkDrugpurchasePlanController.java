@@ -23,7 +23,11 @@ public class YkDrugpurchasePlanController {
     @RequestMapping("all-plan")
     public List<YkDrugpurchasePlan> allplan(){
         System.out.println("-----------------查询了----------------------------");
-       return planService.allplan();
+        List<YkDrugpurchasePlan> allplan = planService.allplan();
+        for (YkDrugpurchasePlan aa:allplan){
+            System.err.println("没有的"+aa);
+        }
+       return allplan;
     }
     /*查询员工   采购计划经手人*/
     @RequestMapping("all-stall")
@@ -35,7 +39,13 @@ public class YkDrugpurchasePlanController {
     @RequestMapping("all-ydpd")
     public List<YkDrugpurchasePlanDetails> allydpd(){
         System.out.println("我进来了jjjjjjjjjjjjjjjjjj");
-        return planService.allydpd();
+        List<YkDrugpurchasePlanDetails> allydpd = planService.allydpd();
+        for(YkDrugpurchasePlanDetails aa:allydpd){
+            System.err.println("wozoule"+aa);
+        }
+
+
+        return allydpd;
     }
     /*查询药品信息*/
     @RequestMapping("drug")
