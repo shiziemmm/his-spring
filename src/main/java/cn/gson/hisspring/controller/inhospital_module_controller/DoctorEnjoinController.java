@@ -30,7 +30,7 @@ public class DoctorEnjoinController {
     }
 
 
-    /**
+    /**VC
      * 根据住院号查询医嘱信息
      * @return
      */
