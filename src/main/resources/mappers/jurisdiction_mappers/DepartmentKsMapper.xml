@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.DepartmentKs">
     <id column="ks_id" jdbcType="INTEGER" property="ksId" />
     <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
+    <result column="ks_dz" jdbcType="VARCHAR" property="ksDz" />
     <result column="de_id" jdbcType="TIMESTAMP" property="deId" />
     <association property="dept"  javaType="cn.gson.hisspring.model.pojos.Department">
       <id column="de_id" jdbcType="INTEGER" property="deId" />
@@ -13,25 +14,32 @@
   </resultMap>
 
 
-<select id="selectlist" resultMap="BaseResultMap">
-  select * from  department_ks k left JOIN department d on k.de_id= d.de_id
-</select>
+  <select id="selectlist" resultMap="BaseResultMap">
+    select * from  department_ks k left JOIN department d on k.de_id= d.de_id
+  </select>
 
-<select id="selectZyKs" resultMap="BaseResultMap">
-  select * from department_ks where de_id =  (select de_id from department where de_name = '住院部')
-</select>
+  <select id="selectZyKs" resultMap="BaseResultMap">
+    select * from department_ks where de_id =  (select de_id from department where de_name = '住院部')
+  </select>
   <select id="selectId" resultMap="BaseResultMap">
     select * from department_ks k left join department d on k.de_id=d.de_id WHERE k.de_id=#{ksId} and k.de_id is not null
   </select>
   <select id="selectName" resultMap="BaseResultMap">
     select * from  department_ks k left JOIN department d on k.de_id= d.de_id where k.de_id is null
   </select>
+  <!-- 去除空格 -->
   <select id="selectdome" resultMap="BaseResultMap">
-    select * from department_ks
+    select * from department_ks d
     <where>
 
       <if test="ksName!=null">
-        or ks_name like '%${ksName}%'
+        trim(
+        REPLACE (d.ks_name, ' ', '')
+        ) LIKE trim(
+        REPLACE (
+        CONCAT(
+        '%',
+        #{ksName},'%'),' ',''))
       </if>
 
     </where>

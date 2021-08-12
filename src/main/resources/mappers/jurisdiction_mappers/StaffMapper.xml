@@ -36,4 +36,7 @@
             s.ks_id=d.ks_id INNER join title t on s.t_id=t.t_id inner join department dept on
             d.de_id=dept.de_id
     </select>
+    <select id="selectksId" resultMap="BaseResultMap">
+        select * from staff where ks_id=#{ksId}
+    </select>
 </mapper>

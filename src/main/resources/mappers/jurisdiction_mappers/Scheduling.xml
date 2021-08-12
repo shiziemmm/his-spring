@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMapper">
+  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.Scheduling">
+    <id column="sc_id" jdbcType="INTEGER" property="scId" />
+      <result column="s_id" jdbcType="VARCHAR" property="sId" />
+      <result column="fc_id" jdbcType="VARCHAR" property="fcId" />
+    <result column="sc_date" jdbcType="VARCHAR" property="scDate" />
+      <result column="sc_end" jdbcType="VARCHAR" property="scEnd" />
+    <result column="sc_start_date" jdbcType="VARCHAR" property="scStartDate"/>
+    <result column="sc_end_date" jdbcType="INTEGER" property="scEndDate"></result>
+      <result column="ks_ren" jdbcType="INTEGER" property="ksRen"></result>
+      <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
+          <id column="s_id" jdbcType="INTEGER" property="sId" />
+          <result column="s_name" jdbcType="VARCHAR" property="sName" />
+          <result column="s_sore" jdbcType="VARCHAR" property="sSore" />
+          <result column="s_phone" jdbcType="VARCHAR" property="sPhone" />
+          <result column="s_date" jdbcType="VARCHAR" property="sDate" />
+          <result column="ks_id" jdbcType="VARCHAR" property="ksId" />
+          <result column="t_id" jdbcType="VARCHAR" property="tId" />
+          <result column="s_zt" jdbcType="VARCHAR" property="sZt" />
+      </association>
+      <association property="ks" javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
+          <id column="ks_id" jdbcType="INTEGER" property="ksId" />
+          <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
+      </association>
+  </resultMap>
+
+
+    <insert id="addSch">
+    insert into scheduling(s_id,fc_id,Sc_date,sc_end,Sc_start_date,Sc_end_date) values
+    <foreach collection="list" item="i" separator=", ">
+        (#{i},#{sd.fcId},#{sd.scDate},#{sd.scEnd},#{sd.scStartDate},#{sd.scEndDate})
+    </foreach>
+    </insert>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT *,(SELECT count(*) from staff group by staff.ks_id >2) ks_ren
+        from scheduling s left join staff st on s.s_id=st.s_id left join department_ks d on st.ks_id=d.ks_id WHERE s.sc_date
+            BETWEEN #{scDate} and #{scEnd}
+    </select>
+</mapper>
