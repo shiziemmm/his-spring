@@ -20,7 +20,7 @@ public class MzXprescription {
   private String rdEntrust;
   private long drugId;
   private long recipeNumber;
-
+  private long rdStatePrice;
 
   private String rdDosage;//用量
   private String rdFrequency;//频次

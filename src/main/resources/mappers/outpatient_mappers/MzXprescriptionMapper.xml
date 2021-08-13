@@ -15,6 +15,7 @@
         <result column="rd_Entrust" property="rdEntrust"></result>
         <result column="drug_Id" property="drugId"></result>
         <result column="recipe_Number" property="recipeNumber"></result>
+        <result column="rd_State_Price" property="rdStatePrice"></result>
 
         <result column="rd_Dosage" property="rdDosage"></result>
         <result column="rd_Frequency" property="rdFrequency"></result>
@@ -35,6 +36,7 @@
             Rd_skinResult,
             rd_grouping,
             rd_entrust,
+            rd_state_price,
             drug_id,
             recipe_number
         )  values
@@ -51,6 +53,7 @@
             #{xp.rdSkinResult},
             #{xp.rdGrouping},
             #{xp.rdEntrust},
+            #{xp.rdStatePrice},
             #{xp.drugId},
             #{xp.recipeNumber}
             )
