@@ -24,10 +24,13 @@
 
         <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap"></association>
         <association property="historyObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMap"></association>
+        <association property="sickObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap"></association>
+
     </resultMap>
+
     <select id="selectMzMedicalRecord" resultMap="recordMap">
         select * from mzmedicalrecord where 1=1
-        <if test="index != null">
+        <if test="index != null and ''!=index" >
             and mr_state = #{index}
         </if>
         <if test="texts !=null and ''!=texts ">
@@ -37,4 +40,18 @@
         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_number
     </select>
+
+
+    <select id="selectMzMedicalRecords" resultMap="recordMap">
+        select * from mzmedicalrecord where 1=1
+        <if test="texts !=null and ''!=texts ">
+            and  (mr_mc_card = #{texts}
+            or mr_count = #{texts}
+            or mr_id_card = #{texts})
+        </if>
+        and zp_state_price = 0
+        or rd_state_price = 0
+        order by mr_number
+    </select>
+
 </mapper>

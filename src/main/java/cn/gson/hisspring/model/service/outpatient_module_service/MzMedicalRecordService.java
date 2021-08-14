@@ -68,6 +68,7 @@ public class MzMedicalRecordService {
             for (MzXprescription xpList : xpLists) {
                 xpList.setRecipeNumber(recipeObject.getRecipeNumber());//外键-新增处方单号
                 System.err.println("xp="+xpList);
+                xpList.setRdStatePrice(0);
             }
            xpMapper.addListXp(xpLists);
         }
@@ -76,19 +77,27 @@ public class MzMedicalRecordService {
             List<MzZprescription> zpList = recordVo.getRecipeObject().getZpList();
             for (MzZprescription mzZprescription : zpList) {
                 mzZprescription.setRecipeNumber(recipeObject.getRecipeNumber());//外键-新增处方单号
+                mzZprescription.setZpStatePrice(0);
                 System.err.println("zp="+mzZprescription);
             }
             zpMapper.addListZp(zpList);
+            for (MzZprescription mzZprescription : zpList) {
+                System.err.println(mzZprescription);
+            }
         }
 
     }
     /**
      *  查询就诊记录表
      */
-    public List<MzMedicalRecord> selectMedicalRecord(Long index,String texts){
-        System.err.println(index);
+    public List<MzMedicalRecord> selectMedicalRecord(String index,String texts){
        return medicalRecordMapper.selectMzMedicalRecord(index, texts);
     }
-
+    /**
+     *  查询就诊记录表--缴费记录查询
+     */
+    public MzMedicalRecord selectMedicalRecord(String texts){
+        return medicalRecordMapper.selectMzMedicalRecords( texts);
+    }
 
 }

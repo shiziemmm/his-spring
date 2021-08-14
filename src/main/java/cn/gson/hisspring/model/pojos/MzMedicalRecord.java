@@ -36,7 +36,17 @@ public class MzMedicalRecord {
 
   @TableField(exist = false)//不是数据库的
   private MzRecipe recipeObject;//处方表
-  private MzCaseHistory historyObject;
+
+//  @TableField(exist = false)//不是数据库的
+//  private MzSurgeryStamp surgeryStampObject; //手术表
+//  @TableField(exist = false)//不是数据库的
+//  private MzLaboratory laboratoryObject; //化验表
+
+  @TableField(exist = false)//不是数据库的
+  private MzCaseHistory historyObject;//病历表
+  @TableField(exist = false)//不是数据库的
+  private MzSick sickObject;//病人资料表
+
 
 
 
