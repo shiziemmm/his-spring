@@ -34,6 +34,7 @@ public class DoctorEnjoinExecuteRecordService {
     public boolean doctorEnjoinExecute(List<ZyDoctorEnjoinDetails> detailsList,Long sId){
             double price = 0;//药品价格
 
+        if(!detailsList.isEmpty()){
 
             //添加执行医嘱记录
             for (ZyDoctorEnjoinDetails list : detailsList) {
@@ -66,6 +67,10 @@ public class DoctorEnjoinExecuteRecordService {
 
 
             return true;
+
+        }else{
+            return false;
+        }
     }
 
 }
