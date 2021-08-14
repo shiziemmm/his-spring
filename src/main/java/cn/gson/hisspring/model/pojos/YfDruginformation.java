@@ -7,7 +7,7 @@ import lombok.Data;
 @Data//get  set方法
 public class YfDruginformation {
 
-  private Integer drugId;
+  private int drugId;
   private String drugName;
   private String drugBarCode;
   private Double drugPrice;
@@ -20,7 +20,7 @@ public class YfDruginformation {
   private String drugUnit;
   private String drugSpecification;
   private String drugPastDate;//保质期
-  private Long drugParticle;//单粒价格
+  private Double drugParticle;//单粒价格
   private String drugQuantity;//每瓶数量
   private Long drugPrescription;//处方药
   
@@ -28,11 +28,11 @@ public class YfDruginformation {
   private YkSupplier ykSupplier;//供应商表
   private YfDrugcategory yfDrugcategory;//类别表
 
-  public Long getDrugParticle() {
+  public Double getDrugParticle() {
     return drugParticle;
   }
 
-  public void setDrugParticle(Long drugParticle) {
+  public void setDrugParticle(Double drugParticle) {
     this.drugParticle = drugParticle;
   }
 
@@ -52,11 +52,11 @@ public class YfDruginformation {
     this.drugPrescription = drugPrescription;
   }
 
-  public Integer getDrugId() {
+  public int getDrugId() {
     return drugId;
   }
 
-  public void setDrugId(Integer drugId) {
+  public void setDrugId(int drugId) {
     this.drugId = drugId;
   }
 
