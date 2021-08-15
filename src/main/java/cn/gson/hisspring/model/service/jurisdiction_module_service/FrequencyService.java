@@ -25,6 +25,7 @@ public class FrequencyService {
     public List<Frequency> selectById(long fid){
         return frequencyMapper.selectById(fid);
     }
+    public List<Frequency> selectAllId(long fcId){return frequencyMapper.selectAllId(fcId);}
 
 
 }

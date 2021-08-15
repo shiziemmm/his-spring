@@ -11,4 +11,5 @@ import java.util.List;
 public interface SchedulingMapper extends BaseMapper<Scheduling> {
     int addSch(@Param("sd") Scheduling sd,@Param("list") List<Integer> list);
     List<Scheduling> selectAll(@Param("scDate") String star,@Param("scEnd") String end);
+    List<Scheduling>selectWeek(@Param("rq")String rq,@Param("ksId") long ksId);
 }

@@ -11,20 +11,10 @@ public class Scheduling {
 @TableId(value = "sc_id")
   private long scId;
   private long sId;
-  private long fcId;
-  private String scDate;
-  private String scEnd;
-  private String scStartDate;
-  private String scEndDate;
-
-
+  private long frId;
+  private String rq;
 
   @TableField(exist = false)
   private Staff staff;
 
-  @TableField(exist = false)
-  private DepartmentKs ks;
-
-  @TableField(exist = false)
-  private Long ksRen;
 }

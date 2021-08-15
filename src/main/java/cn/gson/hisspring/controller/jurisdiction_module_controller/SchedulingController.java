@@ -35,21 +35,21 @@ public class SchedulingController {
      */
     @RequestMapping("data-time")
     public void saceGrant(@RequestBody String grant) throws ParseException {
-        System.err.println(grant);
-        Map map = JSON.parseObject(grant, Map.class);
-        List<String> funs = (List<String>) map.get("funs");
-
-        Integer freId=Integer.parseInt(map.get("freid").toString());//班次id
-        List<Frequency> list= frequencyService.selectById(freId);//查询班次
-        Scheduling d=new Scheduling();
-        d.setFcId(Long.parseLong(map.get("freid").toString()));
-        d.setScDate(funs.get(0));
-        d.setScEnd(funs.get(1));
-        d.setScStartDate(list.get(0).getFStartTime());
-        d.setScEndDate(list.get(0).getFEndTime());
-        System.out.println(d);
-        List<Integer> staffIdList = (List<Integer>) map.get("funss");
-        schedulingService.addSch(d,staffIdList);
+//        System.err.println(grant);
+//        Map map = JSON.parseObject(grant, Map.class);
+//        List<String> funs = (List<String>) map.get("funs");
+//
+//        Integer freId=Integer.parseInt(map.get("freid").toString());//班次id
+//        List<Frequency> list= frequencyService.selectById(freId);//查询班次
+//        Scheduling d=new Scheduling();
+//        d.setFcId(Long.parseLong(map.get("freid").toString()));
+//        d.setScDate(funs.get(0));
+//        d.setScEnd(funs.get(1));
+//        d.setScStartDate(list.get(0).getFStartTime());
+//        d.setScEndDate(list.get(0).getFEndTime());
+//        System.out.println(d);
+//        List<Integer> staffIdList = (List<Integer>) map.get("funss");
+//        schedulingService.addSch(d,staffIdList);
         /**
          * 获取开始结束日期
          */
