@@ -8,19 +8,20 @@ public class ZyDoctorEnjoinExecuteRecord {
 
   @TableId("der_id")
   private long derId;
-  private long desId;
+  private Long desId;
   private java.sql.Timestamp derExecuteDate;
   private Double derDrugPrice;
-  private long ptNo;
-  private long sId;
+  private Long ptNo;
+  private Long sId;
+  private String derText;//说明
 
 
 
-  public long getSId() {
+  public Long getSId() {
     return sId;
   }
 
-  public void setSId(long sId) {
+  public void setSId(Long sId) {
     this.sId = sId;
   }
 

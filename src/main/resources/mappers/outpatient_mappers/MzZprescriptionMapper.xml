@@ -13,6 +13,8 @@
         <result column="zp_Entrust" property="zpEntrust"></result>
         <result column="drug_Id" property="drugId"></result>
         <result column="recipe_Number" property="recipeNumber"></result>
+        <result column="zp_State_Price" property="zpStatePrice"></result>
+
     </resultMap>
 
 
@@ -24,6 +26,7 @@
             Zp_usage,
             Zp_Price,
             zp_entrust,
+            zp_state_price,
             drug_id,
             recipe_number
         ) values
@@ -35,6 +38,7 @@
             #{zp.zpUsage},
             #{zp.zpPrice},
             #{zp.zpEntrust},
+            #{zp.zpStatePrice},
             #{zp.drugId},
             #{zp.recipeNumber}
             )

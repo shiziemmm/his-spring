@@ -34,30 +34,29 @@ public class DoctorEnjoinExecuteRecordService {
     public boolean doctorEnjoinExecute(List<ZyDoctorEnjoinDetails> detailsList,Long sId){
             double price = 0;//药品价格
 
+        if(!detailsList.isEmpty()){
 
             //添加执行医嘱记录
             for (ZyDoctorEnjoinDetails list : detailsList) {
-                ZyDoctorEnjoinExecuteRecord record = new ZyDoctorEnjoinExecuteRecord();
-                if(list.getDesFrequency() == null || list.getDesFrequency() == 1){
-                    record.setDerDrugPrice(list.getDesPrice() * list.getDesCount());//执行一次的价格
-                    record.setDesId(list.getDesId());//医嘱详情编号
-                    record.setPtNo(list.getPtNo());//病人住院号
-                    record.setSId(sId);//护士编号
-                    price += list.getDesPrice() * list.getDesCount();//叠加价格
-                    deerm.insert(record);//新增
-
-                }else{
-                    for (int i = 0;i < list.getDesFrequency();i++){
+                    ZyDoctorEnjoinExecuteRecord record = new ZyDoctorEnjoinExecuteRecord();
+                    if(list.getDesFrequency() == null || list.getDesFrequency() == 1){
                         record.setDerDrugPrice(list.getDesPrice() * list.getDesCount());//执行一次的价格
                         record.setDesId(list.getDesId());//医嘱详情编号
                         record.setPtNo(list.getPtNo());//病人住院号
                         record.setSId(sId);//护士编号
                         price += list.getDesPrice() * list.getDesCount();//叠加价格
                         deerm.insert(record);//新增
+                    }else{
+                        for (int i = 0;i < list.getDesFrequency();i++){
+                            record.setDerDrugPrice(list.getDesPrice() * list.getDesCount());//执行一次的价格
+                            record.setDesId(list.getDesId());//医嘱详情编号
+                            record.setPtNo(list.getPtNo());//病人住院号
+                            record.setSId(sId);//护士编号
+                            price += list.getDesPrice() * list.getDesCount();//叠加价格
+                            deerm.insert(record);//新增
+                        }
                     }
-                }
             }
-
             //将医嘱详表里面的执行记录修改为当前时间
             dedm.doctorEnjoinDetailsExecuteFor(detailsList);
 
@@ -66,6 +65,10 @@ public class DoctorEnjoinExecuteRecordService {
 
 
             return true;
+
+        }else{
+            return false;
+        }
     }
 
 }

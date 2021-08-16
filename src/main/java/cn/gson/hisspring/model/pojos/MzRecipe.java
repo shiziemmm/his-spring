@@ -27,7 +27,7 @@ public class MzRecipe {
   private long sickNumber;
   private long sId;
   private long mrNumber;
-  private long recipeStatePrice;
+  private double recipePrice;
 
   @TableField(exist = false)//不是数据库对象
   private List<MzXprescription> xpList;//西药处方对象

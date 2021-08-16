@@ -35,12 +35,46 @@ public class MzMedicalRecordController {
         }
     }
 
+    /**
+     *  问诊查询
+     * @param str
+     * @return
+     */
     @RequestMapping("selectAllRecord")
     public List<MzMedicalRecord> selectMedicalRecord( @RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
         String index = map.get("index").toString();
         String texts = map.get("texts").toString();
+        System.err.println(index);
         System.err.println(texts);
-        return recordService.selectMedicalRecord(Long.parseLong(index),texts);
+        return recordService.selectMedicalRecord(index,texts);
     }
+
+    /**
+     * 缴费查询
+     * @param str
+     * @return
+     */
+    @RequestMapping("selectAllRecords")
+    public MzMedicalRecord selectMedicalRecords(@RequestBody String str){
+        Map map = JSON.parseObject(str, Map.class);
+        String texts = map.get("texts").toString();
+        System.err.println(texts);
+        return recordService.selectMedicalRecord(texts);
+    }
+
+    @RequestMapping("forPrinting")
+    public String forPrinting(@RequestBody String str){
+        try {
+            Map map = JSON.parseObject(str, Map.class);
+            String index = map.get("index").toString();
+            System.err.println(index);
+
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fial";
+        }
+    }
+
 }

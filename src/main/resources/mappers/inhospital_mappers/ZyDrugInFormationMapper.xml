@@ -18,6 +18,9 @@
         <result property="yfDrcaName" column="yf_drca_name"/>
         <result property="specSpecification" column="spec_specification"/>
         <result property="iss" column="iss"/>
+        <result property="drugParticle" column="drug_Particle"/>
+        <result property="drugQuantity" column="drug_Quantity"/>
+        <result property="drugPrescription" column="drug_Prescription"/>
     </resultMap>
 
 

@@ -14,7 +14,8 @@
         <result column="sick_Number" property="sickNumber"></result>
         <result column="s_Id" property="sId"></result>
         <result column="mr_Number" property="mrNumber"></result>
-        <result column="recipe_State_Price" property="recipeStatePrice"></result>
+
+        <result column="recipe_price" property="recipePrice"></result>
     </resultMap>
 
     <resultMap id="recipeMap" type="cn.gson.hisspring.model.pojos.MzRecipe">
@@ -28,7 +29,7 @@
         <result column="sick_Number" property="sickNumber"></result>
         <result column="s_Id" property="sId"></result>
         <result column="mr_Number" property="mrNumber"></result>
-        <result column="recipe_State_Price" property="recipeStatePrice"></result>
+        <result column="recipe_price" property="recipePrice"></result>
 
         <collection property="xpList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzXprescriptionMapper.xpMaps">
 

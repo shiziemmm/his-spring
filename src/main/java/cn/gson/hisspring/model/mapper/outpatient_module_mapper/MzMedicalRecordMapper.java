@@ -13,5 +13,7 @@ import java.util.List;
 @Mapper
 public interface MzMedicalRecordMapper extends BaseMapper<MzMedicalRecord> {
     //查询就诊记录表
-    List<MzMedicalRecord> selectMzMedicalRecord(Long index,String texts);
+    List<MzMedicalRecord> selectMzMedicalRecord(String index,String texts);
+    //查询就诊记录表 -- 缴费查询
+    MzMedicalRecord selectMzMedicalRecords(String texts);
 }
