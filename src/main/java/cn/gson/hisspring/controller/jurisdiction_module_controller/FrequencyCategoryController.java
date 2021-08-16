@@ -4,9 +4,11 @@ import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMappe
 import cn.gson.hisspring.model.pojos.Frequency;
 import cn.gson.hisspring.model.pojos.FrequencyCategory;
 import cn.gson.hisspring.model.pojos.Scheduling;
+import cn.gson.hisspring.model.pojos.pojos_vo.SchedulingVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.WeekVo;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.FrequencyCategoryService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.FrequencyService;
+import cn.gson.hisspring.model.service.jurisdiction_module_service.SchedulingVoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,8 @@ public class FrequencyCategoryController {
     FrequencyService fs;
     @Autowired
     SchedulingMapper sl;
+    @Autowired
+    SchedulingVoService sv;
     private static final int FIRST_DAY = Calendar.MONDAY;
 
     @RequestMapping("list-fre")
@@ -47,9 +51,14 @@ public class FrequencyCategoryController {
         return frequencies;
     }
     /**
-     * 根据科室查询人员排班信息
+     * 根据职称查询人员排班信息
      */
+    @RequestMapping("add-sch")
+    public List<SchedulingVo> list(){
+        List<SchedulingVo> list = sv.list();
+        return list;
 
+    }
     /*
     获取当前星期
      */
