@@ -24,6 +24,9 @@ public class DrugVo {
     private String drugSpecification;
     private String drugPastDate;
     private Long iss;//1是药品 2是耗材
+    private Double drugParticle;//单粒价格
+    private String drugQuantity;//每瓶数量
+    private Long drugPrescription;//处方药
 
     //关系
     @TableField(exist = false)
