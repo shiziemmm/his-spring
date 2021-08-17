@@ -5,11 +5,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
 public interface SchedulingMapper extends BaseMapper<Scheduling> {
-    int addSch(@Param("sd") Scheduling sd,@Param("list") List<Integer> list);
+    int addSch(@Param("rq") Date rq,@Param("sid") Integer sid, @Param("list") List<Integer> list);
     List<Scheduling> selectAll(@Param("scDate") String star,@Param("scEnd") String end);
     List<Scheduling>selectWeek(@Param("rq")String rq,@Param("ksId") long ksId);
 }

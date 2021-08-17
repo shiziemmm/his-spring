@@ -8,12 +8,14 @@ import cn.gson.hisspring.model.pojos.pojos_vo.SchedulingVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.WeekVo;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.FrequencyCategoryService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.FrequencyService;
+import cn.gson.hisspring.model.service.jurisdiction_module_service.SchedulingService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.SchedulingVoService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.DateFormat;
@@ -35,6 +37,8 @@ public class FrequencyCategoryController {
     SchedulingMapper sl;
     @Autowired
     SchedulingVoService sv;
+    @Autowired
+    SchedulingService sls;
     private static final int FIRST_DAY = Calendar.MONDAY;
 
     @RequestMapping("list-fre")
@@ -67,10 +71,17 @@ public class FrequencyCategoryController {
      * @param grant
      */
     @RequestMapping("saveGrant")
-    private void saveGrant(String grant){
+    private void saveGrant(@RequestParam("grant") String grant) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");//注意月份是MM
         JSONObject o = JSONObject.parseObject(grant);
-        Integer roleId = Integer.parseInt(o.get("roleId").toString());
+        String rq=o.get("rq").toString();
+        Integer bcId = Integer.parseInt(o.get("bcId").toString());
         List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(),Integer.TYPE);
+        Date date = simpleDateFormat.parse(rq);
+        System.out.println(date);
+        System.out.println(bcId);
+        System.out.println(funs);
+        sls.addSch(date,bcId,funs);
     }
     /*
     获取当前星期

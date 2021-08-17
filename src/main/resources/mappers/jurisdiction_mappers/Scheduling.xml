@@ -15,9 +15,9 @@
 
 
     <insert id="addSch">
-    insert into scheduling(s_id,fc_id,Sc_date,sc_end,Sc_start_date,Sc_end_date) values
+    insert into scheduling(s_id,fr_id,rq) values
     <foreach collection="list" item="i" separator=", ">
-        (#{i},#{sd.fcId},#{sd.scDate},#{sd.scEnd},#{sd.scStartDate},#{sd.scEndDate})
+        (#{i},#{sid},#{rq})
     </foreach>
     </insert>
     <select id="selectAll" resultMap="BaseResultMap">
