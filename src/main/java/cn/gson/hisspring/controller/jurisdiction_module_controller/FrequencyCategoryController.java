@@ -9,6 +9,8 @@ import cn.gson.hisspring.model.pojos.pojos_vo.WeekVo;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.FrequencyCategoryService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.FrequencyService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.SchedulingVoService;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +60,17 @@ public class FrequencyCategoryController {
         List<SchedulingVo> list = sv.list();
         return list;
 
+    }
+
+    /**
+     * 新增排班记录
+     * @param grant
+     */
+    @RequestMapping("saveGrant")
+    private void saveGrant(String grant){
+        JSONObject o = JSONObject.parseObject(grant);
+        Integer roleId = Integer.parseInt(o.get("roleId").toString());
+        List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(),Integer.TYPE);
     }
     /*
     获取当前星期
