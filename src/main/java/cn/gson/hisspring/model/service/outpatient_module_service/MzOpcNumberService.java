@@ -1,7 +1,7 @@
 package cn.gson.hisspring.model.service.outpatient_module_service;
 
-import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.TitleMapper;
+import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzDepartmentKsMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzOpcNumberMapper;
 import cn.gson.hisspring.model.pojos.DepartmentKs;
 import cn.gson.hisspring.model.pojos.MzOpcNumber;
@@ -22,7 +22,7 @@ public class MzOpcNumberService {
     @Autowired
     MzOpcNumberMapper countMapper; // 排号表mapper
     @Autowired
-    DepartmentKsMapper ksMapper; //科室mapper
+    MzDepartmentKsMapper ksMapper; //科室mapper
     @Autowired
     TitleMapper titleMapper; //职称表mapper
     @Autowired
