@@ -25,4 +25,7 @@ public class SchedulingService {
     public List<Scheduling> selectWeek(String rq,long ksId){
         return schedulingMapper.selectWeek(rq,ksId);
     }
+    public List<Scheduling> selectAllWeek(String rq,long ksId){
+        return schedulingMapper.selectWeek(rq,ksId);
+    }
 }

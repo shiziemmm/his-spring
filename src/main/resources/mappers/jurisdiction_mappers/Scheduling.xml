@@ -29,4 +29,8 @@
         select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id where
                 date_format(pb.rq,'%Y/%m/%d')=#{rq} and yg.ks_id=#{ksId}
     </select>
+    <select id="selectAllWeek" resultMap="BaseResultMap">
+        select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id where
+            date_format(pb.rq,'%Y/%m/%d')=#{rq}
+    </select>
 </mapper>
