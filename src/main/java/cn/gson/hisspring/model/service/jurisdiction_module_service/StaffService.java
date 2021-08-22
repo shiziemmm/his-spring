@@ -27,7 +27,7 @@ public class StaffService{
     查询所有员工信息
      */
     public  List<Staff>  selectALl(){
-       return sm.selectALl();
+        return sm.selectALl();
     };
     //新增元员工
     public int addStaff(Staff staff){

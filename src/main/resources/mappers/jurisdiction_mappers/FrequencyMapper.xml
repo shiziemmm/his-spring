@@ -22,4 +22,7 @@
       (#{rId},#{i})
     </foreach>
   </insert>
+  <select id="selectAllId" resultMap="BaseResultMap">
+    select * from frequency where fc_id=#{fcId}
+  </select>
 </mapper>

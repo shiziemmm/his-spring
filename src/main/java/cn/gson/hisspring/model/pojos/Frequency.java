@@ -10,10 +10,9 @@ import java.util.List;
 public class Frequency {
   @TableId(value = "f_id")
   private long fId;
-  private String fFrequency;
   private String fStartTime;
   private String fEndTime;
-  private long fZt;
+  private long fcId;
 
 
 }

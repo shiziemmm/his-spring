@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingVoMapper">
+  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.pojos_vo.SchedulingVo">
+    <id column="tid" jdbcType="INTEGER" property="tId" />
+    <result column="tname" jdbcType="VARCHAR" property="tName" />
+    <collection property="staff"  ofType="cn.gson.hisspring.model.pojos.pojos_vo.SchedulingVo">
+      <id column="sid" jdbcType="INTEGER" property="tId" />
+      <result column="sname" jdbcType="VARCHAR" property="tName" />
+    </collection>
+  </resultMap>
+<select id="chuaxun" resultMap="BaseResultMap">
+  SELECT t.t_id tid,t.t_name tname,s.s_id sid,s.s_name sname FROM title t left JOIN staff s on t.t_id=s.t_id
+</select>
+</mapper>

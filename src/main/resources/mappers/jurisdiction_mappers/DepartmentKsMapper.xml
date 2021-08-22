@@ -14,13 +14,13 @@
   </resultMap>
 
 
-<select id="selectlist" resultMap="BaseResultMap">
-  select * from  department_ks k left JOIN department d on k.de_id= d.de_id
-</select>
+  <select id="selectlist" resultMap="BaseResultMap">
+    select * from  department_ks k left JOIN department d on k.de_id= d.de_id
+  </select>
 
-<select id="selectZyKs" resultMap="BaseResultMap">
-  select * from department_ks where de_id =  (select de_id from department where de_name = '住院部')
-</select>
+  <select id="selectZyKs" resultMap="BaseResultMap">
+    select * from department_ks where de_id =  (select de_id from department where de_name = '住院部')
+  </select>
   <select id="selectId" resultMap="BaseResultMap">
     select * from department_ks k left join department d on k.de_id=d.de_id WHERE k.de_id=#{ksId} and k.de_id is not null
   </select>

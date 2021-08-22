@@ -10,6 +10,6 @@ import java.util.List;
 public interface StaffMapper extends BaseMapper<Staff> {
     List<Staff> selectALl();
     List<Staff> selectksId(long ksId);
-     int upa(long sid);
+    int upa(long sid);
 
 }

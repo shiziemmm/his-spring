@@ -9,7 +9,6 @@ import java.util.List;
 @Mapper
 public interface FrequencyMapper extends BaseMapper<Frequency> {
     List<Frequency> selectById(long fid);
-
-
     int updateById(long fid);
+    List<Frequency> selectAllId(long fcId);
 }
