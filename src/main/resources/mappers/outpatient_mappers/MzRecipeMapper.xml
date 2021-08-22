@@ -14,7 +14,6 @@
         <result column="sick_Number" property="sickNumber"></result>
         <result column="s_Id" property="sId"></result>
         <result column="mr_Number" property="mrNumber"></result>
-
         <result column="recipe_price" property="recipePrice"></result>
     </resultMap>
 
