@@ -102,7 +102,8 @@
                                             )
                                             values
                                         <foreach collection="dedList" separator="," item="des">
-                                            (#{deId},
+                                            (
+                                            #{deId},
                                             #{des.desDrugId},
                                             #{des.desDrugIs},
                                             #{des.desDrugName},
