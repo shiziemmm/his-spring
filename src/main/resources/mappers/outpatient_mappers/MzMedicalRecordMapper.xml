@@ -49,8 +49,8 @@
             or mr_count = #{texts}
             or mr_id_card = #{texts})
         </if>
-        and zp_state_price = 0
-        or rd_state_price = 0
+        and (zp_state_price = 0
+        or rd_state_price = 0)
         order by mr_number
     </select>
 

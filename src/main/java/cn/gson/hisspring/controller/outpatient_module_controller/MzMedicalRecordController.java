@@ -68,8 +68,9 @@ public class MzMedicalRecordController {
         try {
             Map map = JSON.parseObject(str, Map.class);
             String index = map.get("index").toString();
+            String xmName = map.get("xmName").toString();
             System.err.println(index);
-
+            recordService.updateStateRecipe(index,xmName);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
