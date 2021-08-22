@@ -33,7 +33,7 @@
             rd_price,
             rd_typpe,
             Rd_skin,
-            Rd_skinResult,
+            Rd_skin_Result,
             rd_grouping,
             rd_entrust,
             rd_state_price,
