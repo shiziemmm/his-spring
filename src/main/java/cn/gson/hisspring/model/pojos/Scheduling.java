@@ -16,5 +16,6 @@ public class Scheduling {
 
   @TableField(exist = false)
   private Staff staff;
-
+  @TableField(exist = false)
+  private List<Integer> list;
 }

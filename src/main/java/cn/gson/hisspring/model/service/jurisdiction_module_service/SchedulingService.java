@@ -5,6 +5,7 @@ import cn.gson.hisspring.model.pojos.Scheduling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -15,13 +16,16 @@ public class SchedulingService {
     public List<Scheduling> selectList(){
         return schedulingMapper.selectList(null);
     }
-    public boolean addSch(Scheduling scheduling,List<Integer> list){
-        return schedulingMapper.addSch(scheduling,list) < 0 ? false : true;
+    public boolean addSch(Date rq,Integer sid, List<Integer> list){
+        return schedulingMapper.addSch(rq,sid,list) < 0 ? false : true;
     }
     public List<Scheduling> selectAll(String star,String end){
         return schedulingMapper.selectAll(star,end);
     }
     public List<Scheduling> selectWeek(String rq,long ksId){
+        return schedulingMapper.selectWeek(rq,ksId);
+    }
+    public List<Scheduling> selectAllWeek(String rq,long ksId){
         return schedulingMapper.selectWeek(rq,ksId);
     }
 }
