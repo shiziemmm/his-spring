@@ -63,6 +63,11 @@ public class MzMedicalRecordController {
         return recordService.selectMedicalRecord(texts);
     }
 
+    /**
+     * 打印结果集，修改状态
+     * @param str
+     * @return
+     */
     @RequestMapping("forPrinting")
     public String forPrinting(@RequestBody String str){
         try {
@@ -76,6 +81,31 @@ public class MzMedicalRecordController {
             e.printStackTrace();
             return "fial";
         }
+    }
+
+    /**
+     * 查询所有的就诊完成记录（已经完成缴费记录的）
+     * @param str
+     * @return
+     */
+    @RequestMapping("selectRecordsAll")
+    public List<MzMedicalRecord> selectRecordsAll(@RequestBody String str){
+        Map map = JSON.parseObject(str,Map.class);
+        String text = map.get("text").toString();
+        return recordService.selectRecordsAll(text);
+    }
+
+
+    /**
+     * 查询所有的就诊完成记录（已经纠正完成的）
+     * @param str
+     * @return
+     */
+    @RequestMapping("allRecordsSick")
+    public List<MzMedicalRecord> allRecordsSick(@RequestBody String str){
+        Map map = JSON.parseObject(str,Map.class);
+        String text = map.get("text").toString();
+        return recordService.allRecordSick(text);
     }
 
 }

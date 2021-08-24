@@ -131,4 +131,24 @@ public class MzMedicalRecordService {
         }
     }
 
+
+    /**
+     * 查询所有的缴费完成记录
+     * @return
+     */
+    public List<MzMedicalRecord> selectRecordsAll(String text){
+        List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.selectRecordsAll(text);
+        return mzMedicalRecords;
+    }
+
+
+    /**
+     * 病人信息查询 已经就诊完成了的人
+     * @return
+     */
+    public List<MzMedicalRecord> allRecordSick(String text){
+        List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.allRecordSick(text);
+        return mzMedicalRecords;
+    }
+
 }

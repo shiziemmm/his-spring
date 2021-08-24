@@ -27,7 +27,7 @@
         <association property="sickObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap"></association>
 
     </resultMap>
-
+    <!--问诊页面查询就诊列表-->
     <select id="selectMzMedicalRecord" resultMap="recordMap">
         select * from mzmedicalrecord where 1=1
         <if test="index != null and ''!=index" >
@@ -41,7 +41,7 @@
         order by mr_number
     </select>
 
-
+    <!--未缴费查询-->
     <select id="selectMzMedicalRecords" resultMap="recordMap">
         select * from mzmedicalrecord where 1=1
         <if test="texts !=null and ''!=texts ">
@@ -53,5 +53,28 @@
         or rd_state_price = 0)
         order by mr_number
     </select>
-
+    <!--缴费完成查询-->
+    <select id="selectRecordsAll" resultMap="recordMap">
+        select * from mzmedicalrecord where 1=1
+        <if test="text !=null and ''!=text ">
+            and  (mr_mc_card = #{text}
+            or mr_count = #{text}
+            or mr_id_card = #{text})
+        </if>
+        and (zp_state_price = 1
+        or rd_state_price = 1)
+        order by mr_number
+    </select>
+    <!--病人信息查询 已经就诊完成了的人-->
+    <select id="allRecordSick" resultMap="recordMap">
+        select * from mzmedicalrecord where 1=1
+        <if test="text !=null and ''!=text ">
+            and  (mr_mc_card = #{text}
+            or mr_count = #{text}
+            or mr_id_card = #{text})
+        </if>
+        and mr_state = 1
+--         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
+        order by mr_number desc
+    </select>
 </mapper>
