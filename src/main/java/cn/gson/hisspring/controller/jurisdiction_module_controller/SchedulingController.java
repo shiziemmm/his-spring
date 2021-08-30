@@ -37,7 +37,7 @@ public class SchedulingController {
     public void saceGrant(@RequestBody String grant) throws ParseException {
 //        System.err.println(grant);
 //        Map map = JSON.parseObject(grant, Map.class);
-//        List<String> funs = (List<String>) map.get("funs");
+//        List<String> funs = (List<String>) map.get("funs")    ;
 //
 //        Integer freId=Integer.parseInt(map.get("freid").toString());//班次id
 //        List<Frequency> list= frequencyService.selectById(freId);//查询班次

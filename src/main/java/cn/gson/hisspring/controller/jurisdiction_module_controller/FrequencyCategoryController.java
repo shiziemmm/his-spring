@@ -226,10 +226,10 @@ public class FrequencyCategoryController {
         System.out.println(ban2List);
         return ban2List;
     }
-    @RequestMapping("dome")
-    public void lake() throws ParseException {
-        Date date=cs();
-        System.out.println(date.getTime());
+    @RequestMapping("select-cate")
+    public List<FrequencyCategory> lake() {
+        List<FrequencyCategory> dome = fre.dome();
+        return dome;
     }
     /**
      *   获取本周的第一天
