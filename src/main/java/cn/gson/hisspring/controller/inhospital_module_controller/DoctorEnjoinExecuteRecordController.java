@@ -1,5 +1,6 @@
 package cn.gson.hisspring.controller.inhospital_module_controller;
 
+import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord;
 import cn.gson.hisspring.model.service.inhospital_module_service.DoctorEnjoinExecuteRecordService;
@@ -22,18 +23,17 @@ public class DoctorEnjoinExecuteRecordController {
 
 
     @RequestMapping("addDoctorEnjoinExecute")
-    public boolean doctorEnjoinExecute(@RequestBody String str){
+    public Map<String, String> doctorEnjoinExecute(@RequestBody String str){
         System.err.println(str);
         Map map = JSON.parseObject(str, Map.class);
         List<ZyDoctorEnjoinDetails> zyDoctorEnjoinExecuteRecordList  = JSON.parseArray(map.get("doctorEnjoinList").toString(),ZyDoctorEnjoinDetails.class);
         zyDoctorEnjoinExecuteRecordList.forEach(c->{
             System.out.println(c);
         });
-        Long sId = Long.parseLong(map.get("sId").toString());
+        Staff staff = JSON.parseObject(map.get("staff").toString(),Staff.class);
         System.out.println(zyDoctorEnjoinExecuteRecordList);
 
-        deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList,sId);
+        return deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList,staff);
 
-        return false;
     }
 }
