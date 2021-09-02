@@ -22,5 +22,5 @@ public class SsOperationApply {
   @TableField(exist = false)
   private ZyPatientBase ptdx;//病人信息
   @TableField(exist = false)
-  private  Staff staff;//病人信息
+  private  Staff staff;//员工信息
 }
