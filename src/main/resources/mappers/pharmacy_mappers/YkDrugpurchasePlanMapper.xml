@@ -39,6 +39,7 @@
         <result property="ksId" column="ks_id"/>
         <result property="tId" column="t_id"/>
     </resultMap>
+
     <!--查询药品采购计划详单-->
     <resultMap id="allPlanDetails" type="cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails">
         <result property="ykChaseId" column="YK_chase_id"/>
@@ -47,6 +48,7 @@
         <result property="ykDrugName" column="YK_drug_name"/>
         <result property="ykChaseCount" column="YK_chase_count"/>
         <result property="drugPrice" column="Drug_price"/>
+        <!--药品-->
         <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
             <result property="drugId" column="Drug_id" />
             <result property="drugName" column="Drug_name" />
@@ -62,7 +64,16 @@
             <result property="drugSpecification" column="Drug_specification" />
             <result property="drugPastDate" column="Drug_pastDate" />
         </association>
+        <!--供应商-->
+        <association property="ykSupplier" javaType="cn.gson.hisspring.model.pojos.YkSupplier">
+            <result property="supplierId" column="Supplier_id"/>
+            <result property="supplierName" column="Supplier_name"/>
+            <result property="supplierSite" column="Supplier_site"/>
+            <result property="supplierPhone" column="Supplier_phone"/>
+            <result property="supplierLinkman" column="Supplier_linkman"/>
+        </association>
     </resultMap>
+
     <!--药品信息查询-->
     <resultMap id="DrugMap" type="cn.gson.hisspring.model.pojos.YfDruginformation">
         <result property="drugId" column="Drug_id" />
@@ -111,6 +122,7 @@
     <!--查询采购计划详单-->
     <select id="allydpd" resultMap="allPlanDetails">
         select * from yk_drugpurchase_plan_details ydpd left join yf_drugInformation drug on ydpd.drug_id = drug.drug_id
+        left join yk_supplier supp on drug.drug_id = supp.Supplier_id
     </select>
 
     <!--查询药品信息-->

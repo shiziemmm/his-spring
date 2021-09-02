@@ -41,4 +41,12 @@ public class MzOpcNumberController {
             return "fail";
         }
     }
+    //接诊就修改挂号表的状态
+    @RequestMapping("upRtNumber")
+    public void upRtNumber(@RequestBody String str){
+        Map map = JSON.parseObject(str, Map.class);
+        String rtNumber = map.get("rtNumber").toString();
+        countService.upRtNumber(rtNumber);
+    }
+
 }

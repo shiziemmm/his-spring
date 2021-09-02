@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.DrugStorageMapper">
+    <resultMap id="DrugStorageMap" type="cn.gson.hisspring.model.pojos.YkDruginventory">
+        <result property="ykDrvenId" column="YK_drven_id"/>
+        <result property="drugId" column="Drug_id"/>
+        <result property="ykDrvenName" column="YK_drven_name"/>
+        <result property="ykWareId" column="YK_ware_id"/>
+        <result property="ykDrvenBatch" column="YK_drven_batch"/>
+        <result property="ykDrvenCount" column="YK_drven_count"/>
+        <result property="ykDrvenMftDate" column="YK_drven_mftDate"/>
+        <result property="supplierId" column="Supplier_id"/>
+        <result property="ykSupplierName" column="YK_Supplier_name"/>
+            <!--仓库-->
+            <association property="ykWarehouse" javaType="cn.gson.hisspring.model.pojos.YkWarehouse">
+                <result property="ykWareId" column="YK_ware_id"/>
+                <result property="ykWareName" column="YK_ware_name"/>
+                <result property="ykWareType" column="YK_ware_type"/>
+            </association>
+            <!--供应商-->
+            <association property="ykSupplier" javaType="cn.gson.hisspring.model.pojos.YkSupplier">
+                <result property="supplierId" column="Supplier_id"/>
+                <result property="supplierName" column="Supplier_name"/>
+                <result property="supplierSite" column="Supplier_site"/>
+                <result property="supplierPhone" column="Supplier_phone"/>
+                <result property="supplierLinkman" column="Supplier_linkman"/>
+            </association>
+    </resultMap>
+
+    <select id="allDrugStorg" resultMap="DrugStorageMap">
+        select * from yk_druginventory tory left join yk_warehouse house on tory.YK_ware_id = house.YK_ware_id
+        left join yk_supplier supp on tory.Supplier_id = supp.Supplier_id
+    </select>
+</mapper>

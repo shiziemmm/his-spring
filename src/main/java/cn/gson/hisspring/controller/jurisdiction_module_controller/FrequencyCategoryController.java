@@ -194,12 +194,16 @@ public class FrequencyCategoryController {
      * @return
      */
     @RequestMapping("this-week")
-    public Object thisWeek(){
+    public Object thisWeek() throws ParseException {
+        //点击当前周之后清空star的值
+        star=new Date();
+        Date date=cs();
         List<WeekVo> ban2List=new ArrayList<>();
         //获取当前时间
         Calendar calendar = Calendar.getInstance();
         //        调用方法回到本周的第一天
         setToFirstDay(calendar);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");//注意月份是MM
         for (int i = 0; i < 7; i++) {
             WeekVo paiBan2=new WeekVo();
 //           将星期，日期，赋值
@@ -209,17 +213,23 @@ public class FrequencyCategoryController {
             paiBan2.setSlist(panBan);
             //将查询出来的结果赋值给需要返回出去的集合
             ban2List.add(paiBan2);
-            //System.out.println(rq);
+            //判断按钮可否使用
+            Date days = simpleDateFormat.parse(paiBan2.getRq());
+            if(days.getTime()<=date.getTime()){
+                paiBan2.setState(true);
+            }else{
+                paiBan2.setState(false);
+            }
 //           循环给日期加天数
             calendar.add(Calendar.DATE, 1);
         }
         System.out.println(ban2List);
         return ban2List;
     }
-    @RequestMapping("dome")
-    public void lake() throws ParseException {
-        Date date=cs();
-        System.out.println(date.getTime());
+    @RequestMapping("select-cate")
+    public List<FrequencyCategory> lake() {
+        List<FrequencyCategory> dome = fre.dome();
+        return dome;
     }
     /**
      *   获取本周的第一天
