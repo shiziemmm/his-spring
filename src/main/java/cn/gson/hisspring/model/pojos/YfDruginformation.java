@@ -35,7 +35,7 @@ public class YfDruginformation {
   public void setDrugParticle(Double drugParticle) {
     this.drugParticle = drugParticle;
   }
-
+ 
   public String getDrugQuantity() {
     return drugQuantity;
   }

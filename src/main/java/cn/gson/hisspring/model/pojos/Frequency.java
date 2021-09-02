@@ -13,6 +13,7 @@ public class Frequency {
   private String fStartTime;
   private String fEndTime;
   private long fcId;
-
+  @TableField(exist = false)
+  private FrequencyCategory fc;
 
 }

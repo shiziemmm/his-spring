@@ -23,15 +23,9 @@ import java.util.List;
 public class MzRecipeService {
     @Autowired
     MzRecipeMapper recipeMapper;
+    @Autowired
+    MzXprescriptionMapper xpMapper;
+    @Autowired
+    MzZprescriptionMapper zpMapper;
 
-    /**
-     * 修改处方表的缴费状态
-     */
-    public void updateStateRecipe(String index){
-        //条件构造寻找对应的id
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("recipe_number",index);
-        MzRecipe mzRecipe = recipeMapper.selectOne(qw);
-        recipeMapper.updateById(mzRecipe);
-    }
 }

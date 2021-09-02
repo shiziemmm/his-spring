@@ -31,6 +31,9 @@ public class MzMedicalRecordService {
     MzOpcNumberMapper opcNumberMapper;//排号
     @Autowired
     MzCaseHistoryMapper historyMapper;//病历表
+
+    @Autowired
+    MzRegistrationMapper registrationMapper;
     /**
      添加处方表--只做处方 和就诊记录的添加
      */
@@ -38,6 +41,9 @@ public class MzMedicalRecordService {
         MzMedicalRecord medicalRecordObject = recordVo.getMedicalRecordObject();
 
         MzRecipe recipeObject = recordVo.getRecipeObject();
+
+
+
         //新增就诊记录表 和修改排号表状态
         if(recordVo.getMedicalRecordObject() !=null){
             //修改排号表状态
@@ -98,6 +104,51 @@ public class MzMedicalRecordService {
      */
     public MzMedicalRecord selectMedicalRecord(String texts){
         return medicalRecordMapper.selectMzMedicalRecords( texts);
+    }
+
+
+
+    /**
+     * 修改处方表的缴费状态
+     */
+    public void updateStateRecipe(String index,String xmName){
+        //条件构造寻找对应的id
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("recipe_Number",index);
+        if(xmName.equals("西药处方")){
+            List<MzXprescription> mzRecipe = xpMapper.selectList(qw);
+            for (MzXprescription mzXprescription : mzRecipe) {
+                mzXprescription.setRdStatePrice(1);
+                xpMapper.updateById(mzXprescription);
+            }
+        }
+        if(xmName.equals("中药处方")){
+            List<MzZprescription> zp =  zpMapper.selectList(qw);
+            for (MzZprescription mzZprescription : zp) {
+                mzZprescription.setZpStatePrice(1);
+                zpMapper.updateById(mzZprescription);
+            }
+        }
+    }
+
+
+    /**
+     * 查询所有的缴费完成记录
+     * @return
+     */
+    public List<MzMedicalRecord> selectRecordsAll(String text){
+        List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.selectRecordsAll(text);
+        return mzMedicalRecords;
+    }
+
+
+    /**
+     * 病人信息查询 已经就诊完成了的人
+     * @return
+     */
+    public List<MzMedicalRecord> allRecordSick(String text){
+        List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.allRecordSick(text);
+        return mzMedicalRecords;
     }
 
 }

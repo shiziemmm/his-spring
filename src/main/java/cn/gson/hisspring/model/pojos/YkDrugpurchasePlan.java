@@ -13,13 +13,13 @@ import java.util.List;
 @Data//get  set方法
 public class YkDrugpurchasePlan {
 
-  private String ykPurchaseId;
-  private String ykPurchaseName;
+  private String ykPurchaseId;//药品采购计划编号
+  private String ykPurchaseName;//采购的计划名称
   @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
-  private Timestamp ykPurchaseTime;
-  private Long sId;
-  private String ykPurchaseSName;
-  private Long ykPurchaseIs;
+  private Timestamp ykPurchaseTime;//药品计划采购日期
+  private Long sId;//指定采购计划人员 连接员工编号
+  private String ykPurchaseSName;//采购员名称
+  private Long ykPurchaseIs;//是否已经执行过该计划  1是未执行 2是已执行
 
   @TableField(exist = false)
   private Staff staff;/*员工表*/
