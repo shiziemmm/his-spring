@@ -34,6 +34,9 @@ public class MzMedicalRecord {
   private long bnNumber;
   private String mcNumber;
 
+  @TableField(exist = false)
+  private MzOpcNumber opcObject;//排号表对象
+
   @TableField(exist = false)//不是数据库的
   private MzRecipe recipeObject;//处方表
 

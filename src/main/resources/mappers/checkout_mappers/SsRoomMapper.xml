@@ -51,5 +51,10 @@
         SELECT * FROM ss_operation_room a
         inner join  department_ks b on b.ks_id=a.ks_id
         inner join  staff c on c.s_id=a.s_id
+        <where>
+            <if test ="seach !=null and '' != seach"> /*名称like*/
+                Operation_zt ='${OperationZt}'
+            </if>
+        </where>
     </select>
 </mapper>
