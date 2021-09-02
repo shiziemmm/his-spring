@@ -18,4 +18,6 @@ public class Scheduling {
   private Staff staff;
   @TableField(exist = false)
   private List<Integer> list;
+  @TableField(exist = false)
+  private List<Frequency> fre;
 }
