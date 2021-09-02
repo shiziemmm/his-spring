@@ -18,7 +18,7 @@ public class ZyDoctorEnjoinDetails {
   private long desId;//医嘱详细编号
   private Long deId;//连接医嘱编号
   private Long desDrugId;//连接药品编号或者耗材
-  private Long desDrugIs;//是药品还是耗材 1是药品 2是耗材
+  private Long desDrugIs;//是药品还是耗材 1是药品 2是耗材 3处方药
   private String desDrugName;//药品名称
   private String desText;//医嘱内容
   private String desSpecification;//规格

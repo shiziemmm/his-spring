@@ -11,16 +11,16 @@
         <result column="Consumables_unit" property="consumablesUnit"/>
         <result column="Consumables_price" property="consumablesPrice"/>
     </resultMap>
-
+    <!--耗材查询-->
     <select id="allConsumables" resultMap="HcIndConsumables">
         select * from hc_ind_consumables
     </select>
-
+    <!--新增-->
     <insert id="addConsumables" parameterType="cn.gson.hisspring.model.pojos.HcIndConsumables">
         insert into hc_ind_consumables (Consumables_name,Consumables_Purchase,Consumables_unit,Consumables_price)
         values (#{consumablesName},#{consumablesPurchase},#{consumablesUnit},#{consumablesPrice})
     </insert>
-
+    <!--修改-->
     <update id="updateConsumables" parameterType="cn.gson.hisspring.model.pojos.HcIndConsumables">
         update hc_ind_consumables set consumables_name=#{consumablesName},consumables_Purchase=#{consumablesPurchase},
                                       consumables_unit=#{consumablesUnit},consumables_price=#{consumablesPrice} where consumables_id=#{consumablesId}

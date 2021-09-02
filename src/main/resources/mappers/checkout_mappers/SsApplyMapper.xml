@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.SsApplyMapper">
+    <resultMap id="allssApply" type="cn.gson.hisspring.model.pojos.SsOperationApply">
+        <id column="apply_id" property="applyId"></id>
+        <result  column="pt_no" property="ptNo"></result>
+        <result  column="simulation_operation" property="simulationOperation"></result>
+        <result  column="simulation_time" property="simulationTime"></result>
+        <result  column="s_id" property="sId"></result>
+        <result  column="project_id" property="projectId"></result>
+        <result  column="change_id" property="changeId"></result>
+        <result  column="operation_id" property="operationId"></result>
+<!--病人信息-->
+        <association property="ptdx" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.patientMap"></association>
+<!--   医生信息-->
+        <association property="staff" resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper.BaseResultMap"></association>
+    </resultMap>
+
+    <select id="selectSsApply" resultMap="allssApply">
+        select * from ss_operation_apply a
+        inner join zy_patient_base b on a.pt_no =b.pt_no
+        inner join staff d on d.s_id =b.s_id
+        inner join staff c on a.s_id =c.s_id
+        <where>
+            <if test ="seach !=null and '' != seach"> /*名称like*/
+                pt_name like'%${ptName}%'
+            </if>
+            <if test ="seach !=null and '' != seach">/*伤害*/
+                or pt_diagnose_name like'%${ptDiagnoseName}%'
+            </if>
+        </where>
+    </select>
+</mapper>

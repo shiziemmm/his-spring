@@ -25,8 +25,13 @@ public class SsobjectControll {
     }
     //所有手术室
     @RequestMapping("sssRoom")
-    public List<SsOperationRoom> allSroom(){
-        return  sprojectService.allSroom();
+    public List<SsOperationRoom> allSroom(String seach){
+        return  sprojectService.allSroom(seach);
+    }
+    //所有手术申请
+    @RequestMapping("sssApply")
+    public List<SsOperationApply> allSapply(String seach){
+        return  sprojectService.allSApply(seach);
     }
 //    单个手术项目
     @RequestMapping("ssprot")
@@ -68,6 +73,18 @@ public class SsobjectControll {
         SsOperationRoom proj = JSON.parseObject(map.get("proj").toString(), SsOperationRoom.class);
         System.out.println(proj);
         return sprojectService.sssUpdate(proj);
+    }
+    /**
+     * 新增修改手术申请
+     */
+
+    @RequestMapping("aOrUApply")
+    public boolean applyAddOrUpdate(@RequestBody String projstr){
+        System.out.println(projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将病房对象字符串转换为病房对象
+        SsOperationApply proj = JSON.parseObject(map.get("proj").toString(), SsOperationApply.class);
+        System.out.println(proj);
+        return sprojectService.ssqUpdate(proj);
     }
     //    修改手术室状态
     @PostMapping("upd-roomzt")
