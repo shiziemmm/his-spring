@@ -1,6 +1,7 @@
 package cn.gson.hisspring.controller.outpatient_module_controller;
 
 import cn.gson.hisspring.model.pojos.MzMedicalRecord;
+import cn.gson.hisspring.model.pojos.MzPayment;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalRecordService;
 import com.alibaba.fastjson.JSON;
@@ -74,8 +75,9 @@ public class MzMedicalRecordController {
             Map map = JSON.parseObject(str, Map.class);
             String index = map.get("index").toString();
             String xmName = map.get("xmName").toString();
+            MzPayment payment = JSON.parseObject(map.get("payment").toString(),MzPayment.class);
             System.err.println(index);
-            recordService.updateStateRecipe(index,xmName);
+            recordService.updateStateRecipe(index,xmName,payment);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();

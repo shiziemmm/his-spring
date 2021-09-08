@@ -25,6 +25,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("chTime",new Date(),metaObject);// 门诊就病历表-pojos
         this.setFieldValByName("recipeTime",new Date(),metaObject); // 门诊处方表-pojos
 
+        this.setFieldValByName("pmTime",new Date(),metaObject); // 门诊缴费记录表-pojos
+
     }
 
     @Override

@@ -1,8 +1,11 @@
 package cn.gson.hisspring.model.service.outpatient_module_service;
 
+import cn.gson.hisspring.config.MyUtilCardConfig;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.*;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +35,12 @@ public class MzMedicalRecordService {
     @Autowired
     MzCaseHistoryMapper historyMapper;//病历表
 
+//    @Autowired
+//    MzRegistrationMapper registrationMapper;//门诊挂号表
+
     @Autowired
-    MzRegistrationMapper registrationMapper;
+    MzPaymentMapper paymentMapper;
+
     /**
      添加处方表--只做处方 和就诊记录的添加
      */
@@ -111,13 +118,14 @@ public class MzMedicalRecordService {
     /**
      * 修改处方表的缴费状态
      */
-    public void updateStateRecipe(String index,String xmName){
+    public void updateStateRecipe(String index,String xmName,MzPayment payment){
         //条件构造寻找对应的id
         QueryWrapper qw = new QueryWrapper();
         qw.eq("recipe_Number",index);
+
         if(xmName.equals("西药处方")){
-            List<MzXprescription> mzRecipe = xpMapper.selectList(qw);
-            for (MzXprescription mzXprescription : mzRecipe) {
+            List<MzXprescription> xp = xpMapper.selectList(qw);
+            for (MzXprescription mzXprescription : xp) {
                 mzXprescription.setRdStatePrice(1);
                 xpMapper.updateById(mzXprescription);
             }
@@ -129,6 +137,24 @@ public class MzMedicalRecordService {
                 zpMapper.updateById(mzZprescription);
             }
         }
+        // 查询一遍处方表
+        MzRecipe mzRecipe = recipeMapper.selectOne(qw);
+        // 修改状态后存入缴费记录表中
+        MzPayment mzPayment = new MzPayment();
+        //自动生成缴费单号
+        MyUtilCardConfig myUtilCardConfig = new MyUtilCardConfig();
+        mzPayment.setPmNumberCount("MZJF"+myUtilCardConfig.numberNot(6));
+        //对传过来的对象进行挨个赋值
+        mzPayment.setPmCard(payment.getPmCard());
+        mzPayment.setPmSum(payment.getPmSum());
+        mzPayment.setPmType(payment.getPmType());
+        mzPayment.setPmTypeId(payment.getPmTypeId());
+        mzPayment.setSId(payment.getSId());
+        mzPayment.setSickNumber(payment.getSickNumber());
+
+        paymentMapper.insert(mzPayment);
+
+
     }
 
 
