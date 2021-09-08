@@ -45,6 +45,7 @@
         </if>
         and (zp_state_price = 1
         or rd_state_price = 1)
+        and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_number
     </select>
     <!--病人信息查询 已经就诊完成了的人-->
