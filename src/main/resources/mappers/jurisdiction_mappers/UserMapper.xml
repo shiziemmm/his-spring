@@ -14,6 +14,7 @@
       <result column="u_id" jdbcType="INTEGER" property="uId" />
         <result column="ks_id" jdbcType="INTEGER" property="ksId" />
       <result column="t_id" jdbcType="INTEGER" property="tId" />
+      <result column="s_zt" jdbcType="INTEGER" property="sZt" />
     </association>
   </resultMap>
   <sql id="Base_Column_List">
