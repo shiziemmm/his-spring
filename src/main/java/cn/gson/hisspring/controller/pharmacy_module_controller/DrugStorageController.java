@@ -11,11 +11,14 @@ import java.util.List;
 
 @RestController
 @CrossOrigin /*跨域*/
+/**
+ * 药库
+ */
 public class DrugStorageController {
     @Autowired
     DrugStorageService drugStorageService;
 
-    @RequestMapping("all-DrugStorg")
+    @RequestMapping("YK-repertory")
     public List<YkDruginventory> allDrugStorg() {
         return drugStorageService.allDrugStorg();
     }

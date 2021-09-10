@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YFDruglnventoryMapper">
+    <resultMap id="YFDruglnventoryMap" type="cn.gson.hisspring.model.pojos.YfDruginventory">
+        <result property="yfDrvenId" column="YF_drven_id"/>
+        <result property="drugId" column="Drug_id"/>
+        <result property="yfDrvenName" column="YF_drven_name"/>
+        <result property="yfDrvenCount" column="YF_drven_count"/>
+        <result property="supplierId" column="Supplier_id"/>
+        <result property="yfSupplierName" column="YF_Supplier_name"/>
+        <result property="yfDrcaName" column="YF_drca_name"/>
+        <result property="drugPrescription" column="Drug_prescription"/>
+        <!--供应商-->
+        <association property="ykSupplier" javaType="cn.gson.hisspring.model.pojos.YkSupplier">
+            <result property="supplierId" column="Supplier_id"/>
+            <result property="supplierName" column="Supplier_name"/>
+            <result property="supplierSite" column="Supplier_site"/>
+            <result property="supplierPhone" column="Supplier_phone"/>
+            <result property="supplierLinkman" column="Supplier_linkman"/>
+        </association>
+        <!--药品信息-->
+        <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
+            <result property="drugId" column="Drug_id" />
+            <result property="drugName" column="Drug_name" />
+            <result property="drugBarCode" column="Drug_barCode" />
+            <result property="drugPrice" column="Drug_price" />
+            <result property="drugUsage" column="Drug_usage" />
+            <result property="ykSpecId" column="YK_spec_id" />
+            <result property="ykSupplierId" column="YK_Supplier_id" />
+            <result property="yfDrcaId" column="YF_drca_id" />
+            <result property="drugUpper" column="Drug_upper" />
+            <result property="drugRemark" column="Drug_remark" />
+            <result property="drugUnit" column="Drug_unit" />
+            <result property="drugSpecification" column="Drug_specification" />
+            <result property="drugPastDate" column="Drug_pastDate" />
+            <result property="drugParticle" column="Drug_particle"/>
+            <result property="drugQuantity" column="Drug_quantity"/>
+        </association>
+        <!--药品类别-->
+        <association property="yfDrugcategory" javaType="cn.gson.hisspring.model.pojos.YfDrugcategory">
+            <result property="yfDrcaId" column="YF_drca_id"/>
+            <result property="yfDrcaName" column="YF_drca_name"/>
+        </association>
+    </resultMap>
+
+    <select id="allYFlnventory" resultMap="YFDruglnventoryMap">
+        select * from yf_druginventory tory left join yk_supplier supp on tory.Supplier_id = supp.Supplier_id
+                                            left join yf_druginformation drug on tory.Drug_id = drug.Drug_id
+                                            left join yf_drugcategory gory on tory.YF_drca_name = gory.YF_drca_id
+    </select>
+
+</mapper>
