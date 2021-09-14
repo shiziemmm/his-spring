@@ -11,20 +11,44 @@
         <result  column="project_id" property="projectId"></result>
         <result  column="change_id" property="changeId"></result>
         <result  column="operation_id" property="operationId"></result>
-<!--病人信息-->
-        <association property="ptdx" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.patientMap"></association>
-<!--   医生信息-->
-        <association property="staff" resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper.BaseResultMap"></association>
+        <result  column="apply_zt" property="applyZt"></result>
+<!--        执行人信息-->
+        <association property="ys" javaType="cn.gson.hisspring.model.pojos.Staff">
+            <id column="ys_id" jdbcType="INTEGER" property="sId" />
+            <result column="ys_name" jdbcType="VARCHAR" property="sName" />
+        </association>
+<!--        主刀医生员工信息-->
+        <association property="ptdx" javaType="cn.gson.hisspring.model.pojos.ZyPatientBase">
+            <result column="Pt_no" property="ptNo"/>
+            <result column="pt_In_date" property="ptInDate"/>
+            <result column="Pt_name" property="ptName"/>
+            <result column="pt_sex" property="ptSex"/>
+            <result column="Pt_Birth_date" property="ptBirthDate"/>
+            <result column="Pt_Capacity_no" property="ptCapacityNo"/>
+            <result column="Pt_Home_adder" property="ptHomeAdder"/>
+            <result column="ks_id" property="ksId"/>
+            <result column="Pt_Diagnose_name" property="ptDiagnoseName"/>
+            <result column="Bd_id" property="bdId"/>
+            <result column="Pt_Out_date" property="ptOutDate"/>
+            <result column="Pt_age" property="ptAge"/>
+            <result column="pt_pay_money" property="ptPayMoney"/>
+            <result column="pt_price" property="ptPrice"/>
+            <result column="pt_iphone" property="ptIphone"/>
+            <result column="s_id" property="sId"/>
+            <result column="ks_name" property="ksName"/>
+            <result column="pt_is" property="ptIs"/>
+            <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
+                <id column="yh_id" jdbcType="INTEGER" property="sId" />
+                <result column="yh_name" jdbcType="VARCHAR" property="sName" />
+            </association>
+        </association>
     </resultMap>
 
     <select id="selectSsApply" resultMap="allssApply">
-        select * from ss_operation_apply a
-        inner join zy_patient_base b on a.pt_no =b.pt_no
-        inner join staff d on d.s_id =b.s_id
-        inner join staff c on a.s_id =c.s_id
+        select * from ssapply
         <where>
             <if test ="seach !=null and '' != seach"> /*名称like*/
-                pt_name like'%${ptName}%'
+                and pt_name like'%${ptName}%'
             </if>
             <if test ="seach !=null and '' != seach">/*伤害*/
                 or pt_diagnose_name like'%${ptDiagnoseName}%'

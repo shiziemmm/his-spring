@@ -16,6 +16,17 @@ public class Scheduling {
 
   @TableField(exist = false)
   private Staff staff;
+
+  @TableField(exist = false)
+  private DepartmentKs departmentKs;
+
+  @TableField(exist = false)
+  private Title title;
+
   @TableField(exist = false)
   private List<Integer> list;
+
+  @TableField(exist = false)
+  private List<Frequency> fre;
+
 }

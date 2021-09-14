@@ -22,6 +22,8 @@ public class SprojectService {
     SsRoomMapper sss;//手术室mapper
     @Autowired
     SsApplyMapper ssq;//手术申请mapper
+    @Autowired
+    SsDetailsMapper ssd;//手术记录mapper
     //所有手术项目
     public List<SsOperationProject> allProject(){
         List<SsOperationProject> listsp = sproject.allProject();
@@ -30,6 +32,11 @@ public class SprojectService {
     //所有手术室
     public List<SsOperationRoom> allSroom(String seach){
         List<SsOperationRoom> listss = sss.allSroom(seach);
+        return listss;
+    }
+    //所有手术记录
+    public List<SsOperationDetails> allSdetails(String seach){
+        List<SsOperationDetails> listss = ssd.selectAllsDetails(seach);
         return listss;
     }
     //所有手术申请

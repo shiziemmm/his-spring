@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.SsDetailsMapper">
+    <resultMap id="allssDetails" type="cn.gson.hisspring.model.pojos.SsOperationDetails">
+    <id column="Operation_num" property="operationNum"></id>
+    <result  column="Operation_time" property="OperationTime"></result>
+    <result  column="Operation_date" property="operationDate"></result>
+    <result  column="project_id" property="projectId"></result>
+    <result  column="Operation_handle" property="operationHandle"></result>
+    <result  column="Operation_hocus" property="operationHocus"></result>
+    <result  column="Operation_doctor" property="operationDoctorName"></result>
+    <result  column="pt_no" property="ptNo"></result>
+    <!--病人信息-->
+    <association property="ptdx" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.patientMap"></association>
+    <!--手术信息-->
+    <association property="ssdx" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper.allProject"></association>
+    </resultMap>
+    <select id="selectAllsDetails" resultMap="allssDetails">
+        select * from ss_operation_details a
+        inner join zy_patient_base b on a.pt_no =b.pt_no
+        inner join ss_operation_project d on d.project_id =a.project_id
+        <where>
+            <if test ="seach !=null and '' !=seach"> /*住院号号like*/
+                b.pt_no like'%${ptNo}%'
+            </if>
+            <if test ="seach !=null and '' !=seach">/*姓名like*/
+                or b.pt_name like'%${ptName}%'
+            </if>
+            <if test ="seach !=null and '' !=seach">/*身份证like*/
+                or b.pt_capacity_no like'%${ptCapacityNo}%'
+            </if>
+            <if test ="seach !=null and '' !=seach">/*手术名字*/
+                or d.project_name like'%${projectName}%'
+            </if>
+        </where>
+        ORDER BY a.Operation_date desc
+    </select>
+</mapper>
