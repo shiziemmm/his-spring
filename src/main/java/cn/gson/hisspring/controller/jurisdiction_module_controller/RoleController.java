@@ -111,5 +111,8 @@ public class RoleController {
         System.out.println(roleId+"==== "+funs);
         roleinfo.addStaff(roleId,funs);
     }
-
+    @RequestMapping("menus/{userId}")
+    public void menus(@PathVariable("userId") Long userId){
+        System.err.println("测试用户编号："+userId);
+    }
 }
