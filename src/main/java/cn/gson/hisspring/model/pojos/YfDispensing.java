@@ -1,18 +1,47 @@
 package cn.gson.hisspring.model.pojos;
 
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-//发药表
+import java.util.Date;
+import java.sql.Timestamp;
 
-@Data//get  set方法
+/**
+ * 发药记录
+ */
+
+@Data
 public class YfDispensing {
 
+  @TableId(value = "yk_dis_id")
   private long ykDisId;
   private java.sql.Timestamp ykDisDate;
   private String ykDisGo;
-  private long sId;
+  private Long sId;
   private String ykDisName;
-  private long recipeNumber;
+  private String yfDisDurgName;
+  private Long yfDisDurgCount;
+  private Long drugId;
 
+  public Long getsId() {
+    return sId;
+  }
 
+  public void setsId(Long sId) {
+    this.sId = sId;
+  }
+
+  public YfDispensing() {
+  }
+
+  public YfDispensing(String ykDisGo, Long sId, String ykDisName, String yfDisDurgName, Long yfDisDurgCount, Long drugId) {
+    this.ykDisDate = new Timestamp(new Date().getTime());
+    this.ykDisGo = ykDisGo;
+    this.sId = sId;
+    this.ykDisName = ykDisName;
+    this.yfDisDurgName = yfDisDurgName;
+    this.yfDisDurgCount = yfDisDurgCount;
+    this.drugId = drugId;
+  }
 }
