@@ -18,9 +18,12 @@ public class SsOperationApply {
   private long projectId;
   private long changeId;
   private long operationId;
+  private long applyZt;
 
   @TableField(exist = false)
   private ZyPatientBase ptdx;//病人信息
   @TableField(exist = false)
-  private  Staff staff;//病人信息
+  private  Staff ys;//执行人员工信息
+  @TableField(exist = false)
+  private  Staff yh;//主刀医生员工信息
 }

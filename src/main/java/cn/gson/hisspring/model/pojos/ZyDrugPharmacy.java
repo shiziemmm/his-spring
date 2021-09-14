@@ -12,20 +12,27 @@ public class ZyDrugPharmacy {
   @TableId(value = "dp_id")
   private long dpId;
 
-  private Long ksId;
   private String dpMaxUnit;
-  private Double dpMaxCount;
+  private Long dpMaxCount;
   private Long dpInventory;
   private Long drugId;
   private Double dpDrugPrice;
   private String dpMinUnit;
   private String dpDrugName;
-  private Integer dpGuard;//库存警戒线
 
-
-  public ZyDrugPharmacy(long dpId, Integer dpGuard) {
+  public ZyDrugPharmacy(long dpId, Long dpInventory) {
     this.dpId = dpId;
-    this.dpGuard = dpGuard;
+    this.dpInventory = dpInventory;
+  }
+
+  public ZyDrugPharmacy(String dpMaxUnit, Long dpMaxCount, Long dpInventory, Long drugId, Double dpDrugPrice, String dpMinUnit, String dpDrugName) {
+    this.dpMaxUnit = dpMaxUnit;
+    this.dpMaxCount = dpMaxCount;
+    this.dpInventory = dpInventory;
+    this.drugId = drugId;
+    this.dpDrugPrice = dpDrugPrice;
+    this.dpMinUnit = dpMinUnit;
+    this.dpDrugName = dpDrugName;
   }
 
   public ZyDrugPharmacy() {
