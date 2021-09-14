@@ -5,7 +5,6 @@
     <resultMap id="zyDrugMaps" type="cn.gson.hisspring.model.pojos.pojos_vo.DrugVo">
         <result property="drugId" column="Drug_id" />
         <result property="drugName" column="Drug_name" />
-        <result property="drugBarCode" column="Drug_barCode" />
         <result property="drugPrice" column="Drug_price" />
         <result property="drugUsage" column="Drug_usage" />
         <result property="ykSpecId" column="YK_spec_id" />

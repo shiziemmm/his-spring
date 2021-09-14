@@ -1,5 +1,6 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import java.sql.Timestamp;
 //药品药库库存表
 
 @Data//get  set方法
+@TableName(value = "yk_druginventory")
 public class YkDruginventory {
 
   private long ykDrvenId;//药品库存编号
