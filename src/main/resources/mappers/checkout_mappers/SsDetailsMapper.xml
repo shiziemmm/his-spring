@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.SsDetailsMapper">
     <resultMap id="allssDetails" type="cn.gson.hisspring.model.pojos.SsOperationDetails">
-    <id column="Operation_num" property="operationDate"></id>
+    <id column="Operation_num" property="operationNum"></id>
     <result  column="Operation_time" property="OperationTime"></result>
     <result  column="Operation_date" property="operationDate"></result>
     <result  column="project_id" property="projectId"></result>
@@ -17,21 +17,23 @@
     <association property="ssdx" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper.allProject"></association>
     </resultMap>
     <select id="selectAllsDetails" resultMap="allssDetails">
-        select * from  ss_operation_project a left join department_ks b on a.ks_id=b.ks_id
+        select * from ss_operation_details a
+        inner join zy_patient_base b on a.pt_no =b.pt_no
+        inner join ss_operation_project d on d.project_id =a.project_id
         <where>
-            <if test ="projectNumber !=null and '' != projectNumber"> /*卡号like*/
-                Project_number like'%${projectNumber}%'
+            <if test ="seach !=null and '' !=seach"> /*住院号号like*/
+                b.pt_no like'%${ptNo}%'
             </if>
-            <if test ="projectType !=null and '' != projectType">/*手术类别like*/
-                or project_type like'%${projectType}%'
+            <if test ="seach !=null and '' !=seach">/*姓名like*/
+                or b.pt_name like'%${ptName}%'
             </if>
-            <if test ="projectName !=null and '' != projectName">/*手术名称like*/
-                or project_name like'%${projectName}%'
+            <if test ="seach !=null and '' !=seach">/*身份证like*/
+                or b.pt_capacity_no like'%${ptCapacityNo}%'
             </if>
-            <if test ="ksName !=null and '' != ksName">/*科室*/
-                or b.ks_name like'%${ksName}%'
+            <if test ="seach !=null and '' !=seach">/*手术名字*/
+                or d.project_name like'%${projectName}%'
             </if>
         </where>
-        ORDER BY a.project_pay desc
+        ORDER BY a.Operation_date desc
     </select>
 </mapper>

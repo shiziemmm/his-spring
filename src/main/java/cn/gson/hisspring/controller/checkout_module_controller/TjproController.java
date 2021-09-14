@@ -41,7 +41,7 @@ public class TjproController {
     public List<TjCodeProject> allManp(Integer manId){
         return major.selectAlonMm(manId);
     }
-    @RequestMapping("aloneProt") //体检套餐所含检查指标
+    @RequestMapping("aloneProt") //体检套餐所含检查指标44
     public List<TjCodeProject> allPro(Integer codeId){
         return major.selectTjpro(codeId);
     }
