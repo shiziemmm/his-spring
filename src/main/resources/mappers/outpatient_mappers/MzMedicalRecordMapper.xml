@@ -57,13 +57,9 @@
             or mr_id_card = #{text})
         </if>
         and mr_state = 1
---         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
+        and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_number desc
     </select>
-
-
-
-
 
     <resultMap id="recordMaps" type="cn.gson.hisspring.model.pojos.MzMedicalRecord">
         <id column="mr_Number" property="mrNumber"></id>

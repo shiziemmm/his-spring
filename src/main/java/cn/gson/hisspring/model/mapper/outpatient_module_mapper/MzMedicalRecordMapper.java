@@ -16,7 +16,9 @@ public interface MzMedicalRecordMapper extends BaseMapper<MzMedicalRecord> {
     List<MzMedicalRecord> selectMzMedicalRecord(String index,String texts);
     //查询就诊记录表 -- 缴费查询
     MzMedicalRecord selectMzMedicalRecords(String texts);
-    //查询所有的缴费完成记录
+    /**
+     * 查询所有的缴费完成记录
+     */
     List<MzMedicalRecord> selectRecordsAll(String text);
     ///病人信息查询 已经就诊完成了的人
     List<MzMedicalRecord> allRecordSick(String text);

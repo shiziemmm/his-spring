@@ -129,6 +129,8 @@ public class MzMedicalRecordService {
                 mzXprescription.setRdStatePrice(1);
                 xpMapper.updateById(mzXprescription);
             }
+            //添加到缴费记录表中
+            extracted(payment, qw);
         }
         if(xmName.equals("中药处方")){
             List<MzZprescription> zp =  zpMapper.selectList(qw);
@@ -136,7 +138,15 @@ public class MzMedicalRecordService {
                 mzZprescription.setZpStatePrice(1);
                 zpMapper.updateById(mzZprescription);
             }
+            //添加到缴费记录表中
+            extracted(payment, qw);
         }
+    }
+
+    /**
+     * 添加到缴费记录表中
+     */
+    private void extracted(MzPayment payment, QueryWrapper qw) {
         // 查询一遍处方表
         MzRecipe mzRecipe = recipeMapper.selectOne(qw);
         // 修改状态后存入缴费记录表中
@@ -153,8 +163,6 @@ public class MzMedicalRecordService {
         mzPayment.setSickNumber(payment.getSickNumber());
 
         paymentMapper.insert(mzPayment);
-
-
     }
 
 
