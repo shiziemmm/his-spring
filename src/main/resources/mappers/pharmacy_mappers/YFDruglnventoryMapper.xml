@@ -50,4 +50,12 @@
                                             left join yf_drugcategory gory on tory.YF_drca_name = gory.YF_drca_id
     </select>
 
+    <insert id="InsertOrUpdate_Info">
+        insert into movieinfo
+            (id,title,type)
+        values
+            (#{id},#{title},#{type})
+            ON DUPLICATE KEY UPDATE
+                                 title = #{title},type = #{type}
+    </insert>
 </mapper>
