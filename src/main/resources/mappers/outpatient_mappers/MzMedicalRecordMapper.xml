@@ -22,6 +22,18 @@
         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_number
     </select>
+    <!--问诊手术查询-->
+    <select id="mzSelectAllSsObject" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper.allProject">
+        select * from  ss_operation_project a left join department_ks b on a.ks_id=b.ks_id where 1=1
+            <if test ="projectName !=null and '' != projectName">/*手术名称like*/
+                and a.project_name like'%${projectName}%'
+            </if>
+            <if test ="projectType !=null and '' != projectType">/*类型*/
+                and a.project_Type = #{projectType}
+            </if>
+        ORDER BY a.project_pay desc
+    </select>
+
 
     <!--未缴费查询-->
     <select id="selectMzMedicalRecords" resultMap="recordMap">
@@ -57,7 +69,7 @@
             or mr_id_card = #{text})
         </if>
         and mr_state = 1
-        and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
+--         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_number desc
     </select>
 

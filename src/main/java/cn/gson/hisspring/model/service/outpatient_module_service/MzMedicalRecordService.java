@@ -39,7 +39,7 @@ public class MzMedicalRecordService {
 //    MzRegistrationMapper registrationMapper;//门诊挂号表
 
     @Autowired
-    MzPaymentMapper paymentMapper;
+    MzPaymentMapper paymentMapper;  // 缴费记录表
 
     /**
      添加处方表--只做处方 和就诊记录的添加
@@ -110,7 +110,7 @@ public class MzMedicalRecordService {
      *  查询就诊记录表--缴费记录查询
      */
     public MzMedicalRecord selectMedicalRecord(String texts){
-        return medicalRecordMapper.selectMzMedicalRecords( texts);
+        return medicalRecordMapper.selectMzMedicalRecords(texts);
     }
 
 
@@ -183,6 +183,23 @@ public class MzMedicalRecordService {
     public List<MzMedicalRecord> allRecordSick(String text){
         List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.allRecordSick(text);
         return mzMedicalRecords;
+    }
+
+    /**
+     * 门诊查询手术等级
+     * @return
+     */
+    public  List<Object> selectAllSsObjectType(){
+        return medicalRecordMapper.selectAllSsObjectType();
+    }
+
+    /**
+     * 模糊查询手术项目
+     * @return
+     */
+    public List<SsOperationProject> mzSelectAllSsObject(String projectName,String projectType){
+        List<SsOperationProject> listap = medicalRecordMapper.mzSelectAllSsObject(projectName,projectType);
+        return  listap;
     }
 
 }
