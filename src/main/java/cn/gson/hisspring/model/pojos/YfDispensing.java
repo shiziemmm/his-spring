@@ -1,32 +1,30 @@
 package cn.gson.hisspring.model.pojos;
 
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
- * 发药记录
+ * 药房发药记录
  */
-
 @Data
 public class YfDispensing {
 
-  @TableId(value = "yk_dis_id")
-  private long ykDisId;
-  private java.sql.Timestamp ykDisDate;
-  private String ykDisGo;
+  @TableId(value = "yf_dis_id")
+  private long yfDisId;
+  private java.sql.Timestamp yfDisDate;
+  private String yfDisGo;
   private Long sId;
-  private String ykDisName;
+  private String yfDisName;
   private String yfDisDurgName;
   private Long yfDisDurgCount;
   private Long drugId;
+  private Long yfDrugIs;
 
-  public Long getsId() {
-    return sId;
-  }
+
+
 
   public void setsId(Long sId) {
     this.sId = sId;
@@ -35,13 +33,14 @@ public class YfDispensing {
   public YfDispensing() {
   }
 
-  public YfDispensing(String ykDisGo, Long sId, String ykDisName, String yfDisDurgName, Long yfDisDurgCount, Long drugId) {
-    this.ykDisDate = new Timestamp(new Date().getTime());
-    this.ykDisGo = ykDisGo;
+  public YfDispensing(String ykDisGo, Long sId, String ykDisName, String yfDisDurgName, Long yfDisDurgCount, Long drugId,Long is) {
+    this.yfDisDate = new Timestamp(new Date().getTime());
+    this.yfDisGo = ykDisGo;
     this.sId = sId;
-    this.ykDisName = ykDisName;
+    this.yfDisName = ykDisName;
     this.yfDisDurgName = yfDisDurgName;
     this.yfDisDurgCount = yfDisDurgCount;
     this.drugId = drugId;
+    this.yfDrugIs = is;
   }
 }

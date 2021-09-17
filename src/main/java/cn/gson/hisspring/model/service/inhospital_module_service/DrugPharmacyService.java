@@ -1,11 +1,9 @@
 package cn.gson.hisspring.model.service.inhospital_module_service;
 
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.*;
+import cn.gson.hisspring.model.mapper.pharmacy_module_mapper.SupplierMapper;
 import cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YfDispensingMapper;
-import cn.gson.hisspring.model.pojos.YfDispensing;
-import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord;
-import cn.gson.hisspring.model.pojos.ZyDrugPharmacy;
-import cn.gson.hisspring.model.pojos.ZyDrugPharmacyDispensingRecord;
+import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.DispensingVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.DrugVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.PharmacyVo;
@@ -45,6 +43,7 @@ public class DrugPharmacyService {
     YfDrugInventoryVoMapper ydivm;//药房mapper
 
 
+
     /**
      * 根据科室编号查询科室药品库存
      * @param ksId
@@ -69,22 +68,18 @@ public class DrugPharmacyService {
      * @return
      */
     public boolean dispensingByKsOrDrug(DispensingVo dispensingVo){
-//        Map<String,String> erro = new HashMap<>();
-//        erro.put("erroText","yes");
         // =============根据条件查询需要发药的数据
         System.out.println(dispensingVo);
         List<PharmacyVo> pharmacyVoList = dpm.selectPharmacyByKsIdOrDrugId(dispensingVo);
         //=======================================将已执行医嘱修改状态
         List<ZyDoctorEnjoinExecuteRecord> zyDoctorEnjoinExecuteRecordList = deerm.selectExecutePharmacyByKsIdOrDrugId(dispensingVo);
-
         deerm.updateDoctorExecuteIs(zyDoctorEnjoinExecuteRecordList);//循环修改
 
         //=============循环需要扣除药品库存
         for (PharmacyVo pv : pharmacyVoList){
-            System.err.println(pv.getDesDrugId());
+            //使用变量
             QueryWrapper qw = new QueryWrapper<ZyDrugPharmacy>().eq("drug_id",pv.getDesDrugId());
             DrugVo drugVo = difm.selectById(pv.getDesDrugId());//根据药品编号查询药品信息
-            System.out.println(drugVo);
             Long drugCount = (pv.getKc() / drugVo.getDrugQuantity())+1;//发药数量
             Long phCount = (drugVo.getDrugQuantity() * drugCount) - pv.getKc();//扣除需要发的数量之后的库存
             ZyDrugPharmacy pharmacy = null;
@@ -94,17 +89,15 @@ public class DrugPharmacyService {
             //===根据药品编号查询药房库存
             QueryWrapper yfQw = new QueryWrapper<ZyYfDrugInventoryVo>().eq("drug_id",drugVo.getDrugId());//根据药品编号查询
             List<ZyYfDrugInventoryVo> ZyYfDrugInventoryVoList = ydivm.selectList(yfQw);
-//            if(ZyYfDrugInventoryVoList.isEmpty() || ZyYfDrugInventoryVoList.get(0).getYfDrvenCount() < drugCount){
-//                erro.put(drugVo.getDrugId()+"",drugVo.getDrugName());
-//                erro.put("erroText","no");//前端用来判断是否有执行成功
-//                continue;//跳过本次循环
-//            }else{
-                ZyYfDrugInventoryVo zyYfDrugInventoryVo = new ZyYfDrugInventoryVo(ZyYfDrugInventoryVoList.get(0).getYfDrvenId(),ZyYfDrugInventoryVoList.get(0).getYfDrvenCount() - drugCount);
-                ydivm.updateById(zyYfDrugInventoryVo);//修改药房库存
-//            }
 
+            //!
+            if(ZyYfDrugInventoryVoList.isEmpty()){//如果药房没有改药品就新增该药品信息（一般不会出现这种状况）*
+                ZyYfDrugInventoryVo zydi = new ZyYfDrugInventoryVo(drugVo.getDrugId(),drugVo.getDrugName(),0,drugVo.getYkSupplierId());
+                ydivm.insert(zydi);//新增
+            }
 
-
+            ZyYfDrugInventoryVo zyYfDrugInventoryVo = new ZyYfDrugInventoryVo(ZyYfDrugInventoryVoList.get(0).getYfDrvenId(),ZyYfDrugInventoryVoList.get(0).getYfDrvenCount() - drugCount);
+            ydivm.updateById(zyYfDrugInventoryVo);//修改药房库存
 
             //=====================新增住院医嘱处方药使用记录
             ZyDrugPharmacyDispensingRecord zyDrugPharmacyDispensingRecord = new ZyDrugPharmacyDispensingRecord("医嘱处方药",dispensingVo.getDvSid(),pv.getKsId(),pv.getDesDrugId(),pv.getKc(),drugVo.getDrugUnit());
@@ -114,7 +107,7 @@ public class DrugPharmacyService {
             if(zyDrugPharmaciesList.isEmpty() || zyDrugPharmaciesList.get(0).getDpInventory() < pv.getKc()){//如果是进这里就说明这个药品需要去拆盒
 
                 //===========================新增发药记录
-                YfDispensing yfDispensing = new YfDispensing("住院医嘱",dispensingVo.getDvSid(),dispensingVo.getDvName(),drugVo.getDrugName(),drugCount,drugVo.getDrugId());
+                YfDispensing yfDispensing = new YfDispensing("住院医嘱(药品)",dispensingVo.getDvSid(),dispensingVo.getDvName(),drugVo.getDrugName(),drugCount,drugVo.getDrugId(),1L);
                 ydm.insert(yfDispensing);//新增
 
                 //=========================新增或者修改拆盒药品库存
@@ -122,7 +115,6 @@ public class DrugPharmacyService {
                     pharmacy = new ZyDrugPharmacy(zyDrugPharmaciesList.get(0).getDpId(),phCount + zyDrugPharmaciesList.get(0).getDpInventory());
                     dpm.updateById(pharmacy);//修改
                 }else{
-//                    String maxUnit =
                     pharmacy = new ZyDrugPharmacy(drugVo.getSpecSpecification(),drugVo.getDrugQuantity(),phCount,drugVo.getDrugId(),drugVo.getDrugParticle(),drugVo.getDrugUnit(),drugVo.getDrugName());
                     dpm.insert(pharmacy);//新增
                 }
@@ -136,7 +128,6 @@ public class DrugPharmacyService {
                 }
             }
         }
-
         return true;
     }
 
