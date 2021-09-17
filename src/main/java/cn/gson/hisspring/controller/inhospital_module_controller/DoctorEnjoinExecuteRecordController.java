@@ -30,10 +30,10 @@ public class DoctorEnjoinExecuteRecordController {
         zyDoctorEnjoinExecuteRecordList.forEach(c->{
             System.out.println(c);
         });
-        Staff staff = JSON.parseObject(map.get("staff").toString(),Staff.class);
+        Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);
         System.out.println(zyDoctorEnjoinExecuteRecordList);
 
-        return deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList,staff);
+        return deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList,sId);
 
     }
 }

@@ -17,4 +17,38 @@
 <!--                                                        -->
 <!--                                                    </foreach>-->
 <!--    </insert>-->
+
+    <resultMap id="dExecuteIdMap" type="cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord">
+        <result property="desId" column="des_id"/>
+    </resultMap>
+
+
+    <select id="selectExecutePharmacyByKsIdOrDrugId" resultMap="dExecuteIdMap">
+        select * from seltExecutePharmacys
+
+        <where>
+            <if test="dvDrugId != '' and dvDrugId != null ">
+                des_drug_id = #{dvDrugId}
+            </if>
+
+            <if test="(dvKsId != '' and dvKsId != null) and (dvDrugId != '' and dvDrugId != null)">
+                and
+            </if>
+
+            <if test="dvKsId != '' and dvKsId != null ">
+                ks_id = #{dvKsId}
+            </if>
+        </where>
+    </select>
+
+
+
+    <update id="updateDoctorExecuteIs">
+        update zy_doctor_enjoin_execute_record set der_is = 1 where Des_id in
+        (
+        <foreach collection="zyDoctorEnjoinExecuteRecord" item="de" separator=",">
+            #{de.desId}
+        </foreach>
+        )
+    </update>
 </mapper>

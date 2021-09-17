@@ -7,6 +7,8 @@
     <resultMap id="haMap" type="cn.gson.hisspring.model.pojos.ZyInhospitalApply">
         <result column="In_id" property="inId"/>
         <result column="In_diagnosis" property="inDiagnosis"/>
+        <result column="in_suggest" property="inSuggest"/>
+
         <result column="In_apply_date" property="inApplyDate"/>
         <result column="Ks_id" property="ksId"/>
         <result column="Ks_name" property="ksName"/>
@@ -14,6 +16,9 @@
         <result column="s_id" property="sId"/>
         <result column="sick_number" property="sickNumber"/>
         <result column="In_is" property="inIs"/>
+
+        <result column="mr_Number" property="mrNumber"/>
+        <result column="pt_No" property="ptNo"/>
 
         <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap" property="sick"></association>
 

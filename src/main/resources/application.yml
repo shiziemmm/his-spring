@@ -19,3 +19,13 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:mappers/*/*.xml
   config-location: classpath:mybatis-config.xml
+# JWT配置
+jwt:
+  # 密匙KEY
+  secret: JWTSecret
+  # HeaderKEY
+  header: jwtAuth
+  # Token前缀字符
+  tokenPrefix: Security-c
+  # 过期时间毫秒
+  expire: 600000000
