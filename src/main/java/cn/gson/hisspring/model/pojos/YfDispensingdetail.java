@@ -14,4 +14,5 @@ public class YfDispensingdetail {
   private long yfDispenDurgCount;
   private String drugId;
 
+
 }

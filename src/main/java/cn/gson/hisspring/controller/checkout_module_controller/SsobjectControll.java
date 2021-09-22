@@ -33,7 +33,17 @@ public class SsobjectControll {
     public List<SsOperationApply> allSapply(String seach){
         return  sprojectService.allSApply(seach);
     }
-//    单个手术项目
+    //所有手术记录
+    @RequestMapping("ssdDetail")
+    public List<SsOperationDetails> allSDetail(String seach){
+        return  sprojectService.allSdetails(seach);
+    }
+
+
+
+
+
+    //    单个手术项目
     @RequestMapping("ssprot")
     public List<SsOperationProject> singeProject(Integer projectId){
         return  sprojectService.singeProject(projectId);
@@ -48,6 +58,7 @@ public class SsobjectControll {
     public List<SsOperationProject> descSpro(String input){
         return sprojectService.selectAllSsObject(input);
     }
+
     /**
      * 新增修改手术项目
      */

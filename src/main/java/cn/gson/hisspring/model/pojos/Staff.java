@@ -21,7 +21,7 @@ public class Staff {
   private Long uId;
   private Long ksId;
   private Long tId;
-  private long sZt;
+  private Long sZt;
 
   @TableField(exist = false)
   private User user;

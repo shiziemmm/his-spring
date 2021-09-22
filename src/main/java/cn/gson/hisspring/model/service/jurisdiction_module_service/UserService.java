@@ -13,7 +13,7 @@ public class UserService {
     UserMapper us;
 
 
-    public List<User> login(User user){
+    public User login(User user){
         return us.login(user);
     }
     public User cha(User user){
