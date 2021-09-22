@@ -103,7 +103,7 @@
 
     <!--修改余额-->
     <update id="updatePatientBasePrice">
-        update Zy_patient_base set pt_price = pt_price - #{price} where pt_no = #{ptNo}
+        update Zy_patient_base set pt_price = pt_price - #{price}  , pt_pay_money = pt_pay_money + #{price}  where pt_no = #{ptNo}
     </update>
 
     <!--查询病人以及病人下面的医嘱信息-->
