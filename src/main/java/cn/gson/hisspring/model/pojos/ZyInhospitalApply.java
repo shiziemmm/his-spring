@@ -32,6 +32,12 @@ public class ZyInhospitalApply {
   @TableField(exist = false)
   private Staff staff;//员工对象
 
+  public ZyInhospitalApply(long inId, Long inIs,Long ptNo) {
+    this.inId = inId;
+    this.inIs = inIs;
+    this.ptNo = ptNo;
+  }
+
   public ZyInhospitalApply(long inId, Long inIs) {
     this.inId = inId;
     this.inIs = inIs;

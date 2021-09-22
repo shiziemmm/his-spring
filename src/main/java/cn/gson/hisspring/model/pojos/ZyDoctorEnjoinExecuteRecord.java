@@ -3,6 +3,9 @@ package cn.gson.hisspring.model.pojos;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 @Data
 public class ZyDoctorEnjoinExecuteRecord {
 
@@ -13,9 +16,18 @@ public class ZyDoctorEnjoinExecuteRecord {
   private Double derDrugPrice;
   private Long ptNo;
   private Long sId;
-  private String derText;//说明
+  private String derIs;//说明
 
+  public ZyDoctorEnjoinExecuteRecord(Double derDrugPrice, Long ptNo, Long sId, String derText) {
+    this.derExecuteDate = new Timestamp(new Date().getTime());
+    this.derDrugPrice = derDrugPrice;
+    this.ptNo = ptNo;
+    this.sId = sId;
+    this.derIs = derText;
+  }
 
+  public ZyDoctorEnjoinExecuteRecord() {
+  }
 
   public Long getSId() {
     return sId;

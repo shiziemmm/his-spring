@@ -198,16 +198,18 @@ public class PatientBaseService {
      * @return
      */
     public boolean insertPatient(ZyPatientBase patientBase){
-        try{
             //新增住院登记数据
             patientBase.setBdId(0L);//给零
             patientBase.setPtPrice(patientBase.getPtPayMoney());//将预交金额赋值给余额
             pbm.insert(patientBase);//新增
 
 
+        System.err.println("住院编号"+patientBase.getPtNo());
             //修改住院申请信息
-            ZyInhospitalApply ha = new ZyInhospitalApply(patientBase.getInId(),2L);
+            ZyInhospitalApply ha = new ZyInhospitalApply(patientBase.getInId(),2L,patientBase.getPtNo());
             ham.updateById(ha);//根据住院申请编号修改状态
+
+
 
             //新增病人关系信息
             List<ZyContacts> ctaList = patientBase.getListContacts().isEmpty() ? null : patientBase.getListContacts();
@@ -226,9 +228,6 @@ public class PatientBaseService {
             return true;
 
 
-        }catch (Exception e){
-            return false;
-        }
     }
 
 

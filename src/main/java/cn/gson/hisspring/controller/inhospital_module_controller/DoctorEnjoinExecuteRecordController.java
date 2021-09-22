@@ -3,6 +3,7 @@ package cn.gson.hisspring.controller.inhospital_module_controller;
 import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord;
+import cn.gson.hisspring.model.pojos.pojos_vo.PatientPayObjVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.DoctorEnjoinExecuteRecordService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ public class DoctorEnjoinExecuteRecordController {
     DoctorEnjoinExecuteRecordService deers;//执行医嘱service
 
 
+    /**
+     * 执行医嘱方法
+     * @param str 医嘱集合  员工编号
+     * @return
+     */
     @RequestMapping("addDoctorEnjoinExecute")
     public Map<String, String> doctorEnjoinExecute(@RequestBody String str){
         System.err.println(str);
@@ -34,6 +40,19 @@ public class DoctorEnjoinExecuteRecordController {
         System.out.println(zyDoctorEnjoinExecuteRecordList);
 
         return deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList,sId);
+    }
 
+
+    /**
+     * 新开病人费用方法
+     */
+    @RequestMapping("addPatientPay")
+    public boolean patientAddPay(@RequestBody PatientPayObjVo patientPayObjVo){
+        System.err.println(patientPayObjVo);
+        if(patientPayObjVo.getPoPtNo() == null && patientPayObjVo.getPoSid() == null){
+            return false;
+        }
+        deers.patientAddPay(patientPayObjVo);
+        return false;
     }
 }

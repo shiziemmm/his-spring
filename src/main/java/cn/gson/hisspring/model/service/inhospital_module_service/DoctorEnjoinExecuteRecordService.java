@@ -5,6 +5,7 @@ import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper;
 import cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YfDispensingMapper;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.DrugVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.PatientPayObjVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.ZyHCindConsumables;
 import cn.gson.hisspring.model.pojos.pojos_vo.ZyYfDrugInventoryVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -50,6 +51,23 @@ public class DoctorEnjoinExecuteRecordService {
     @Autowired
     ZyHcIndConsumablesMapper zhcm;//耗材mapper
 
+
+    /**
+     * 新开病人费用
+     */
+    public boolean patientAddPay(PatientPayObjVo payObjVo){
+        //===================新增费用记录
+        ZyDoctorEnjoinExecuteRecord deer = new ZyDoctorEnjoinExecuteRecord(payObjVo.getPoPrice(),payObjVo.getPoPtNo(),payObjVo.getPoSid(),payObjVo.getPoText());
+        deerm.insert(deer);//新增
+
+        //================扣除病人费用
+        pbm.updatePatientBasePrice(payObjVo.getPoPrice(),payObjVo.getPoPtNo());//修改病人余额
+
+
+        return false;
+    }
+
+
     /**
      * 执行医嘱方法
      */
@@ -83,12 +101,14 @@ public class DoctorEnjoinExecuteRecordService {
                 DrugVo drugVo = difm.selectById(list.getDesDrugId());//药品对象
                 Staff staff = sm.selectById(sId);//查询员工
                 ZyHCindConsumables zyHCindConsumables = zhcm.selectById(list.getDesDrugId());//耗材对象
-
-
-//                System.err.println(drugVo);
-                System.err.println(list);
-
                 Long drugCount = 0L;
+
+
+
+
+
+
+                //========================================================执行业务操作逻辑
                 for (int i = 0;i < count;i++){
                     drugCount += list.getDesCount();//叠加药品数量
                     record.setDerDrugPrice(list.getDesPrice() * list.getDesCount());//执行一次的价格
@@ -145,5 +165,6 @@ public class DoctorEnjoinExecuteRecordService {
             return erro;
         }
     }
+
 
 }

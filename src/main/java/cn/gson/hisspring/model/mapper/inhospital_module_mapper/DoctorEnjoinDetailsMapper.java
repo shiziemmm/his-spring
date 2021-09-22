@@ -29,4 +29,6 @@ public interface DoctorEnjoinDetailsMapper extends BaseMapper<ZyDoctorEnjoinDeta
 
     int doctorEnjoinDetailsExecuteFor(List<ZyDoctorEnjoinDetails> list);
 
+    int doctorEnjoinDetailsExecute(Long desId);
+
 }
