@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YKAllotMapper">
+    <resultMap id="allotMap" type="cn.gson.hisspring.model.pojos.YkAllot">
+        <result property="ykAllotId" column="YK_allot_id"/>
+        <result property="ykAllotCause" column="YK_allot_cause"/>
+        <result property="ykAllotTime" column="YK_allot_time"/>
+        <result property="sId" column="S_id"/>
+        <result property="ykAllotName" column="YK_allot_name"/>
+        <!--员工表-->
+        <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
+            <result property="sId" column="s_id"/>
+            <result property="sName" column="s_name"/>
+        </association>
+        <!--调拨详表-->
+        <collection property="ykAllotdetail" resultMap="ykAllotdetailMap"/>
+    </resultMap>
+
+    <!--调拨详表-->
+    <resultMap id="ykAllotdetailMap" type="cn.gson.hisspring.model.pojos.YkAllotdetail">
+        <result property="ykAllotdetailId" column="YK_allotdetail_id"/>
+        <result property="ykAllotId" column="YK_allot_id"/>
+        <result property="ykAllotdetailIs" column="YK_allotdetail_is"/>
+        <result property="ykAllotdetailCount" column="YK_allotdetail_count"/>
+        <result property="ykDrvenId" column="YK_drven_id"/>
+        <result property="ykDrvenDrugName" column="YK_drven_drug_name"/>
+        <!--药库库存表-->
+        <association property="ykDruginventory" javaType="cn.gson.hisspring.model.pojos.YkDruginventory">
+            <result property="ykDrvenId" column="YK_drven_id"/>
+            <result property="drugId" column="Drug_id"/>
+            <result property="ykDrvenName" column="YK_drven_name"/>
+        </association>
+    </resultMap>
+
+    <!--查询所有的调拨申请-->
+    <select id="allykallot" resultMap="allotMap">
+        select * from yk_allot ot left join staff sta on ot.S_id = sta.s_id
+    </select>
+    <!--查询调拨详表-->
+    <select id="alldetail" resultMap="ykAllotdetailMap">
+        select * from yk_allotdetail tail left join yk_druginventory tory on tail.YK_drven_id = tory.YK_drven_id
+    </select>
+
+    <!--新增调拨表-->
+    <insert id="adddykallot" parameterType="cn.gson.hisspring.model.pojos.YkAllot">
+        insert into yk_allot(YK_allot_id,YK_allot_cause,YK_allot_time,S_id,YK_allot_name)
+            value (#{ykAllotId},#{ykAllotCause},#{ykAllotTime},#{sId},#{ykAllotName})
+    </insert>
+    <!--新增调拨详表-->
+    <insert id="addykallotdetail" parameterType="cn.gson.hisspring.model.pojos.YkAllotdetail">
+        insert into yk_allotdetail(YK_allotdetail_id,YK_allot_id,YK_allotdetail_is,YK_allotdetail_count,YK_drven_id,YK_drven_drug_name)
+            value (#{ykAllotdetailId},#{ykAllotId},#{ykAllotdetailIs},#{ykAllotdetailCount},#{ykDrvenId},#{ykDrvenDrugName})
+    </insert>
+</mapper>

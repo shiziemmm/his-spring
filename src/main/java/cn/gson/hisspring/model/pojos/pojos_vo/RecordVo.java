@@ -14,4 +14,5 @@ public class RecordVo {
     private MzMedicalRecord medicalRecordObject;//就诊记录表
     private MzRecipe recipeObject;//处方对象里面包含 西药中药list
     private MzCaseHistory historyObject;//病历表
+
 }

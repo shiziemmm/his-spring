@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DrugPharmacyMapper">
+    <resultMap id="pmyMap" type="cn.gson.hisspring.model.pojos.pojos_vo.PharmacyVo">
+        <result property="desPrice" column="des_price"/>
+        <result property="desUsage" column="des_usage"/>
+        <result property="desUnit" column="des_unit"/>
+        <result property="desDrugName" column="des_drug_name"/>
+        <result property="desDrugId" column="des_drug_id"/>
+        <result property="kc" column="kc"/>
+        <result property="ksName" column="ks_name"/>
+        <result property="ksId" column="ks_id"/>
+    </resultMap>
+
+
+    <!--查询需要扣除的医嘱药品库存-->
+    <select resultMap="pmyMap" id="selectPharmacyByKsOrAll">
+        SELECT
+        zy_doctor_enjoin_details.Des_drug_name,
+        zy_doctor_enjoin_details.Des_usage,
+        zy_doctor_enjoin_details.Des_price,
+        zy_doctor_enjoin_details.des_drug_id,
+        zy_patient_base.ks_id,
+        department_ks.ks_name,
+        Sum(zy_doctor_enjoin_details.des_count) AS kc,
+        zy_doctor_enjoin_details.Des_unit
+        FROM
+        zy_doctor_enjoin
+        INNER JOIN zy_doctor_enjoin_details ON zy_doctor_enjoin.De_id = zy_doctor_enjoin_details.De_id
+        INNER JOIN zy_patient_base ON zy_doctor_enjoin.Pt_no = zy_patient_base.Pt_no
+        INNER JOIN department_ks ON zy_patient_base.ks_id = department_ks.ks_id
+        INNER JOIN zy_doctor_enjoin_execute_record ON zy_doctor_enjoin_execute_record.Des_id = zy_doctor_enjoin_details.Des_id and DATE_FORMAT(zy_doctor_enjoin_execute_record.Der_execute_date,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+        WHERE
+        (zy_doctor_enjoin.De_longorshort = 1 AND zy_doctor_enjoin_details.des_is = 1) -- 把长期医嘱和没有停嘱的医嘱筛选出来
+        AND
+        zy_doctor_enjoin_details.des_drug_is = 3 -- 把处方药的医嘱筛选出来
+
+        AND
+
+        zy_doctor_enjoin_execute_record.der_is is null
+
+        AND
+        ((zy_doctor_enjoin_details.Des_end_date IS null OR
+        DATE_FORMAT(zy_doctor_enjoin_details.Des_end_date,'%Y-%m-%d') >= DATE_FORMAT(NOW(),'%Y-%m-%d')) AND
+        DATE_FORMAT(zy_doctor_enjoin_details.Des_execute_date,'%Y-%m-%d') &lt;= DATE_FORMAT(NOW(),'%Y-%m-%d')) -- 把长期医嘱没有到截止日期的医嘱筛选出来
+
+        group by
+
+        <if test="ksId != '' and ksId != null">
+            zy_patient_base.ks_id,
+        </if>
+         zy_doctor_enjoin_details.des_drug_id
+    </select>
+
+
+    <!--  视图 seltpharmacy  查询当天需要执行的医嘱处方药品-->
+    <select resultMap="pmyMap" id="selectPharmacyByKsIdOrDrugId">
+        select * from seltpharmacys
+        <where>
+            <if test="dvDrugId != '' and dvDrugId != null ">
+                des_drug_id = #{dvDrugId}
+            </if>
+
+            <if test="(dvKsId != '' and dvKsId != null) and (dvDrugId != '' and dvDrugId != null)">
+                and
+            </if>
+
+            <if test="dvKsId != '' and dvKsId != null ">
+                ks_id = #{dvKsId}
+            </if>
+        </where>
+    </select>
+
+
+
+
+</mapper>

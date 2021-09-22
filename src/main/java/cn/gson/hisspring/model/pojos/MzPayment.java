@@ -1,22 +1,33 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-@Data//get  set方法
-public class MzPayment {
+import java.util.Date;
 
+/**
+ *  门诊缴费表
+ */
+@Data
+public class MzPayment {
+  @TableId(type = IdType.AUTO)
   private long pmNumber;
-  private long mrNumbe;
-  private String pmBillCode;
-  private String pmBillNumber;
-  private java.sql.Timestamp pmTime;
-  private String pmName;
-  private double pmPrice;
+  private String pmNumberCount;
+
+  @TableField(fill = FieldFill.INSERT)//丢到处理器handler中新增去
+  private Date pmTime;
+
+  private String pmCard;
   private double pmSum;
-  private String pmPriceType;
-  private long mcNumberCard;
-  private String sickNumber;
+  private String pmType;
+
+  private long pmTypeId;
   private long sId;
+  private long sickNumber;
+
 
 
 }

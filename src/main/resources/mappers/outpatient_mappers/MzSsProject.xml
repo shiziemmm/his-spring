@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper">
+    <resultMap id="ssProjectMaps" type="cn.gson.hisspring.model.pojos.SsOperationProject">
+        <id column="project_id" property="projectId"></id>
+        <result  column="project_name" property="projectName"></result>
+        <result  column="project_pay" property="projectPay"></result>
+        <result  column="project_type" property="projectType"></result>
+        <result  column="Project_position" property="projectPosition"></result>
+        <result  column="Project_indication" property="projectIndication"></result>
+        <result  column="Project_taboo" property="projectTaboo"></result>
+        <result  column="Project_matters" property="projectMatters"></result>
+        <result  column="Project_number" property="projectNumber"></result>
+        <result  column="ks_id" property="ksId"></result>
+        <result  column="ks_name" property="ksName"></result>
+
+        <association property="ksId" resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper.BaseResultMap"></association>
+
+
+
+    </resultMap>
+
+    <select id="selectMzssProject" resultMap="ssProjectMaps">
+
+    </select>
+</mapper>
