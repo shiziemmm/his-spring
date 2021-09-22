@@ -8,6 +8,7 @@
         <result  column="check_pay" property="checkPay"></result>
         <result  column="index_name" property="indexName"></result>
         <result  column="index_significance" property="indexSignificance"></result>
+        <result  column="ks_id" property="ksId"></result>
         <association property="deptks"  javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
             <id column="ks_id" jdbcType="INTEGER" property="ksId" />
             <result column="ks_name" jdbcType="VARCHAR" property="ksName" />

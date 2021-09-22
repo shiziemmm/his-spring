@@ -14,7 +14,10 @@ public class SsOperationDetails {
   private String operationHocus;
   private String operationDoctorName;
   private long ptNo;
+  private long hocusId;
 
+  @TableField(exist = false)
+  private YfDruginformation yfdx;//药房信息
   @TableField(exist = false)
   private SsOperationProject ssdx;//手术信息
   @TableField(exist = false)
