@@ -48,6 +48,10 @@
                 <if test="searchDrugUsage != '' and searchDrugUsage != null">
                     and Drug_usage = #{searchDrugUsage}
                 </if>
+
+                <if test="searchIs != '' and searchIs != null">
+                    and Drug_prescription = 1 and iss = 1
+                </if>
             </where>
     </select>
 

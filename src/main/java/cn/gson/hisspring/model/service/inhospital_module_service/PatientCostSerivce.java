@@ -23,13 +23,15 @@ public class PatientCostSerivce {
      */
     public List<PatientCostVo> selectCostByPtNo(Long ptNo,String text){
         QueryWrapper<PatientCostVo> qwc = new QueryWrapper<PatientCostVo>().eq("pt_no",ptNo).orderBy(true,false,"pcd_date");
-        if(text != null){
-            if(text.equals("其它费用")){
+        if(text != null) {
+            if (text.equals("其它费用")) {
                 qwc.isNotNull("pcd_cause");
-                qwc.notIn("pcd_cause","医嘱费用","床位费用");
-            }else{
-                qwc.eq("pcd_cause",text);
+                qwc.notIn("pcd_cause", "医嘱费用", "床位费用");
+            } else {
+                qwc.eq("pcd_cause", text);
             }
+        }else{
+            return pcm.selectPayAll(ptNo);
         }
 
         List<PatientCostVo> patientCostVos = pcm.selectList(qwc);

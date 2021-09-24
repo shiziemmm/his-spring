@@ -17,7 +17,7 @@ public class ZyPay {
   private long pyId;
   private Double pyPrice;
 
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private java.sql.Timestamp pyDate;
   private Long ptNo;
   private Long sId;
