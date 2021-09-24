@@ -11,6 +11,7 @@
         <result column="ch_History" property="chHistory"></result>
         <result column="ch_Family_History" property="chFamilyHistory"></result>
         <result column="ch_Oe" property="chOe"></result>
+        <result column="ch_ops" property="chOps"></result>
         <result column="ch_Cause" property="chCause"></result>
         <result column="ch_Doctor_Text" property="chDoctorText"></result>
         <result column="sick_Number" property="sickNumber"></result>

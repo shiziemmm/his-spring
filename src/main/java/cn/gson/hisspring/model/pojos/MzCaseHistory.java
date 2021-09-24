@@ -24,6 +24,7 @@ public class MzCaseHistory {
   private String chHistory;
   private String chFamilyHistory;
   private String chOe;
+  private String chOps;
   private String chCause;
   private String chDoctorText;
   private long sickNumber;
