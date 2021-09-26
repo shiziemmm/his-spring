@@ -31,8 +31,8 @@ public class TjproService {
     @Autowired
     MzMedicalCardMapper1 car;//诊疗卡体检用mapper
 //检查项目模糊查询与传参
-    public List<TjCodeProject> selectAllTjObject(String seach){
-        List<TjCodeProject> listjc = major.selectAllTjObject(seach);
+    public List<TjCodeProject> selectAllTjObject(String seach,Integer checkTpye){
+        List<TjCodeProject> listjc = major.selectAllTjObject(seach,checkTpye);
         return  listjc;
     }
     //体检套餐模糊查询与传参

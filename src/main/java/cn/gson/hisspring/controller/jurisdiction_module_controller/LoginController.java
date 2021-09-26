@@ -46,6 +46,7 @@ public class LoginController {
         CustomError resultBean = new CustomError();
         if(cha!=null){
             User user1=userService.cha(user);
+            log.info(user1.toString());
             System.err.println(user1);
             if(user1!=null){
                 if(user1.getUName().equals(cha.getUName())&&user1.getUPswd().equals(cha.getUPswd())){
@@ -56,6 +57,7 @@ public class LoginController {
                         System.err.println(resultBean.getCode());
                         return AjaxResponse.error(resultBean);
                     }else{
+                        System.err.println("调试");
                         //未离职的员工返回token
                     String token=jwt.generateToken(user1.getUName(),user1.getUId()+"");
                     a.setToken(token);

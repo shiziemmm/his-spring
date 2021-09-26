@@ -18,8 +18,8 @@ public class TjproController {
     @Autowired
     TjproService major;
     @RequestMapping("allDescTjpro") //排序所有检查信息
-    public List<TjCodeProject> descSpro(String seach){
-        return major.selectAllTjObject(seach);
+    public List<TjCodeProject> descSpro(String seach,Integer checkTpye){
+        return major.selectAllTjObject(seach,checkTpye);
     }
     @RequestMapping("allIndex") //所有检查指标
     public List<TjCodeIndex> allIndex(){
