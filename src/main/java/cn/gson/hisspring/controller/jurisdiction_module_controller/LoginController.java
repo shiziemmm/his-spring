@@ -96,5 +96,14 @@ public class LoginController {
                return null;
             }
     }
+    @RequestMapping("dome")
+    public void dome(){
+        String s="";
+        if(s==null || "".equals(s)){
+            System.out.println("null");
+        }else{
+            System.out.println("not null");
+        }
+    }
 
 }

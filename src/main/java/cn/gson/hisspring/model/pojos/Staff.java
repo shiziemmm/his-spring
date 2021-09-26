@@ -38,6 +38,8 @@ public class Staff {
   @TableField(exist = false)
   private Department dept;
 
+  @TableField(exist = false)
+  private Register register;
 
   @Override
   public String toString() {

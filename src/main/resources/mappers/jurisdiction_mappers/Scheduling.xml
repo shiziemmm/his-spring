@@ -19,7 +19,10 @@
           <id column="t_id" jdbcType="INTEGER" property="tId" />
           <result column="t_name" jdbcType="VARCHAR" property="tName" />
       </association>
-
+      <association property="register" javaType="cn.gson.hisspring.model.pojos.Register">
+          <id column="r_id" jdbcType="INTEGER" property="rId" />
+          <result column="r_moeny" jdbcType="VARCHAR" property="rMoeny" />
+      </association>
       <collection property="fre" ofType="cn.gson.hisspring.model.pojos.Frequency">
           <id column="f_id" jdbcType="INTEGER" property="fId" />
           <result column="f_start_time" jdbcType="INTEGER" property="fStartTime" />
@@ -56,5 +59,9 @@
     <select id="selectDate" resultMap="BaseResultMap">
         select * from staff yg  inner join scheduling pb  on pb.s_id=yg.s_id inner join frequency f on f.F_id=pb.fr_id inner join department_ks d on yg.ks_id=d.ks_id
             inner join title t on  yg.t_id=t.t_id WHERE to_days(pb.rq) = to_days(now())
+    </select>
+    <select id="selectNowWeek" resultMap="BaseResultMap">
+        select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id inner join register r on r.t_id=yg.t_id
+        WHERE TO_DAYS(NOW())-TO_DAYS(rq) > -7 and TO_DAYS(rq) >= TO_DAYS(NOW())
     </select>
 </mapper>
