@@ -44,18 +44,11 @@
         </association>
     </resultMap>
 
+    <!--药房药品信息查询-->
     <select id="allYFlnventory" resultMap="YFDruglnventoryMap">
         select * from yf_druginventory tory left join yk_supplier supp on tory.Supplier_id = supp.Supplier_id
                                             left join yf_druginformation drug on tory.Drug_id = drug.Drug_id
                                             left join yf_drugcategory gory on tory.YF_drca_name = gory.YF_drca_id
     </select>
 
-    <insert id="InsertOrUpdate_Info">
-        insert into movieinfo
-            (id,title,type)
-        values
-            (#{id},#{title},#{type})
-            ON DUPLICATE KEY UPDATE
-                                 title = #{title},type = #{type}
-    </insert>
 </mapper>

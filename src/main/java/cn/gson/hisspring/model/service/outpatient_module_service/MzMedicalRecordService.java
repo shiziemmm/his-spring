@@ -1,8 +1,11 @@
 package cn.gson.hisspring.model.service.outpatient_module_service;
 
+import cn.gson.hisspring.config.MyUtilCardConfig;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.*;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +35,12 @@ public class MzMedicalRecordService {
     @Autowired
     MzCaseHistoryMapper historyMapper;//病历表
 
+//    @Autowired
+//    MzRegistrationMapper registrationMapper;//门诊挂号表
+
     @Autowired
-    MzRegistrationMapper registrationMapper;
+    MzPaymentMapper paymentMapper;  // 缴费记录表
+
     /**
      添加处方表--只做处方 和就诊记录的添加
      */
@@ -55,13 +62,6 @@ public class MzMedicalRecordService {
             opcNumberMapper.updateById(opcNumber);
             medicalRecordObject.setMrOverTime(new Timestamp(System.currentTimeMillis()));//这个是修改时间，就是结束就诊时间对应时间，
             medicalRecordMapper.insert(medicalRecordObject);
-        }
-        //新增病历表
-        MzCaseHistory historyObject = recordVo.getHistoryObject();
-        if(historyObject!=null){
-            historyObject.setSickNumber(recipeObject.getSickNumber());//新增病人外键
-            historyObject.setMrNumber(medicalRecordObject.getMrNumber());//新增就诊记录表
-            historyMapper.insert(historyObject);
         }
         //新增处方
         if(recordVo.getRecipeObject() !=null){
@@ -91,6 +91,14 @@ public class MzMedicalRecordService {
                 System.err.println(mzZprescription);
             }
         }
+        //新增病历表
+        MzCaseHistory historyObject = recordVo.getHistoryObject();
+        if(historyObject!=null){
+            historyObject.setChDoctor(medicalRecordObject.getMrDoctorName());//新增主治医生
+            historyObject.setSickNumber(recipeObject.getSickNumber());//新增病人外键
+            historyObject.setMrNumber(medicalRecordObject.getMrNumber());//新增就诊记录表
+            historyMapper.insert(historyObject);
+        }
 
     }
     /**
@@ -103,7 +111,7 @@ public class MzMedicalRecordService {
      *  查询就诊记录表--缴费记录查询
      */
     public MzMedicalRecord selectMedicalRecord(String texts){
-        return medicalRecordMapper.selectMzMedicalRecords( texts);
+        return medicalRecordMapper.selectMzMedicalRecords(texts);
     }
 
 
@@ -111,16 +119,19 @@ public class MzMedicalRecordService {
     /**
      * 修改处方表的缴费状态
      */
-    public void updateStateRecipe(String index,String xmName){
+    public void updateStateRecipe(String index,String xmName,MzPayment payment){
         //条件构造寻找对应的id
         QueryWrapper qw = new QueryWrapper();
         qw.eq("recipe_Number",index);
+
         if(xmName.equals("西药处方")){
-            List<MzXprescription> mzRecipe = xpMapper.selectList(qw);
-            for (MzXprescription mzXprescription : mzRecipe) {
+            List<MzXprescription> xp = xpMapper.selectList(qw);
+            for (MzXprescription mzXprescription : xp) {
                 mzXprescription.setRdStatePrice(1);
                 xpMapper.updateById(mzXprescription);
             }
+            //添加到缴费记录表中
+            extracted(payment, qw);
         }
         if(xmName.equals("中药处方")){
             List<MzZprescription> zp =  zpMapper.selectList(qw);
@@ -128,7 +139,31 @@ public class MzMedicalRecordService {
                 mzZprescription.setZpStatePrice(1);
                 zpMapper.updateById(mzZprescription);
             }
+            //添加到缴费记录表中
+            extracted(payment, qw);
         }
+    }
+
+    /**
+     * 添加到缴费记录表中
+     */
+    private void extracted(MzPayment payment, QueryWrapper qw) {
+        // 查询一遍处方表
+        MzRecipe mzRecipe = recipeMapper.selectOne(qw);
+        // 修改状态后存入缴费记录表中
+        MzPayment mzPayment = new MzPayment();
+        //自动生成缴费单号
+        MyUtilCardConfig myUtilCardConfig = new MyUtilCardConfig();
+        mzPayment.setPmNumberCount("MZJF"+myUtilCardConfig.numberNot(6));
+        //对传过来的对象进行挨个赋值
+        mzPayment.setPmCard(payment.getPmCard());
+        mzPayment.setPmSum(payment.getPmSum());
+        mzPayment.setPmType(payment.getPmType());
+        mzPayment.setPmTypeId(payment.getPmTypeId());
+        mzPayment.setSId(payment.getSId());
+        mzPayment.setSickNumber(payment.getSickNumber());
+
+        paymentMapper.insert(mzPayment);
     }
 
 
@@ -149,6 +184,23 @@ public class MzMedicalRecordService {
     public List<MzMedicalRecord> allRecordSick(String text){
         List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.allRecordSick(text);
         return mzMedicalRecords;
+    }
+
+    /**
+     * 门诊查询手术等级
+     * @return
+     */
+    public  List<Object> selectAllSsObjectType(){
+        return medicalRecordMapper.selectAllSsObjectType();
+    }
+
+    /**
+     * 模糊查询手术项目
+     * @return
+     */
+    public List<SsOperationProject> mzSelectAllSsObject(String projectName,String projectType){
+        List<SsOperationProject> listap = medicalRecordMapper.mzSelectAllSsObject(projectName,projectType);
+        return  listap;
     }
 
 }

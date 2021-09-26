@@ -1,8 +1,10 @@
 package cn.gson.hisspring.model.service.inhospital_module_service;
 
+import cn.gson.hisspring.model.mapper.checkout_module_mapper.TjManMapper;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.*;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper;
 import cn.gson.hisspring.model.pojos.*;
+import cn.gson.hisspring.model.pojos.pojos_vo.PatientCheckoutVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientUpdateBedVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,44 @@ public class PatientBaseService {
     @Autowired
     ChangeDeptMapper cdm;//病人转科记录mapper
 
+    @Autowired
+    TjManMapper tmm;//体检人员mapper
+
+
+    /**
+     * 新增病人化验项目
+     */
+    public boolean addPatientCheckout(PatientCheckoutVo patientCheckoutVo){
+        QueryWrapper<TjCodeMan> qwtj = new QueryWrapper<TjCodeMan>().eq("man_mz_zy_is",2).eq("man_mz_zy_id",patientCheckoutVo.getPtNo());
+        List<TjCodeMan> tjCodeManList = tmm.selectList(qwtj);
+        Long manId = 0L;//体检人员编号
+
+        if(tjCodeManList.isEmpty()){//如果没有值
+            ZyPatientBase zyPatientBase = pbm.selectById(patientCheckoutVo.getPtNo());
+            TjCodeMan tjCodeMan = new TjCodeMan();
+            tjCodeMan.setManAge(zyPatientBase.getPtAge());//年龄
+            tjCodeMan.setManName(zyPatientBase.getPtName());//姓名
+            tjCodeMan.setManPhone(zyPatientBase.getPtIphone());//电话号码
+            tjCodeMan.setManSid(zyPatientBase.getPtCapacityNo());//身份证
+            tjCodeMan.setManGender(zyPatientBase.getPtSex());//性别
+            tjCodeMan.setManBirthtime(zyPatientBase.getPtBirthDate());//生日
+            tjCodeMan.setManMzZyId(patientCheckoutVo.getPtNo());//住院号
+            tjCodeMan.setManMzZyIs(2);//1是门诊2是住院
+            tjCodeMan.setManState(1L);//检查状态
+            tmm.insert(tjCodeMan);
+            manId = tjCodeMan.getManId();
+        }else{
+            TjCodeMan tjCodeMan = new TjCodeMan();
+            tjCodeMan.setManState(1L);
+            tjCodeMan.setManId(tjCodeManList.get(0).getManId());
+            tmm.updateById(tjCodeMan);
+            manId = tjCodeManList.get(0).getManId();
+        }
+
+        pbm.insertPatientCheckout(patientCheckoutVo.getTjCodeProjectList(),manId);
+
+        return false;
+    }
 
 
 
@@ -198,16 +238,18 @@ public class PatientBaseService {
      * @return
      */
     public boolean insertPatient(ZyPatientBase patientBase){
-        try{
             //新增住院登记数据
             patientBase.setBdId(0L);//给零
             patientBase.setPtPrice(patientBase.getPtPayMoney());//将预交金额赋值给余额
             pbm.insert(patientBase);//新增
 
 
+        System.err.println("住院编号"+patientBase.getPtNo());
             //修改住院申请信息
-            ZyInhospitalApply ha = new ZyInhospitalApply(patientBase.getInId(),2L);
+            ZyInhospitalApply ha = new ZyInhospitalApply(patientBase.getInId(),2L,patientBase.getPtNo());
             ham.updateById(ha);//根据住院申请编号修改状态
+
+
 
             //新增病人关系信息
             List<ZyContacts> ctaList = patientBase.getListContacts().isEmpty() ? null : patientBase.getListContacts();
@@ -226,9 +268,6 @@ public class PatientBaseService {
             return true;
 
 
-        }catch (Exception e){
-            return false;
-        }
     }
 
 

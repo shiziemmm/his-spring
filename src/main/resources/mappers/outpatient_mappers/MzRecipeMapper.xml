@@ -9,6 +9,8 @@
         <result column="recipe_Sick_Name" property="recipeSickName"></result>
         <result column="recipe_Doctor_Name" property="recipeDoctorName"></result>
         <result column="recipe_Doctor_Text" property="recipeDoctorText"></result>
+        <result column="recipe_Drug_State" property="recipeDrugState"></result>
+
         <result column="xp_Notes" property="xpNotes"></result>
         <result column="zp_Notes" property="zpNotes"></result>
         <result column="sick_Number" property="sickNumber"></result>
@@ -23,6 +25,8 @@
         <result column="recipe_Sick_Name" property="recipeSickName"></result>
         <result column="recipe_Doctor_Name" property="recipeDoctorName"></result>
         <result column="recipe_Doctor_Text" property="recipeDoctorText"></result>
+        <result column="recipe_Drug_State" property="recipeDrugState"></result>
+
         <result column="xp_Notes" property="xpNotes"></result>
         <result column="zp_Notes" property="zpNotes"></result>
         <result column="sick_Number" property="sickNumber"></result>

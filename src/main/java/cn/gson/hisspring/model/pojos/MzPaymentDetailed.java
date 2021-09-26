@@ -2,13 +2,15 @@ package cn.gson.hisspring.model.pojos;
 
 import lombok.Data;
 
-@Data//get  set方法
+/**
+ * 缴费记录中间表
+ */
+@Data
 public class MzPaymentDetailed {
 
-  private long pdNumber;
   private long pmNumber;
-  private String recipeNumber;
-  private double labNumber;
-
+  private long recipeNumber;
+  private long susNumber;
+  private long labNumber;
 
 }

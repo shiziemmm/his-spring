@@ -44,6 +44,10 @@ public class SprojectService {
         List<SsOperationApply> listss = ssq.selectSsApply(seach);
         return listss;
     }
+    /*查询药品信息*/
+    public List<YfDruginformation> querysById(){
+        return ssq.querysById();
+    }
     //单个手术项目详情
     public List<SsOperationProject> singeProject(Integer projectId){
         List<SsOperationProject> listssp = sproject.singleProject(projectId);
@@ -79,7 +83,7 @@ public class SprojectService {
      */
     public boolean ssqUpdate(SsOperationApply proj){
         int is = 0;//判断是否新增成功
-        if(proj.getOperationId() == 0){//新增
+        if(proj.getApplyId() == 0){//新增
             ssq.insert(proj);
         }else{//修改
             is = ssq.updateById(proj);

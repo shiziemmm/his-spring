@@ -1,6 +1,8 @@
 package cn.gson.hisspring.controller.outpatient_module_controller;
 
 import cn.gson.hisspring.model.pojos.MzMedicalRecord;
+import cn.gson.hisspring.model.pojos.MzPayment;
+import cn.gson.hisspring.model.pojos.SsOperationProject;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalRecordService;
 import com.alibaba.fastjson.JSON;
@@ -21,7 +23,12 @@ import java.util.Map;
 public class MzMedicalRecordController {
     @Autowired
     MzMedicalRecordService recordService;
-    //添加所有的就诊信息
+
+    /**
+     * 添加所有就诊信息
+     * @param recordVo
+     * @return
+     */
     @RequestMapping("addRecord")
     public String addRecord(@RequestBody RecordVo recordVo){
 //        System.err.println(JSONObject.toJSONString(recordVo.getMedicalRecordObject()));
@@ -44,7 +51,7 @@ public class MzMedicalRecordController {
     public List<MzMedicalRecord> selectMedicalRecord( @RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
         String index = map.get("index").toString();
-        String texts = map.get("texts").toString();
+        String texts = map.get("texts").toString().replace(" ", "");
         System.err.println(index);
         System.err.println(texts);
         return recordService.selectMedicalRecord(index,texts);
@@ -58,8 +65,7 @@ public class MzMedicalRecordController {
     @RequestMapping("selectAllRecords")
     public MzMedicalRecord selectMedicalRecords(@RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
-        String texts = map.get("texts").toString();
-        System.err.println(texts);
+        String texts = map.get("texts").toString().replace(" ", "");
         return recordService.selectMedicalRecord(texts);
     }
 
@@ -73,9 +79,10 @@ public class MzMedicalRecordController {
         try {
             Map map = JSON.parseObject(str, Map.class);
             String index = map.get("index").toString();
-            String xmName = map.get("xmName").toString();
+            String xmName = map.get("xmName").toString().replace(" ", "");;;
+            MzPayment payment = JSON.parseObject(map.get("payment").toString(),MzPayment.class);
             System.err.println(index);
-            recordService.updateStateRecipe(index,xmName);
+            recordService.updateStateRecipe(index,xmName,payment);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,7 +98,7 @@ public class MzMedicalRecordController {
     @RequestMapping("selectRecordsAll")
     public List<MzMedicalRecord> selectRecordsAll(@RequestBody String str){
         Map map = JSON.parseObject(str,Map.class);
-        String text = map.get("text").toString();
+        String text = map.get("text").toString().replace(" ", "");;;
         return recordService.selectRecordsAll(text);
     }
 
@@ -104,8 +111,27 @@ public class MzMedicalRecordController {
     @RequestMapping("allRecordsSick")
     public List<MzMedicalRecord> allRecordsSick(@RequestBody String str){
         Map map = JSON.parseObject(str,Map.class);
-        String text = map.get("text").toString();
+        String text = map.get("text").toString().replace(" ", "");
         return recordService.allRecordSick(text);
+    }
+
+    /**
+     * 门诊查询手术等级
+     */
+    @RequestMapping("ssType")
+    public List<Object>  selectAllSsObjectType(){
+        return recordService.selectAllSsObjectType();
+    }
+    /**
+     * 门诊查询手术
+     * @return
+     */
+    @RequestMapping("mzAllDescSpro")
+    public List<SsOperationProject> mzAllDescSpro(@RequestBody String  str){
+        Map map = JSON.parseObject(str,Map.class);
+        String projectName = map.get("projectName").toString().replace(" ", "");
+        String projectType = map.get("projectType").toString();
+        return recordService.mzSelectAllSsObject(projectName,projectType);
     }
 
 }

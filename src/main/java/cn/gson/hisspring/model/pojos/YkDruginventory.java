@@ -1,5 +1,6 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -23,6 +24,8 @@ public class YkDruginventory {
   private long supplierId;//供应商编号
   private String ykSupplierName;//供应商名称
 
+  @TableField(exist = false)
   private YkWarehouse ykWarehouse;//仓库
+  @TableField(exist = false)
   private YkSupplier ykSupplier;//供应商
 }

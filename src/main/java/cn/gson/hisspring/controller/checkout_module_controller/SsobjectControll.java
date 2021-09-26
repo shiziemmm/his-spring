@@ -58,6 +58,7 @@ public class SsobjectControll {
     public List<SsOperationProject> descSpro(String input){
         return sprojectService.selectAllSsObject(input);
     }
+
     /**
      * 新增修改手术项目
      */
@@ -117,6 +118,11 @@ public class SsobjectControll {
             e.printStackTrace();
             return "fail";
         }
+    }
+    //查询所有手术药品
+    @RequestMapping("yp-ss")
+    public List<YfDruginformation> yfDruginformations(){
+        return  sprojectService.querysById();
     }
     //单个项目可选麻醉
     @RequestMapping("mzprot")

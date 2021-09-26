@@ -3,6 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper">
 
+    <insert id="insertPatientCheckout">
+        insert into tj_man_middle(man_id,check_id) values
+
+        <foreach item="ck" separator="," collection="checkList">
+            (#{manId},#{ck.checkId})
+        </foreach>
+
+    </insert>
 
 
     <!--封装住院登记信息-->
@@ -103,7 +111,7 @@
 
     <!--修改余额-->
     <update id="updatePatientBasePrice">
-        update Zy_patient_base set pt_price = pt_price - #{price} where pt_no = #{ptNo}
+        update Zy_patient_base set pt_price = pt_price - #{price}  , pt_pay_money = pt_pay_money + #{price}  where pt_no = #{ptNo}
     </update>
 
     <!--查询病人以及病人下面的医嘱信息-->
