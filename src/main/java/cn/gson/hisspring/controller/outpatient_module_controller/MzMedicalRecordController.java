@@ -23,7 +23,12 @@ import java.util.Map;
 public class MzMedicalRecordController {
     @Autowired
     MzMedicalRecordService recordService;
-    //添加所有的就诊信息
+
+    /**
+     * 添加所有就诊信息
+     * @param recordVo
+     * @return
+     */
     @RequestMapping("addRecord")
     public String addRecord(@RequestBody RecordVo recordVo){
 //        System.err.println(JSONObject.toJSONString(recordVo.getMedicalRecordObject()));

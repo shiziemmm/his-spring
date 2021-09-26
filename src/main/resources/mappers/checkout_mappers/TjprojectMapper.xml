@@ -14,7 +14,7 @@
             <id column="ks_id" jdbcType="INTEGER" property="ksId" />
             <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
             <result column="de_id" jdbcType="TIMESTAMP" property="deId" />
-<!--            <result column="ks_dz" jdbcType="TIMESTAMP" property="ksDz" />-->
+            <result column="ks_dz" jdbcType="TIMESTAMP" property="ksDz" />
         </association>
     </resultMap>
     <select id="selectAllTjObject" resultMap="Tjproject">
