@@ -63,13 +63,6 @@ public class MzMedicalRecordService {
             medicalRecordObject.setMrOverTime(new Timestamp(System.currentTimeMillis()));//这个是修改时间，就是结束就诊时间对应时间，
             medicalRecordMapper.insert(medicalRecordObject);
         }
-        //新增病历表
-        MzCaseHistory historyObject = recordVo.getHistoryObject();
-        if(historyObject!=null){
-            historyObject.setSickNumber(recipeObject.getSickNumber());//新增病人外键
-            historyObject.setMrNumber(medicalRecordObject.getMrNumber());//新增就诊记录表
-            historyMapper.insert(historyObject);
-        }
         //新增处方
         if(recordVo.getRecipeObject() !=null){
             recipeObject.setMrNumber(medicalRecordObject.getMrNumber());
@@ -97,6 +90,14 @@ public class MzMedicalRecordService {
             for (MzZprescription mzZprescription : zpList) {
                 System.err.println(mzZprescription);
             }
+        }
+        //新增病历表
+        MzCaseHistory historyObject = recordVo.getHistoryObject();
+        if(historyObject!=null){
+            historyObject.setChDoctor(medicalRecordObject.getMrDoctorName());//新增主治医生
+            historyObject.setSickNumber(recipeObject.getSickNumber());//新增病人外键
+            historyObject.setMrNumber(medicalRecordObject.getMrNumber());//新增就诊记录表
+            historyMapper.insert(historyObject);
         }
 
     }

@@ -1,6 +1,7 @@
 package cn.gson.hisspring.controller.outpatient_module_controller;
 
 import cn.gson.hisspring.model.pojos.DepartmentKs;
+import cn.gson.hisspring.model.pojos.MzCaseHistory;
 import cn.gson.hisspring.model.pojos.ZyInhospitalApply;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzOpcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,18 @@ public class MzOpcController {
      * @return
      */
     @RequestMapping("selectKs")
-    public List<DepartmentKs> selectKs(){
-        return opcService.selectKs();
+    public List<DepartmentKs> selectKs(Integer index){
+        System.err.println(index);
+        return opcService.selectKs(index);
     }
 
+    /**
+     * 查询所有的病例信息
+     */
+    @RequestMapping("selectBl")
+    public List<MzCaseHistory> selectBl(Integer index){
+        System.err.println(index+"ssssssssssssssssssssss");
+        return opcService.selectCaseHistory(index);
+    }
 
 }
