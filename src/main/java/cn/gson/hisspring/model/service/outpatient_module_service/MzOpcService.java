@@ -3,9 +3,7 @@ package cn.gson.hisspring.model.service.outpatient_module_service;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.InHospitalApplyMapper;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.*;
-import cn.gson.hisspring.model.pojos.DepartmentKs;
-import cn.gson.hisspring.model.pojos.MzCaseHistory;
-import cn.gson.hisspring.model.pojos.ZyInhospitalApply;
+import cn.gson.hisspring.model.pojos.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,9 @@ public class MzOpcService {
     @Autowired
     MzOpcNumberMapper opcNumberMapper;//排号
     @Autowired
+    MzOpcNumberService opcNumberService;//排号Service
+
+    @Autowired
     MzCaseHistoryMapper historyMapper;//病历表
 
 
@@ -36,12 +37,26 @@ public class MzOpcService {
     @Autowired
     DepartmentKsMapper departmentKsMapper;//科室mapper
 
+
+    /**
+     * 新增病人化验项目
+     */
+
+
+
     /**
      * 添加住院申请
      * @param inhospitalApply
      */
-    public void addInHospitalApply(ZyInhospitalApply inhospitalApply){
+    public void addInHospitalApply(ZyInhospitalApply inhospitalApply,String rtNumber){
+        //修改排号状态
+        opcNumberService.upRtNumber(rtNumber);
         inhospitalApply.setInIs(0L);
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("rt_Number",rtNumber);
+        MzOpcNumber opcNumber = opcNumberMapper.selectOne(qw);
+        opcNumber.setBnState(1);
+        opcNumberMapper.updateById(opcNumber);
         inHospitalApplyMapper.insert(inhospitalApply);
     }
 
