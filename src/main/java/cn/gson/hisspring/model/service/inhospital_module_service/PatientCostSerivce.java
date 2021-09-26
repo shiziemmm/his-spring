@@ -1,6 +1,8 @@
 package cn.gson.hisspring.model.service.inhospital_module_service;
 
+import cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinExecuteRecordMapper;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientCostMapper;
+import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientCostVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import java.util.List;
 public class PatientCostSerivce {
     @Autowired
     PatientCostMapper pcm;//病人消费记录
+
+    @Autowired
+    DoctorEnjoinExecuteRecordMapper deerm;//医嘱执行记录
 
     /**
      * 根据病人住院号查询所有消费记录
@@ -36,6 +41,15 @@ public class PatientCostSerivce {
 
         List<PatientCostVo> patientCostVos = pcm.selectList(qwc);
         return patientCostVos;
+    }
+
+    /**
+     * 查询出所有不同的费用名称
+     * @return
+     */
+    public List<ZyDoctorEnjoinExecuteRecord> selectCostName(){
+        QueryWrapper<ZyDoctorEnjoinExecuteRecord> qwc = new QueryWrapper<ZyDoctorEnjoinExecuteRecord>().groupBy("der_is").notIn("der_is",1);
+        return deerm.selectList(qwc);
     }
 
 }

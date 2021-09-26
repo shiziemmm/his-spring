@@ -1,5 +1,6 @@
 package cn.gson.hisspring.controller.inhospital_module_controller;
 
+import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientCostVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.PatientCostSerivce;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,14 @@ public class PatientCostController {
     public List<PatientCostVo> selectCostByPtNo(Long ptNo,String text){
         System.err.println(text);
        return pcs.selectCostByPtNo(ptNo,text);
+    }
+
+
+    /**
+     * 查询所有不同费用的名称
+     */
+    @RequestMapping("select-costName")
+    public List<ZyDoctorEnjoinExecuteRecord> selectCostName(){
+        return pcs.selectCostName();
     }
 }

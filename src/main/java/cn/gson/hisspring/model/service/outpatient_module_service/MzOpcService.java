@@ -26,7 +26,6 @@ public class MzOpcService {
     @Autowired
     MzCaseHistoryMapper historyMapper;//病历表
 
-
     @Autowired
     MzPaymentMapper paymentMapper;  // 缴费记录表
 
@@ -41,7 +40,7 @@ public class MzOpcService {
      * @param inhospitalApply
      */
     public void addInHospitalApply(ZyInhospitalApply inhospitalApply){
-        inhospitalApply.setInIs(0L);
+        inhospitalApply.setInIs(1L);
         inHospitalApplyMapper.insert(inhospitalApply);
     }
 
