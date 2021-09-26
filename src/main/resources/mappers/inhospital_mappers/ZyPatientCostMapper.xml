@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientCostMapper">
+
+    <resultMap id="payCostMap" type="cn.gson.hisspring.model.pojos.pojos_vo.PatientCostVo">
+        <result column="pcd_price" property="pcdPrice"/>
+        <result column="cause" property="pcdCause"/>
+    </resultMap>
+
+    <select id="selectPayAll" resultMap="payCostMap">
+        select sum(pcd_price)as pcd_price,if(pcd_cause = '医嘱费用' || pcd_cause = '床位费用' ,pcd_cause,'其他费用') AS cause from seltpatientcostbreakdown where pt_no = #{ptNo} group by cause
+    </select>
+</mapper>

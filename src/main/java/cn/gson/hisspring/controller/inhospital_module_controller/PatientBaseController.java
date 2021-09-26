@@ -2,6 +2,7 @@ package cn.gson.hisspring.controller.inhospital_module_controller;
 
 import cn.gson.hisspring.model.pojos.ZyChangeDeptRecord;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
+import cn.gson.hisspring.model.pojos.pojos_vo.PatientCheckoutVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.PatientBaseService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,20 @@ public class PatientBaseController {
 
     @Autowired
     PatientBaseService pbs;
+
+
+    /**
+     * 新增病人化验项目
+     * @param
+     * @return
+     */
+    @RequestMapping("add-patient-checkout")
+    public boolean addPatientCheckout(@RequestBody String str){
+        PatientCheckoutVo patientCheckoutVo = JSON.parseObject(str, PatientCheckoutVo.class);
+        System.err.println(str);
+        pbs.addPatientCheckout(patientCheckoutVo);
+        return false;
+    }
 
 
     @RequestMapping("patient-changeDept")

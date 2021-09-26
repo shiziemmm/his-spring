@@ -27,7 +27,7 @@ public class ZyPatientBase {
   private String ptDiagnoseName;
   private Long bdId;
   private String ptOutDate;
-  private String ptAge;
+  private Long ptAge;
   private Double ptPayMoney;
   private Double ptPrice;
   private String ptIphone;
