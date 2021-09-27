@@ -30,6 +30,8 @@
             <result property="ykDrvenId" column="YK_drven_id"/>
             <result property="drugId" column="Drug_id"/>
             <result property="ykDrvenName" column="YK_drven_name"/>
+            <result property="ykDrvenMftDate" column="YK_drven_mftDate"/>
+            <result property="ykDrvenBatch" column="YK_drven_batch"/>
         </association>
     </resultMap>
 

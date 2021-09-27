@@ -1,18 +1,16 @@
 package cn.gson.hisspring.model.service.outpatient_module_service;
 
 import cn.gson.hisspring.config.MyUtilCardConfig;
+import cn.gson.hisspring.model.mapper.checkout_module_mapper.TjManMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.*;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,28 +39,61 @@ public class MzMedicalRecordService {
     @Autowired
     MzPaymentMapper paymentMapper;  // 缴费记录表
 
+    @Autowired
+    TjManMapper tjManMapper;//体检人员mapper
+
+    @Autowired
+    MzTjManResultMapper tjManResultMapper; // 循环添加检验项目集合
+
     /**
      添加处方表--只做处方 和就诊记录的添加
      */
     public void addRecipe(RecordVo recordVo ){
-        MzMedicalRecord medicalRecordObject = recordVo.getMedicalRecordObject();
-
-        MzRecipe recipeObject = recordVo.getRecipeObject();
-
-
-
-        //新增就诊记录表 和修改排号表状态
-        if(recordVo.getMedicalRecordObject() !=null){
-            //修改排号表状态
-            long bnNumber = medicalRecordObject.getBnNumber();
-            QueryWrapper qw = new QueryWrapper();
-            qw.eq("bn_number",bnNumber);
-            MzOpcNumber opcNumber = opcNumberMapper.selectOne(qw);
-            opcNumber.setBnState(1);
-            opcNumberMapper.updateById(opcNumber);
-            medicalRecordObject.setMrOverTime(new Timestamp(System.currentTimeMillis()));//这个是修改时间，就是结束就诊时间对应时间，
-            medicalRecordMapper.insert(medicalRecordObject);
+//        就诊记录
+        MzMedicalRecord medicalRecordObject = getMzMedicalRecord(recordVo);
+//        处方
+        MzRecipe recipeObject = getMzRecipe(recordVo, medicalRecordObject);
+//        检验
+        if(recordVo.getTjCodeManObject() != null) {//如果没有值说明为空
+            //体检申请单表对象
+            TjCodeMan tjCodeManObject =  recordVo.getTjCodeManObject();
+            tjCodeManObject.setManState(0L);
+            tjCodeManObject.setManMzZyIs(1);//判断是门诊状态
+            tjCodeManObject.setManMzZyId(medicalRecordObject.getMrNumber());//添加问诊号
+            tjCodeManObject.setManTime(new Timestamp(System.currentTimeMillis()));
+            tjManMapper.insert(tjCodeManObject);
+//            如果不等于空集合
+            if(!recordVo.getTjManResultList().isEmpty()){
+                List<TjManResult> tjManResult = recordVo.getTjManResultList();
+                for (TjManResult manResult : tjManResult) {
+                    //循环赋值id
+                    manResult.setsId(medicalRecordObject.getsId());
+                    manResult.setManId(tjCodeManObject.getManId());
+                }
+                tjManResultMapper.addTjManResultArr(tjManResult);
+            }
         }
+//        手术
+
+        //新增病历表
+        MzCaseHistory historyObject = recordVo.getHistoryObject();
+        if(historyObject!=null){
+            historyObject.setChDoctor(medicalRecordObject.getMrDoctorName());//新增主治医生
+            historyObject.setSickNumber(recipeObject.getSickNumber());//新增病人外键
+            historyObject.setMrNumber(medicalRecordObject.getMrNumber());//新增就诊记录表
+            historyMapper.insert(historyObject);
+        }
+
+    }
+
+    /**
+     * 新增处方表
+     * @param recordVo
+     * @param medicalRecordObject
+     * @return
+     */
+    private MzRecipe getMzRecipe(RecordVo recordVo, MzMedicalRecord medicalRecordObject) {
+        MzRecipe recipeObject = recordVo.getRecipeObject();
         //新增处方
         if(recordVo.getRecipeObject() !=null){
             recipeObject.setMrNumber(medicalRecordObject.getMrNumber());
@@ -91,16 +122,31 @@ public class MzMedicalRecordService {
                 System.err.println(mzZprescription);
             }
         }
-        //新增病历表
-        MzCaseHistory historyObject = recordVo.getHistoryObject();
-        if(historyObject!=null){
-            historyObject.setChDoctor(medicalRecordObject.getMrDoctorName());//新增主治医生
-            historyObject.setSickNumber(recipeObject.getSickNumber());//新增病人外键
-            historyObject.setMrNumber(medicalRecordObject.getMrNumber());//新增就诊记录表
-            historyMapper.insert(historyObject);
-        }
-
+        return recipeObject;
     }
+
+    /**
+     * 新增就诊记录表-----------这里的修改排号状态要做判断
+     * @param recordVo
+     * @return
+     */
+    private MzMedicalRecord getMzMedicalRecord(RecordVo recordVo) {
+        MzMedicalRecord medicalRecordObject = recordVo.getMedicalRecordObject();
+        //新增就诊记录表 和修改排号表状态
+        if(recordVo.getMedicalRecordObject() !=null){
+            //修改排号表状态
+            long bnNumber = medicalRecordObject.getBnNumber();
+            QueryWrapper qw = new QueryWrapper();
+            qw.eq("bn_number",bnNumber);
+            MzOpcNumber opcNumber = opcNumberMapper.selectOne(qw);
+            opcNumber.setBnState(1);
+            opcNumberMapper.updateById(opcNumber);
+            medicalRecordObject.setMrOverTime(new Timestamp(System.currentTimeMillis()));//这个是修改时间，就是结束就诊时间对应时间，
+            medicalRecordMapper.insert(medicalRecordObject);
+        }
+        return medicalRecordObject;
+    }
+
     /**
      *  查询就诊记录表
      */
