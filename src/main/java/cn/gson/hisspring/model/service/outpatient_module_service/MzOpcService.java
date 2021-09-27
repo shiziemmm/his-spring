@@ -37,13 +37,6 @@ public class MzOpcService {
     @Autowired
     DepartmentKsMapper departmentKsMapper;//科室mapper
 
-
-    /**
-     * 新增病人化验项目
-     */
-
-
-
     /**
      * 添加住院申请
      * @param inhospitalApply

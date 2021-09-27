@@ -31,9 +31,9 @@ public class MzMedicalRecordController {
      */
     @RequestMapping("addRecord")
     public String addRecord(@RequestBody RecordVo recordVo){
-//        System.err.println(JSONObject.toJSONString(recordVo.getMedicalRecordObject()));
-        System.err.println(recordVo.getMedicalRecordObject());
         try {
+            System.err.println("检验"+recordVo.getTjCodeManObject());
+            System.err.println("检验集合"+recordVo.getTjManResultList());
             recordService.addRecipe(recordVo);
             return "ok";
         } catch (Exception e) {
