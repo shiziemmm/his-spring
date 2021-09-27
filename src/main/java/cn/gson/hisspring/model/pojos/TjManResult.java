@@ -23,6 +23,9 @@ public class TjManResult {
   private TjCodeMan man;
   @TableField(exist = false)
   private TjCodeProject pro;
+  @TableField(exist = false)
+  private Staff staff;
+
 
 
   public Long getsId() {
