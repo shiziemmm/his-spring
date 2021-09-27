@@ -38,7 +38,7 @@
         <foreach collection="list" item="des" separator=",">
             #{des.desId}
         </foreach>
-        )
+        ) and (des_present_date is null or DATE_FORMAT(des_Present_Date,'%Y-%m-%d') != DATE_FORMAT(NOW(),'%Y-%m-%d'))
     </update>
 
 

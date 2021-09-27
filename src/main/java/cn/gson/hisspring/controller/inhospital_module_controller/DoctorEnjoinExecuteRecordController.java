@@ -30,14 +30,12 @@ public class DoctorEnjoinExecuteRecordController {
      */
     @RequestMapping("addDoctorEnjoinExecute")
     public Map<String, String> doctorEnjoinExecute(@RequestBody String str){
-        System.err.println(str);
         Map map = JSON.parseObject(str, Map.class);
         List<ZyDoctorEnjoinDetails> zyDoctorEnjoinExecuteRecordList  = JSON.parseArray(map.get("doctorEnjoinList").toString(),ZyDoctorEnjoinDetails.class);
         zyDoctorEnjoinExecuteRecordList.forEach(c->{
             System.out.println(c);
         });
         Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);
-        System.out.println(zyDoctorEnjoinExecuteRecordList);
 
         return deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList,sId);
     }

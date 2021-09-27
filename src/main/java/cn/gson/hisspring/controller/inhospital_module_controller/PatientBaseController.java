@@ -1,5 +1,6 @@
 package cn.gson.hisspring.controller.inhospital_module_controller;
 
+import cn.gson.hisspring.model.pojos.TjManResult;
 import cn.gson.hisspring.model.pojos.ZyChangeDeptRecord;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientCheckoutVo;
@@ -21,6 +22,16 @@ public class PatientBaseController {
     @Autowired
     PatientBaseService pbs;
 
+
+    /**
+     * 根据住院号查询该病人已开的项目
+     * @param ptNo
+     * @return
+     */
+    @RequestMapping("select-manResult-byPtNo")
+    public List<TjManResult> selectManResultByPtNo(Long ptNo){
+        return pbs.selectTjResultByPtNo(ptNo);
+    }
 
     /**
      * 新增病人化验项目

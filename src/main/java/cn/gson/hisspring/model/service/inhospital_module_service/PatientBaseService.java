@@ -1,6 +1,7 @@
 package cn.gson.hisspring.model.service.inhospital_module_service;
 
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.TjManMapper;
+import cn.gson.hisspring.model.mapper.checkout_module_mapper.TjResultMapper;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.*;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper;
 import cn.gson.hisspring.model.pojos.*;
@@ -54,6 +55,22 @@ public class PatientBaseService {
     @Autowired
     TjManMapper tmm;//体检人员mapper
 
+    @Autowired
+    TjResultMapper trm;//体检结果mapper
+
+
+    /**
+     * 根据住院号查询所有已开化验项目
+     */
+    public List<TjManResult> selectTjResultByPtNo(Long ptNo){
+        QueryWrapper<TjCodeMan>  qwMan = new QueryWrapper<TjCodeMan>().eq("man_Mz_Zy_Is",2).eq("man_Mz_Zy_Id",ptNo);//根据住院号查询体检人员编号
+        List<TjCodeMan> tjCodeManList = tmm.selectList(qwMan);
+        if(!tjCodeManList.isEmpty()){
+            QueryWrapper<TjManResult> qwResult = new QueryWrapper<TjManResult>().eq("man_id",tjCodeManList.get(0).getManId());//根据查询出来的体检人员编号进行项目查询
+            return trm.selectList(qwResult);
+        }
+        return null;
+    }
 
     /**
      * 新增病人化验项目
@@ -85,7 +102,7 @@ public class PatientBaseService {
             manId = tjCodeManList.get(0).getManId();
         }
 
-        pbm.insertPatientCheckout(patientCheckoutVo.getTjCodeProjectList(),manId);
+        pbm.insertPatientCheckout(patientCheckoutVo.getTjCodeProjectList(),manId,patientCheckoutVo.getsId());
 
         return false;
     }

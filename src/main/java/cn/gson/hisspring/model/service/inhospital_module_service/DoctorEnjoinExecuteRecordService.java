@@ -12,7 +12,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.text.resources.FormatData;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +55,8 @@ public class DoctorEnjoinExecuteRecordService {
 
     @Autowired
     ZyHcIndConsumablesMapper zhcm;//耗材mapper
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//格式化日期
 
 
     /**
@@ -95,6 +102,11 @@ public class DoctorEnjoinExecuteRecordService {
 //                    continue;
 //                }
 
+                if(list.getDesPresentDate() != null && simpleDateFormat.format(list.getDesPresentDate()).equals(simpleDateFormat.format(new Timestamp(new Date().getTime())))){
+                    System.err.println("跳过"+list.getDesDrugName());
+                    continue;
+                }
+
 //                ===============变量
                 ZyDoctorEnjoinExecuteRecord record = new ZyDoctorEnjoinExecuteRecord();
                 Long count = list.getDesFrequency() == null ? 1 : list.getDesFrequency();
@@ -139,7 +151,8 @@ public class DoctorEnjoinExecuteRecordService {
                     List<ZyYfDrugInventoryVo> ZyYfDrugInventoryVoList = ydivm.selectList(yfQw);
                     //!
                     if(ZyYfDrugInventoryVoList.isEmpty()){//如果药房没有改药品就新增该药品信息（一般不会出现这种状况）*
-                        ZyYfDrugInventoryVo zydi = new ZyYfDrugInventoryVo(list.getDesDrugId(),list.getDesDrugName(),0 - drugCount,drugVo.getYkSupplierId());
+                        System.err.println(list);
+                        ZyYfDrugInventoryVo zydi = new ZyYfDrugInventoryVo(list.getDesDrugId(),"s",0 - drugCount,drugVo.getYkSupplierId());
                         ydivm.insert(zydi);//新增
                     }else{
                         ZyYfDrugInventoryVo zyYfDrugInventoryVo = new ZyYfDrugInventoryVo(ZyYfDrugInventoryVoList.get(0).getYfDrvenId(),ZyYfDrugInventoryVoList.get(0).getYfDrvenCount() - drugCount);
