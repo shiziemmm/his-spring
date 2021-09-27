@@ -19,9 +19,17 @@
     </resultMap>
 <!--    //体检人员模糊查询-->
     <select id="selectAllMan" resultMap="TjMan">
-        select *,(select mc_balance from  mz_medical_card where mc_Id_Card=tj.man_sid) mc_balance
-        from tj_code_man tj
-        <where>   tj.man_state  = '${manState}'
+        select *,(select mc_balance from  mz_medical_card where mc_Id_Card=tj.man_sid) mc_balance from tj_code_man  tj
+        <where>
+            tj.man_id not in(
+            SELECT
+            tj_man_result.man_id
+            FROM
+            tj_man_result
+            where
+            tj_man_result.man_result is not null or tj_man_result.man_result != '' or tj_man_result.man_result is null
+            group by tj_man_result.man_id
+            )
             <if test ="sermen !=null and '' != sermen"> /*名称like*/
                 and tj.man_name like '%${sermen}%'
             </if>
@@ -34,7 +42,56 @@
         </where>
         order by TO_DAYS(tj.man_time) = TO_DAYS(NOW()) desc
     </select>
-
+    <!--    //体检人员未填完结果-->
+    <select id="selectAllMan1" resultMap="TjMan">
+        select *,(select mc_balance from  mz_medical_card where mc_Id_Card=tj.man_sid) mc_balance from tj_code_man  tj
+        <where>
+            tj.man_id  in(
+            SELECT
+            tj_man_result.man_id
+            FROM
+            tj_man_result
+            where
+            tj_man_result.man_result is null or tj_man_result.man_result =''
+            group by tj_man_result.man_id
+            )
+            <if test ="sermen !=null and '' != sermen"> /*名称like*/
+                and tj.man_name like '%${sermen}%'
+            </if>
+            <if test ="sermen !=null and '' != sermen">/*身份证*/
+                or tj.man_sid like '%${sermen}%'
+            </if>
+            <if test ="sermen !=null and '' != sermen">/*手机号*/
+                or tj.man_phone like '%${sermen}%'
+            </if>
+        </where>
+        order by TO_DAYS(tj.man_time) = TO_DAYS(NOW()) desc
+    </select>
+    <!--    //体检人员已填完结果-->
+    <select id="selectAllMan2" resultMap="TjMan">
+        select *,(select mc_balance from  mz_medical_card where mc_Id_Card=tj.man_sid) mc_balance from tj_code_man  tj
+        <where>
+            tj.man_id  in(
+            SELECT
+            tj_man_result.man_id
+            FROM
+            tj_man_result
+            where
+            tj_man_result.man_result is not null or tj_man_result.man_result != ''
+            group by tj_man_result.man_id
+            )
+            <if test ="sermen !=null and '' != sermen"> /*名称like*/
+                and tj.man_name like '%${sermen}%'
+            </if>
+            <if test ="sermen !=null and '' != sermen">/*身份证*/
+                or tj.man_sid like '%${sermen}%'
+            </if>
+            <if test ="sermen !=null and '' != sermen">/*手机号*/
+                or tj.man_phone like '%${sermen}%'
+            </if>
+        </where>
+        order by TO_DAYS(tj.man_time) = TO_DAYS(NOW()) desc
+    </select>
 
     <!--    体检人员检查项目中间表批量新增-->
     <insert id="insertTjman">

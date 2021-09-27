@@ -34,8 +34,16 @@ public class TjproController {
         return major.selectAllTjMeal(checkIndex,codeName,codeType);
     }
     @RequestMapping("allMan") //体检人员排序
-    public List<TjCodeMan> allMan(Integer manState,String sermen){
-        return major.selectAllman(manState,sermen);
+    public List<TjCodeMan> allManaa(String sermen){
+        return major.selectAllman(sermen);
+    }
+    @RequestMapping("allMan1") //体检人员未填写
+    public List<TjCodeMan> allManas(String sermen){
+        return major.selectAllman1(sermen);
+    }
+    @RequestMapping("allMan2") //体检人员已填写
+    public List<TjCodeMan> allManaw(String sermen){
+        return major.selectAllman2(sermen);
     }
     @RequestMapping("aloneMp") //体检人员所含项目
     public List<TjCodeProject> allManp(Integer manId){
@@ -45,7 +53,7 @@ public class TjproController {
     public List<TjCodeProject> allPro(Integer codeId){
         return major.selectTjpro(codeId);
     }
-    @RequestMapping("aloneRes") //体检套餐所含检查指标
+    @RequestMapping("aloneRes") //检查结果查询
     public List<TjManResult> allMan(Integer manId){
         return major.AllRes(manId);
     }

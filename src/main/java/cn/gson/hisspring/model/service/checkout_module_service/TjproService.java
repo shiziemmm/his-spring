@@ -50,9 +50,21 @@ public class TjproService {
         List<TjCodeProject> listm = major.inspect(codeId);
         return  listm;
     }
+    //体检人员未填写
+    public List<TjCodeMan> selectAllman(String sermen){
+        List<TjCodeMan> listman = man.selectAllMan(sermen);
+        System.out.println(listman);
+        return  listman;
+    }
     //体检人员模糊查询与传参
-    public List<TjCodeMan> selectAllman(Integer manState,String sermen){
-        List<TjCodeMan> listman = man.selectAllMan(manState,sermen);
+    public List<TjCodeMan> selectAllman1(String sermen){
+        List<TjCodeMan> listman = man.selectAllMan1(sermen);
+        System.out.println(listman);
+        return  listman;
+    }
+    //体检人员已填写
+    public List<TjCodeMan> selectAllman2(String sermen){
+        List<TjCodeMan> listman = man.selectAllMan2(sermen);
         System.out.println(listman);
         return  listman;
     }
