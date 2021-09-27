@@ -8,6 +8,7 @@ import com.github.dreamyoung.mprelation.Lazy;
 import com.github.dreamyoung.mprelation.OneToMany;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data//get  set方法
@@ -17,7 +18,7 @@ public class Staff {
   private String sName;
   private String sSore;
   private String sPhone;
-  private java.sql.Timestamp sDate;
+  private Date sDate;
   private Long uId;
   private Long ksId;
   private Long tId;

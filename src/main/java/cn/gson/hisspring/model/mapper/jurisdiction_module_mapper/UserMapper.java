@@ -11,4 +11,5 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
     User login(User user);
     User cha(User us);
+   int reset(@Param("upswd") String upswd,@Param("uid") Long uid);
 }
