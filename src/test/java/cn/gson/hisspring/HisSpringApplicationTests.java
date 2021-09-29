@@ -3,6 +3,7 @@ package cn.gson.hisspring;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.BedMapper;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientUpdateBedVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO;
 import cn.gson.hisspring.model.service.inhospital_module_service.*;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzDepartmentKsService;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalRecordService;
@@ -156,11 +157,10 @@ class HisSpringApplicationTests {
     MzMedicalRecordService se;
     @Test
     void  yy (){
-        List<MzMedicalRecord> mzMedicalRecords = se.selectMedicalRecord("1",null);
-        for (MzMedicalRecord mzMedicalRecord : mzMedicalRecords) {
+        List<ReCordAllVO> mzMedicalRecords = se.selectAllRecord(null,null);
+        for (ReCordAllVO mzMedicalRecord : mzMedicalRecords) {
             System.err.println(mzMedicalRecord);
         }
-
     }
 
 }
