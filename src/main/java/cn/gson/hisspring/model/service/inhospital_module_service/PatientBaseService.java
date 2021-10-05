@@ -89,7 +89,7 @@ public class PatientBaseService {
             tjCodeMan.setManSid(zyPatientBase.getPtCapacityNo());//身份证
             tjCodeMan.setManGender(zyPatientBase.getPtSex());//性别
             tjCodeMan.setManBirthtime(zyPatientBase.getPtBirthDate());//生日
-            tjCodeMan.setManMzZyId(patientCheckoutVo.getPtNo());//住院号
+//            tjCodeMan.setManMzZyId(patientCheckoutVo.getPtNo());//住院号
             tjCodeMan.setManMzZyIs(2);//1是门诊2是住院
             tjCodeMan.setManState(1L);//检查状态
             tmm.insert(tjCodeMan);

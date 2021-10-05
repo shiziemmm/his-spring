@@ -8,7 +8,8 @@
             project_id,
             sus_number,
             sus_message,
-            sus_doctor_text
+            sus_doctor_text,
+            sus_pay_state
             )
         values
         <foreach collection="list"  item="ss" separator=",">
@@ -16,7 +17,8 @@
             #{ss.projectId},
             #{ss.susNumber},
             #{ss.susMessage},
-            #{ss.susDoctorText}
+            #{ss.susDoctorText},
+            #{ss.susPayState}
             )
         </foreach>
     </insert>

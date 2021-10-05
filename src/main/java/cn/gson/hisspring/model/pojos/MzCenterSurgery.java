@@ -15,6 +15,7 @@ public class MzCenterSurgery {
   private java.sql.Timestamp overDate;
   private String susMessage;
   private String susDoctorText;
+  private Long susPayState;
 
   @TableField(exist = false)
   private SsOperationProject ssObject;

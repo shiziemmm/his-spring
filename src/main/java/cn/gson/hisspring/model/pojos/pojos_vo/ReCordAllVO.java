@@ -15,8 +15,6 @@ public class ReCordAllVO {
     private MzCaseHistory historyObject;//病历
 
     private MzRecipe recipeObject;//处方
-    private List<MzXprescription> xpList;//西药
-    private List<MzZprescription> zpList;//中药
 
     private TjCodeMan tjCodeManObject;//体检单表
     private List<TjManResult> tjManResultList;//体检中间项目集合表

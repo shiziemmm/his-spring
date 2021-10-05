@@ -25,12 +25,17 @@ public class MzMedicalRecordController {
     @Autowired
     MzMedicalRecordService recordService;
 
+    /**
+     * 问诊界面--查询就诊记录表
+     * @param str
+     * @return
+     */
     @RequestMapping("selectRA")
     public List<ReCordAllVO> selectRA(@RequestBody String str){
         Map map = JSON.parseObject(str,Map.class);
         String index = map.get("index").toString();
-        String text = map.get("texts").toString().replace(" ", "");;
-        return recordService.selectAllRecord(index,text);
+        String texts = map.get("texts").toString().replace(" ", "");;
+        return recordService.selectAllRecord(index,texts);
     }
 
     /**
@@ -56,21 +61,6 @@ public class MzMedicalRecordController {
             e.printStackTrace();
             return "fail";
         }
-    }
-
-    /**
-     *  查询就诊信息（已接诊和已经完成接诊的人员）
-     * @param str
-     * @return
-     */
-    @RequestMapping("selectAllRecord")
-    public List<MzMedicalRecord> selectMedicalRecord( @RequestBody String str){
-        Map map = JSON.parseObject(str, Map.class);
-        String index = map.get("index").toString();
-        String texts = map.get("texts").toString().replace(" ", "");
-        System.err.println(index);
-        System.err.println(texts);
-        return recordService.selectMedicalRecord(index,texts);
     }
 
     /**

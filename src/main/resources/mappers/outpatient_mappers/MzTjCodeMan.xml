@@ -37,7 +37,7 @@
         <result column="man_Mz_Zy_Id" property="manMzZyId"></result>
     </resultMap>
     <resultMap id="tjResultMaps" type="cn.gson.hisspring.model.pojos.TjManResult">
-        <id column="manResultId" property="manResultId"></id>
+        <id column="man_Result_Id" property="manResultId"></id>
         <result column="check_Id" property="checkId"></result>
         <result column="man_Result" property="manResult"></result>
         <result column="man_Id" property="manId"></result>

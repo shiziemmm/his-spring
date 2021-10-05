@@ -52,11 +52,11 @@ public class MzMedicalRecordService {
     /**
      * 查询所有的Vo对象组合类
      * @param index
-     * @param text
+     * @param texts
      * @return
      */
-    public List<ReCordAllVO> selectAllRecord(String index,String text){
-      return reCordAllVOMapper.selectAllReCordObject(index,text);
+    public List<ReCordAllVO> selectAllRecord(String index,String texts){
+      return reCordAllVOMapper.selectAllReCordObject(index,texts);
     };
 
     /**
@@ -97,7 +97,6 @@ public class MzMedicalRecordService {
             opcNumber.setBnState(1);
             opcNumberMapper.updateById(opcNumber);
 //            一个时间用于接诊保存时间 ，一个时间用于结束就诊时间
-//            medicalRecordObject.setMrOverTime(new Timestamp(System.currentTimeMillis()));//结束就诊时间
             medicalRecordMapper.insert(medicalRecordObject);
         }
         return medicalRecordObject;
@@ -121,6 +120,7 @@ public class MzMedicalRecordService {
             List<MzCenterSurgery> centerSurgeryList = recordVo.getCenterSurgeryList();
             for (MzCenterSurgery mzCenterSurgery : centerSurgeryList) {
                 mzCenterSurgery.setSusNumber(surgeryStampObject.getSusNumber());
+                mzCenterSurgery.setSusPayState(0L);
             }
             centerSurgeryMapper.addCenterSurgery(centerSurgeryList);
         }

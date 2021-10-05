@@ -6,14 +6,11 @@
         <association property="medicalRecordObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalRecordMapper.recordMap3"></association>
         <association property="historyObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMap"></association>
 
-        <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMaps"></association>
+        <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap"></association>
 
         <association property="tjCodeManObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzTjManResultMapper.tjMaps"></association>
 
         <association property="surgeryStampObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.surgeryMaps"></association>
-        <!--处方西药，中药集合-->
-        <collection property="xpList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzXprescriptionMapper.xpMaps"></collection>
-        <collection property="zpList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzZprescriptionMapper.zmMaps"></collection>
         <!--手术集合-->
         <collection property="centerSurgeryList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.centerSurgeryMaps"></collection>
         <!--体检集合-->
