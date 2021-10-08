@@ -34,4 +34,7 @@ public class TjCodeMan {
 
   @TableField(exist = false)
   private Double mcBalance;
+
+  @TableField(exist = false)
+  private List<TjManResult> tjManResultList;
 }

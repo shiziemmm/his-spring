@@ -56,7 +56,47 @@ public class MzMedicalRecordService {
      * @return
      */
     public List<ReCordAllVO> selectAllRecord(String index,String texts){
-      return reCordAllVOMapper.selectAllReCordObject(index,texts);
+        List<ReCordAllVO> reCordAllVOS = reCordAllVOMapper.selectAllReCordObject(index, texts);
+        for (ReCordAllVO reCordAllVO : reCordAllVOS) {
+            //处方值不为null ，回流添加改换集合
+            if(reCordAllVO.getRecipeObject() !=null){
+                if(reCordAllVO.getRecipeObject().getRecipeNumber() != 0){
+                    List<MzRecipe> mzRecipes = reCordAllVOMapper.selectAllReCordOrDrug(reCordAllVO.getRecipeObject().getRecipeNumber());
+                        for (MzRecipe mzRecipe : mzRecipes) {
+                            if(!mzRecipe.getXpList().isEmpty()){
+                                reCordAllVO.getRecipeObject().setXpList(mzRecipe.getXpList());
+                            }
+                            if(!mzRecipe.getZpList().isEmpty()){
+                                reCordAllVO.getRecipeObject().setZpList(mzRecipe.getZpList());
+                            }
+                        }
+                }
+            }
+            //体检值不为null ，回流添加改换集合
+            if(reCordAllVO.getTjCodeManObject() != null){
+                if(reCordAllVO.getTjCodeManObject().getManId()!=0){
+                    List<TjCodeMan> reCordAllVOTjs = reCordAllVOMapper.selectAllReCordOrTj(reCordAllVO.getTjCodeManObject().getManId());
+                    for (TjCodeMan reCordAllVOTj : reCordAllVOTjs) {
+                        if(!reCordAllVOTj.getTjManResultList().isEmpty()){
+                            reCordAllVO.setTjManResultList(reCordAllVOTj.getTjManResultList());
+                        }
+                    }
+                }
+            }
+            //手术值不为null ，回流添加改换集合
+            if(reCordAllVO.getSurgeryStampObject() != null){
+                if(reCordAllVO.getSurgeryStampObject().getSusNumber() != 0){
+                    List<MzSurgeryStamp> reCordAllVOSses = reCordAllVOMapper.selectAllReCordOrSs(reCordAllVO.getSurgeryStampObject().getSusNumber());
+                    for (MzSurgeryStamp reCordAllVOSs : reCordAllVOSses) {
+                        if(!reCordAllVOSs.getCenterSurgeryList().isEmpty()){
+                            reCordAllVO.setCenterSurgeryList(reCordAllVOSs.getCenterSurgeryList());
+                        }
+                    }
+                }
+            }
+        }
+
+        return reCordAllVOS;
     };
 
     /**
@@ -147,6 +187,7 @@ public class MzMedicalRecordService {
                 //循环赋值id
                 manResult.setsId(medicalRecordObject.getsId());
                 manResult.setManId(tjCodeManObject.getManId());
+                manResult.setManPayState(0L);
             }
             tjManResultMapper.addTjManResultArr(tjManResult);
 
