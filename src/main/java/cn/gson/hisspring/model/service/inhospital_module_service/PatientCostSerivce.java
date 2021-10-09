@@ -31,7 +31,7 @@ public class PatientCostSerivce {
         if(text != null) {
             if (text.equals("其它费用")) {
                 qwc.isNotNull("pcd_cause");
-                qwc.notIn("pcd_cause", "医嘱费用", "床位费用");
+                qwc.notIn("pcd_cause", "医嘱费用", "床位费用","化验费用");
             } else {
                 qwc.eq("pcd_cause", text);
             }

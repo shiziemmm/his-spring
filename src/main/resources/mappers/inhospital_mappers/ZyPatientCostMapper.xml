@@ -5,7 +5,7 @@
 
     <resultMap id="payCostMap" type="cn.gson.hisspring.model.pojos.pojos_vo.PatientCostVo">
         <result column="pcd_price" property="pcdPrice"/>
-        <result column="cause" property="pcdCause"/>
+        <result column="cause" property="name"/>
     </resultMap>
 
     <select id="selectPayAll" resultMap="payCostMap">

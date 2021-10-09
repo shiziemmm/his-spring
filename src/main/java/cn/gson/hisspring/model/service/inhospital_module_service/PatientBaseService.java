@@ -2,14 +2,15 @@ package cn.gson.hisspring.model.service.inhospital_module_service;
 
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.TjManMapper;
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.TjResultMapper;
+import cn.gson.hisspring.model.mapper.checkout_module_mapper.TjprojectMapper;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.*;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientCheckoutVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientUpdateBedVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.ResultManVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 //import sun.rmi.runtime.Log;
@@ -58,16 +59,57 @@ public class PatientBaseService {
     @Autowired
     TjResultMapper trm;//体检结果mapper
 
+    @Autowired
+    TjprojectMapper tpm;//化验项目mapper
+
+    @Autowired
+    CheckoutOutPayMapper cpm;//已退费化验项目
+
+
+    /**
+     *根据科室编号查询今天排班医生
+     */
+    public List<Scheduling> selectDateByKsId(Long ksId){
+
+        return pbm.selectDateByKsId(ksId);
+    }
+
+    /**
+     * 取消已开项目
+     */
+    public boolean cancelPatientCheckout(TjManResult tjManResult,Long ptNo,Long sId){
+        //根据化验编号查询
+        TjCodeProject tjCodeProject = tpm.selectById(tjManResult.getCheckId());//查询
+
+        //新增住院项目退费表
+        ZyCheckoutOutpay zyCheckoutOutpay = new ZyCheckoutOutpay(tjCodeProject.getCheckPay(),tjManResult.getManResultId(),ptNo,sId);
+        cpm.insert(zyCheckoutOutpay);
+
+        //=========================修改费用
+        //先根据病人住院号查询病人住院登记信息
+        ZyPatientBase pb = pbm.selectById(ptNo);
+
+        ZyPatientBase pbs = new ZyPatientBase(ptNo,pb.getPtPrice()+tjCodeProject.getCheckPay());
+        int i = pbm.updateById(pbs);//修改
+
+
+        if (i > 0){
+            return true;
+        }
+        return false;
+    }
+
+
 
     /**
      * 根据住院号查询所有已开化验项目
      */
-    public List<TjManResult> selectTjResultByPtNo(Long ptNo){
+    public List<ResultManVo> selectTjResultByPtNo(Long ptNo){
         QueryWrapper<TjCodeMan>  qwMan = new QueryWrapper<TjCodeMan>().eq("man_Mz_Zy_Is",2).eq("man_Mz_Zy_Id",ptNo);//根据住院号查询体检人员编号
         List<TjCodeMan> tjCodeManList = tmm.selectList(qwMan);
         if(!tjCodeManList.isEmpty()){
-            QueryWrapper<TjManResult> qwResult = new QueryWrapper<TjManResult>().eq("man_id",tjCodeManList.get(0).getManId());//根据查询出来的体检人员编号进行项目查询
-            return trm.selectList(qwResult);
+
+            return pbm.selectResultByManId(tjCodeManList.get(0).getManId());
         }
         return null;
     }
@@ -79,6 +121,7 @@ public class PatientBaseService {
         QueryWrapper<TjCodeMan> qwtj = new QueryWrapper<TjCodeMan>().eq("man_mz_zy_is",2).eq("man_mz_zy_id",patientCheckoutVo.getPtNo());
         List<TjCodeMan> tjCodeManList = tmm.selectList(qwtj);
         Long manId = 0L;//体检人员编号
+        Double price = 0d;//项目总费用
 
         if(tjCodeManList.isEmpty()){//如果没有值
             ZyPatientBase zyPatientBase = pbm.selectById(patientCheckoutVo.getPtNo());
@@ -102,9 +145,16 @@ public class PatientBaseService {
             manId = tjCodeManList.get(0).getManId();
         }
 
+        if(!patientCheckoutVo.getTjCodeProjectList().isEmpty()){
+            for (TjCodeProject tjCodeProject : patientCheckoutVo.getTjCodeProjectList()) {
+                price += tjCodeProject.getCheckPay();//项目金额累加
+            }
+        }
+        pbm.updatePatientBasePrice(price,patientCheckoutVo.getPtNo());//修改病人余额
         pbm.insertPatientCheckout(patientCheckoutVo.getTjCodeProjectList(),manId,patientCheckoutVo.getsId());
 
         return false;
+
     }
 
 

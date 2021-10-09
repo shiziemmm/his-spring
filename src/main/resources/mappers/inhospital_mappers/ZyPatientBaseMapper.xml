@@ -3,16 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper">
 
-    <insert id="insertPatientCheckout">
-        insert into tj_man_result(man_id,check_id,man_time,s_id) values
-
-        <foreach item="ck" separator="," collection="checkList">
-            (#{manId},#{ck.checkId},current_timestamp,#{sId})
-        </foreach>
-
-    </insert>
-
-
     <!--封装住院登记信息-->
     <resultMap id="patientMap" type="cn.gson.hisspring.model.pojos.ZyPatientBase">
         <result column="Pt_no" property="ptNo"/>
@@ -108,6 +98,57 @@
         <!--病床信息-->
         <association property="bed" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper.bedMap"></association>
     </resultMap>
+
+    <!--体检项目map-->
+    <resultMap id="manResultMap" type="cn.gson.hisspring.model.pojos.pojos_vo.ResultManVo">
+        <id column="man_result_id" property="manResultId"></id>
+        <result  column="check_id" property="checkId"></result>
+        <result  column="man_result" property="manResult"></result>
+        <result  column="man_id" property="manId"></result>
+        <result column="man_date" property="manDate"></result>
+        <result column="man_time" property="manTime"></result>
+        <result property="sName" column="s_name"/>
+        <result property="iss" column="iss"/>
+        <association property="tjCodeProject" javaType="cn.gson.hisspring.model.pojos.TjCodeProject">
+            <id column="check_id" property="checkId"></id>
+            <result  column="check_name" property="checkName"></result>
+            <result  column="check_pay" property="checkPay"></result>
+            <result  column="index_name" property="indexName"></result>
+            <result  column="index_significance" property="indexSignificance"></result>
+        </association>
+    </resultMap>
+
+
+
+    <!--根据科室查询该科室今天排班医生-->
+    <select id="selectDateByKsId" resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMapper.BaseResultMap">
+        select * from staff yg  inner join scheduling pb  on pb.s_id=yg.s_id inner join frequency f on f.F_id=pb.fr_id inner join department_ks d on yg.ks_id=d.ks_id
+            inner join title t on  yg.t_id=t.t_id
+            <where>
+                to_days(pb.rq) = to_days(now()) and
+                <if test="ksId != null and ksId != ''">
+                     yg.ks_Id = #{ksId}
+                </if>
+            </where>
+    </select>
+
+
+    <select id="selectResultByManId" resultMap="manResultMap">
+        select * from seltresultpatient where man_id = #{manId}
+    </select>
+
+    <!--循环新增病人化验项目-->
+    <insert id="insertPatientCheckout">
+        insert into tj_man_result(man_id,check_id,man_time,s_id) values
+
+        <foreach item="ck" separator="," collection="checkList">
+            (#{manId},#{ck.checkId},current_timestamp,#{sId})
+        </foreach>
+
+    </insert>
+
+
+
 
     <!--修改余额-->
     <update id="updatePatientBasePrice">

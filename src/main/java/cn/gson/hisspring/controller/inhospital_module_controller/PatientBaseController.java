@@ -1,9 +1,8 @@
 package cn.gson.hisspring.controller.inhospital_module_controller;
 
-import cn.gson.hisspring.model.pojos.TjManResult;
-import cn.gson.hisspring.model.pojos.ZyChangeDeptRecord;
-import cn.gson.hisspring.model.pojos.ZyPatientBase;
+import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientCheckoutVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.ResultManVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.PatientBaseService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,38 @@ public class PatientBaseController {
     @Autowired
     PatientBaseService pbs;
 
+    /**
+     * 根据科室编号查询今天排班
+     */
+    @RequestMapping("home-sch-byksId")
+    public List<Scheduling> selectDateByKsId(Long ksId){
+       return pbs.selectDateByKsId(ksId);
+    }
+
+    /**
+     * 取消已开项目方法
+     */
+    @RequestMapping("cancel-chekout")
+    public boolean cancelPatientCheckout(@RequestBody String str){
+
+        System.err.println(str);
+        Map map = JSON.parseObject(str,Map.class);
+        TjManResult tjManResult = JSON.parseObject(map.get("tjManResult").toString(), TjManResult.class);
+        Long ptNo = JSON.parseObject(map.get("ptNo").toString(),Long.class);
+        Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);
+        if(sId == null){
+            return false;
+        }
+        if (ptNo == null){
+            return false;
+        }
+        if (tjManResult == null){
+            return false;
+        }
+
+        pbs.cancelPatientCheckout(tjManResult,ptNo,sId);
+        return false;
+    }
 
     /**
      * 根据住院号查询该病人已开的项目
@@ -29,7 +60,7 @@ public class PatientBaseController {
      * @return
      */
     @RequestMapping("select-manResult-byPtNo")
-    public List<TjManResult> selectManResultByPtNo(Long ptNo){
+    public List<ResultManVo> selectManResultByPtNo(Long ptNo){
         return pbs.selectTjResultByPtNo(ptNo);
     }
 

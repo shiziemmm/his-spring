@@ -69,6 +69,11 @@ public class ZyPatientBase {
     this.bdId = bdId;
   }
 
+  public ZyPatientBase(long ptNo, Double ptPrice) {
+    this.ptNo = ptNo;
+    this.ptPrice = ptPrice;
+  }
+
   public ZyPatientBase(long ptNo, Long bdId, Long sId,Long ksId) {
     this.ptNo = ptNo;
     this.bdId = bdId;

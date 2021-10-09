@@ -22,6 +22,38 @@
         <result property="desId" column="des_id"/>
     </resultMap>
 
+    <resultMap id="doctorExecuteMap" type="cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord">
+        <result property="derId" column="der_id"/>
+        <result property="desId" column="des_id"/>
+        <result property="derDrugPrice" column="der_drug_price"/>
+        <result property="derExecuteDate" column="der_execute_date"/>
+        <result property="derIs" column="der_is"/>
+        <result property="doctorSname" column="doctorSname"/>
+        <result property="executeSname" column="executeSname"/>
+
+        <association property="zyDoctorEnjoinDetails" javaType="cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails">
+            <result column="des_Execute_Date" property="desExecuteDate" />
+            <result column="des_end_date" property="desEndDate"/>
+
+            <result column="Des_id" property="desId"/>
+            <result column="De_id" property="deId"/>
+            <result column="des_drug_id" property="desDrugId"/>
+            <result column="des_drug_is" property="desDrugIs"/>
+            <result column="Des_drug_name" property="desDrugName"/>
+            <result column="Des_text" property="desText"/>
+            <result column="Des_specification" property="desSpecification"/>
+            <result column="Des_measure" property="desMeasure"/>
+            <result column="Des_frequency" property="desFrequency"/>
+            <result column="Des_unit" property="desUnit"/>
+            <result column="Des_usage" property="desUsage"/>
+            <result column="des_entering_date" property="desEnteringDate"/>
+            <result column="des_count" property="desCount"/>
+            <result column="Des_price" property="desPrice" />
+            <result column="Des_is" property="desIs" />
+            <result column="Des_present_date" property="desPresentDate" />
+            <result property="deLongorshort" column="de_longorshort"/>
+        </association>
+    </resultMap>
 
     <select id="selectExecutePharmacyByKsIdOrDrugId" resultMap="dExecuteIdMap">
         select * from seltExecutePharmacys
@@ -51,4 +83,37 @@
         </foreach>
         )
     </update>
+
+
+    <!--查询已经执行完的医嘱记录多条件-->
+    <select id="selectExecuteDoctor" resultMap="doctorExecuteMap">
+        select * from seltYesExecute
+        <where>
+        
+            <if test="(startDate != null) and (endDate != null)">
+                and (Der_execute_date between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or Der_execute_date between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
+            
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(Der_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
+
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(Der_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+            
+            <if test="searchLike != null and searchLike != ''">
+                and Des_drug_name like '%${searchLike}%'
+            </if>
+            
+            <if test="doctorType != null and doctorType != '' ">
+                and de_longorshort = #{doctorType}
+            </if>
+
+            <if test="ptNo != null and ptNo != ''">
+                and pt_no = #{ptNo}
+            </if>
+
+        </where>
+    </select>
 </mapper>
