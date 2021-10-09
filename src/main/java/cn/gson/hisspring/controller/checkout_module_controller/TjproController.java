@@ -62,6 +62,17 @@ public class TjproController {
         return major.alomCaed(sId);
     }
     /**
+     * 新增修改检查结果
+     */
+    @RequestMapping("addOrUpdares")
+    public boolean resAddOrUpdate(@RequestBody String projstr){
+        System.out.println(projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将项目对象字符串转换为检查对象
+        TjManResult troj = JSON.parseObject(map.get("troj").toString(), TjManResult.class);
+        System.out.println(troj);
+        return major.tjresUpdate(troj);
+    }
+    /**
      * 批量新增检查结果
      */
     @RequestMapping("resAdd")
@@ -103,6 +114,17 @@ public class TjproController {
         TjCodeMan manj = JSON.parseObject(map.get("manj").toString(), TjCodeMan.class);
         System.out.println(manj);
         return major.tjmanUpdate(manj);
+    }
+    /**
+     * 新增修改体检人员单表
+     */
+    @RequestMapping("addOrUpdataMan1")
+    public boolean TjmanUpdate1(@RequestBody String projstr){
+        System.out.println(projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将项目对象字符串转换为检查对象
+        TjCodeMan manj = JSON.parseObject(map.get("manj").toString(), TjCodeMan.class);
+        System.out.println(manj);
+        return major.tjmanUpdate1(manj);
     }
     /**
      * 批量修改体检时间

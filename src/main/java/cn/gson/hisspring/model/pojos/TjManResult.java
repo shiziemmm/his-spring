@@ -25,6 +25,8 @@ public class TjManResult {
   private TjCodeProject pro;
   @TableField(exist = false)
   private Staff staff;
+  @TableField(exist = false)
+  private DepartmentKs   deptks;
 
 
 
