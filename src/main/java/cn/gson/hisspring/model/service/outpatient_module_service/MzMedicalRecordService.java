@@ -100,9 +100,9 @@ public class MzMedicalRecordService {
     };
 
     /**
-     添加处方表--只做处方 和就诊记录的添加
+      保存添加，结束也得添加
      */
-    public void addRecipe(RecordVo recordVo ){
+    public void addRecipe(RecordVo recordVo){
 //        就诊记录
         MzMedicalRecord medicalRecordObject = getMzMedicalRecord(recordVo);
 //        处方

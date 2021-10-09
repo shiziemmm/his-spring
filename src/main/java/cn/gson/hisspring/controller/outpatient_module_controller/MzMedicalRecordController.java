@@ -3,6 +3,7 @@ package cn.gson.hisspring.controller.outpatient_module_controller;
 import cn.gson.hisspring.model.pojos.MzMedicalRecord;
 import cn.gson.hisspring.model.pojos.MzPayment;
 import cn.gson.hisspring.model.pojos.SsOperationProject;
+import cn.gson.hisspring.model.pojos.TjManResult;
 import cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalRecordService;
@@ -54,8 +55,13 @@ public class MzMedicalRecordController {
             System.err.println("手术集合"+recordVo.getCenterSurgeryList());
             System.err.println("检验"+recordVo.getTjCodeManObject());
             System.err.println("检验集合"+recordVo.getTjManResultList());
+            List<TjManResult> tjManResultList = recordVo.getTjManResultList();
+            for (TjManResult tjManResult : tjManResultList) {
+                System.err.println("==="+tjManResult);
+            }
+
             System.err.println("病历"+recordVo.getHistoryObject());
-            recordService.addRecipe(recordVo);
+//            recordService.addRecipe(recordVo);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
