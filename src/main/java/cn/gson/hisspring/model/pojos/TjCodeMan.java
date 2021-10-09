@@ -25,11 +25,14 @@ public class TjCodeMan {
   private String  manProposal;
 
   private Integer manMzZyIs;//1是门诊2是住院
-  private Long manMzZyId;//门诊或者住院编号
+  private String manMzZyId;//门诊或者住院编号
 
   @TableField(exist = false)
   private List<Integer> jcXm;
 
   @TableField(exist = false)
   private Double mcBalance;
+
+  @TableField(exist = false)
+  private List<TjManResult> tjManResultList;
 }

@@ -4,10 +4,7 @@ import cn.gson.hisspring.model.mapper.inhospital_module_mapper.*;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper;
 import cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YfDispensingMapper;
 import cn.gson.hisspring.model.pojos.*;
-import cn.gson.hisspring.model.pojos.pojos_vo.DrugVo;
-import cn.gson.hisspring.model.pojos.pojos_vo.PatientPayObjVo;
-import cn.gson.hisspring.model.pojos.pojos_vo.ZyHCindConsumables;
-import cn.gson.hisspring.model.pojos.pojos_vo.ZyYfDrugInventoryVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +53,15 @@ public class DoctorEnjoinExecuteRecordService {
     ZyHcIndConsumablesMapper zhcm;//耗材mapper
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//格式化日期
+
+
+    /**
+     * 多条件查询执行医嘱
+     */
+    public List<ZyDoctorEnjoinExecuteRecord> selectExecuteDoctor(SelectExecuteVo selectExecuteVo){
+        return deerm.selectExecuteDoctor(selectExecuteVo);
+    }
+
 
 
     /**

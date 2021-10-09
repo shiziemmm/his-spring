@@ -3,6 +3,7 @@ package cn.gson.hisspring.controller.outpatient_module_controller;
 import cn.gson.hisspring.model.pojos.MzMedicalRecord;
 import cn.gson.hisspring.model.pojos.MzPayment;
 import cn.gson.hisspring.model.pojos.SsOperationProject;
+import cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalRecordService;
 import com.alibaba.fastjson.JSON;
@@ -25,6 +26,19 @@ public class MzMedicalRecordController {
     MzMedicalRecordService recordService;
 
     /**
+     * 问诊界面--查询就诊记录表
+     * @param str
+     * @return
+     */
+    @RequestMapping("selectRA")
+    public List<ReCordAllVO> selectRA(@RequestBody String str){
+        Map map = JSON.parseObject(str,Map.class);
+        String index = map.get("index").toString();
+        String texts = map.get("texts").toString().replace(" ", "");;
+        return recordService.selectAllRecord(index,texts);
+    }
+
+    /**
      * 添加所有就诊信息
      * @param recordVo
      * @return
@@ -32,29 +46,21 @@ public class MzMedicalRecordController {
     @RequestMapping("addRecord")
     public String addRecord(@RequestBody RecordVo recordVo){
         try {
+            System.err.println("就诊记录"+recordVo.getMedicalRecordObject());
+            System.err.println("处方"+recordVo.getRecipeObject());
+            System.err.println("西药集合"+recordVo.getRecipeObject().getXpList());
+            System.err.println("中药集合"+recordVo.getRecipeObject().getZpList());
+            System.err.println("手术"+recordVo.getSurgeryStampObject());
+            System.err.println("手术集合"+recordVo.getCenterSurgeryList());
             System.err.println("检验"+recordVo.getTjCodeManObject());
             System.err.println("检验集合"+recordVo.getTjManResultList());
+            System.err.println("病历"+recordVo.getHistoryObject());
             recordService.addRecipe(recordVo);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
             return "fail";
         }
-    }
-
-    /**
-     *  问诊查询
-     * @param str
-     * @return
-     */
-    @RequestMapping("selectAllRecord")
-    public List<MzMedicalRecord> selectMedicalRecord( @RequestBody String str){
-        Map map = JSON.parseObject(str, Map.class);
-        String index = map.get("index").toString();
-        String texts = map.get("texts").toString().replace(" ", "");
-        System.err.println(index);
-        System.err.println(texts);
-        return recordService.selectMedicalRecord(index,texts);
     }
 
     /**

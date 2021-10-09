@@ -19,6 +19,8 @@ public class TjManResult {
   @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private java.sql.Timestamp manTime;
   private Long sId;
+  private Long manPayState;
+
   @TableField(exist = false)
   private TjCodeMan man;
   @TableField(exist = false)

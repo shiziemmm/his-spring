@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @TableName(value = "yf_druginventory")
 public class YfDruginventory {
 
-  private long yfDrvenId;//药品库存编号
+  private Long yfDrvenId;//药品库存编号
   private long drugId;//药品编号
   private String yfDrvenName;//药品名称
   private long yfDrvenCount;//药品库存  数量
@@ -23,8 +23,60 @@ public class YfDruginventory {
   @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
   private Timestamp yfDrvenMftDate;//生产日期
   private String yfDrvenBatch;//药品批次
+  private Double yfSellingprice;//药品售价
 
   private YkSupplier ykSupplier;//供应商
   private YfDruginformation yfDruginformation;//药品信息
   private YfDrugcategory yfDrugcategory;//药品类别
+  private int yfNumbers;
+
+  public int getYfNumbers() {
+    return yfNumbers;
+  }
+
+  public void setYfNumbers(int yfNumbers) {
+    this.yfNumbers = yfNumbers;
+  }
+
+  private YkAllot ykAllot;
+
+  public YkAllot getYkAllot() {
+    return ykAllot;
+  }
+
+  public void setYkAllot(YkAllot ykAllot) {
+    this.ykAllot = ykAllot;
+  }
+
+  public Long getDrugId() {
+    return drugId;
+  }
+
+  public void setDrugId(Long drugId) {
+    this.drugId = drugId;
+  }
+
+  public String getYfDrvenName() {
+    return yfDrvenName;
+  }
+
+  public void setYfDrvenName(String yfDrvenName) {
+    this.yfDrvenName = yfDrvenName;
+  }
+
+  public Timestamp getYfDrvenMftDate() {
+    return yfDrvenMftDate;
+  }
+
+  public void setYfDrvenMftDate(Timestamp yfDrvenMftDate) {
+    this.yfDrvenMftDate = yfDrvenMftDate;
+  }
+
+  public String getYfDrvenBatch() {
+    return yfDrvenBatch;
+  }
+
+  public void setYfDrvenBatch(String yfDrvenBatch) {
+    this.yfDrvenBatch = yfDrvenBatch;
+  }
 }

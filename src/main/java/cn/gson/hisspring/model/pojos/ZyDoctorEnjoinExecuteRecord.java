@@ -1,5 +1,6 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -17,6 +18,16 @@ public class ZyDoctorEnjoinExecuteRecord {
   private Long ptNo;
   private Long sId;
   private String derIs;//说明
+
+  //关系
+  @TableField(exist = false)
+  private ZyDoctorEnjoinDetails zyDoctorEnjoinDetails;
+  @TableField(exist = false)
+  private String executeSname;//执行医生
+  @TableField(exist = false)
+  private String doctorSname;//开嘱医生
+
+
 
   public ZyDoctorEnjoinExecuteRecord(Double derDrugPrice, Long ptNo, Long sId, String derText) {
     this.derExecuteDate = new Timestamp(new Date().getTime());

@@ -15,6 +15,20 @@
         </association>
         <!--调拨详表-->
         <collection property="ykAllotdetail" resultMap="ykAllotdetailMap"/>
+        <!--药房库存表-->
+        <collection property="yfDruginventories" ofType="cn.gson.hisspring.model.pojos.YfDruginventory">
+            <result property="yfDrvenId" column="YF_drven_id"/>
+            <result property="drugId" column="Drug_id"/>
+            <result property="yfDrvenName" column="YF_drven_name"/>
+            <result property="yfDrvenCount" column="YF_drven_count"/>
+            <result property="supplierId" column="Supplier_id"/>
+            <result property="yfSupplierName" column="YF_Supplier_name"/>
+            <result property="yfDrcaName" column="YF_drca_name"/>
+            <result property="drugPrescription" column="Drug_prescription"/>
+            <result property="yfDrvenMftDate" column="YF_drven_mftDate"/>
+            <result property="yfDrvenBatch" column="YF_drven_batch"/>
+            <result property="yfSellingprice" column="YF_Sellingprice"/>
+        </collection>
     </resultMap>
 
     <!--调拨详表-->
@@ -32,12 +46,28 @@
             <result property="ykDrvenName" column="YK_drven_name"/>
             <result property="ykDrvenMftDate" column="YK_drven_mftDate"/>
             <result property="ykDrvenBatch" column="YK_drven_batch"/>
+            <result property="ykSellingprice" column="YK_Sellingprice"/>
+        </association>
+        <!--药房库存-->
+        <association property="yfDruginventory" javaType="cn.gson.hisspring.model.pojos.YfDruginventory">
+            <result property="yfDrvenId" column="YF_drven_id"/>
+            <result property="drugId" column="Drug_id"/>
+            <result property="yfDrvenName" column="YF_drven_name"/>
+            <result property="yfDrvenCount" column="YF_drven_count"/>
+            <result property="supplierId" column="Supplier_id"/>
+            <result property="yfSupplierName" column="YF_Supplier_name"/>
+            <result property="yfDrcaName" column="YF_drca_name"/>
+            <result property="drugPrescription" column="Drug_prescription"/>
+            <result property="yfDrvenMftDate" column="YF_drven_mftDate"/>
+            <result property="yfDrvenBatch" column="YF_drven_batch"/>
+            <result property="yfSellingprice" column="YF_Sellingprice"/>
         </association>
     </resultMap>
 
     <!--查询所有的调拨申请-->
     <select id="allykallot" resultMap="allotMap">
         select * from yk_allot ot left join staff sta on ot.S_id = sta.s_id
+                        left join yk_allotdetail detail on ot.YK_allot_id = detail.YK_allot_id
     </select>
     <!--查询调拨详表-->
     <select id="alldetail" resultMap="ykAllotdetailMap">
@@ -51,7 +81,10 @@
     </insert>
     <!--新增调拨详表-->
     <insert id="addykallotdetail" parameterType="cn.gson.hisspring.model.pojos.YkAllotdetail">
-        insert into yk_allotdetail(YK_allotdetail_id,YK_allot_id,YK_allotdetail_is,YK_allotdetail_count,YK_drven_id,YK_drven_drug_name)
-            value (#{ykAllotdetailId},#{ykAllotId},#{ykAllotdetailIs},#{ykAllotdetailCount},#{ykDrvenId},#{ykDrvenDrugName})
+        insert into yk_allotdetail(
+            YK_allot_id,YK_allotdetail_is,YK_allotdetail_count,YK_drven_id,YK_drven_drug_name)
+            values (
+            #{ykAllotId},#{ykAllotdetailIs},#{ykAllotdetailCount},#{ykDrvenId},#{ykDrvenDrugName})
     </insert>
+
 </mapper>

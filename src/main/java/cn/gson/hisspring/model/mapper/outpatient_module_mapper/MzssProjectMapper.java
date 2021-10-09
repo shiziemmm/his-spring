@@ -11,10 +11,5 @@ import java.util.List;
  */
 @Mapper
 public interface MzssProjectMapper extends BaseMapper<SsOperationProject> {
-    /**
-     * 查询所有的手术项目
-     * @param text
-     * @return
-     */
-    public List<SsOperationProject> selectMzssProject(String text);
+
 }

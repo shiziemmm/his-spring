@@ -6,7 +6,17 @@
 
 
 
-
+    <!--问诊手术查询-->
+    <select id="mzSelectAllSsObject" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper.allProject">
+        select * from  ss_operation_project a left join department_ks b on a.ks_id=b.ks_id where 1=1
+        <if test ="projectName !=null and '' != projectName">/*手术名称like*/
+            and a.project_name like'%${projectName}%'
+        </if>
+        <if test ="projectType !=null and '' != projectType">/*类型*/
+            and a.project_Type = #{projectType}
+        </if>
+        ORDER BY a.project_pay desc
+    </select>
 
 
     <!--问诊页面查询就诊列表-->
@@ -22,20 +32,8 @@
         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_number
     </select>
-    <!--问诊手术查询-->
-    <select id="mzSelectAllSsObject" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper.allProject">
-        select * from  ss_operation_project a left join department_ks b on a.ks_id=b.ks_id where 1=1
-            <if test ="projectName !=null and '' != projectName">/*手术名称like*/
-                and a.project_name like'%${projectName}%'
-            </if>
-            <if test ="projectType !=null and '' != projectType">/*类型*/
-                and a.project_Type = #{projectType}
-            </if>
-        ORDER BY a.project_pay desc
-    </select>
 
-
-    <!--未缴费查询-->
+    <!--未缴费页面查询-->
     <select id="selectMzMedicalRecords" resultMap="recordMap">
         select * from mzmedicalrecord where 1=1
         <if test="texts !=null and ''!=texts ">
@@ -47,7 +45,7 @@
         or rd_state_price = 0)
         order by mr_number
     </select>
-    <!--缴费完成查询-->
+    <!--缴费页面完成查询-->
     <select id="selectRecordsAll" resultMap="recordMap">
         select * from mzmedicalrecord where 1=1
         <if test="text !=null and ''!=text ">
@@ -60,7 +58,7 @@
         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_number
     </select>
-    <!--病人信息查询 已经就诊完成了的人-->
+    <!--病人信息页面查询 已经就诊完成了的人-->
     <select id="allRecordSick" resultMap="recordMap2">
         select * from mzmedicalrecord where 1=1
         <if test="text !=null and ''!=text ">
@@ -113,14 +111,10 @@
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
         <result column="bn_Number" property="bnNumber"></result>
-
-
         <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap"></association>
         <association property="historyObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMap"></association>
         <association property="sickObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap"></association>
-
     </resultMap>
-
 
     <resultMap id="recordMap2" type="cn.gson.hisspring.model.pojos.MzMedicalRecord">
         <id column="mr_Number" property="mrNumber"></id>
@@ -140,14 +134,33 @@
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
         <result column="bn_Number" property="bnNumber"></result>
-
         <association property="opcObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzOpcNumberMapper.opcNumberMaps" ></association>
         <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap"></association>
         <association property="historyObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMap"></association>
         <association property="sickObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap"></association>
-
     </resultMap>
 
+    <resultMap id="recordMap3" type="cn.gson.hisspring.model.pojos.MzMedicalRecord">
+        <id column="mr_Number" property="mrNumber"></id>
+        <result column="mr_Count" property="mrCount"></result>
+        <result column="mr_Doctor_Name" property="mrDoctorName"></result>
+        <result column="mr_Diagnose_Record" property="mrDiagnoseRecord"></result>
+        <result column="mr_Section" property="mrSection"></result>
+        <result column="mr_Over_Time" property="mrOverTime"></result>
+        <result column="mr_Ks_Name" property="mrKsName"></result>
+        <result column="mr_Id_Card" property="mrIdCard"></result>
+        <result column="mr_State" property="mrState"></result>
+        <result column="mr_Sick_Type" property="mrSickType"></result>
+        <result column="mr_Total_Money" property="mrTotalMoney"></result>
+        <result column="mr_mc_card" property="mrMcCard"></result>
+        <result column="s_Id" property="sId"></result>
+        <result column="sick_Number" property="sickNumber"></result>
+        <result column="mc_Number" property="mcNumber"></result>
+        <result column="bn_Number" property="bnNumber"></result>
 
+        <association property="opcObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzOpcNumberMapper.opcNumberMaps" ></association>
+        <association property="sickObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap"></association>
+
+    </resultMap>
 
 </mapper>
