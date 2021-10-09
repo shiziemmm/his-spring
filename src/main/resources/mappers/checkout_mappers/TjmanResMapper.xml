@@ -23,6 +23,8 @@
             <result column="man_state" property="manState"></result>
             <result column="mc_balance" property="mcBalance"></result>
             <result column="man_proposal" property="manProposal"></result>
+            <result column="man_mz_zy_id" property="manMzZyId"></result>
+            <result column="man_mz_zy_is" property="manMzZyIs"></result>
         </association>
         <association property="pro"  javaType="cn.gson.hisspring.model.pojos.TjCodeProject">
             <id column="check_id" property="checkId"></id>
@@ -60,13 +62,21 @@
                 <result column="de_name" jdbcType="VARCHAR" property="deName" />
             </association>
         </association>
+        <association property="deptks"  javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
+            <id column="ks_id" jdbcType="INTEGER" property="ksId" />
+            <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
+            <result column="de_id" jdbcType="TIMESTAMP" property="deId" />
+            <result column="ks_dz" jdbcType="TIMESTAMP" property="ksDz" />
+        </association>
     </resultMap>
+<!--    查询人员所含项目-->
     <select id="allmresult" resultMap="TjMres">
         select * from tj_man_result a
-        inner join tj_code_man b on a.man_id =b.man_id
-        inner join tj_code_project c on a.check_id =c.check_id
-        inner join  staff d on a.s_id=d.s_id
-        where a.man_id like '${manId}'
+                          inner join tj_code_man b on a.man_id =b.man_id
+                          inner join tj_code_project c on a.check_id =c.check_id
+                          inner join department_ks e on c.ks_id =e.ks_id
+                          inner join  staff d on a.s_id=d.s_id
+        where  a.man_id =#{manId} and a.man_result_id not in(select tj_man_result.man_result_id from tj_man_result inner join zy_checkout_outpay on tj_man_result.man_result_id = zy_checkout_outpay.man_result_id)
     </select>
     <!--    检查结果人员中间表批量新增-->
     <insert id="insertTjmres">

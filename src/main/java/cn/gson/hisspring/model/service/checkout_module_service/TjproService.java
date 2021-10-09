@@ -87,6 +87,19 @@ public class TjproService {
         return  listcard;
     }
     /**
+     * 新增修改检查结果
+     * @return
+     */
+    public boolean tjresUpdate(TjManResult mroj){
+        int is = 0;//判断是否新增成功
+        if(mroj.getManResultId() == 0){//新增
+            is = ent.insert(mroj);
+        }else{//修改
+            is = ent.updateById(mroj);
+        }
+        return is == 0?false:true;
+    }
+    /**
      * 新增修改套惨
      * @return
      */
@@ -124,6 +137,17 @@ public class TjproService {
             is = man.insert(manj);
             System.out.println("新增编号"+manj.getManId());
             man.insertTjman(manj.getManId(),manj.getJcXm());
+        }
+
+        return is == 0?false:true;
+    }
+//    改人员单表
+    public boolean tjmanUpdate1(TjCodeMan manj){
+        int is = 0;//判断是否新增成功
+        if(manj.getManId() == 0){//新增
+            is = man.insert(manj);
+        }else{
+            is = man.updateById(manj);
         }
 
         return is == 0?false:true;

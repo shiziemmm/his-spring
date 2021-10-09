@@ -4,12 +4,12 @@
 <mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.SsDetailsMapper">
     <resultMap id="allssDetails" type="cn.gson.hisspring.model.pojos.SsOperationDetails">
     <id column="Operation_num" property="operationNum"></id>
-    <result  column="Operation_time" property="OperationTime"></result>
+    <result  column="Operation_time" property="operationTime"></result>
     <result  column="Operation_date" property="operationDate"></result>
     <result  column="project_id" property="projectId"></result>
     <result  column="Operation_handle" property="operationHandle"></result>
     <result  column="Operation_hocus" property="operationHocus"></result>
-    <result  column="Operation_doctor" property="operationDoctorName"></result>
+    <result  column="Operation_doctor" property="operationDoctor"></result>
     <result  column="pt_no" property="ptNo"></result>
     <result  column="hocus_id" property="hocusId"></result>
     <!--药品信息-->

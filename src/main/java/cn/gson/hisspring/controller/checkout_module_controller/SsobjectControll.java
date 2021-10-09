@@ -97,6 +97,18 @@ public class SsobjectControll {
         System.out.println(proj);
         return sprojectService.ssqUpdate(proj);
     }
+    /**
+     * 新增修改手术记录
+     */
+
+    @RequestMapping("aOrUDatils")
+    public boolean datailAddOrUpdate(@RequestBody String projstr){
+        System.out.println(projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将病房对象字符串转换为病房对象
+        SsOperationDetails proj = JSON.parseObject(map.get("proj").toString(), SsOperationDetails.class);
+        System.out.println(proj);
+        return sprojectService.ssjlUpdate(proj);
+    }
     //    修改手术室状态
     @PostMapping("upd-roomzt")
     public String updetroom(Integer operationZt,Integer operationId){

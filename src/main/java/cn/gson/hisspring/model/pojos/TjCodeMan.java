@@ -22,8 +22,6 @@ public class TjCodeMan {
   private String manPhone;
   private Double manPhy;
   private Long manState;
-
-  @TableField(exist = false)
   private String  manProposal;
 
   private Integer manMzZyIs;//1是门诊2是住院

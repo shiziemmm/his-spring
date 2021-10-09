@@ -16,6 +16,8 @@
         <result column="man_state" property="manState"></result>
         <result column="mc_balance" property="mcBalance"></result>
         <result column="man_proposal" property="manProposal"></result>
+        <result column="man_mz_zy_id" property="manMzZyId"></result>
+        <result column="man_mz_zy_is" property="manMzZyIs"></result>
     </resultMap>
 <!--    //体检人员模糊查询-->
     <select id="selectAllMan" resultMap="TjMan">

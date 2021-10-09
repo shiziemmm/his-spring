@@ -7,12 +7,12 @@ import lombok.Data;
 public class SsOperationDetails {
 
   private long operationNum;
-  private String OperationTime;
+  private String operationTime;
   private java.sql.Timestamp operationDate;
   private long projectId;
   private String operationHandle;
-  private String operationHocus;
-  private String operationDoctorName;
+  private long operationHocus;
+  private String operationDoctor;
   private long ptNo;
   private long hocusId;
 
