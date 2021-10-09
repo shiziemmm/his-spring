@@ -13,6 +13,7 @@
         <result property="drugPrescription" column="Drug_prescription"/>
         <result property="yfDrvenMftDate" column="YF_drven_mftDate"/>
         <result property="yfDrvenBatch" column="YF_drven_batch"/>
+        <result property="yfSellingprice" column="YF_Sellingprice"/>
         <!--供应商-->
         <association property="ykSupplier" javaType="cn.gson.hisspring.model.pojos.YkSupplier">
             <result property="supplierId" column="Supplier_id"/>

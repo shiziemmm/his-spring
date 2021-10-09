@@ -17,7 +17,7 @@ import java.util.List;
 public class DrugStorageController {
     @Autowired
     DrugStorageService drugStorageService;
-
+    /*查询药库*/
     @RequestMapping("YK-repertory")
     public List<YkDruginventory> allDrugStorg() {
         return drugStorageService.allDrugStorg();
