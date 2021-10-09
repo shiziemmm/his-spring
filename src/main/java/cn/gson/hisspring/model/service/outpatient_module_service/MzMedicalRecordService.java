@@ -115,8 +115,10 @@ public class MzMedicalRecordService {
         MzCaseHistory historyObject = recordVo.getHistoryObject();
         if(historyObject.getChComplaint() !=null && historyObject.getChComplaint() !=""){
             historyObject.setChDoctor(medicalRecordObject.getMrDoctorName());//新增主治医生
-            historyObject.setSickNumber(recipeObject.getSickNumber());//新增病人外键
-            historyObject.setMrNumber(medicalRecordObject.getMrNumber());//新增就诊记录表
+            historyObject.setSickNumber(medicalRecordObject.getSickNumber());//新增病人外键
+            historyObject.setChIs(1L);//一就是门诊
+            historyObject.setChZyMzId(medicalRecordObject.getMrNumber());//新增就诊记录表
+            historyObject.setChSid(medicalRecordObject.getsId());
             historyMapper.insert(historyObject);
         }
     }

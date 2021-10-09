@@ -31,7 +31,7 @@ public class MzMedicalRecord {
   private Double mrTotalMoney;
   private String mrMcCard;
   private long sId;
-  private String sickNumber;
+  private Long sickNumber;
   private long bnNumber;
   private String mcNumber;
 

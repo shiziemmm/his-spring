@@ -10,12 +10,13 @@
         <result column="ch_Complaint" property="chComplaint"></result>
         <result column="ch_History" property="chHistory"></result>
         <result column="ch_Family_History" property="chFamilyHistory"></result>
-        <result column="ch_Oe" property="chOe"></result>
-        <result column="ch_ops" property="chOps"></result>
         <result column="ch_Cause" property="chCause"></result>
         <result column="ch_Doctor_Text" property="chDoctorText"></result>
         <result column="sick_Number" property="sickNumber"></result>
-        <result column="mr_Number" property="mrNumber"></result>
+
+        <result column="ch_zy_mz_id" property="chZyMzId"></result>
+        <result column="ch_is" property="chIs"></result>
+        <result column="ch_sid" property="chSid"></result>
 
     </resultMap>
 
