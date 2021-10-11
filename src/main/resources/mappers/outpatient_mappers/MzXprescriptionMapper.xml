@@ -16,8 +16,8 @@
         <result column="recipe_Number" property="recipeNumber"></result>
         <result column="rd_State_Price" property="rdStatePrice"></result>
         <result column="rd_Skin_Result" property="rdSkinResult"></result>
-    </resultMap>
 
+    </resultMap>
 
     <insert id="addListXp">
         insert into Mz_Xprescription (

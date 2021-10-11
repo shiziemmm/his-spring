@@ -15,6 +15,7 @@
         <result column="man_state" property="manState"></result>
         <result column="man_Mz_Zy_Is" property="manMzZyIs"></result>
         <result column="man_Mz_Zy_Id" property="manMzZyId"></result>
+        <result column="man_Proposal" property="manProposal"></result>
     </resultMap>
     <resultMap id="tjMaps" type="cn.gson.hisspring.model.pojos.TjCodeMan">
         <id column="man_id" property="manId"></id>
@@ -29,6 +30,7 @@
         <result column="man_state" property="manState"></result>
         <result column="man_Mz_Zy_Is" property="manMzZyIs"></result>
         <result column="man_Mz_Zy_Id" property="manMzZyId"></result>
+        <result column="man_Proposal" property="manProposal"></result>
         <collection property="tjManResultList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzTjManResultMapper.tjResultMaps">
 
         </collection>

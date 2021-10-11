@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.ReCordAllVOMapper">
     <!--问诊页面查询就诊列表-->
-    <select id="selectAllReCordObject" resultMap="reVoAllMap">
+    <select id="selectAllReCordObject" resultMap="reVoAllMap" >
         select * from mzmedicalrecord where 1=1
         <if test="index != null and ''!=index" >
             and mr_state = #{index}
@@ -46,7 +46,7 @@
 
         <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap"></association>
 
-        <association property="tjCodeManObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzTjCodeManMapper.tjMap"></association>
+        <association property="tjCodeManObject" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.TjManMapper.TjMan"></association>
 
         <association property="surgeryStampObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.surgeryMap"></association>
         <!--手术集合-->

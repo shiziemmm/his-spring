@@ -1,9 +1,6 @@
 package cn.gson.hisspring.controller.outpatient_module_controller;
 
-import cn.gson.hisspring.model.pojos.MzMedicalRecord;
-import cn.gson.hisspring.model.pojos.MzPayment;
-import cn.gson.hisspring.model.pojos.SsOperationProject;
-import cn.gson.hisspring.model.pojos.TjManResult;
+import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalRecordService;
@@ -25,6 +22,25 @@ import java.util.Map;
 public class MzMedicalRecordController {
     @Autowired
     MzMedicalRecordService recordService;
+
+    /**
+     * 删除对应的中间表数据
+     * @param str
+     * @return
+     */
+    @RequestMapping("deleteRe")
+    public String deleteRe(@RequestBody String str){
+        Map map = JSON.parseObject(str,Map.class);
+        String index = map.get("index").toString();
+        String i = map.get("number").toString();
+        try {
+            recordService.delectRecord(Long.parseLong(index), Long.parseLong(i));
+            return "ok";
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return "fali";
+        }
+    }
 
     /**
      * 问诊界面--查询就诊记录表
@@ -59,9 +75,13 @@ public class MzMedicalRecordController {
             for (TjManResult tjManResult : tjManResultList) {
                 System.err.println("==="+tjManResult);
             }
+            List<MzCenterSurgery> centerSurgeryList = recordVo.getCenterSurgeryList();
+            for (MzCenterSurgery mzCenterSurgery : centerSurgeryList) {
+                System.err.println("+++"+mzCenterSurgery);
+            }
 
             System.err.println("病历"+recordVo.getHistoryObject());
-//            recordService.addRecipe(recordVo);
+            recordService.addRecipes(recordVo);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
