@@ -6,53 +6,43 @@
     <resultMap id="xpMaps" type="cn.gson.hisspring.model.pojos.MzXprescription">
         <id column="rd_Number" property="rdNumber"></id>
         <result column="rd_Name" property="rdName"></result>
+        <result column="rd_drugSpecification" property="rdDrugSpecification"></result>
+        <result column="rd_specSpecification" property="rdSpecSpecification"></result>
         <result column="rd_Count" property="rdCount"></result>
-        <result column="rd_Way" property="rdWay"></result>
         <result column="rd_Price" property="rdPrice"></result>
-        <result column="rd_Typpe" property="rdTyppe"></result>
         <result column="rd_Skin" property="rdSkin"></result>
-        <result column="rd_Grouping" property="rdGrouping"></result>
         <result column="rd_Entrust" property="rdEntrust"></result>
-        <result column="drug_Id" property="drugId"></result>
+        <result column="xpdrugid" property="drugId"></result>
         <result column="recipe_Number" property="recipeNumber"></result>
         <result column="rd_State_Price" property="rdStatePrice"></result>
-
-        <result column="rd_Dosage" property="rdDosage"></result>
-        <result column="rd_Frequency" property="rdFrequency"></result>
         <result column="rd_Skin_Result" property="rdSkinResult"></result>
     </resultMap>
 
 
     <insert id="addListXp">
         insert into Mz_Xprescription (
-            rd_name,
-            rd_count,
-            rd_dosage,
-            rd_frequency,
-            rd_way,
-            rd_price,
-            rd_typpe,
-            Rd_skin,
-            Rd_skin_Result,
-            rd_grouping,
-            rd_entrust,
-            rd_state_price,
-            drug_id,
-            recipe_number
+        rd_Name,
+        rd_drugSpecification,
+        rd_specSpecification,
+        rd_count,
+        rd_Price,
+        rd_Skin,
+        rd_Entrust,
+        rd_Skin_Result,
+        rd_State_Price,
+        drug_Id,
+        recipe_Number
         )  values
         <foreach collection="list" separator="," item="xp">
             (
             #{xp.rdName},
+            #{xp.rdDrugSpecification},
+            #{xp.rdSpecSpecification},
             #{xp.rdCount},
-            #{xp.rdDosage},
-            #{xp.rdFrequency},
-            #{xp.rdWay},
             #{xp.rdPrice},
-            #{xp.rdTyppe},
             #{xp.rdSkin},
-            #{xp.rdSkinResult},
-            #{xp.rdGrouping},
             #{xp.rdEntrust},
+            #{xp.rdSkinResult},
             #{xp.rdStatePrice},
             #{xp.drugId},
             #{xp.recipeNumber}

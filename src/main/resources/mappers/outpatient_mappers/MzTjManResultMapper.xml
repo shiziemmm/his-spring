@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+门诊体检记录表mapper
+-->
+<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzTjManResultMapper">
+    <!--sql循环添加体检中间表-->
+    <insert id="addTjManResultArr" parameterType="cn.gson.hisspring.model.pojos.TjManResult">
+        insert into tj_man_result (
+            check_id,
+            man_result,
+            man_id,
+            s_id,
+            man_pay_state
+        )  values
+        <foreach collection="list"  item="tjr" separator=",">
+            (
+            #{tjr.checkId},
+            #{tjr.manResult},
+            #{tjr.manId},
+            #{tjr.sId},
+            #{tjr.manPayState}
+            )
+        </foreach>
+    </insert>
+    <resultMap id="tjResultMaps" type="cn.gson.hisspring.model.pojos.TjManResult">
+        <id column="man_Result_Id" property="manResultId"></id>
+        <result column="check_Id" property="checkId"></result>
+        <result column="man_Result" property="manResult"></result>
+        <result column="man_Id" property="manId"></result>
+        <result column="man_Date" property="manDate"></result>
+        <result column="man_Time" property="manTime"></result>
+        <result column="s_Id" property="sId"></result>
+        <result column="man_pay_state" property="manPayState"></result>
+        <association property="pro" resultMap="tjProjectMaps"></association>
+    </resultMap>
+    <resultMap id="tjProjectMaps" type="cn.gson.hisspring.model.pojos.TjCodeProject">
+        <id column="check_id" property="checkId"></id>
+        <result  column="check_name" property="checkName"></result>
+        <result  column="check_pay" property="checkPay"></result>
+        <result  column="index_name" property="indexName"></result>
+        <result  column="index_significance" property="indexSignificance"></result>
+        <result  column="ks_id" property="ksId"></result>
+        <result  column="check_tpye" property="checkTpye"></result>
+    </resultMap>
+</mapper>

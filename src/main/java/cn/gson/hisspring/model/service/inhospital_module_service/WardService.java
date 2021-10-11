@@ -2,6 +2,7 @@ package cn.gson.hisspring.model.service.inhospital_module_service;
 
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper;
+import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.ZyBed;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import cn.gson.hisspring.model.pojos.ZyWard;
@@ -29,10 +30,10 @@ public class WardService{
      * 查询所有病房
      * @return
      */
-    public List<ZyWard> selectWardAllPage(String search){
-        QueryWrapper<ZyWard> qw = new QueryWrapper<>();
-        wdm.selectList(qw);
-        List<ZyWard> listWard = wdm.selectWardAllPage(search,"");
+    public List<ZyWard> selectWardAllPage(String search, Staff staff){
+//        QueryWrapper<ZyWard> qw = new QueryWrapper<ZyWard>().eq("ks_id",staff.getKsId());
+//        wdm.selectList(qw);
+        List<ZyWard> listWard = wdm.selectWardAllPage(search,staff.getKsId().toString());
         for(ZyWard wd : listWard){
             if(!wd.getListBed().isEmpty()){//判断该病房下面是否有病床 防止报空指针
                 int count = 0;//病房病人数量

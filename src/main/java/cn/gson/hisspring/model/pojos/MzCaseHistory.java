@@ -23,12 +23,13 @@ public class MzCaseHistory {
   private String chComplaint;
   private String chHistory;
   private String chFamilyHistory;
-  private String chOe;
-  private String chOps;
   private String chCause;
   private String chDoctorText;
   private long sickNumber;
-  private long mrNumber;
+  private Long chIs;//1是门诊病例 2是住院病例
+  private Long chZyMzId;//住院号编号  就诊记录编号
+  private Long chSid;//添加医生
+
 
 
 }

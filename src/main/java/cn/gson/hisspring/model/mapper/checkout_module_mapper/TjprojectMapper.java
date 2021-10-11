@@ -16,7 +16,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface TjprojectMapper extends BaseMapper<TjCodeProject> {
-    List<TjCodeProject> selectAllTjObject(String seach);
+    List<TjCodeProject> selectAllTjObject(String seach,Integer checkTpye);
     //删除
     @Delete("delete from Tj_code_project where index_id=#{indexId}")
     public void delet(Integer indexId);

@@ -13,7 +13,11 @@ import java.util.List;
 @Mapper
 public interface TjManMapper extends BaseMapper<TjCodeMan> {
     //体检人员查询
-    List<TjCodeMan> selectAllMan(Integer manState,String sermen);
+    List<TjCodeMan> selectAllMan(String sermen);
+    //未填些
+    List<TjCodeMan> selectAllMan1(String sermen);
+    //已填写
+    List<TjCodeMan> selectAllMan2(String sermen);
     //修改体检人员时间
     @Update("update tj_code_man set man_time=#{manTime} where man_id=#{manId}")
     public void  updTjman(String manTime,Integer manId);

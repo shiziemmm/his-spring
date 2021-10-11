@@ -78,6 +78,19 @@ public class SprojectService {
         return is == 0?false:true;
     }
     /**
+     * 新增修改手术记录
+     * @return
+     */
+    public boolean ssjlUpdate(SsOperationDetails proj){
+        int is = 0;//判断是否新增成功
+        if(proj.getOperationNum() == 0){//新增
+            ssd.insert(proj);
+        }else{//修改
+            is = ssd.updateById(proj);
+        }
+        return is == 0?false:true;
+    }
+    /**
      * 新增修改手术申请
      * @return
      */

@@ -18,8 +18,8 @@ public class TjproController {
     @Autowired
     TjproService major;
     @RequestMapping("allDescTjpro") //排序所有检查信息
-    public List<TjCodeProject> descSpro(String seach){
-        return major.selectAllTjObject(seach);
+    public List<TjCodeProject> descSpro(String seach,Integer checkTpye){
+        return major.selectAllTjObject(seach,checkTpye);
     }
     @RequestMapping("allIndex") //所有检查指标
     public List<TjCodeIndex> allIndex(){
@@ -34,8 +34,16 @@ public class TjproController {
         return major.selectAllTjMeal(checkIndex,codeName,codeType);
     }
     @RequestMapping("allMan") //体检人员排序
-    public List<TjCodeMan> allMan(Integer manState,String sermen){
-        return major.selectAllman(manState,sermen);
+    public List<TjCodeMan> allManaa(String sermen){
+        return major.selectAllman(sermen);
+    }
+    @RequestMapping("allMan1") //体检人员未填写
+    public List<TjCodeMan> allManas(String sermen){
+        return major.selectAllman1(sermen);
+    }
+    @RequestMapping("allMan2") //体检人员已填写
+    public List<TjCodeMan> allManaw(String sermen){
+        return major.selectAllman2(sermen);
     }
     @RequestMapping("aloneMp") //体检人员所含项目
     public List<TjCodeProject> allManp(Integer manId){
@@ -45,13 +53,24 @@ public class TjproController {
     public List<TjCodeProject> allPro(Integer codeId){
         return major.selectTjpro(codeId);
     }
-    @RequestMapping("aloneRes") //体检套餐所含检查指标
+    @RequestMapping("aloneRes") //检查结果查询
     public List<TjManResult> allMan(Integer manId){
         return major.AllRes(manId);
     }
     @RequestMapping("aloneCard") //体检套餐诊疗卡检查指标
     public List<MzMedicalCard> allMan(String sId){
         return major.alomCaed(sId);
+    }
+    /**
+     * 新增修改检查结果
+     */
+    @RequestMapping("addOrUpdares")
+    public boolean resAddOrUpdate(@RequestBody String projstr){
+        System.out.println(projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将项目对象字符串转换为检查对象
+        TjManResult troj = JSON.parseObject(map.get("troj").toString(), TjManResult.class);
+        System.out.println(troj);
+        return major.tjresUpdate(troj);
     }
     /**
      * 批量新增检查结果
@@ -95,6 +114,17 @@ public class TjproController {
         TjCodeMan manj = JSON.parseObject(map.get("manj").toString(), TjCodeMan.class);
         System.out.println(manj);
         return major.tjmanUpdate(manj);
+    }
+    /**
+     * 新增修改体检人员单表
+     */
+    @RequestMapping("addOrUpdataMan1")
+    public boolean TjmanUpdate1(@RequestBody String projstr){
+        System.out.println(projstr);
+        Map map = JSON.parseObject(projstr, Map.class);//将项目对象字符串转换为检查对象
+        TjCodeMan manj = JSON.parseObject(map.get("manj").toString(), TjCodeMan.class);
+        System.out.println(manj);
+        return major.tjmanUpdate1(manj);
     }
     /**
      * 批量修改体检时间

@@ -31,8 +31,8 @@ public class TjproService {
     @Autowired
     MzMedicalCardMapper1 car;//诊疗卡体检用mapper
 //检查项目模糊查询与传参
-    public List<TjCodeProject> selectAllTjObject(String seach){
-        List<TjCodeProject> listjc = major.selectAllTjObject(seach);
+    public List<TjCodeProject> selectAllTjObject(String seach,Integer checkTpye){
+        List<TjCodeProject> listjc = major.selectAllTjObject(seach,checkTpye);
         return  listjc;
     }
     //体检套餐模糊查询与传参
@@ -50,9 +50,21 @@ public class TjproService {
         List<TjCodeProject> listm = major.inspect(codeId);
         return  listm;
     }
+    //体检人员未填写
+    public List<TjCodeMan> selectAllman(String sermen){
+        List<TjCodeMan> listman = man.selectAllMan(sermen);
+        System.out.println(listman);
+        return  listman;
+    }
     //体检人员模糊查询与传参
-    public List<TjCodeMan> selectAllman(Integer manState,String sermen){
-        List<TjCodeMan> listman = man.selectAllMan(manState,sermen);
+    public List<TjCodeMan> selectAllman1(String sermen){
+        List<TjCodeMan> listman = man.selectAllMan1(sermen);
+        System.out.println(listman);
+        return  listman;
+    }
+    //体检人员已填写
+    public List<TjCodeMan> selectAllman2(String sermen){
+        List<TjCodeMan> listman = man.selectAllMan2(sermen);
         System.out.println(listman);
         return  listman;
     }
@@ -73,6 +85,19 @@ public class TjproService {
         List<MzMedicalCard> listcard = car.allmzmidCard(mcIdCard);
         System.out.println(listcard);
         return  listcard;
+    }
+    /**
+     * 新增修改检查结果
+     * @return
+     */
+    public boolean tjresUpdate(TjManResult mroj){
+        int is = 0;//判断是否新增成功
+        if(mroj.getManResultId() == 0){//新增
+            is = ent.insert(mroj);
+        }else{//修改
+            is = ent.updateById(mroj);
+        }
+        return is == 0?false:true;
     }
     /**
      * 新增修改套惨
@@ -112,6 +137,17 @@ public class TjproService {
             is = man.insert(manj);
             System.out.println("新增编号"+manj.getManId());
             man.insertTjman(manj.getManId(),manj.getJcXm());
+        }
+
+        return is == 0?false:true;
+    }
+//    改人员单表
+    public boolean tjmanUpdate1(TjCodeMan manj){
+        int is = 0;//判断是否新增成功
+        if(manj.getManId() == 0){//新增
+            is = man.insert(manj);
+        }else{
+            is = man.updateById(manj);
         }
 
         return is == 0?false:true;

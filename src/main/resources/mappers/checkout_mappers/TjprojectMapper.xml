@@ -9,6 +9,7 @@
         <result  column="index_name" property="indexName"></result>
         <result  column="index_significance" property="indexSignificance"></result>
         <result  column="ks_id" property="ksId"></result>
+        <result  column="check_tpye" property="checkTpye"></result>
         <association property="deptks"  javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
             <id column="ks_id" jdbcType="INTEGER" property="ksId" />
             <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
@@ -19,8 +20,11 @@
     <select id="selectAllTjObject" resultMap="Tjproject">
         SELECT * FROM tj_code_project a  left join  department_ks b on b.ks_id=a.ks_id
         <where>
+            <if test ="checkTpye !=null and '' != checkTpye"> /*名称like*/
+                check_tpye like'%${checkTpye}%'
+            </if>
             <if test ="seach !=null and '' != seach"> /*名称like*/
-                check_name like'%${checkName}%'
+                 and  check_name like'%${checkName}%'
             </if>
             <if test ="seach !=null and '' != seach">/*指标*/
                 or index_name like'%${indexName}%'
@@ -31,9 +35,10 @@
 <!--    体检人员所含项目查询-->
     <select id="selectAlonMp" resultMap="Tjproject">
         select * from tj_code_man a
-        inner join tj_man_middle b on a.man_id =b.man_id
-         inner join tj_code_project c on b.check_id =c.check_id
-         inner join department_ks d on c.ks_id =d.ks_id
-        where a.man_id =#{manId}
+                          inner join tj_man_middle b on a.man_id =b.man_id
+                          inner join tj_code_project c on b.check_id =c.check_id
+                          inner join department_ks d on c.ks_id =d.ks_id
+                          inner join tj_man_result e on e.man_id =a.man_id
+        where a.man_id=#{manId}  and  e.man_result is  null or e.man_result!=''
     </select>
 </mapper>

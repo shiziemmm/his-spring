@@ -73,7 +73,7 @@ public class MzRegistrationService {
         //挂号时就得生成排号单
         MzOpcNumber opcNumber = new MzOpcNumber();
         opcNumber.setBnTime(mzRegistration.getRtOnsetTime());//排号时间
-        opcNumber.setMrNumber(null);
+        opcNumber.setRtClass(mzRegistration.getRtClass());//挂号类型
         opcNumber.setRtNumber(mzRegistration.getRtNumber());
         opcNumber.setBnIdCard(cardObject.getMcIdCard());
         opcNumber.setBnKsName(mzRegistration.getRtOverKsName());

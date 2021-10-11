@@ -1,8 +1,10 @@
 package cn.gson.hisspring.model.mapper.inhospital_module_mapper;
 
+import cn.gson.hisspring.model.pojos.Scheduling;
 import cn.gson.hisspring.model.pojos.TjCodeMan;
 import cn.gson.hisspring.model.pojos.TjCodeProject;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
+import cn.gson.hisspring.model.pojos.pojos_vo.ResultManVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,5 +29,9 @@ public interface PatientBaseMapper extends BaseMapper<ZyPatientBase> {
 
     int updatePatientBasePrice(@Param("price") double price, @Param("ptNo") Long ptNo);
 
-    int insertPatientCheckout(@Param("checkList")List<TjCodeProject> list, @Param("manId") Long manId);
+    int insertPatientCheckout(@Param("checkList")List<TjCodeProject> list, @Param("manId") Long manId,@Param("sId") Long sId);
+
+    List<ResultManVo> selectResultByManId(Long manId);
+
+    List<Scheduling> selectDateByKsId(Long ksId);
 }

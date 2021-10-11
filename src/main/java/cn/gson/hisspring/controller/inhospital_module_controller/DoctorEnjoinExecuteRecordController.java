@@ -4,6 +4,7 @@ import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientPayObjVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.DoctorEnjoinExecuteRecordService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +25,31 @@ public class DoctorEnjoinExecuteRecordController {
 
 
     /**
+     * 多条件查询已执行医嘱
+     */
+    @RequestMapping("doctor-where-execute")
+    public List<ZyDoctorEnjoinExecuteRecord> selectExecuteDoctor(@RequestBody String str){
+        System.err.println(str);
+        SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
+        System.out.println(selectExecuteVo);
+        return deers.selectExecuteDoctor(selectExecuteVo);
+    }
+
+
+
+    /**
      * 执行医嘱方法
      * @param str 医嘱集合  员工编号
      * @return
      */
     @RequestMapping("addDoctorEnjoinExecute")
     public Map<String, String> doctorEnjoinExecute(@RequestBody String str){
-        System.err.println(str);
         Map map = JSON.parseObject(str, Map.class);
         List<ZyDoctorEnjoinDetails> zyDoctorEnjoinExecuteRecordList  = JSON.parseArray(map.get("doctorEnjoinList").toString(),ZyDoctorEnjoinDetails.class);
         zyDoctorEnjoinExecuteRecordList.forEach(c->{
             System.out.println(c);
         });
         Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);
-        System.out.println(zyDoctorEnjoinExecuteRecordList);
 
         return deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList,sId);
     }

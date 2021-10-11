@@ -15,6 +15,8 @@ public class TjCodeProject {
   private String indexSignificance;
   private long ksId;
   @TableField(exist = false)
+  private long checkTpye;
+  @TableField(exist = false)
   private DepartmentKs deptks;
   @TableField(exist = false)
   private long codeId;

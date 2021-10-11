@@ -19,6 +19,7 @@ public class PatientCostVo {
     private Timestamp pcdDate;//扣费日期
     private Double pcdPrice;//扣除金额
     private Long ptNo;//住院号
+    private String name;//扣除名称
     private String pcdCause;//扣除名称
 
 }

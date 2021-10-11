@@ -23,6 +23,7 @@ public class YkDruginventory {
   private Timestamp ykDrvenMftDate;//生产日期
   private long supplierId;//供应商编号
   private String ykSupplierName;//供应商名称
+  private Double ykSellingprice;//药品售价
 
   @TableField(exist = false)
   private YkWarehouse ykWarehouse;//仓库

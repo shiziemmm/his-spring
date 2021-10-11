@@ -14,7 +14,7 @@
         <result column="bn_Science" property="bnScience"></result>
         <result column="bn_Sick_Name" property="bnSickName"></result>
         <result column="rt_Number" property="rtNumber"></result>
-        <result column="mr_Number" property="mrNumber"></result>
+        <result column="rt_Class" property="rtClass"></result>
     </resultMap>
 
 
@@ -29,8 +29,7 @@
         <result column="bn_Science" property="bnScience"></result>
         <result column="bn_Sick_Name" property="bnSickName"></result>
         <result column="rt_Number" property="rtNumber"></result>
-        <result column="mr_Number" property="mrNumber"></result>
-
+        <result column="rt_Class" property="rtClass"></result>
 
         <association property="rtRegObject"  resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRegistrationMapper.regMap">
         </association>

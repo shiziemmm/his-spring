@@ -28,7 +28,7 @@ public class MzOpcNumber {
   private String bnSickName;
   private long rtNumber;
   @TableField(insertStrategy =  FieldStrategy.IGNORED )
-  private String mrNumber;
+  private String rtClass;
 
   @TableField(exist = false)// 挂号记录表 -数据对象
   private MzRegistration rtRegObject;

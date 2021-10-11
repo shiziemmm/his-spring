@@ -11,6 +11,7 @@
         <result  column="project_id" property="projectId"></result>
         <result  column="change_id" property="changeId"></result>
         <result  column="operation_id" property="operationId"></result>
+        <result  column="hocus_id" property="hocusId"></result>
         <result  column="apply_zt" property="applyZt"></result>
 <!--        执行人信息-->
         <association property="ys" javaType="cn.gson.hisspring.model.pojos.Staff">

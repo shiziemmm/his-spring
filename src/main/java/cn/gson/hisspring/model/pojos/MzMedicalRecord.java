@@ -19,9 +19,10 @@ public class MzMedicalRecord {
   private String mrCount;
   private String mrDoctorName;
   private String mrDiagnoseRecord;
+  @TableField(fill = FieldFill.INSERT)//丢到处理器handler中新增去
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Date mrSection;
-//  @TableField(fill = FieldFill.INSERT_UPDATE)//丢到处理器handler中新增去
+  @TableField(fill = FieldFill.INSERT_UPDATE)//丢到处理器handler中新增去
   private Date  mrOverTime;
   private String mrKsName;
   private String mrIdCard;
@@ -30,7 +31,7 @@ public class MzMedicalRecord {
   private Double mrTotalMoney;
   private String mrMcCard;
   private long sId;
-  private String sickNumber;
+  private Long sickNumber;
   private long bnNumber;
   private String mcNumber;
 

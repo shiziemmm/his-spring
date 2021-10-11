@@ -12,6 +12,7 @@
         <result property="ykDrvenMftDate" column="YK_drven_mftDate"/>
         <result property="supplierId" column="Supplier_id"/>
         <result property="ykSupplierName" column="YK_Supplier_name"/>
+        <result property="ykSellingprice" column="YK_Sellingprice"/>
             <!--仓库-->
             <association property="ykWarehouse" javaType="cn.gson.hisspring.model.pojos.YkWarehouse">
                 <result property="ykWareId" column="YK_ware_id"/>
@@ -27,7 +28,7 @@
                 <result property="supplierLinkman" column="Supplier_linkman"/>
             </association>
     </resultMap>
-
+    <!--药库查询-->
     <select id="allDrugStorg" resultMap="DrugStorageMap">
         select * from yk_druginventory tory left join yk_warehouse house on tory.YK_ware_id = house.YK_ware_id
         left join yk_supplier supp on tory.Supplier_id = supp.Supplier_id
