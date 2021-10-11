@@ -18,5 +18,6 @@ public interface SchedulingMapper extends BaseMapper<Scheduling> {
     List<Scheduling> selectNowWeek();
     List<Scheduling>selectNow(@Param("rq")String rq,@Param("ksId") long ksId,@Param("sId") long sId);
     List<Scheduling> selectDate();
+    List<Scheduling>seletSch(@Param("rq")String rq,@Param("list") List<Integer> dome);
 
 }

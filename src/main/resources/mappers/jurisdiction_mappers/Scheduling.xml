@@ -32,7 +32,13 @@
 
   </resultMap>
 
+    <resultMap id="dome" type="cn.gson.hisspring.model.pojos.Scheduling">
+        <id column="sc_id"  property="scId" />
+        <result column="s_id"  property="sId" />
+        <result column="fr_id"  property="frId" />
+<!--        <result column="rq"  property="rq" />-->
 
+    </resultMap>
     <insert id="addSch">
     insert into scheduling(s_id,fr_id,rq) values
     <foreach collection="list" item="i" separator=", ">
@@ -57,11 +63,43 @@
             date_format(pb.rq,'%Y/%m/%d')=#{rq} and yg.ks_id=#{ksId} and yg.s_id=#{sId}
     </select>
     <select id="selectDate" resultMap="BaseResultMap">
-        select * from staff yg  inner join scheduling pb  on pb.s_id=yg.s_id inner join frequency f on f.F_id=pb.fr_id inner join department_ks d on yg.ks_id=d.ks_id
-            inner join title t on  yg.t_id=t.t_id WHERE to_days(pb.rq) = to_days(now())
+        SELECT
+        staff.s_id,
+        staff.s_name,
+        staff.s_sore,
+        staff.s_phone,
+        staff.s_date,
+        staff.u_id,
+        staff.ks_id,
+        staff.t_id,
+        staff.s_zt,
+        frequency.F_id,
+        frequency.F_start_time,
+        frequency.F_end_time,
+        frequency.fc_id,
+        department_ks.ks_name,
+        department_ks.ks_dz,
+        department_ks.de_id,
+        title.T_name,
+        scheduling.Sc_id,
+        scheduling.rq
+
+        FROM
+        staff
+        INNER JOIN title ON staff.t_id = title.T_id
+        INNER JOIN department_ks ON staff.ks_id = department_ks.ks_id
+        INNER JOIN scheduling ON staff.s_id = scheduling.S_id
+        INNER JOIN frequency ON frequency.F_id = scheduling.fr_id
+        where  DATE_FORMAT(NOW(),'%Y-%m-%d') = DATE_FORMAT(scheduling.rq,'%Y-%m-%d') and time(frequency.F_start_time) &lt; time(NOW()) and time(frequency.F_end_time) &gt; TIME(NOW())
     </select>
     <select id="selectNowWeek" resultMap="BaseResultMap">
         select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id inner join register r on r.t_id=yg.t_id
         WHERE TO_DAYS(NOW())-TO_DAYS(rq) > -7 and TO_DAYS(rq) >= TO_DAYS(NOW())
+    </select>
+    <select id="seletSch" resultMap="BaseResultMap">
+        SELECT * FROM scheduling s WHERE s.rq=#{rq} and s.s_id in
+        <foreach collection="list" item="i" separator="," open="(" close=")">
+            #{i}
+        </foreach>
     </select>
 </mapper>

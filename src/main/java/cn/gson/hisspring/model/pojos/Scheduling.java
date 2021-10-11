@@ -30,4 +30,6 @@ public class Scheduling {
   private List<Frequency> fre;
   @TableField(exist = false)
   private Register register;
+  @TableField(exist = false)
+  private List<Integer> dome;
 }
