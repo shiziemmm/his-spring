@@ -1,5 +1,8 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 //药房药品信息表
@@ -7,9 +10,12 @@ import lombok.Data;
 @Data//get  set方法
 public class YfDruginformation {
 
+  @TableId(type = IdType.AUTO)
+  @TableField(value = "drug_id")
   private int drugId;
+
   private String drugName;
-  private String drugBarCode;
+  private String drugBarcode;
   private Double drugPrice;
   private String drugUsage;//用法
   private Long ykSpecId;
@@ -19,13 +25,16 @@ public class YfDruginformation {
   private String drugRemark;//药品功效
   private String drugUnit;
   private String drugSpecification;
-  private String drugPastDate;//保质期
+  private String drugPastdate;//保质期
   private Double drugParticle;//单粒价格
   private String drugQuantity;//每瓶数量
   private Long drugPrescription;//处方药
-  
+
+  @TableField(exist = false)
   private YkDrugspecifcations ykDrugspecifcations;//规格表
+  @TableField(exist = false)
   private YkSupplier ykSupplier;//供应商表
+  @TableField(exist = false)
   private YfDrugcategory yfDrugcategory;//类别表
 
   public Double getDrugParticle() {
@@ -68,13 +77,7 @@ public class YfDruginformation {
     this.drugName = drugName;
   }
 
-  public String getDrugBarCode() {
-    return drugBarCode;
-  }
 
-  public void setDrugBarCode(String drugBarCode) {
-    this.drugBarCode = drugBarCode;
-  }
 
   public Double getDrugPrice() {
     return drugPrice;
@@ -148,13 +151,6 @@ public class YfDruginformation {
     this.drugSpecification = drugSpecification;
   }
 
-  public String getDrugPastDate() {
-    return drugPastDate;
-  }
-
-  public void setDrugPastDate(String drugPastDate) {
-    this.drugPastDate = drugPastDate;
-  }
 
   public YkDrugspecifcations getYkDrugspecifcations() {
     return ykDrugspecifcations;

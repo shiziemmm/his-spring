@@ -9,7 +9,7 @@
         <result property="ykWareId" column="YK_ware_id"/>
         <result property="ykDrvenBatch" column="YK_drven_batch"/>
         <result property="ykDrvenCount" column="YK_drven_count"/>
-        <result property="ykDrvenMftDate" column="YK_drven_mftDate"/>
+        <result property="ykDrvenMftdate" column="YK_drven_mftDate"/>
         <result property="supplierId" column="Supplier_id"/>
         <result property="ykSupplierName" column="YK_Supplier_name"/>
         <result property="ykSellingprice" column="YK_Sellingprice"/>

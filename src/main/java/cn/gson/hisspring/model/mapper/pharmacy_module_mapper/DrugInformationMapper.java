@@ -4,12 +4,13 @@ import cn.gson.hisspring.model.pojos.YfDrugcategory;
 import cn.gson.hisspring.model.pojos.YfDruginformation;
 import cn.gson.hisspring.model.pojos.YkDrugspecifcations;
 import cn.gson.hisspring.model.pojos.YkSupplier;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
-public interface DrugInformationMapper {
+public interface DrugInformationMapper extends BaseMapper<YfDruginformation> {
     //查询药品信息
     List <YfDruginformation> queryById();
     //新增药品信息

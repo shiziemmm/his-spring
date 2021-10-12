@@ -11,7 +11,7 @@
         <result property="yfSupplierName" column="YF_Supplier_name"/>
         <result property="yfDrcaName" column="YF_drca_name"/>
         <result property="drugPrescription" column="Drug_prescription"/>
-        <result property="yfDrvenMftDate" column="YF_drven_mftDate"/>
+        <result property="yfDrvenMftdate" column="YF_drven_mftDate"/>
         <result property="yfDrvenBatch" column="YF_drven_batch"/>
         <result property="yfSellingprice" column="YF_Sellingprice"/>
         <!--供应商-->
@@ -26,7 +26,7 @@
         <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
             <result property="drugId" column="Drug_id" />
             <result property="drugName" column="Drug_name" />
-            <result property="drugBarCode" column="Drug_barCode" />
+            <result property="drugBarcode" column="Drug_barCode" />
             <result property="drugPrice" column="Drug_price" />
             <result property="drugUsage" column="Drug_usage" />
             <result property="ykSpecId" column="YK_spec_id" />
@@ -36,7 +36,7 @@
             <result property="drugRemark" column="Drug_remark" />
             <result property="drugUnit" column="Drug_unit" />
             <result property="drugSpecification" column="Drug_specification" />
-            <result property="drugPastDate" column="Drug_pastDate" />
+            <result property="drugPastdate" column="Drug_pastDate" />
             <result property="drugParticle" column="Drug_particle"/>
             <result property="drugQuantity" column="Drug_quantity"/>
         </association>

@@ -1,8 +1,12 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import sun.rmi.runtime.Log;
 
 import java.sql.Timestamp;
 
@@ -12,32 +16,31 @@ import java.sql.Timestamp;
 @TableName(value = "yf_druginventory")
 public class YfDruginventory {
 
+  @TableId(type = IdType.AUTO)
+  @TableField(value ="yf_Drven_Id" )
   private Long yfDrvenId;//药品库存编号
-  private long drugId;//药品编号
+  private Long drugId;//药品编号
   private String yfDrvenName;//药品名称
-  private long yfDrvenCount;//药品库存  数量
-  private long supplierId;//连接供应商表 供应商编号
+  private Long yfDrvenCount;//药品库存  数量
+  private Long supplierId;//连接供应商表 供应商编号
   private String yfSupplierName;//供应商名称
   private String yfDrcaName;//药品类别
   private String drugPrescription;//处方药
   @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
-  private Timestamp yfDrvenMftDate;//生产日期
+  private Timestamp yfDrvenMftdate;//生产日期
   private String yfDrvenBatch;//药品批次
   private Double yfSellingprice;//药品售价
 
+  @TableField(exist = false)
   private YkSupplier ykSupplier;//供应商
+  @TableField(exist = false)
   private YfDruginformation yfDruginformation;//药品信息
+  @TableField(exist = false)
   private YfDrugcategory yfDrugcategory;//药品类别
-  private int yfNumbers;
+  @TableField(exist = false)
+  private Integer yfNumbers;
 
-  public int getYfNumbers() {
-    return yfNumbers;
-  }
-
-  public void setYfNumbers(int yfNumbers) {
-    this.yfNumbers = yfNumbers;
-  }
-
+@TableField(exist = false)
   private YkAllot ykAllot;
 
   public YkAllot getYkAllot() {
@@ -64,13 +67,7 @@ public class YfDruginventory {
     this.yfDrvenName = yfDrvenName;
   }
 
-  public Timestamp getYfDrvenMftDate() {
-    return yfDrvenMftDate;
-  }
 
-  public void setYfDrvenMftDate(Timestamp yfDrvenMftDate) {
-    this.yfDrvenMftDate = yfDrvenMftDate;
-  }
 
   public String getYfDrvenBatch() {
     return yfDrvenBatch;

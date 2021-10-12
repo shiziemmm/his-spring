@@ -7,11 +7,13 @@ import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,7 +50,6 @@ public class MzMedicalRecordService {
 
     @Autowired
     ReCordAllVOMapper reCordAllVOMapper;
-
     /**
      * 查询所有的Vo对象组合类
      * @param index
@@ -62,14 +63,14 @@ public class MzMedicalRecordService {
             if(reCordAllVO.getRecipeObject() !=null){
                 if(reCordAllVO.getRecipeObject().getRecipeNumber() != 0){
                     List<MzRecipe> mzRecipes = reCordAllVOMapper.selectAllReCordOrDrug(reCordAllVO.getRecipeObject().getRecipeNumber());
-                        for (MzRecipe mzRecipe : mzRecipes) {
-                            if(!mzRecipe.getXpList().isEmpty()){
-                                reCordAllVO.getRecipeObject().setXpList(mzRecipe.getXpList());
-                            }
-                            if(!mzRecipe.getZpList().isEmpty()){
-                                reCordAllVO.getRecipeObject().setZpList(mzRecipe.getZpList());
-                            }
+                    for (MzRecipe mzRecipe : mzRecipes) {
+                        if(!mzRecipe.getXpList().isEmpty()){
+                            reCordAllVO.getRecipeObject().setXpList(mzRecipe.getXpList());
                         }
+                        if(!mzRecipe.getZpList().isEmpty()){
+                            reCordAllVO.getRecipeObject().setZpList(mzRecipe.getZpList());
+                        }
+                    }
                 }
             }
             //体检值不为null ，回流添加改换集合
@@ -89,6 +90,7 @@ public class MzMedicalRecordService {
                     List<MzSurgeryStamp> reCordAllVOSses = reCordAllVOMapper.selectAllReCordOrSs(reCordAllVO.getSurgeryStampObject().getSusNumber());
                     for (MzSurgeryStamp reCordAllVOSs : reCordAllVOSses) {
                         if(!reCordAllVOSs.getCenterSurgeryList().isEmpty()){
+                            System.err.println(reCordAllVOSs.getCenterSurgeryList());
                             reCordAllVO.setCenterSurgeryList(reCordAllVOSs.getCenterSurgeryList());
                         }
                     }
@@ -98,11 +100,159 @@ public class MzMedicalRecordService {
 
         return reCordAllVOS;
     };
+    /**
+     * 删除对应的中间表
+     * @param index
+     * @param i
+     */
+    public void delectRecord(Long index,Long i){
+        QueryWrapper qw = new QueryWrapper();
+        if(index==1){
+            qw.eq("rd_number",i);
+                xpMapper.delete(qw);
+        }else if(index==2){
+            qw.eq("zp_Number",i);
+                zpMapper.delete(qw);
+        }else if(index==3){
+            qw.eq("man_result_id",i);
+                tjManResultMapper.delete(qw);
+        }else if(index==4){
+            qw.eq("sus_number",i);
+                centerSurgeryMapper.delete(qw);
+        }
+    }
+
 
     /**
-     添加处方表--只做处方 和就诊记录的添加
+     * 依此类推来判断是进：保存，还是结束就诊，还是二次保存
      */
-    public void addRecipe(RecordVo recordVo ){
+    public void addRecipes(RecordVo recordVo){
+        if(recordVo.getMedicalRecordObject().getMrNumber() == 0){
+            addRecipe(recordVo);
+        }else{
+            addRecipeServe(recordVo);
+        }
+    }
+
+    /**
+     * 二次保存或者结束就诊
+     * @param recordVo
+     */
+    private void addRecipeServe(RecordVo recordVo) {
+        //        如果有就诊记录就修改了它 先查询一遍在修改
+        UpdateWrapper uw = new UpdateWrapper();
+        uw.eq("mr_Number", recordVo.getMedicalRecordObject().getMrNumber());
+        MzMedicalRecord medicalRecordObject = medicalRecordMapper.selectOne(uw);
+        medicalRecordMapper.update(medicalRecordObject,uw);
+        System.err.println("这里是走回传二次保存");
+        //如果“处方”的id有值，说明是双击回传过来的就诊列表的人
+        if(recordVo.getRecipeObject().getRecipeNumber() !=0 ){
+            UpdateWrapper qwRe = new UpdateWrapper();
+            qwRe.eq("mz_recipe.recipe_Number", recordVo.getRecipeObject().getRecipeNumber());
+            MzRecipe mzRecipe = recipeMapper.selectOne(qwRe);
+            recipeMapper.update(mzRecipe,qwRe);//查询一遍而后修改
+            if(mzRecipe!=null){//非空判断
+                if(!recordVo.getRecipeObject().getXpList().isEmpty() && recordVo.getRecipeObject().getXpList() !=null ){
+                    List<MzXprescription> xpLists = recordVo.getRecipeObject().getXpList();
+                    List<MzXprescription> xpLists1 = new ArrayList<>();
+                    UpdateWrapper qws =new UpdateWrapper();
+                    // 根据id遍历查询有就作修改，没就新增到另一个集合中作为新增
+                    for (MzXprescription xpList : xpLists) {
+                        qws.eq("mz_xprescription.recipe_number",xpList.getRecipeNumber());
+                        MzXprescription mzXprescription = xpMapper.selectOne(qws);
+                        if(mzXprescription!=null){
+                            xpMapper.update(mzXprescription,qws);
+                        }else{
+                            xpList.setRecipeNumber(mzXprescription.getRecipeNumber());//外键-新增处方单号
+                            xpList.setRdStatePrice(0);
+                            xpLists1.add(xpList);
+                        }
+                    }
+                    xpMapper.addListXp(xpLists1);
+                }
+                if(!recordVo.getRecipeObject().getZpList().isEmpty() && recordVo.getRecipeObject().getZpList()!=null){
+                    List<MzZprescription> zpList = recordVo.getRecipeObject().getZpList();
+                    List<MzZprescription> zpLists2 = new ArrayList<>();
+                    UpdateWrapper uwZp = new UpdateWrapper();
+                    for (MzZprescription mzZprescription : zpList) {
+                        uwZp.eq("mz_zprescription.recipe_number",mzZprescription.getRecipeNumber());
+                        MzZprescription mzZprescription1 = zpMapper.selectOne(uwZp);
+                        if(mzZprescription!=null){
+                            zpMapper.update(mzZprescription1,uwZp);
+                        }else{
+                            mzZprescription.setRecipeNumber(mzZprescription1.getRecipeNumber());//外键-新增处方单号
+                            mzZprescription.setZpStatePrice(0);
+                            zpLists2.add(mzZprescription);
+                        }
+                    }
+                    zpMapper.addListZp(zpLists2);
+                }
+
+            }
+        }
+
+        //如果“体检”的id有值，说明是双击回传过来的就诊列表的人
+        if(recordVo.getTjCodeManObject() != null){
+            System.err.println(recordVo.getTjCodeManObject().getManId());
+            if(recordVo.getTjCodeManObject().getManId()!=null){
+                UpdateWrapper qwTj = new UpdateWrapper();
+                qwTj.eq("tj_code_man.man_id", recordVo.tjCodeManObject.getManId());
+                TjCodeMan tjCodeMan = tjManMapper.selectOne(qwTj);
+                tjManMapper.update(tjCodeMan,qwTj);//查询一遍而后修改
+                if(!recordVo.tjManResultList.isEmpty()){
+                    List<TjManResult> tjManResult = recordVo.getTjManResultList();
+                    UpdateWrapper qwResult = new UpdateWrapper();
+
+                    List<TjManResult> listResult = new ArrayList<>();
+                    for (TjManResult manResult : tjManResult) {
+                        qwResult.eq("tj_man_result.man_id",qwResult);
+                        TjManResult tjManResult1 = tjManResultMapper.selectOne(qwResult);
+                        if(tjManResult1!=null){
+                            tjManResultMapper.update(tjManResult1,qwResult);
+                        }else{
+                            manResult.setsId(tjManResult1.getsId());
+                            manResult.setManId(tjManResult1.getManId());
+                            manResult.setManPayState(0L);
+                            listResult.add(manResult);
+                        }
+                    }
+                    tjManResultMapper.addTjManResultArr(listResult);
+                }
+            }
+        }
+
+        //如果“手术”的id有值，说明是双击回传过来的就诊列表的人
+        if(recordVo.getSurgeryStampObject().getSusNumber() !=0){
+            QueryWrapper qwSs = new QueryWrapper();
+            qwSs.eq("sus_Number", recordVo.getSurgeryStampObject().getSusNumber());
+            MzSurgeryStamp mzSurgeryStamp = surgeryStampMapper.selectOne(qwSs);
+            surgeryStampMapper.updateById(mzSurgeryStamp);//查询一遍而后修改
+
+//            if(!recordVo.centerSurgeryList.isEmpty()){
+//            //添加中间表
+//                List<MzCenterSurgery> centerSurgeryList = recordVo.getCenterSurgeryList();
+//                for (MzCenterSurgery mzCenterSurgery : centerSurgeryList) {
+//                    mzCenterSurgery.setSusNumber(recordVo.getSurgeryStampObject().getSusNumber());
+//                    mzCenterSurgery.setSusPayState(0L);
+//                }
+//                centerSurgeryMapper.addCenterSurgery(centerSurgeryList);
+//            }
+
+        }
+
+        //如果“病例”的id有值，说明是双击回传过来的就诊列表的人
+        if(recordVo.getHistoryObject().getChNumber() !=0){
+            QueryWrapper qwHis = new QueryWrapper();
+            qwHis.eq("ch_Number", recordVo.getHistoryObject().getChNumber());
+            MzCaseHistory mzCaseHistory = historyMapper.selectOne(qwHis);
+            historyMapper.updateById(mzCaseHistory);//查询一遍而后修改
+        }
+    }
+
+    /**
+      保存添加，结束也得添加
+     */
+    public void addRecipe(RecordVo recordVo){
 //        就诊记录
         MzMedicalRecord medicalRecordObject = getMzMedicalRecord(recordVo);
 //        处方
@@ -111,15 +261,22 @@ public class MzMedicalRecordService {
         getTjCodeResult(recordVo, medicalRecordObject);
 //        手术
         getSurgeryStamp(recordVo, medicalRecordObject);
-        //新增病历表
+//      新增病历表
+        getHistoryObject(recordVo, medicalRecordObject);
+    }
+
+    private void getHistoryObject(RecordVo recordVo, MzMedicalRecord medicalRecordObject) {
         MzCaseHistory historyObject = recordVo.getHistoryObject();
         if(historyObject.getChComplaint() !=null && historyObject.getChComplaint() !=""){
             historyObject.setChDoctor(medicalRecordObject.getMrDoctorName());//新增主治医生
-            historyObject.setSickNumber(recipeObject.getSickNumber());//新增病人外键
-            historyObject.setMrNumber(medicalRecordObject.getMrNumber());//新增就诊记录表
+            historyObject.setSickNumber(medicalRecordObject.getSickNumber());//新增病人外键
+            historyObject.setChIs(1L);//一就是门诊
+            historyObject.setChZyMzId(medicalRecordObject.getMrNumber());//新增就诊记录表
+            historyObject.setChSid(medicalRecordObject.getsId());
             historyMapper.insert(historyObject);
         }
     }
+
     /**
      * 新增就诊记录表-----------这里的修改排号状态要做判断
      * @param recordVo
@@ -164,6 +321,7 @@ public class MzMedicalRecordService {
             }
             centerSurgeryMapper.addCenterSurgery(centerSurgeryList);
         }
+
     }
 
     /**
@@ -190,7 +348,6 @@ public class MzMedicalRecordService {
                 manResult.setManPayState(0L);
             }
             tjManResultMapper.addTjManResultArr(tjManResult);
-
         }
     }
 
@@ -250,7 +407,6 @@ public class MzMedicalRecordService {
         //条件构造寻找对应的id
         QueryWrapper qw = new QueryWrapper();
         qw.eq("recipe_Number",index);
-
         if(xmName.equals("西药处方")){
             List<MzXprescription> xp = xpMapper.selectList(qw);
             for (MzXprescription mzXprescription : xp) {

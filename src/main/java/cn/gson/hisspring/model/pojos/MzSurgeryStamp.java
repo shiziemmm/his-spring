@@ -23,7 +23,7 @@ public class MzSurgeryStamp {
   @TableField( fill = FieldFill.INSERT)//mybatis-plus 处理器中调用新增就自动赋值当前系统时间
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Date susTime;
-  private String sickNumber;
+  private Long sickNumber;
   private long sId;
   private long mrNumber;
 
