@@ -52,7 +52,7 @@
         <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
             <result property="drugId" column="Drug_id" />
             <result property="drugName" column="Drug_name" />
-            <result property="drugBarCode" column="Drug_barCode" />
+            <result property="drugBarcode" column="Drug_barCode" />
             <result property="drugPrice" column="Drug_price" />
             <result property="drugUsage" column="Drug_usage" />
             <result property="ykSpecId" column="YK_spec_id" />
@@ -62,7 +62,7 @@
             <result property="drugRemark" column="Drug_remark" />
             <result property="drugUnit" column="Drug_unit" />
             <result property="drugSpecification" column="Drug_specification" />
-            <result property="drugPastDate" column="Drug_pastDate" />
+            <result property="drugPastdate" column="Drug_pastDate" />
         </association>
         <!--供应商-->
         <association property="ykSupplier" javaType="cn.gson.hisspring.model.pojos.YkSupplier">
@@ -78,7 +78,7 @@
     <resultMap id="DrugMap" type="cn.gson.hisspring.model.pojos.YfDruginformation">
         <result property="drugId" column="Drug_id" />
         <result property="drugName" column="Drug_name" />
-        <result property="drugBarCode" column="Drug_barCode" />
+        <result property="drugBarcode" column="Drug_barCode" />
         <result property="drugPrice" column="Drug_price" />
         <result property="drugUsage" column="Drug_usage" />
         <result property="ykSpecId" column="YK_spec_id" />
@@ -88,7 +88,7 @@
         <result property="drugRemark" column="Drug_remark" />
         <result property="drugUnit" column="Drug_unit" />
         <result property="drugSpecification" column="Drug_specification" />
-        <result property="drugPastDate" column="Drug_pastDate" />
+        <result property="drugPastdate" column="Drug_pastDate" />
         <association property="ykSupplier" javaType="cn.gson.hisspring.model.pojos.YkSupplier">
             <result property="supplierId" column="Supplier_id"/>
             <result property="supplierName" column="Supplier_name"/>
