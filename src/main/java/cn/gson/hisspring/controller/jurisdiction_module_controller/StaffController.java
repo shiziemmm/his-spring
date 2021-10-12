@@ -4,6 +4,7 @@ import cn.gson.hisspring.model.pojos.RoleMiddleUser;
 import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.User;
 import cn.gson.hisspring.model.pojos.User_Staff;
+import cn.gson.hisspring.model.pojos.pojos_vo.YongGoneVo;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.RoleMinddleUserService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.StaffService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.UserService;
@@ -11,6 +12,8 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -44,25 +47,40 @@ public class StaffController {
     }
     //新增员工
     @RequestMapping("add-staff")
-    public void dome(String staff, String user){
-        Staff staff1 = JSONObject.parseObject(staff, Staff.class);
-        User user1 = JSONObject.parseObject(user, User.class);
-        System.out.println(staff1);
-        System.out.println(user1);
-        us.addStaff(user1);
-        staff1.setUId(user1.getUId());
-        ss.addStaff(staff1);
-
+    public void dome(YongGoneVo from){
+        System.err.println(from);
+        User user=new User();
+        user.setUName(from.getUName());
+        user.setUPswd(from.getUPswd());
+        Staff s= new Staff();
+        s.setSName(from.getSName());
+        s.setSSore(from.getSSore());
+        s.setSPhone(from.getSPhone());
+        s.setSDate(new Date());
+        s.setKsId(from.getKsId());
+        s.setTId(from.getTId());
+        System.err.println(s);
+        System.err.println(user);
+        System.err.println("新增");
+        us.addStaff(user,s);
     }
     @RequestMapping("upa-staff")
-    public void upa(String staff, String user){
-        Staff staff1 = JSONObject.parseObject(staff, Staff.class);
-        User user1 = JSONObject.parseObject(user, User.class);
-        staff1.setUId(user1.getUId());
-        System.out.println(staff1);
-        System.out.println(user1);
-        us.upa(user1);
-        ss.upa(staff1);
+    public void upa(YongGoneVo from){
+        User user=new User();
+        user.setUName(from.getUName());
+        user.setUPswd(from.getUPswd());
+        Staff s= new Staff();
+        s.setSId(from.getSId());
+        s.setSName(from.getSName());
+        s.setSSore(from.getSSore());
+        s.setSPhone(from.getSPhone());
+        s.setSDate(new Date());
+        s.setKsId(from.getKsId());
+        s.setTId(from.getTId());
+        System.err.println(s);
+        System.err.println(user);
+        us.upa(user);
+        ss.upa(s);
 
     }
     @RequestMapping("quit-staff")
@@ -72,6 +90,16 @@ public class StaffController {
             return "ok";
         }else{
             return "false";
+        }
+    }
+    @RequestMapping("reset")
+    public int  reset(Long uid , String ssore){
+        String upswd=ssore.substring(ssore.length() - 6);
+        int reset = us.reset(upswd, uid);
+        if(reset>0){
+            return 0;
+        }else{
+            return 1;
         }
     }
 }

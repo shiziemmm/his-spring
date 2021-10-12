@@ -17,6 +17,8 @@
         <association property="ks" javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
             <id column="ks_id" jdbcType="INTEGER" property="ksId" />
             <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
+            <result column="de_id" jdbcType="INTEGER" property="deId"/>
+            <result column="ks_dz" jdbcType="VARCHAR" property="ksDz" />
         </association>
         <association property="t" javaType="cn.gson.hisspring.model.pojos.Title">
             <id column="t_id" jdbcType="INTEGER" property="tId" />
@@ -45,4 +47,5 @@
     <update id="upa">
         update staff set s_zt=1 where s_id=#{sid}
     </update>
+
 </mapper>
