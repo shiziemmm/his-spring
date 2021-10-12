@@ -29,4 +29,7 @@ public interface TjManMapper extends BaseMapper<TjCodeMan> {
     //状态修改
     @Update("update tj_code_man set man_state=#{manState} where man_id=#{manId}")
     public void updatezt(Integer manState,Integer manId);
+    //根据id查人员
+    @Select("select * from tj_code_man  where man_id=#{manId}")
+    List<TjCodeMan> selectMan(Integer manId);
 }

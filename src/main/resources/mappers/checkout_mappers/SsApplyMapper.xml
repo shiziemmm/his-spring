@@ -13,6 +13,9 @@
         <result  column="operation_id" property="operationId"></result>
         <result  column="hocus_id" property="hocusId"></result>
         <result  column="apply_zt" property="applyZt"></result>
+        <result  column="Operation_anathe" property="operationAnathe"></result>
+        <result  column="Operation_helper" property="operationHelper"></result>
+        <result  column="Operation_doctor" property="operationDoctor"></result>
 <!--        执行人信息-->
         <association property="ys" javaType="cn.gson.hisspring.model.pojos.Staff">
             <id column="ys_id" jdbcType="INTEGER" property="sId" />
@@ -47,7 +50,7 @@
     <resultMap id="DrugInforMap" type="cn.gson.hisspring.model.pojos.YfDruginformation">
         <result property="drugId" column="Drug_id" />
         <result property="drugName" column="Drug_name" />
-        <result property="drugBarCode" column="Drug_barCode" />
+        <result property="drugBarcode" column="Drug_barCode" />
         <result property="drugPrice" column="Drug_price" />
         <result property="drugUsage" column="Drug_usage" />
         <result property="ykSpecId" column="YK_spec_id" />
@@ -57,7 +60,7 @@
         <result property="drugRemark" column="Drug_remark" />
         <result property="drugUnit" column="Drug_unit" />
         <result property="drugSpecification" column="Drug_specification" />
-        <result property="drugPastDate" column="Drug_pastDate" />
+        <result property="drugPastdate" column="Drug_pastDate" />
         <result property="drugParticle" column="Drug_particle"/>
         <result property="drugQuantity" column="Drug_quantity"/>
         <result property="drugPrescription" column="Drug_prescription"/>

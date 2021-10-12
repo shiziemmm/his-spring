@@ -38,7 +38,6 @@
                           inner join tj_man_middle b on a.man_id =b.man_id
                           inner join tj_code_project c on b.check_id =c.check_id
                           inner join department_ks d on c.ks_id =d.ks_id
-                          inner join tj_man_result e on e.man_id =a.man_id
-        where a.man_id=#{manId}  and  e.man_result is  null or e.man_result!=''
+        where a.man_id=#{manId}
     </select>
 </mapper>

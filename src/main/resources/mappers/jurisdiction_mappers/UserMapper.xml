@@ -26,5 +26,7 @@
   <select id="cha" resultMap="BaseResultMap">
     select * from user d left join staff e on d.u_id = e.u_id where d.u_name=#{uName} and d.u_pswd=#{uPswd}
   </select>
-
+  <update id="reset">
+    update user set u_pswd=#{upswd} where u_id=#{uid}
+  </update>
 </mapper>

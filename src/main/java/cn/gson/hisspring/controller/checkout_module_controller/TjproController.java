@@ -45,6 +45,10 @@ public class TjproController {
     public List<TjCodeMan> allManaw(String sermen){
         return major.selectAllman2(sermen);
     }
+    @RequestMapping("allMan3") //体检人员根据id
+    public List<TjCodeMan> allManrr(Integer manId){
+        return major.selectman(manId);
+    }
     @RequestMapping("aloneMp") //体检人员所含项目
     public List<TjCodeProject> allManp(Integer manId){
         return major.selectAlonMm(manId);

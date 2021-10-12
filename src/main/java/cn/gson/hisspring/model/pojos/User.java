@@ -13,6 +13,7 @@ public class User {
   private long uId;
   private String uName;
   private String uPswd;
+
   @TableField(exist = false)
   private Staff list;
 

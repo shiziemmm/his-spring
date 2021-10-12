@@ -68,6 +68,12 @@ public class TjproService {
         System.out.println(listman);
         return  listman;
     }
+    //根据id查人员
+    public List<TjCodeMan> selectman(Integer manId){
+        List<TjCodeMan> listman = man.selectMan(manId);
+        System.out.println(listman);
+        return  listman;
+    }
     //查体检人员所含项目
     public List<TjCodeProject> selectAlonMm(Integer manId){
         List<TjCodeProject> listman = major.selectAlonMp(manId);

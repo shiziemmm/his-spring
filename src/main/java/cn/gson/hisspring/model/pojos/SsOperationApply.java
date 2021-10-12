@@ -20,6 +20,9 @@ public class SsOperationApply {
   private long operationId;
   private long hocusId;
   private long applyZt;
+  private long operationAnathe;
+  private long operationHelper;
+  private long operationDoctor;
 
 
   @TableField(exist = false)
