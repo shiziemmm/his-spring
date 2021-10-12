@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin /*跨域*/
@@ -31,10 +32,24 @@ public class YKAllotController {
     /*新增调拨*/
     @PostMapping("add-YkAllot")
     public void adddykallot( @RequestBody YkAllot ykAllot){
-        System.err.println(ykAllot);
         for (YfDruginventory yfDruginventory : ykAllot.getYfDruginventories()) {
             System.out.println(yfDruginventory.getYfDrvenName());
         }
         ykAllotService.adddykallot(ykAllot);
+    }
+
+
+    /**
+     * 批量从药库调到药房
+     */
+    @RequestMapping("yk-batch-ykyf")
+    public boolean batchYkYf(@RequestBody String str){
+        Map map = JSON.parseObject(str, Map.class);
+
+        List<YkAllot> list = JSON.parseArray(map.get("allotDetail").toString(),YkAllot.class);//药库调拨集合
+        Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);//员工编号
+        System.err.println(list);
+        ykAllotService.addyf(list,sId);
+        return false;
     }
 }

@@ -15,6 +15,7 @@ public class YfDruglnventoryController {
     @Autowired
     YfDruglnventoryService yfDruglnventoryService;
 
+    /*查询药房库存*/
     @RequestMapping("YF-repertory")
     public List <YfDruginventory> allYFlnventory(){
         return yfDruglnventoryService.allYFlnventory();

@@ -6,7 +6,7 @@
     <resultMap id="DrugInforMap" type="cn.gson.hisspring.model.pojos.YfDruginformation">
         <result property="drugId" column="Drug_id" />
         <result property="drugName" column="Drug_name" />
-        <result property="drugBarCode" column="Drug_barCode" />
+        <result property="drugBarcode" column="Drug_barCode" />
         <result property="drugPrice" column="Drug_price" />
         <result property="drugUsage" column="Drug_usage" />
         <result property="ykSpecId" column="YK_spec_id" />
@@ -16,7 +16,7 @@
         <result property="drugRemark" column="Drug_remark" />
         <result property="drugUnit" column="Drug_unit" />
         <result property="drugSpecification" column="Drug_specification" />
-        <result property="drugPastDate" column="Drug_pastDate" />
+        <result property="drugPastdate" column="Drug_pastDate" />
         <result property="drugParticle" column="Drug_particle"/>
         <result property="drugQuantity" column="Drug_quantity"/>
         <result property="drugPrescription" column="Drug_prescription"/>
@@ -86,18 +86,18 @@
 
     <!--新增药品-->
     <insert id="addDrug" parameterType="cn.gson.hisspring.model.pojos.YfDruginformation">
-        insert into YF_DrugInformation value (null ,#{drugName},#{drugBarCode},#{drugPrice},#{drugUsage},#{ykSpecId},
-            #{ykSupplierId},#{yfDrcaId},#{drugUpper},#{drugRemark},#{drugUnit},#{drugSpecification},#{drugPastDate},#{drugParticle},#{drugQuantity},#{drugPrescription})
+        insert into YF_DrugInformation value (null ,#{drugName},#{drugBarcode},#{drugPrice},#{drugUsage},#{ykSpecId},
+            #{ykSupplierId},#{yfDrcaId},#{drugUpper},#{drugRemark},#{drugUnit},#{drugSpecification},#{drugPastdate},#{drugParticle},#{drugQuantity},#{drugPrescription})
     </insert>
 
     <!--修改药品信息-->
     <update id="updaDrug" parameterType="cn.gson.hisspring.model.pojos.YfDruginformation">
-        update YF_DrugInformation set Drug_name=#{drugName},Drug_barCode=#{drugBarCode},
+        update YF_DrugInformation set Drug_name=#{drugName},Drug_barCode=#{drugBarcode},
                                       Drug_price=#{drugPrice},Drug_usage=#{drugUsage},
                                       YK_spec_id=#{ykSpecId},YK_Supplier_id=#{ykSupplierId},
                                       YF_drca_id=#{yfDrcaId},Drug_upper=#{drugUpper},
                                       Drug_remark=#{drugRemark},Drug_unit=#{drugUnit},
-                                      Drug_specification=#{drugSpecification},Drug_pastDate=#{drugPastDate},
+                                      Drug_specification=#{drugSpecification},Drug_pastDate=#{drugPastdate},
                                       Drug_particle=#{drugParticle},Drug_quantity=#{drugQuantity},
                                       Drug_prescription=#{drugPrescription}
                                       where Drug_id=#{drugId}
