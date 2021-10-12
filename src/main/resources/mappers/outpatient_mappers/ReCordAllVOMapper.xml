@@ -46,7 +46,7 @@
 
         <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap"></association>
 
-        <association property="tjCodeManObject" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.TjManMapper.TjMan"></association>
+        <association property="tjCodeManObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzTjCodeManMapper.tjMap"></association>
 
         <association property="surgeryStampObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.surgeryMap"></association>
         <!--手术集合-->

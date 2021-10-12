@@ -71,15 +71,6 @@ public class MzMedicalRecordController {
             System.err.println("手术集合"+recordVo.getCenterSurgeryList());
             System.err.println("检验"+recordVo.getTjCodeManObject());
             System.err.println("检验集合"+recordVo.getTjManResultList());
-            List<TjManResult> tjManResultList = recordVo.getTjManResultList();
-            for (TjManResult tjManResult : tjManResultList) {
-                System.err.println("==="+tjManResult);
-            }
-            List<MzCenterSurgery> centerSurgeryList = recordVo.getCenterSurgeryList();
-            for (MzCenterSurgery mzCenterSurgery : centerSurgeryList) {
-                System.err.println("+++"+mzCenterSurgery);
-            }
-
             System.err.println("病历"+recordVo.getHistoryObject());
             recordService.addRecipes(recordVo);
             return "ok";
