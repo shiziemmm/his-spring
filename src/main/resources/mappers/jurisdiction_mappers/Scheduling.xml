@@ -83,14 +83,15 @@
         title.T_name,
         scheduling.Sc_id,
         scheduling.rq
-
         FROM
         staff
         INNER JOIN title ON staff.t_id = title.T_id
         INNER JOIN department_ks ON staff.ks_id = department_ks.ks_id
         INNER JOIN scheduling ON staff.s_id = scheduling.S_id
         INNER JOIN frequency ON frequency.F_id = scheduling.fr_id
-        where  DATE_FORMAT(NOW(),'%Y-%m-%d') = DATE_FORMAT(scheduling.rq,'%Y-%m-%d') and time(frequency.F_start_time) &lt; time(NOW()) and time(frequency.F_end_time) &gt; TIME(NOW())
+        where  DATE_FORMAT(NOW(),'%Y-%m-%d') = DATE_FORMAT(scheduling.rq,'%Y-%m-%d')
+        and time(frequency.F_start_time) &lt; time(NOW())
+        and time(frequency.F_end_time) &gt; TIME(NOW())
     </select>
     <select id="selectNowWeek" resultMap="BaseResultMap">
         select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id inner join register r on r.t_id=yg.t_id
