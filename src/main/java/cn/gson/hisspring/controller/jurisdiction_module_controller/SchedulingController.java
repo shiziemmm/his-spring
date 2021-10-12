@@ -79,6 +79,11 @@ public class SchedulingController {
     public  List<Staff> selectksId(long id){
         return staffMapper.selectksId(id);
     }
+    //根据职称显示员工
+    @GetMapping("staff-t")
+    public  List<Staff> selecttId(long id){
+        return staffMapper.selecttId(id);
+    }
 
 
 

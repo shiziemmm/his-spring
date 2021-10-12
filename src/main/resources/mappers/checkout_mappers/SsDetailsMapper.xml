@@ -10,8 +10,14 @@
     <result  column="Operation_handle" property="operationHandle"></result>
     <result  column="Operation_hocus" property="operationHocus"></result>
     <result  column="Operation_doctor" property="operationDoctor"></result>
+    <result  column="Operation_anathe" property="operationAnathe"></result>
+    <result  column="Operation_helper" property="operationHelper"></result>
     <result  column="pt_no" property="ptNo"></result>
     <result  column="hocus_id" property="hocusId"></result>
+    <result  column="simulation_operation" property="simulationOperation"></result>
+
+    <result  column="operation_anaesthesia" property="operationAnaesthesia"></result>
+
     <!--药品信息-->
     <association property="yfdx" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SsApplyMapper.DrugInforMap"></association>
     <!--病人信息-->
@@ -22,8 +28,9 @@
     <select id="selectAllsDetails" resultMap="allssDetails">
         select * from ss_operation_details a
         inner join zy_patient_base b on a.pt_no =b.pt_no
-        inner join ss_operation_project d on d.project_id =a.project_id
+        inner join ss_operation_project d on d.project_id=a.project_id
         inner join  yf_druginformation gg on a.hocus_id = gg.drug_id
+        inner join  ss_operation_anaesthesia mm on a.Operation_hocus= mm.anaesthesia_id
         <where>
             <if test ="seach !=null and '' !=seach"> /*住院号号like*/
                 b.pt_no like'%${ptNo}%'

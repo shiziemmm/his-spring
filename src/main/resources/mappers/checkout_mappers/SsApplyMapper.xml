@@ -13,6 +13,9 @@
         <result  column="operation_id" property="operationId"></result>
         <result  column="hocus_id" property="hocusId"></result>
         <result  column="apply_zt" property="applyZt"></result>
+        <result  column="Operation_anathe" property="operationAnathe"></result>
+        <result  column="Operation_helper" property="operationHelper"></result>
+        <result  column="Operation_doctor" property="operationDoctor"></result>
 <!--        执行人信息-->
         <association property="ys" javaType="cn.gson.hisspring.model.pojos.Staff">
             <id column="ys_id" jdbcType="INTEGER" property="sId" />

@@ -39,6 +39,9 @@
     <select id="selectksId" resultMap="BaseResultMap">
         select * from staff where ks_id=#{ksId}
     </select>
+    <select id="selecttId" resultMap="BaseResultMap">
+        select * from staff where t_id=#{tId} and s_zt=0
+    </select>
     <update id="upa">
         update staff set s_zt=1 where s_id=#{sid}
     </update>
