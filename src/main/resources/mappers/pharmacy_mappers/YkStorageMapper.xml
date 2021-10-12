@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YKStorageMapper">
+    <resultMap id="allykStorage" type="cn.gson.hisspring.model.pojos.YkStorage">
+        <result column="YK_Storage_id" property="ykStorageId"/>
+        <result column="YK_Storage_personnel" property="ykStoragePersonnel"/>
+        <result column="S_id" property="sId"/>
+        <result column="YK_Storage_OutOrEnter" property="ykStorageOutorenter"/>
+        <result column="YK_Storage_cause" property="ykStorageCause"/>
+
+        <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
+            <result property="sId" column="s_id"/>
+            <result property="sName" column="s_name"/>
+        </association>
+    </resultMap>
+</mapper>

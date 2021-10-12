@@ -10,12 +10,13 @@ import lombok.Data;
 public class YkStorage {
 
   @TableField(value = "yk_Storage_id")
-  private long ykStorageId;
+  private long ykStorageId;//药品入库编号
 
-  private String ykStoragePersonnel;
-  private Long sId;
-  private Long ykStorageOutorenter;
-  private String ykStorageCause;
+  private String ykStoragePersonnel;//药品入库负责人员姓名
+  private Long sId;//外连接 连接员工表
+  private Long ykStorageOutorenter;//1是入库 2是出库
+  private String ykStorageCause;//出入库原因
 
-
+  @TableField(exist = false)
+  private Staff staff;//员工数据
 }
