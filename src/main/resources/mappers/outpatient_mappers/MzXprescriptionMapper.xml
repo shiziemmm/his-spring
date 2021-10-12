@@ -6,8 +6,8 @@
     <resultMap id="xpMaps" type="cn.gson.hisspring.model.pojos.MzXprescription">
         <id column="rd_Number" property="rdNumber"></id>
         <result column="rd_Name" property="rdName"></result>
-        <result column="rd_drugSpecification" property="rdDrugSpecification"></result>
-        <result column="rd_specSpecification" property="rdSpecSpecification"></result>
+        <result column="rd_fyjl" property="rdFyjl"></result>
+        <result column="rd_dw" property="rdDw"></result>
         <result column="rd_Count" property="rdCount"></result>
         <result column="rd_Price" property="rdPrice"></result>
         <result column="rd_Skin" property="rdSkin"></result>
@@ -22,8 +22,8 @@
     <insert id="addListXp">
         insert into Mz_Xprescription (
         rd_Name,
-        rd_drugSpecification,
-        rd_specSpecification,
+        rd_fyjl,
+        rd_dw,
         rd_count,
         rd_Price,
         rd_Skin,
@@ -36,8 +36,8 @@
         <foreach collection="list" separator="," item="xp">
             (
             #{xp.rdName},
-            #{xp.rdDrugSpecification},
-            #{xp.rdSpecSpecification},
+            #{xp.rdFyjl},
+            #{xp.rdDw},
             #{xp.rdCount},
             #{xp.rdPrice},
             #{xp.rdSkin},
