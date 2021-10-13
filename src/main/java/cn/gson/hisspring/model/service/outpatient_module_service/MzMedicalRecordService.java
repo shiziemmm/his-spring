@@ -156,10 +156,10 @@ public class MzMedicalRecordService {
                 if(!recordVo.getRecipeObject().getXpList().isEmpty() && recordVo.getRecipeObject().getXpList() !=null ){
                     List<MzXprescription> xpLists = recordVo.getRecipeObject().getXpList();
                     List<MzXprescription> xpLists1 = new ArrayList<>();
-                    UpdateWrapper qws =new UpdateWrapper();
                     // 根据id遍历查询有就作修改，没就新增到另一个集合中作为新增
                     for (MzXprescription xpList : xpLists) {
                         if(xpList.getRdNumber()!=0){
+                            UpdateWrapper qws =new UpdateWrapper();
                             qws.eq("mz_xprescription.rd_number",xpList.getRdNumber());
                             MzXprescription mzXprescription = xpMapper.selectOne(qws);
                             if(mzXprescription!=null){
@@ -180,10 +180,10 @@ public class MzMedicalRecordService {
                 if(!recordVo.getRecipeObject().getZpList().isEmpty() && recordVo.getRecipeObject().getZpList()!=null){
                     List<MzZprescription> zpList = recordVo.getRecipeObject().getZpList();
                     List<MzZprescription> zpLists2 = new ArrayList<>();
-                    UpdateWrapper uwZp = new UpdateWrapper();
                     // 根据id遍历查询有就作修改，没就新增到另一个集合中作为新增
                     for (MzZprescription mzZprescription : zpList) {
                         if(mzZprescription.getZpNumber() !=0){
+                            UpdateWrapper uwZp = new UpdateWrapper();
                             uwZp.eq("mz_zprescription.zp_number",mzZprescription.getZpNumber());
                             MzZprescription mzZprescription1 = zpMapper.selectOne(uwZp);
                             if(mzZprescription!=null){
@@ -206,18 +206,20 @@ public class MzMedicalRecordService {
         //如果“体检”的id有值，说明是双击回传过来的就诊列表的人
         if(recordVo.getTjCodeManObject() != null){
             if(recordVo.getTjCodeManObject().getManId()!=null){
+                System.err.println("这里体检");
                 //有就做修改
                 UpdateWrapper qwTj = new UpdateWrapper();
                 qwTj.eq("tj_code_man.man_id", recordVo.tjCodeManObject.getManId());
                 TjCodeMan tjCodeMan = tjManMapper.selectOne(qwTj);
                 tjManMapper.update(recordVo.getTjCodeManObject(),qwTj);//查询一遍而后修改
-                if(!recordVo.getTjManResultList().isEmpty()  && recordVo.getRecipeObject().getZpList()!=null){
+                if(!recordVo.getTjManResultList().isEmpty()  && recordVo.getTjManResultList()!=null){
                     List<TjManResult> tjManResult = recordVo.getTjManResultList();
-                    UpdateWrapper qwResult = new UpdateWrapper();
                     List<TjManResult> listResult = new ArrayList<>();
                     // 根据id遍历查询有就作修改，没就新增到另一个集合中作为新增
                     for (TjManResult manResult : tjManResult) {
                         if(manResult.getManResultId() !=0){
+                            UpdateWrapper qwResult = new UpdateWrapper();
+                            System.err.println("这里进一"+listResult);
                             qwResult.eq("tj_man_result.man_result_id",manResult.getManResultId());
                             TjManResult tjManResult1 = tjManResultMapper.selectOne(qwResult);
                             if(tjManResult1!=null){
@@ -231,6 +233,7 @@ public class MzMedicalRecordService {
                             listResult.add(manResult);
                         }
                     }
+                    System.err.println("这里进二"+listResult);
                     //如果不是一个空集合就说明上面存进去了值，就可以新增
                     if(!listResult.isEmpty()){
                         tjManResultMapper.addTjManResultArr(listResult);
@@ -245,12 +248,12 @@ public class MzMedicalRecordService {
             qwSs.eq("mz_surgery_stamp.sus_Number", recordVo.getSurgeryStampObject().getSusNumber());
             MzSurgeryStamp mzSurgeryStamp = surgeryStampMapper.selectOne(qwSs);
             surgeryStampMapper.update(recordVo.getSurgeryStampObject(),qwSs);//查询一遍而后修改
-            if(!recordVo.getCenterSurgeryList().isEmpty()){
+            if(!recordVo.getCenterSurgeryList().isEmpty() && recordVo.getCenterSurgeryList() !=null){
                 List<MzCenterSurgery> centerSurgeryList = recordVo.getCenterSurgeryList();
-                UpdateWrapper uwCen = new UpdateWrapper();
                 List<MzCenterSurgery> centerSurgeryList2 = new ArrayList<>();
                 for (MzCenterSurgery mzCenterSurgery : centerSurgeryList) {
                     if(mzCenterSurgery.getSusId()!=0){
+                        UpdateWrapper uwCen = new UpdateWrapper();
                         uwCen.eq("mz_center_surgery.sus_id",mzCenterSurgery.getSusId());
                         MzCenterSurgery mzCenterSurgery1 = centerSurgeryMapper.selectOne(uwCen);
                         if(mzCenterSurgery1!=null){
@@ -275,7 +278,7 @@ public class MzMedicalRecordService {
             UpdateWrapper qwHis = new UpdateWrapper();
             qwHis.eq("ch_Number", recordVo.getHistoryObject().getChNumber());
             MzCaseHistory mzCaseHistory = historyMapper.selectOne(qwHis);
-            historyMapper.update(mzCaseHistory,qwHis);//查询一遍而后修改
+            historyMapper.update(recordVo.getHistoryObject(),qwHis);//查询一遍而后修改
         }
     }
 
@@ -295,16 +298,19 @@ public class MzMedicalRecordService {
         getHistoryObject(recordVo, medicalRecordObject);
     }
 
+    /**
+     * 病历表
+     * @param recordVo
+     * @param medicalRecordObject
+     */
     private void getHistoryObject(RecordVo recordVo, MzMedicalRecord medicalRecordObject) {
         MzCaseHistory historyObject = recordVo.getHistoryObject();
-        if(historyObject.getChComplaint() !=null && historyObject.getChComplaint() !=""){
-            historyObject.setChDoctor(medicalRecordObject.getMrDoctorName());//新增主治医生
-            historyObject.setSickNumber(medicalRecordObject.getSickNumber());//新增病人外键
-            historyObject.setChIs(1L);//一就是门诊
-            historyObject.setChZyMzId(medicalRecordObject.getMrNumber());//新增就诊记录表
-            historyObject.setChSid(medicalRecordObject.getsId());
-            historyMapper.insert(historyObject);
-        }
+        historyObject.setChDoctor(medicalRecordObject.getMrDoctorName());//新增主治医生
+        historyObject.setSickNumber(medicalRecordObject.getSickNumber());//新增病人外键
+        historyObject.setChIs(1L);//一就是门诊
+        historyObject.setChZyMzId(medicalRecordObject.getMrNumber());//新增就诊记录表
+        historyObject.setChSid(medicalRecordObject.getsId());
+        historyMapper.insert(historyObject);
     }
 
     /**
@@ -335,14 +341,14 @@ public class MzMedicalRecordService {
      * @param medicalRecordObject
      */
     private void getSurgeryStamp(RecordVo recordVo, MzMedicalRecord medicalRecordObject) {
+        MzSurgeryStamp surgeryStampObject = recordVo.getSurgeryStampObject();
+        // 添加手术单表
+        surgeryStampObject.setsId(medicalRecordObject.getsId());
+        surgeryStampObject.setMrNumber(medicalRecordObject.getMrNumber());
+        surgeryStampObject.setSickNumber(medicalRecordObject.getSickNumber());
+        surgeryStampObject.setSusState(0);
+        surgeryStampMapper.insert(surgeryStampObject);
         if(!recordVo.getCenterSurgeryList().isEmpty()){
-            MzSurgeryStamp surgeryStampObject = recordVo.getSurgeryStampObject();
-            // 添加手术单表
-            surgeryStampObject.setsId(medicalRecordObject.getsId());
-            surgeryStampObject.setMrNumber(medicalRecordObject.getMrNumber());
-            surgeryStampObject.setSickNumber(medicalRecordObject.getSickNumber());
-            surgeryStampObject.setSusState(0);
-            surgeryStampMapper.insert(surgeryStampObject);
             //添加中间表
             List<MzCenterSurgery> centerSurgeryList = recordVo.getCenterSurgeryList();
             for (MzCenterSurgery mzCenterSurgery : centerSurgeryList) {
@@ -360,15 +366,15 @@ public class MzMedicalRecordService {
      * @param medicalRecordObject
      */
     private void getTjCodeResult(RecordVo recordVo, MzMedicalRecord medicalRecordObject) {
+        TjCodeMan tjCodeManObject =  recordVo.getTjCodeManObject();
+        //体检申请单表对象
+        tjCodeManObject.setManState(0L);
+        tjCodeManObject.setManMzZyIs(1);//判断是门诊状态
+        tjCodeManObject.setManMzZyId(medicalRecordObject.getMrCount());//添加问诊号
+        System.err.println("生日"+ recordVo.getTjCodeManObject().getManBirthtime());
+        tjCodeManObject.setManTime(new Timestamp(System.currentTimeMillis()));
+        tjManMapper.insert(tjCodeManObject);
         if(!recordVo.getTjManResultList().isEmpty()) {//如果没有值说明为空
-            TjCodeMan tjCodeManObject =  recordVo.getTjCodeManObject();
-            //体检申请单表对象
-            tjCodeManObject.setManState(0L);
-            tjCodeManObject.setManMzZyIs(1);//判断是门诊状态
-            tjCodeManObject.setManMzZyId(medicalRecordObject.getMrCount());//添加问诊号
-            System.err.println("生日"+ recordVo.getTjCodeManObject().getManBirthtime());
-            tjCodeManObject.setManTime(new Timestamp(System.currentTimeMillis()));
-            tjManMapper.insert(tjCodeManObject);
 //            如果不等于空集合
             List<TjManResult> tjManResult = recordVo.getTjManResultList();
             for (TjManResult manResult : tjManResult) {
@@ -389,10 +395,10 @@ public class MzMedicalRecordService {
      */
     private MzRecipe getMzRecipe(RecordVo recordVo, MzMedicalRecord medicalRecordObject) {
         MzRecipe recipeObject = recordVo.getRecipeObject();
+        recipeObject.setMrNumber(medicalRecordObject.getMrNumber());
+        recipeMapper.insert(recipeObject);
         //新增处方
         if(recordVo.getRecipeObject().getRecipeSickName() != null && recordVo.getRecipeObject().getRecipeSickName() != ""){
-            recipeObject.setMrNumber(medicalRecordObject.getMrNumber());
-            recipeMapper.insert(recipeObject);
             //新增西药
             if(!recordVo.getRecipeObject().getXpList().isEmpty() && recordVo.getRecipeObject().getXpList() !=null ){
                 List<MzXprescription> xpLists = recordVo.getRecipeObject().getXpList();
