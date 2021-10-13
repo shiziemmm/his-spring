@@ -24,6 +24,7 @@
         <collection property="centerSurgeryList" resultMap="centerSurgeryMaps"></collection>
     </resultMap>
     <resultMap id="centerSurgeryMaps" type="cn.gson.hisspring.model.pojos.MzCenterSurgery">
+        <id column="sus_id" property="susId"></id>
         <result column="project_Id" property="projectId"></result>
         <result column="sus_Number" property="susNumber"></result>
         <result column="start_Date" property="startDate"></result>

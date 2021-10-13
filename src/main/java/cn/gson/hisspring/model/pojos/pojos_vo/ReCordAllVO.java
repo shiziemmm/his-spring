@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * 包含掉所有的实体类的Vo
  */
-@Data
 public class ReCordAllVO {
 
     private MzMedicalRecord medicalRecordObject;//就诊记录
@@ -22,4 +21,60 @@ public class ReCordAllVO {
 
     private MzSurgeryStamp surgeryStampObject; //手术单表
     private List<MzCenterSurgery> centerSurgeryList; //手术集合表
+
+    public MzMedicalRecord getMedicalRecordObject() {
+        return medicalRecordObject;
+    }
+
+    public void setMedicalRecordObject(MzMedicalRecord medicalRecordObject) {
+        this.medicalRecordObject = medicalRecordObject;
+    }
+
+    public MzCaseHistory getHistoryObject() {
+        return historyObject;
+    }
+
+    public void setHistoryObject(MzCaseHistory historyObject) {
+        this.historyObject = historyObject;
+    }
+
+    public MzRecipe getRecipeObject() {
+        return recipeObject;
+    }
+
+    public void setRecipeObject(MzRecipe recipeObject) {
+        this.recipeObject = recipeObject;
+    }
+
+    public TjCodeMan getTjCodeManObject() {
+        return tjCodeManObject;
+    }
+
+    public void setTjCodeManObject(TjCodeMan tjCodeManObject) {
+        this.tjCodeManObject = tjCodeManObject;
+    }
+
+    public List<TjManResult> getTjManResultList() {
+        return tjManResultList;
+    }
+
+    public void setTjManResultList(List<TjManResult> tjManResultList) {
+        this.tjManResultList = tjManResultList;
+    }
+
+    public MzSurgeryStamp getSurgeryStampObject() {
+        return surgeryStampObject;
+    }
+
+    public void setSurgeryStampObject(MzSurgeryStamp surgeryStampObject) {
+        this.surgeryStampObject = surgeryStampObject;
+    }
+
+    public List<MzCenterSurgery> getCenterSurgeryList() {
+        return centerSurgeryList;
+    }
+
+    public void setCenterSurgeryList(List<MzCenterSurgery> centerSurgeryList) {
+        this.centerSurgeryList = centerSurgeryList;
+    }
 }

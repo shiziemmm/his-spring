@@ -16,9 +16,7 @@ public class MzXprescription {
   private String rdDw;
   private long rdCount;
   private double rdPrice;
-  private long rdSkin;
   private String rdEntrust;
-  private String rdSkinResult;
   private long rdStatePrice;
   private long drugId;
   private long recipeNumber;

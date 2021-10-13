@@ -21,6 +21,7 @@ public class ZyPay {
   private java.sql.Timestamp pyDate;
   private Long ptNo;
   private Long sId;
+  private String pyWay;//缴费方式
 
 
   @TableField(exist = false)
