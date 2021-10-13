@@ -7,9 +7,48 @@
         <result column="py_date" property="pyDate"/>
         <result column="py_price" property="pyPrice"/>
         <result column="pt_no" property="ptNo"/>
-
+        <result property="pyWay" column="py_way"/>
         <association property="staff" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps"></association>
     </resultMap>
 
+    <select id="selectPayByPtNo" resultMap="payMap">
+        select * from zy_pay p inner join staff s on p.s_id = s.s_id
+        <where>
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(p.py_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(p.py_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
+
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(p.py_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
+
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(p.py_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+            <if test="ptNo != null and ptNo != ''">
+                and pt_no = #{ptNo}
+            </if>
+            <if test="sIdArr != null and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
+                and p.s_id in (<foreach collection="sIdArr" item="sId"  separator=",">
+                            #{sId}
+                </foreach>)
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectByPtNoStaff" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps">
+        select * from staff where s_id in (
+            select pcd_sid from seltpatientcostbreakdown
+
+        <where>
+            <if test="ptNo != null and ptNo != ''">
+                and pt_no = #{ptNo}
+            </if>
+        </where>
+
+            group by pcd_sid
+        )
+    </select>
     
 </mapper>

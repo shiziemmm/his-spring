@@ -33,6 +33,7 @@ public class ZyPatientBase {
   private String ptIphone;
   private Long sId;//主治医生
   private Long ptIs;//是否出院
+  private Long ptSickNumber;//病人信息编号
 
 
   //关系

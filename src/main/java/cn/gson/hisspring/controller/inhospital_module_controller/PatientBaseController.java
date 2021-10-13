@@ -3,6 +3,7 @@ package cn.gson.hisspring.controller.inhospital_module_controller;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientCheckoutVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.ResultManVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.PatientBaseService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,5 +158,6 @@ public class PatientBaseController {
     public List<ZyPatientBase> selectPatientAndPay(){
         return pbs.selectPatientAndPay();
     }
+
 
 }

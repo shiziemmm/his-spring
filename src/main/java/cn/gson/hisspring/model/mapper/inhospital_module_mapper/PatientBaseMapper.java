@@ -29,6 +29,8 @@ public interface PatientBaseMapper extends BaseMapper<ZyPatientBase> {
 
     int updatePatientBasePrice(@Param("price") double price, @Param("ptNo") Long ptNo);
 
+    int updatePatientBasePriceAndMoney(@Param("price") double price, @Param("ptNo") Long ptNo);
+
     int insertPatientCheckout(@Param("checkList")List<TjCodeProject> list, @Param("manId") Long manId,@Param("sId") Long sId);
 
     List<ResultManVo> selectResultByManId(Long manId);
