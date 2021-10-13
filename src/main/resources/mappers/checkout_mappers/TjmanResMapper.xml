@@ -10,6 +10,7 @@
         <result column="man_date" property="manDate"></result>
         <result column="man_time" property="manTime"></result>
         <result column="s_id" property="sId"></result>
+        <result column="man_proposal" property="manProposal"></result>
         <association property="man"  javaType="cn.gson.hisspring.model.pojos.TjCodeMan">
             <id column="man_id" property="manId"></id>
             <result  column="man_name" property="manName"></result>
@@ -22,7 +23,6 @@
             <result column="man_phy" property="manPhy"></result>
             <result column="man_state" property="manState"></result>
             <result column="mc_balance" property="mcBalance"></result>
-            <result column="man_proposal" property="manProposal"></result>
             <result column="man_mz_zy_id" property="manMzZyId"></result>
             <result column="man_mz_zy_is" property="manMzZyIs"></result>
         </association>

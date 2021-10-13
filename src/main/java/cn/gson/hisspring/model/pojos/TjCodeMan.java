@@ -22,7 +22,6 @@ public class TjCodeMan {
   private String manPhone;
   private Double manPhy;
   private Long manState;
-  private String manProposal;
 
   private Integer manMzZyIs;//1是门诊2是住院
   private String manMzZyId;//门诊或者住院编号

@@ -14,7 +14,7 @@ public class SsOperationDetails {
   private long projectId;
   private String operationHandle;
   private long operationHocus;
-  private String operationDoctor;
+  private long operationDoctor;
   private long ptNo;
   private long hocusId;
   private long operationAnathe;

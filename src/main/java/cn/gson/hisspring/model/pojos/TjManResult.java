@@ -20,6 +20,7 @@ public class TjManResult {
   private java.sql.Timestamp manTime;
   private Long sId;
   private Long manPayState;
+  private String manProposal;
 
   @TableField(exist = false)
   private TjCodeMan man;
