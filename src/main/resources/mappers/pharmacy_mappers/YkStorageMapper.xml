@@ -13,5 +13,14 @@
             <result property="sId" column="s_id"/>
             <result property="sName" column="s_name"/>
         </association>
+        <!--出入库记录详表-->
+        <collection property="ykStorageDetails" resultMap="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YkStorageDetailMapper.allykstoragedetail"/>
+
     </resultMap>
+
+    <select id="allStorage" resultMap="allykStorage">
+        select * from yk_storage yksorg
+            left join yk_storage_detail yktalis on yksorg.YK_Storage_id = yktalis.YK_Storage_id
+            left join staff sta on yksorg.s_id = sta.s_id
+    </select>
 </mapper>

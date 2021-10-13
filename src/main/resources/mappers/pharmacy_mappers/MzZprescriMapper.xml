@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.MzZprescriMapper">
+    <resultMap id="zhongyaochufang" type="cn.gson.hisspring.model.pojos.MzZprescription">
+        <result column="zp_Number" property="zpNumber"/>
+        <result column="zp_Name" property="zpName"/>
+        <result column="zp_Specification" property="zpSpecification"/>
+        <result column="zp_Count" property="zpCount"/>
+        <result column="zp_Usage" property="zpUsage"/>
+        <result column="zp_Price" property="zpPrice"/>
+        <result column="zp_Entrust" property="zpEntrust"/>
+        <result column="drug_Id" property="zpStatePrice"/>
+        <result column="recipe_Number" property="drugId"/>
+        <result column="zp_State_Price" property="recipeNumber"/>
+    </resultMap>
+
+    <select id="allMzzy" resultMap="zhongyaochufang">
+        select * from mz_zprescription
+    </select>
+</mapper>

@@ -3,6 +3,8 @@ package cn.gson.hisspring.model.pojos;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
+import java.util.List;
+
 @Data//get  set方法
 
 //出入库表
@@ -19,4 +21,6 @@ public class YkStorage {
 
   @TableField(exist = false)
   private Staff staff;//员工数据
+  @TableField(exist = false)
+  private List<YkStorageDetail> ykStorageDetails;//记录详表
 }
