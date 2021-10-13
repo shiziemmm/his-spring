@@ -30,6 +30,8 @@ public class MzCaseHistory {
   private Long chZyMzId;//住院号编号  就诊记录编号
   private Long chSid;//添加医生
 
+  @TableField(exist = false)
+  private Staff staff;
 
 
 }

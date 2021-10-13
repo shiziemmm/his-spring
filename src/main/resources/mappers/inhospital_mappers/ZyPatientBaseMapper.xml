@@ -23,6 +23,7 @@
         <result column="s_id" property="sId"/>
         <result column="ks_name" property="ksName"/>
         <result column="pt_is" property="ptIs"/>
+        <result property="ptSickNumber" column="pt_sick_number"/>
 
         <!--医生信息-->
         <association property="staff" resultMap="staffMaps"></association>
@@ -152,20 +153,27 @@
 
     <!--修改余额-->
     <update id="updatePatientBasePrice">
+        update Zy_patient_base set pt_price = pt_price - #{price}  where pt_no = #{ptNo}
+    </update>
+
+
+    <!--修改余额以及病人的已交余额-->
+    <update id="updatePatientBasePriceAndMoney">
         update Zy_patient_base set pt_price = pt_price - #{price}  , pt_pay_money = pt_pay_money + #{price}  where pt_no = #{ptNo}
     </update>
+
 
     <!--查询病人以及病人下面的医嘱信息-->
     <select resultMap="patientsMap" id="doctorEnjoinExecute">
        select * from seltpatientdoctorenjoin
         <where>
-            <if test="sId != null">
+            <if test="sId != null and sId != ''">
                 and s_id = #{sId}
             </if>
-            <if test="ksId != null ">
+            <if test="ksId != null and ksId != ''">
                 and ks_id = #{ksId}
             </if>
-            <if test="text != null">
+            <if test="text != null and text != ''">
                 and (pt_no like '%${text}%' or pt_name like '%{text}%')
             </if>
             and pt_is = 1
@@ -193,6 +201,7 @@
         zy_patient_base.pt_price,
         zy_patient_base.pt_iphone,
         zy_patient_base.s_id,
+        zy_patient_base.pt_sick_number,
         staff.s_id,
         staff.s_name,
         staff.s_sore,
@@ -216,13 +225,13 @@
         LEFT JOIN zy_bed ON zy_patient_base.Bd_id = zy_bed.Bd_id
 
     <where>
-        <if test="sId != null">
+        <if test="sId != null and sId != ''">
            and zy_patient_base.s_id = #{sId}
         </if>
-        <if test="ksId != null ">
+        <if test="ksId != null and ksId != ''">
            and zy_patient_base.ks_id = #{ksId}
         </if>
-        <if test="text != null">
+        <if test="text != null and text != ''">
             and (zy_patient_base.pt_no like '%${text}%' or zy_patient_base.pt_name like '%{text}%')
         </if>
           and zy_patient_base.pt_is = 1
@@ -251,6 +260,7 @@
         zy_patient_base.pt_price,
         zy_patient_base.pt_iphone,
         zy_patient_base.s_id,
+        zy_patient_base.pt_sick_number,
         staff.s_id,
         staff.s_name,
         staff.s_sore,

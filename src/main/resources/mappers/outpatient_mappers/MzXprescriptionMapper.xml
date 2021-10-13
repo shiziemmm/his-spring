@@ -10,12 +10,10 @@
         <result column="rd_dw" property="rdDw"></result>
         <result column="rd_Count" property="rdCount"></result>
         <result column="rd_Price" property="rdPrice"></result>
-        <result column="rd_Skin" property="rdSkin"></result>
         <result column="rd_Entrust" property="rdEntrust"></result>
         <result column="xpdrugid" property="drugId"></result>
         <result column="recipe_Number" property="recipeNumber"></result>
         <result column="rd_State_Price" property="rdStatePrice"></result>
-        <result column="rd_Skin_Result" property="rdSkinResult"></result>
 
     </resultMap>
 
@@ -26,9 +24,7 @@
         rd_dw,
         rd_count,
         rd_Price,
-        rd_Skin,
         rd_Entrust,
-        rd_Skin_Result,
         rd_State_Price,
         drug_Id,
         recipe_Number
@@ -40,9 +36,7 @@
             #{xp.rdDw},
             #{xp.rdCount},
             #{xp.rdPrice},
-            #{xp.rdSkin},
             #{xp.rdEntrust},
-            #{xp.rdSkinResult},
             #{xp.rdStatePrice},
             #{xp.drugId},
             #{xp.recipeNumber}

@@ -21,5 +21,6 @@ public class PatientCostVo {
     private Long ptNo;//住院号
     private String name;//扣除名称
     private String pcdCause;//扣除名称
+    private String sName;//员工名称
 
 }
