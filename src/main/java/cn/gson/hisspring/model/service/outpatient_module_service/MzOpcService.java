@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.rmi.ServerError;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,7 +43,7 @@ public class MzOpcService {
      * 添加住院申请
      * @param inhospitalApply
      */
-    public void addInHospitalApply(ZyInhospitalApply inhospitalApply,String rtNumber){
+    public void addInHospitalApply(ZyInhospitalApply inhospitalApply,String rtNumber,String mrNumber){
         //修改排号状态
         opcNumberService.upRtNumber(rtNumber);
         inhospitalApply.setInIs(0L);
@@ -50,7 +52,18 @@ public class MzOpcService {
         MzOpcNumber opcNumber = opcNumberMapper.selectOne(qw);
         opcNumber.setBnState(1);
         opcNumberMapper.updateById(opcNumber);
+        inhospitalApply.setInApplyDate(new Date());
         inHospitalApplyMapper.insert(inhospitalApply);
+        if(mrNumber != null){
+            QueryWrapper qwRecod = new QueryWrapper();
+            qwRecod.eq("mr_Number",mrNumber);
+            MzMedicalRecord mzMedicalRecord = medicalRecordMapper.selectOne(qwRecod);
+            if(mzMedicalRecord !=null){
+                mzMedicalRecord.setMrState(2);
+                medicalRecordMapper.updateById(mzMedicalRecord);
+            }
+        }
+
     }
 
     /**

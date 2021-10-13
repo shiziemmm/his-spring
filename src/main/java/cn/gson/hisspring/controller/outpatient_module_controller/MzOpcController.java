@@ -24,15 +24,19 @@ public class MzOpcController {
     @Autowired
     MzOpcService opcService;
 
-
+    /**
+     * 新增住院记录表
+     * @param str
+     * @return
+     */
     @RequestMapping("addInHospita")
     public String addInHospitalApply(@RequestBody String str){
         try {
             Map map = JSON.parseObject(str, Map.class);
             String rtNumber = map.get("rtNumber").toString();
             ZyInhospitalApply inhospitalApply = JSON.parseObject(map.get("inhospitalApply").toString(),ZyInhospitalApply.class);
-            System.err.println(inhospitalApply+"====\n"+rtNumber);
-            opcService.addInHospitalApply(inhospitalApply ,rtNumber);
+            String mrNumber = map.get("mrNumber").toString();
+            opcService.addInHospitalApply(inhospitalApply ,rtNumber,mrNumber);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();

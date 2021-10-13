@@ -90,7 +90,6 @@ public class MzMedicalRecordService {
                     List<MzSurgeryStamp> reCordAllVOSses = reCordAllVOMapper.selectAllReCordOrSs(reCordAllVO.getSurgeryStampObject().getSusNumber());
                     for (MzSurgeryStamp reCordAllVOSs : reCordAllVOSses) {
                         if(!reCordAllVOSs.getCenterSurgeryList().isEmpty()){
-                            System.err.println(reCordAllVOSs.getCenterSurgeryList());
                             reCordAllVO.setCenterSurgeryList(reCordAllVOSs.getCenterSurgeryList());
                         }
                     }
@@ -206,7 +205,6 @@ public class MzMedicalRecordService {
         //如果“体检”的id有值，说明是双击回传过来的就诊列表的人
         if(recordVo.getTjCodeManObject() != null){
             if(recordVo.getTjCodeManObject().getManId()!=null){
-                System.err.println("这里体检");
                 //有就做修改
                 UpdateWrapper qwTj = new UpdateWrapper();
                 qwTj.eq("tj_code_man.man_id", recordVo.tjCodeManObject.getManId());
@@ -219,11 +217,9 @@ public class MzMedicalRecordService {
                     for (TjManResult manResult : tjManResult) {
                         if(manResult.getManResultId() !=0){
                             UpdateWrapper qwResult = new UpdateWrapper();
-                            System.err.println("这里进一"+listResult);
                             qwResult.eq("tj_man_result.man_result_id",manResult.getManResultId());
                             TjManResult tjManResult1 = tjManResultMapper.selectOne(qwResult);
                             if(tjManResult1!=null){
-                                System.err.println("检验"+manResult);
                                 tjManResultMapper.update(manResult,qwResult);
                             }
                         }else if(manResult.getManResultId() == 0 && manResult.getCheckId()!=0){
@@ -233,7 +229,6 @@ public class MzMedicalRecordService {
                             listResult.add(manResult);
                         }
                     }
-                    System.err.println("这里进二"+listResult);
                     //如果不是一个空集合就说明上面存进去了值，就可以新增
                     if(!listResult.isEmpty()){
                         tjManResultMapper.addTjManResultArr(listResult);
@@ -257,7 +252,6 @@ public class MzMedicalRecordService {
                         uwCen.eq("mz_center_surgery.sus_id",mzCenterSurgery.getSusId());
                         MzCenterSurgery mzCenterSurgery1 = centerSurgeryMapper.selectOne(uwCen);
                         if(mzCenterSurgery1!=null){
-                            System.err.println("这里进一"+mzCenterSurgery1);
                             centerSurgeryMapper.update(mzCenterSurgery,uwCen);
                         }
                     }else if(mzCenterSurgery.getSusId()==0 && mzCenterSurgery.getProjectId()!=0){
@@ -266,7 +260,6 @@ public class MzMedicalRecordService {
                         centerSurgeryList2.add(mzCenterSurgery);
                     }
                 }
-                System.err.println("这里进二"+centerSurgeryList2);
                 //如果不是一个空集合就说明上面存进去了值，就可以新增
                 if(!centerSurgeryList2.isEmpty()){
                     centerSurgeryMapper.addCenterSurgery(centerSurgeryList2);
@@ -371,7 +364,6 @@ public class MzMedicalRecordService {
         tjCodeManObject.setManState(0L);
         tjCodeManObject.setManMzZyIs(1);//判断是门诊状态
         tjCodeManObject.setManMzZyId(medicalRecordObject.getMrCount());//添加问诊号
-        System.err.println("生日"+ recordVo.getTjCodeManObject().getManBirthtime());
         tjCodeManObject.setManTime(new Timestamp(System.currentTimeMillis()));
         tjManMapper.insert(tjCodeManObject);
         if(!recordVo.getTjManResultList().isEmpty()) {//如果没有值说明为空
