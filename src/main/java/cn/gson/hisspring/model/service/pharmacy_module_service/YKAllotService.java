@@ -64,7 +64,7 @@ public class YKAllotService {
                         .orderByAsc("YK_drven_mftDate");
                 List<YkDruginventory> ykDruginventoryList = dsm.selectList(DruginventoryQW);//查询药库所有一样药品编号的数据
                 for (YkDruginventory ykList : ykDruginventoryList) {
-                    if (drugCount <= ykList.getYkDrvenCount()){//如果进这边说明可以扣除库存
+                    if (drugCount <= ykList.getYkDrvenCount() && ykList.getYkDrvenCount() >0){//如果进这边说明可以扣除库存
                         //先减药库库存
                         YkDruginventory ykdObj = new YkDruginventory(ykList.getYkDrvenId(),ykList.getYkDrvenCount()-drugCount);
                         dsm.updateById(ykdObj);//修改药库库存

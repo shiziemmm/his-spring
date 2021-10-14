@@ -9,6 +9,7 @@ import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientCheckoutVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientUpdateBedVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.ResultManVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -307,6 +308,7 @@ public class PatientBaseService {
     public boolean insertPatient(ZyPatientBase patientBase){
             //新增住院登记数据
             patientBase.setBdId(0L);//给零
+            patientBase.setPtIs(1L);
             patientBase.setPtPrice(patientBase.getPtPayMoney());//将预交金额赋值给余额
             pbm.insert(patientBase);//新增
 
@@ -322,7 +324,7 @@ public class PatientBaseService {
             List<ZyContacts> ctaList = patientBase.getListContacts().isEmpty() ? null : patientBase.getListContacts();
             if(ctaList != null){
                 int i = cs.insertContactsList(ctaList, patientBase.getPtNo());
-                System.out.println("========================================="+i);
+
             }
 
 
@@ -331,10 +333,7 @@ public class PatientBaseService {
                 ZyPay pay = new ZyPay(patientBase.getPtPayMoney(),new Timestamp(new Date().getTime()),patientBase.getPtNo(),patientBase.getSId());
                 pm.insert(pay);//新增缴费记录
             }
-
             return true;
-
-
     }
 
 

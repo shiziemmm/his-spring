@@ -63,8 +63,7 @@ public class InHospitalApplyService {
 
         //========================新增住院申请
         ZyInhospitalApply zyInhospitalApply = new ZyInhospitalApply();
-        zyInhospitalApply.setInProposer(inHospitalMzVo.getOperatorId().toString());//操作员
-        zyInhospitalApply.setsId(inHospitalMzVo.getSId());
+        zyInhospitalApply.setsId(inHospitalMzVo.getOperatorId());//操作员
         zyInhospitalApply.setInIs(1L);//申请状态
         zyInhospitalApply.setKsId(inHospitalMzVo.getKsId());//住院科室
         zyInhospitalApply.setInApplyDate(new Date());

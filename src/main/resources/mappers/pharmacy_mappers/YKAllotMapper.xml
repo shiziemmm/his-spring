@@ -14,7 +14,7 @@
             <result property="sName" column="s_name"/>
         </association>
         <!--调拨详表-->
-        <collection property="ykAllotdetail" resultMap="ykAllotdetailMap"/>
+            <collection property="ykAllotdetail" resultMap="ykAllotdetailMap"/>
         <!--药房库存表-->
         <collection property="yfDruginventories" ofType="cn.gson.hisspring.model.pojos.YfDruginventory">
             <result property="yfDrvenId" column="YF_drven_id"/>
@@ -25,7 +25,7 @@
             <result property="yfSupplierName" column="YF_Supplier_name"/>
             <result property="yfDrcaName" column="YF_drca_name"/>
             <result property="drugPrescription" column="Drug_prescription"/>
-            <result property="yfDrvenMftDate" column="YF_drven_mftDate"/>
+            <result property="yfDrvenMftdate" column="YF_drven_mftDate"/>
             <result property="yfDrvenBatch" column="YF_drven_batch"/>
             <result property="yfSellingprice" column="YF_Sellingprice"/>
         </collection>
@@ -78,6 +78,13 @@
             <result property="drugParticle" column="Drug_particle"/>
             <result property="drugQuantity" column="Drug_quantity"/>
             <result property="drugPrescription" column="Drug_prescription"/>
+        </association>
+        <association property="ykAllot" javaType="cn.gson.hisspring.model.pojos.YkAllot">
+            <result property="ykAllotId" column="YK_allot_id"/>
+            <result property="ykAllotCause" column="YK_allot_cause"/>
+            <result property="ykAllotTime" column="YK_allot_time"/>
+            <result property="sId" column="S_id"/>
+            <result property="ykAllotName" column="YK_allot_name"/>
         </association>
     </resultMap>
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YkStorageDetailMapper">
+    <resultMap id="allykstoragedetail" type="cn.gson.hisspring.model.pojos.YkStorageDetail">
+        <result property="ykStorageDetailId" column="YK_Storage_Detail_id"/>
+        <result property="drugId" column="Drug_id"/>
+        <result property="ykStorageId" column="YK_Storage_id"/>
+        <result property="ykStorageDrugName" column="YK_Storage_drug_name"/>
+        <result property="ykStorageDetailCount" column="YK_Storage_Detail_count"/>
+        <result property="ykStorageDetailPrice" column="YK_Storage_Detail_price"/>
+        <result property="ykDrvenId" column="YK_drven_id"/>
+        <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
+            <result property="drugId" column="Drug_id" />
+            <result property="drugName" column="Drug_name" />
+            <result property="drugBarcode" column="Drug_barCode" />
+            <result property="drugPrice" column="Drug_price" />
+            <result property="drugUsage" column="Drug_usage" />
+            <result property="ykSpecId" column="YK_spec_id" />
+            <result property="ykSupplierId" column="YK_Supplier_id" />
+            <result property="yfDrcaId" column="YF_drca_id" />
+            <result property="drugUpper" column="Drug_upper" />
+            <result property="drugRemark" column="Drug_remark" />
+            <result property="drugUnit" column="Drug_unit" />
+            <result property="drugSpecification" column="Drug_specification" />
+            <result property="drugPastdate" column="Drug_pastDate" />
+            <result property="drugParticle" column="Drug_particle"/>
+            <result property="drugQuantity" column="Drug_quantity"/>
+            <result property="drugPrescription" column="Drug_prescription"/>
+        </association>
+    </resultMap>
+
+    <select id="allstoragedetail" resultMap="allykstoragedetail">
+        select * from yk_storage_detail detail left join yf_druginformation drug on detail.Drug_id = drug.Drug_id
+    </select>
+
+</mapper>
