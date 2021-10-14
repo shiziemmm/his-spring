@@ -5,5 +5,5 @@ Accept: application/json
 
 
 ###
-GET http://localhost:8089/selectRA
+GET http://localhost:8089/week-sch
 Accept: application/json

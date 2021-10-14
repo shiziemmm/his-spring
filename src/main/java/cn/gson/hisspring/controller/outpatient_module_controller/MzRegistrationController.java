@@ -25,7 +25,7 @@ public class MzRegistrationController {
     //查询单个诊疗卡
     @GetMapping("byIdCard")
     public MzMedicalCard selectById(String mcCard){
-        MzMedicalCard mzMedicalCard = cardService.selectById(mcCard);
+        MzMedicalCard mzMedicalCard = cardService.selectById(mcCard.replace(" ", ""));
         return mzMedicalCard;
     }
     //新增挂号表

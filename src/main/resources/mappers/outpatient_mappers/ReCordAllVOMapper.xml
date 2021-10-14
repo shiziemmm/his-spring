@@ -13,9 +13,10 @@
             or mr_id_card = #{texts})
         </if>
 --         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
-        order by mr_number
+--         order by mr_number
 
     </select>
+
     <!--    处方单项对应查询-->
     <select id="selectAllReCordOrDrug" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap">
         select * from mzmedicalrecordOrDrug where 1=1
@@ -26,18 +27,40 @@
     <!--    体检单项对应查询-->
     <select id="selectAllReCordOrTj" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzTjCodeManMapper.tjMaps">
         select * from mzmedicalrecordOrTj where 1=1
-        <if test=" susNumber !='' and susNumber!= 0 ">
+        <if test=" manId!='' and manId!= 0 ">
             and  man_id = #{manId}
         </if>
     </select>
     <!--    手术单项对应查询-->
     <select id="selectAllReCordOrSs" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.surgeryMaps">
         select * from mzmedicalrecordOrSs where 1=1
-        <if test=" '' != manId  and manId!= 0 ">
+        <if test=" susNumber !='' and susNumber!= 0 ">
             and  sus_number = #{susNumber}
         </if>
     </select>
 
+
+
+    <!--    处方单项对应查询2-->
+    <select id="selectAllReCordOrDrug2" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap">
+        select * from mzmedicalrecordOrDrug where 1=1
+        <if test="recipeNumber!='' and recipeNumber!= 0 ">
+            and  recipe_Number = #{recipeNumber}
+        </if>
+        <if test="statePrice!= null ">
+            and  (rd_state_price = #{statePrice} or zp_state_price = #{statePrice})
+        </if>
+    </select>
+    <!--    手术单项对应查询2-->
+    <select id="selectAllReCordOrSs2" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.surgeryMaps">
+        select * from mzmedicalrecordOrSs where 1=1
+        <if test=" susNumber !='' and susNumber!= 0 ">
+            and  sus_number = #{susNumber}
+        </if>
+        <if test="statePrice != null  ">
+            and sus_pay_state = #{statePrice}
+        </if>
+    </select>
     <!--所有的VO实体类集合对象Maps-->
     <resultMap id="reVoAllMap" type="cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO">
         <association property="medicalRecordObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalRecordMapper.recordMap3"></association>
@@ -53,6 +76,18 @@
         <collection property="centerSurgeryList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.centerSurgeryMaps"></collection>
         <!--体检集合-->
         <collection property="tjManResultList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzTjManResultMapper.tjResultMaps"></collection>
+    </resultMap>
+    <!--所有的VO实体类集合对象Maps-->
+    <resultMap id="reVoAllMap2" type="cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO">
+        <association property="medicalRecordObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalRecordMapper.recordMap3"></association>
+
+        <association property="historyObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMap"></association>
+
+        <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap"></association>
+
+        <association property="surgeryStampObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.surgeryMap"></association>
+        <!--手术集合-->
+        <collection property="centerSurgeryList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.centerSurgeryMaps"></collection>
     </resultMap>
 
 </mapper>

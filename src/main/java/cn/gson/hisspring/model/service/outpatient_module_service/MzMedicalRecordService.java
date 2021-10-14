@@ -412,47 +412,139 @@ public class MzMedicalRecordService {
         }
         return recipeObject;
     }
+    /**
+     *  查询就诊记录表--未缴费，开始输入号码缴费
+     * @return
+     */
+    public ReCordAllVO selectMedicalRecord(String texts){
+        ReCordAllVO reCordAllVO1 = medicalRecordMapper.selectAllReCordObject2(texts);
+        if( reCordAllVO1 !=null){
+            //对处方的回流改集合
+            if(reCordAllVO1.getRecipeObject().getRecipeNumber() != 0 ){
+                List<MzRecipe> mzRecipes = reCordAllVOMapper.selectAllReCordOrDrug2(reCordAllVO1.getRecipeObject().getRecipeNumber(),0l);
+                for (MzRecipe mzRecipe : mzRecipes) {
+                    if(!mzRecipe.getXpList().isEmpty()){
+                        reCordAllVO1.getRecipeObject().setXpList(mzRecipe.getXpList());
+                    }
+                    if(!mzRecipe.getZpList().isEmpty()){
+                        reCordAllVO1.getRecipeObject().setZpList(mzRecipe.getZpList());
+                    }
+                }
+            }
+        //手术值不为null ，回流添加改换集合
+            if(reCordAllVO1.getSurgeryStampObject() != null){
+                if(reCordAllVO1.getSurgeryStampObject().getSusNumber() != 0){
+                    List<MzSurgeryStamp> reCordAllVOSses = reCordAllVOMapper.selectAllReCordOrSs2(reCordAllVO1.getSurgeryStampObject().getSusNumber(),0L);
+                    for (MzSurgeryStamp reCordAllVOSs : reCordAllVOSses) {
+                        if(!reCordAllVOSs.getCenterSurgeryList().isEmpty()){
+                            reCordAllVO1.setCenterSurgeryList(reCordAllVOSs.getCenterSurgeryList());
+                        }
+                    }
+                }
+            }
+        }
+        return reCordAllVO1;
+    }
 
     /**
-     *  查询就诊记录表
+     * 查询所有的缴费完成记录--已经缴费，开始查询打印
+     * @return
      */
-    public List<MzMedicalRecord> selectMedicalRecord(String index,String texts){
-       return medicalRecordMapper.selectMzMedicalRecord(index, texts);
+    public List<ReCordAllVO> selectRecordsAll(String texts){
+        List<ReCordAllVO> mzMedicalRecords = medicalRecordMapper.selectAllReCordObject3(texts);;
+        for (ReCordAllVO mzMedicalRecord : mzMedicalRecords) {
+            if( mzMedicalRecord !=null){
+                //对处方的回流改集合
+                if(mzMedicalRecord.getRecipeObject() !=null && mzMedicalRecord.getRecipeObject().getRecipeNumber() != 0){
+                    List<MzRecipe> mzRecipes = reCordAllVOMapper.selectAllReCordOrDrug2(mzMedicalRecord.getRecipeObject().getRecipeNumber(),1l);
+                    for (MzRecipe mzRecipe : mzRecipes) {
+                        if(!mzRecipe.getXpList().isEmpty()){
+                            mzMedicalRecord.getRecipeObject().setXpList(mzRecipe.getXpList());
+                        }
+                        if(!mzRecipe.getZpList().isEmpty()){
+                            mzMedicalRecord.getRecipeObject().setZpList(mzRecipe.getZpList());
+                        }
+                    }
+                }
+                //手术值不为null ，回流添加改换集合
+                if(mzMedicalRecord.getSurgeryStampObject() != null && mzMedicalRecord.getSurgeryStampObject().getSusNumber() != 0){
+                    List<MzSurgeryStamp> reCordAllVOSses = reCordAllVOMapper.selectAllReCordOrSs2(mzMedicalRecord.getSurgeryStampObject().getSusNumber(),1L);
+                    for (MzSurgeryStamp reCordAllVOSs : reCordAllVOSses) {
+                        if(!reCordAllVOSs.getCenterSurgeryList().isEmpty()){
+                            mzMedicalRecord.setCenterSurgeryList(reCordAllVOSs.getCenterSurgeryList());
+                        }
+                    }
+                }
+            }
+        }
+        return mzMedicalRecords;
     }
-    /**
-     *  查询就诊记录表--缴费记录查询
-     */
-    public MzMedicalRecord selectMedicalRecord(String texts){
-        return medicalRecordMapper.selectMzMedicalRecords(texts);
-    }
-
-
-
     /**
      * 修改处方表的缴费状态
      */
-    public void updateStateRecipe(String index,String xmName,MzPayment payment){
+    public void updateStateRecipe(RecordVo recordVo){
         //条件构造寻找对应的id
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("recipe_Number",index);
-        if(xmName.equals("西药处方")){
-            List<MzXprescription> xp = xpMapper.selectList(qw);
-            for (MzXprescription mzXprescription : xp) {
-                mzXprescription.setRdStatePrice(1);
-                xpMapper.updateById(mzXprescription);
+        //根据处方修改药品
+        if(recordVo.getRecipeObject() != null && recordVo.getRecipeObject().getRecipeNumber() !=0){
+            /*先修改处方状态*/
+            QueryWrapper qw1 = new QueryWrapper();
+            qw1.eq("recipe_Number",recordVo.getRecipeObject().getRecipeNumber());
+            MzRecipe mzRecipe = recipeMapper.selectOne(qw1);
+            mzRecipe.setRecipeDrugState(1);
+            recipeMapper.updateById(mzRecipe);
+            /*西药药品修改*/
+            if(!recordVo.getRecipeObject().getXpList().isEmpty() ){
+                List<MzXprescription> xp = recordVo.getRecipeObject().getXpList();
+                for (MzXprescription mzXprescription : xp) {
+                    QueryWrapper qwXp = new QueryWrapper();
+                    qwXp.eq("rd_number",mzXprescription.getRdNumber());
+                    MzXprescription mzXprescription1 = xpMapper.selectOne(qwXp);
+                    if(mzXprescription1!=null){
+                        mzXprescription1.setRdStatePrice(1L);
+                        xpMapper.updateById(mzXprescription1);
+                    }
+                }
+                //添加到缴费记录表中
+//                extracted(payment, qw);
             }
-            //添加到缴费记录表中
-            extracted(payment, qw);
-        }
-        if(xmName.equals("中药处方")){
-            List<MzZprescription> zp =  zpMapper.selectList(qw);
-            for (MzZprescription mzZprescription : zp) {
-                mzZprescription.setZpStatePrice(1);
-                zpMapper.updateById(mzZprescription);
+            /*中药药品修改*/
+            if(!recordVo.getRecipeObject().getZpList().isEmpty()){
+                List<MzZprescription> zp =  recordVo.getRecipeObject().getZpList();
+                for (MzZprescription mzZprescription : zp) {
+                    QueryWrapper qwZp = new QueryWrapper();
+                    qwZp.eq("zp_number",mzZprescription.getZpNumber());
+                    MzZprescription mzZprescription1 = zpMapper.selectOne(qwZp);
+                    if(mzZprescription1!=null){
+                        mzZprescription1.setZpStatePrice(1L);
+                        zpMapper.updateById(mzZprescription1);
+                    }
+                }
+                //添加到缴费记录表中
             }
-            //添加到缴费记录表中
-            extracted(payment, qw);
         }
+//        根据手术修改药品
+        if(recordVo.getSurgeryStampObject() !=null && recordVo.getSurgeryStampObject().getSusNumber() !=0){
+            //先修改手术对象的缴费状态
+            QueryWrapper qw1 = new QueryWrapper();
+            qw1.eq("sus_number",recordVo.getSurgeryStampObject().getSusNumber());
+            MzSurgeryStamp mzSurgeryStamp = surgeryStampMapper.selectOne(qw1);
+            mzSurgeryStamp.setSusState(1);
+            surgeryStampMapper.updateById(mzSurgeryStamp);
+            if(!recordVo.getCenterSurgeryList().isEmpty()){
+                List<MzCenterSurgery> centerSurgeryList = recordVo.getCenterSurgeryList();
+                for (MzCenterSurgery mzCenterSurgery : centerSurgeryList) {
+                    QueryWrapper qw2 = new QueryWrapper();
+                    qw2.eq("sus_id",mzCenterSurgery.getSusId());
+                    MzCenterSurgery mzCenterSurgery1 = centerSurgeryMapper.selectOne(qw2);
+                    if(mzCenterSurgery1!=null){
+                        mzCenterSurgery1.setSusPayState(1L);
+                        centerSurgeryMapper.updateById(mzCenterSurgery1);
+                    }
+                }
+
+            }
+        }
+
     }
 
     /**
@@ -477,19 +569,8 @@ public class MzMedicalRecordService {
         paymentMapper.insert(mzPayment);
     }
 
-
     /**
-     * 查询所有的缴费完成记录
-     * @return
-     */
-    public List<MzMedicalRecord> selectRecordsAll(String text){
-        List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.selectRecordsAll(text);
-        return mzMedicalRecords;
-    }
-
-
-    /**
-     * 病人信息查询 已经就诊完成了的人
+     * 病人信息查询 已经就诊完成了的人所有人的就诊记录表（当天看病人数统计表页面）
      * @return
      */
     public List<MzMedicalRecord> allRecordSick(String text){

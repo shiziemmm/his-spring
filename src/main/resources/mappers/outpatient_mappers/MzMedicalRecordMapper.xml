@@ -18,46 +18,31 @@
         ORDER BY a.project_pay desc
     </select>
 
-
-    <!--问诊页面查询就诊列表-->
-    <select id="selectMzMedicalRecord" resultMap="recordMap">
-        select * from mzmedicalrecord where 1=1
-        <if test="index != null and ''!=index" >
-            and mr_state = #{index}
-        </if>
+    <!--未缴费页面查询 ，病人缴费，开始查询-->
+    <select id="selectAllReCordObject2" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.ReCordAllVOMapper.reVoAllMap2" >
+        select * from mzmedicalrecord where 1=1 and mr_state = 1
         <if test="texts !=null and ''!=texts ">
-            and  (mr_mc_card = #{texts}
+            and  (mr_Count = #{texts}
+            or   mr_mc_card = #{texts}
             or mr_id_card = #{texts})
         </if>
-        and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
-        order by mr_number
+        and (sus_state =0 or recipe_drug_state = 0)
+    -- and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
     </select>
-
-    <!--未缴费页面查询-->
-    <select id="selectMzMedicalRecords" resultMap="recordMap">
-        select * from mzmedicalrecord where 1=1
+    <!--未缴费页面查询 ，缴费完成，按条件查询就诊号-->
+    <select id="selectAllReCordObject3" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.ReCordAllVOMapper.reVoAllMap2" >
+        select * from mzmedicalrecord where 1=1 and mr_state = 1
         <if test="texts !=null and ''!=texts ">
-            and  (mr_mc_card = #{texts}
-            or mr_count = #{texts}
+            and  (mr_Count = #{texts}
+            or   mr_mc_card = #{texts}
             or mr_id_card = #{texts})
         </if>
-        and (zp_state_price = 0
-        or rd_state_price = 0)
-        order by mr_number
+        and (sus_state =1 or recipe_drug_state = 1)
+        -- and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
     </select>
-    <!--缴费页面完成查询-->
-    <select id="selectRecordsAll" resultMap="recordMap">
-        select * from mzmedicalrecord where 1=1
-        <if test="text !=null and ''!=text ">
-            and  (mr_mc_card = #{text}
-            or mr_count = #{text}
-            or mr_id_card = #{text})
-        </if>
-        and (zp_state_price = 1
-        or rd_state_price = 1)
-        and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
-        order by mr_number
-    </select>
+
+
+
     <!--病人信息页面查询 已经就诊完成了的人-->
     <select id="allRecordSick" resultMap="recordMap2">
         select * from mzmedicalrecord where 1=1

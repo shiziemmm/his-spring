@@ -86,26 +86,21 @@ public class MzMedicalRecordController {
      * @return
      */
     @RequestMapping("selectAllRecords")
-    public MzMedicalRecord selectMedicalRecords(@RequestBody String str){
+    public ReCordAllVO selectMedicalRecords(@RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
         String texts = map.get("texts").toString().replace(" ", "");
         return recordService.selectMedicalRecord(texts);
     }
 
     /**
-     * 打印结果集，修改状态
-     * @param str
+     * 缴费页面进行缴费--打印结果集，修改状态
      * @return
      */
     @RequestMapping("forPrinting")
-    public String forPrinting(@RequestBody String str){
+    public String forPrinting(@RequestBody  RecordVo recordVo){
         try {
-            Map map = JSON.parseObject(str, Map.class);
-            String index = map.get("index").toString();
-            String xmName = map.get("xmName").toString().replace(" ", "");;;
-            MzPayment payment = JSON.parseObject(map.get("payment").toString(),MzPayment.class);
-            System.err.println(index);
-            recordService.updateStateRecipe(index,xmName,payment);
+            System.err.println(recordVo);
+            recordService.updateStateRecipe(recordVo);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +114,7 @@ public class MzMedicalRecordController {
      * @return
      */
     @RequestMapping("selectRecordsAll")
-    public List<MzMedicalRecord> selectRecordsAll(@RequestBody String str){
+    public List<ReCordAllVO> selectRecordsAll(@RequestBody String str){
         Map map = JSON.parseObject(str,Map.class);
         String text = map.get("text").toString().replace(" ", "");;;
         return recordService.selectRecordsAll(text);
