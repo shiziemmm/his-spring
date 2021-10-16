@@ -19,9 +19,7 @@ public class SchedulingService {
     public boolean addSch(Date rq,Integer sid, List<Integer> list){
         return schedulingMapper.addSch(rq,sid,list) < 0 ? false : true;
     }
-    public List<Scheduling> selectAll(String star,String end){
-        return schedulingMapper.selectAll(star,end);
-    }
+
     public List<Scheduling> selectWeek(String rq,long ksId){
         return schedulingMapper.selectWeek(rq,ksId);
     }

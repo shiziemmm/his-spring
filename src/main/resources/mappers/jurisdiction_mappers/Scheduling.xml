@@ -45,18 +45,13 @@
         (#{i},#{sid},#{rq})
     </foreach>
     </insert>
-    <select id="selectAll" resultMap="BaseResultMap">
-        SELECT *,(SELECT count(*) from staff group by staff.ks_id >2) ks_ren
-        from scheduling s left join staff st on s.s_id=st.s_id left join department_ks d on st.ks_id=d.ks_id WHERE s.sc_date
-            BETWEEN #{scDate} and #{scEnd}
-    </select>
     <select id="selectWeek" resultMap="BaseResultMap">
         select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id where
                 date_format(pb.rq,'%Y/%m/%d')=#{rq} and yg.ks_id=#{ksId}
     </select>
     <select id="selectAllWeek" resultMap="BaseResultMap">
         select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id where
-            date_format(pb.rq,'%Y/%m/%d')=#{rq}
+            date_format(pb.rq,'%Y/%m/%d')=#{rq} and pb.fr_id=#{frId} and yg.ks_id=#{ksId}
     </select>
     <select id="selectNow" resultMap="BaseResultMap">
         select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id where

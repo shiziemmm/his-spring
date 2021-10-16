@@ -55,6 +55,7 @@ public class FrequencyCategoryController {
     @RequestMapping("bc-list")
     public List<Frequency> dome1(long bcId){
         List<Frequency> frequencies = fs.selectAllId(bcId);
+        System.err.println("班次"+frequencies);
         return frequencies;
     }
     /**
@@ -89,6 +90,119 @@ public class FrequencyCategoryController {
      */
     @RequestMapping("week")
     public Object cs(long ksId) throws ParseException {
+        System.err.println(ksId);
+        Date date=cs();
+        List<WeekVo> ban2List=new ArrayList<>();
+        //获取当前时间
+        Calendar calendar = Calendar.getInstance();
+        //        调用方法回到本周的第一天
+        setToFirstDay(calendar);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");//注意月份是MM
+        for (int i = 0; i < 7; i++) {
+            WeekVo paiBan2=new WeekVo();
+//           将星期，日期，赋值
+            paiBan2 = printDay(calendar,paiBan2);
+            System.err.println("日期"+paiBan2);
+            //查询这个科室的排班信息，并赋值
+            List<Scheduling> panBan = sl.selectWeek(paiBan2.getRq(),ksId);
+            System.err.println("排班数据"+panBan.size());
+            paiBan2.setSlist(panBan);
+            //将查询出来的结果赋值给需要返回出去的集合
+            ban2List.add(paiBan2);
+            //判断按钮可否使用
+            Date days = simpleDateFormat.parse(paiBan2.getRq());
+            if(days.getTime()<=date.getTime()){
+                paiBan2.setState(true);
+            }else{
+                paiBan2.setState(false);
+            }
+//           循环给日期加天数
+            calendar.add(Calendar.DATE, 1);
+        }
+        System.err.println(ban2List);
+       return ban2List;
+    }
+
+    /**
+     * 上一周数据
+     * @return
+     */
+    @RequestMapping("star-week")
+    public Object star(long ksId,long bcId) throws ParseException {
+        Date date=cs();
+        List<WeekVo> ban2List=new ArrayList<>();
+        //获取当前时间
+        Calendar calendar = Calendar.getInstance();
+        //        调用方法回到本周的第一天
+        setToWeek(calendar);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");//注意月份是MM
+        for (int i = 0; i < 7; i++) {
+            WeekVo paiBan2=new WeekVo();
+//           将星期，日期，赋值
+            paiBan2 = printDay(calendar,paiBan2);
+            //查询这个科室的排班信息，并赋值
+            List<Scheduling> panBan = sl.selectWeek(paiBan2.getRq(),ksId);
+            paiBan2.setSlist(panBan);
+            //将查询出来的结果赋值给需要返回出去的集合
+            ban2List.add(paiBan2);
+            //判断按钮可否使用
+            Date days = simpleDateFormat.parse(paiBan2.getRq());
+            if(days.getTime()<=date.getTime()){
+                paiBan2.setState(true);
+            }else{
+                paiBan2.setState(false);
+            }
+//           循环给日期加天数
+            calendar.add(Calendar.DATE, 1);
+        }
+        System.out.println(ban2List);
+        return ban2List;
+    }
+    /**
+     * 下一周数据
+     * @return
+     */
+    @RequestMapping("end-week")
+    public Object end(Long ksId,Long bcId) throws ParseException {
+        Date date=cs();
+        List<WeekVo> ban2List=new ArrayList<>();
+        //获取当前时间
+        Calendar calendar = Calendar.getInstance();
+        //        调用方法回到本周的第一天
+        setEndWeek(calendar);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");//注意月份是MM
+        for (int i = 0; i < 7; i++) {
+            WeekVo paiBan2=new WeekVo();
+//           将星期，日期，赋值
+            paiBan2 = printDay(calendar,paiBan2);
+            //查询这个科室的排班信息，并赋值
+            List<Scheduling> panBan = sl.selectWeek(paiBan2.getRq(),ksId);
+            paiBan2.setSlist(panBan);
+            //将查询出来的结果赋值给需要返回出去的集合
+            ban2List.add(paiBan2);
+            //判断按钮可否使用
+            Date days = simpleDateFormat.parse(paiBan2.getRq());
+            if(days.getTime()<=date.getTime()){
+                paiBan2.setState(true);
+            }else{
+                paiBan2.setState(false);
+            }
+//           循环给日期加天数
+            calendar.add(Calendar.DATE, 1);
+        }
+        System.out.println(ban2List);
+        return ban2List;
+    }
+
+    /**
+     * 返回本周
+     * @return
+     */
+    @RequestMapping("this-week")
+    public Object thisWeek(Long ksId,Long bcId) throws ParseException {
+        System.err.println(ksId);
+        //点击当前周之后清空star的值
+        star=new Date();
         Date date=cs();
         List<WeekVo> ban2List=new ArrayList<>();
         //获取当前时间
@@ -115,115 +229,6 @@ public class FrequencyCategoryController {
 //           循环给日期加天数
             calendar.add(Calendar.DATE, 1);
         }
-       return ban2List;
-    }
-
-    /**
-     * 上一周数据
-     * @return
-     */
-    @RequestMapping("star-week")
-    public Object star() throws ParseException {
-        Date date=cs();
-        List<WeekVo> ban2List=new ArrayList<>();
-        //获取当前时间
-        Calendar calendar = Calendar.getInstance();
-        //        调用方法回到本周的第一天
-        setToWeek(calendar);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");//注意月份是MM
-        for (int i = 0; i < 7; i++) {
-            WeekVo paiBan2=new WeekVo();
-//           将星期，日期，赋值
-            paiBan2 = printDay(calendar,paiBan2);
-            //查询这个科室的排班信息，并赋值
-            List<Scheduling> panBan = sl.selectAllWeek(paiBan2.getRq());
-            paiBan2.setSlist(panBan);
-            //将查询出来的结果赋值给需要返回出去的集合
-            ban2List.add(paiBan2);
-            //判断按钮可否使用
-            Date days = simpleDateFormat.parse(paiBan2.getRq());
-            if(days.getTime()<=date.getTime()){
-                paiBan2.setState(true);
-            }else{
-                paiBan2.setState(false);
-            }
-//           循环给日期加天数
-            calendar.add(Calendar.DATE, 1);
-        }
-        System.out.println(ban2List);
-        return ban2List;
-    }
-    /**
-     * 下一周数据
-     * @return
-     */
-    @RequestMapping("end-week")
-    public Object end() throws ParseException {
-        Date date=cs();
-        List<WeekVo> ban2List=new ArrayList<>();
-        //获取当前时间
-        Calendar calendar = Calendar.getInstance();
-        //        调用方法回到本周的第一天
-        setEndWeek(calendar);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");//注意月份是MM
-        for (int i = 0; i < 7; i++) {
-            WeekVo paiBan2=new WeekVo();
-//           将星期，日期，赋值
-            paiBan2 = printDay(calendar,paiBan2);
-            //查询这个科室的排班信息，并赋值
-            List<Scheduling> panBan = sl.selectAllWeek(paiBan2.getRq());
-            paiBan2.setSlist(panBan);
-            //将查询出来的结果赋值给需要返回出去的集合
-            ban2List.add(paiBan2);
-            //判断按钮可否使用
-            Date days = simpleDateFormat.parse(paiBan2.getRq());
-            if(days.getTime()<=date.getTime()){
-                paiBan2.setState(true);
-            }else{
-                paiBan2.setState(false);
-            }
-//           循环给日期加天数
-            calendar.add(Calendar.DATE, 1);
-        }
-        System.out.println(ban2List);
-        return ban2List;
-    }
-
-    /**
-     * 返回本周
-     * @return
-     */
-    @RequestMapping("this-week")
-    public Object thisWeek() throws ParseException {
-        //点击当前周之后清空star的值
-        star=new Date();
-        Date date=cs();
-        List<WeekVo> ban2List=new ArrayList<>();
-        //获取当前时间
-        Calendar calendar = Calendar.getInstance();
-        //        调用方法回到本周的第一天
-        setToFirstDay(calendar);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");//注意月份是MM
-        for (int i = 0; i < 7; i++) {
-            WeekVo paiBan2=new WeekVo();
-//           将星期，日期，赋值
-            paiBan2 = printDay(calendar,paiBan2);
-            //查询这个科室的排班信息，并赋值
-            List<Scheduling> panBan = sl.selectAllWeek(paiBan2.getRq());
-            paiBan2.setSlist(panBan);
-            //将查询出来的结果赋值给需要返回出去的集合
-            ban2List.add(paiBan2);
-            //判断按钮可否使用
-            Date days = simpleDateFormat.parse(paiBan2.getRq());
-            if(days.getTime()<=date.getTime()){
-                paiBan2.setState(true);
-            }else{
-                paiBan2.setState(false);
-            }
-//           循环给日期加天数
-            calendar.add(Calendar.DATE, 1);
-        }
-        System.out.println(ban2List);
         return ban2List;
     }
     @RequestMapping("select-cate")
