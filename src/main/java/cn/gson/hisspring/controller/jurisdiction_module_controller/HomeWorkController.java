@@ -29,11 +29,11 @@ public class HomeWorkController {
         List<Scheduling> schedulings = schedulingMapper.selectDate();
         return schedulings;
     }
-    @RequestMapping("week-sch")
-    public List<Scheduling>  cs(){
-        List<Scheduling> list = schedulingMapper.selectNowWeek();
-        return list;
-    }
+//    @RequestMapping("week-sch")
+//    public List<Scheduling>  cs(){
+//        List<Scheduling> list = schedulingMapper.selectNowWeek();
+//        return list;
+//    }
 
 }
 

@@ -13,8 +13,6 @@
             or mr_id_card = #{texts})
         </if>
 --         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
---         order by mr_number
-
     </select>
 
     <!--    处方单项对应查询-->
@@ -51,6 +49,16 @@
             and  (rd_state_price = #{statePrice} or zp_state_price = #{statePrice})
         </if>
     </select>
+    <!--    体检单项对应查询-->
+    <select id="selectAllReCordOrTj2" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzTjCodeManMapper.tjMaps">
+        select * from mzmedicalrecordOrTj where 1=1
+        <if test=" manId!='' and manId!= 0 ">
+            and  man_id = #{manId}
+        </if>
+        <if test="manPayState != null  ">
+            and man_pay_state = #{manPayState}
+        </if>
+    </select>
     <!--    手术单项对应查询2-->
     <select id="selectAllReCordOrSs2" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.surgeryMaps">
         select * from mzmedicalrecordOrSs where 1=1
@@ -61,6 +69,7 @@
             and sus_pay_state = #{statePrice}
         </if>
     </select>
+
     <!--所有的VO实体类集合对象Maps-->
     <resultMap id="reVoAllMap" type="cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO">
         <association property="medicalRecordObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalRecordMapper.recordMap3"></association>

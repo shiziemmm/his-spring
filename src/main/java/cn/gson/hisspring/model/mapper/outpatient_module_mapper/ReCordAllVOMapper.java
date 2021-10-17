@@ -27,6 +27,8 @@ public interface ReCordAllVOMapper extends BaseMapper<ReCordAllVO> {
 
     //    处方单项对应查询
     List<MzRecipe> selectAllReCordOrDrug2(@Param("recipeNumber") Long recipeNumber,@Param("statePrice") Long statePrice);
+    //    体检单项对应查询
+    List<TjCodeMan> selectAllReCordOrTj2(@Param("manId")Long manId,@Param("manPayState") Long manPayState);
     //    手术单项对应查询
     List<MzSurgeryStamp> selectAllReCordOrSs2( @Param("susNumber") Long susNumber,@Param("statePrice") Long statePrice);
 

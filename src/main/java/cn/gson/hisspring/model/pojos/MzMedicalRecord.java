@@ -33,7 +33,7 @@ public class MzMedicalRecord {
   private long sId;
   private Long sickNumber;
   private long bnNumber;
-  private String mcNumber;
+  private long mcNumber;
 
   @TableField(exist = false)
   private MzOpcNumber opcObject;//排号表对象

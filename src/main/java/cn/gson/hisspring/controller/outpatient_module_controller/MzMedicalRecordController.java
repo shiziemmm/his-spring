@@ -97,10 +97,25 @@ public class MzMedicalRecordController {
      * @return
      */
     @RequestMapping("forPrinting")
-    public String forPrinting(@RequestBody  RecordVo recordVo){
+    public String forPrinting(@RequestBody String str){
         try {
-            System.err.println(recordVo);
-            recordService.updateStateRecipe(recordVo);
+            Map map = JSON.parseObject(str,Map.class);
+            RecordVo recordVo = JSON.parseObject(map.get("recordVo").toString(),RecordVo.class);
+            Long sId  = Long.parseLong(map.get("sId").toString());
+            Long index = Long.parseLong(map.get("index").toString());
+            System.err.println("判断"+recordVo);
+            if(index == 1){
+//                其他缴费
+                recordService.updateStateRecipe(recordVo,sId,1L);
+            }else{
+                //卡缴费
+                Boolean aBoolean = recordService.setCardPrice(recordVo, sId,2L);
+                if(aBoolean){
+                    return "ok";
+                }else{
+                    return "no";
+                }
+            }
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,6 +123,18 @@ public class MzMedicalRecordController {
         }
     }
 
+
+    /**
+     * 查询所有的就诊完成记录（已经完成缴费记录的）
+     * @return
+     */
+    @RequestMapping("sCardPawd")
+    public MzMedicalCard setCardPrice(@RequestBody String str){
+        Map map = JSON.parseObject(str,Map.class);
+
+        String card = map.get("card").toString();
+        return recordService.setCardPrice(card);
+    }
     /**
      * 查询所有的就诊完成记录（已经完成缴费记录的）
      * @param str
