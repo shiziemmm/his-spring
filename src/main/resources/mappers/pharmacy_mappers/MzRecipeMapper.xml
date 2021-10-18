@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.YfMzRecipeMapper">
+    <resultMap id="MzRecipeMaps" type="cn.gson.hisspring.model.pojos.MzRecipe">
+        <result column="recipe_number" property="recipeNumber"/>
+        <result column="recipe_time" property="recipeTime"/>
+        <result column="recipe_sick_name" property="recipeSickName"/>
+        <result column="recipe_doctor_name" property="recipeDoctorName"/>
+        <result column="recipe_doctor_text" property="recipeDoctorText"/>
+        <result column="recipe_drug_state" property="recipeDrugState"/>
+        <result column="xp_Notes" property="xpNotes"/>
+        <result column="zp_Notes" property="zpNotes"/>
+        <result column="recipe_price" property="sickNumber"/>
+        <result column="sick_number" property="sId"/>
+        <result column="s_id" property="mrNumber"/>
+        <result column="mr_number" property="recipePrice"/>
+        <!--西药集合-->
+        <collection property="xpList" ofType="cn.gson.hisspring.model.pojos.MzXprescription">
+            <result property="rdNumber" column="rd_number"/>
+            <result property="rdName" column="rd_Name"/>
+            <result property="rdFyjl" column="rd_fyjl"/>
+            <result property="rdDw" column="rd_dw"/>
+            <result property="rdCount" column="rd_count"/>
+            <result property="rdPrice" column="rd_Price"/>
+            <result property="rdSkin" column="rd_Skin"/>
+            <result property="rdEntrust" column="rd_Entrust"/>
+            <result property="rdSkinResult" column="rd_Skin_Result"/>
+            <result property="rdStatePrice" column="rd_State_Price"/>
+            <result property="drugId" column="drug_Id"/>
+            <result property="recipeNumber" column="recipe_Number"/>
+        </collection>
+        <!--中药集合-->
+        <collection property="zpList" ofType="cn.gson.hisspring.model.pojos.MzZprescription">
+            <result column="zp_Number" property="zpNumber"/>
+            <result column="zp_Name" property="zpName"/>
+            <result column="zp_Specification" property="zpSpecification"/>
+            <result column="zp_Count" property="zpCount"/>
+            <result column="zp_Usage" property="zpUsage"/>
+            <result column="zp_Price" property="zpPrice"/>
+            <result column="zp_Entrust" property="zpEntrust"/>
+            <result column="drug_Id" property="zpStatePrice"/>
+            <result column="recipe_Number" property="drugId"/>
+            <result column="zp_State_Price" property="recipeNumber"/>
+        </collection>
+    </resultMap>
+
+    <select id="allMzRecipess" resultMap="MzRecipeMaps">
+        select * from Mz_recipe mz left join mz_xprescription xy on mz.xp_Notes = xy.rd_number
+            left join mz_zprescription zy on mz.zp_Notes = zy.zp_Number
+            where recipe_drug_state = 0
+    </select>
+
+</mapper>

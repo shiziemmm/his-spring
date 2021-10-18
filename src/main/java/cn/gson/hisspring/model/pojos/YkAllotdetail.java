@@ -21,6 +21,8 @@ public class YkAllotdetail {
   private YfDruginventory yfDruginventory;//药房库存
   @TableField(exist = false)
   private YfDruginformation yfDruginformation;//药品信息
+  @TableField(exist = false)
+  private YkAllot ykAllot;//调拨申请详表
 
   public int getYkAllotdetailId() {
     return ykAllotdetailId;

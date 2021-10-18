@@ -3,14 +3,18 @@ package cn.gson.hisspring.model.service.inhospital_module_service;
 
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.PayMapper;
+import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import cn.gson.hisspring.model.pojos.ZyPay;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -44,9 +48,25 @@ public class PayService{
         ZyPatientBase pb = pbm.selectById(pay.getPtNo());
 
         ZyPatientBase pbs = new ZyPatientBase(pay.getPtNo(),pb.getPtPayMoney()+pay.getPyPrice(),pb.getPtPrice()+pay.getPyPrice());
-        pbm.updateById(pbs);//修改
+        int i = pbm.updateById(pbs);//修改
 
-
+        if (i > 0)
+            return true;
         return false;
     }
+
+    /**
+     * 根据病人住院号查询病人缴费记录
+     */
+    public List<ZyPay> selectPayByPtNo(Long ptNo, SelectExecuteVo selectExecuteVo){
+        return pm.selectPayByPtNo(ptNo,selectExecuteVo.getStartDate(),selectExecuteVo.getEndDate(),selectExecuteVo.getSIdArr());
+    }
+
+    /**
+     * 根据住院号查询出所有操作人员信息
+     */
+    public List<Staff> selectByPtNoStaff(Long ptNo){
+        return pm.selectByPtNoStaff(ptNo);
+    }
+
 }

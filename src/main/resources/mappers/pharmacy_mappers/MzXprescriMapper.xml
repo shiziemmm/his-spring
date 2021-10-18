@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.pharmacy_module_mapper.MzXprescriMapper">
+    <resultMap id="xiyaofayao" type="cn.gson.hisspring.model.pojos.MzXprescription">
+        <result property="rdNumber" column="rd_number"/>
+        <result property="rdName" column="rd_Name"/>
+        <result property="rdFyjl" column="rd_fyjl"/>
+        <result property="rdDw" column="rd_dw"/>
+        <result property="rdCount" column="rd_count"/>
+        <result property="rdPrice" column="rd_Price"/>
+        <result property="rdSkin" column="rd_Skin"/>
+        <result property="rdEntrust" column="rd_Entrust"/>
+        <result property="rdSkinResult" column="rd_Skin_Result"/>
+        <result property="rdStatePrice" column="rd_State_Price"/>
+        <result property="drugId" column="drug_Id"/>
+        <result property="recipeNumber" column="recipe_Number"/>
+    </resultMap>
+
+    <!--查询处方西药要发的药-->
+    <select id="allmzxy" resultMap="xiyaofayao">
+        select * from mz_xprescription
+    </select>
+
+</mapper>

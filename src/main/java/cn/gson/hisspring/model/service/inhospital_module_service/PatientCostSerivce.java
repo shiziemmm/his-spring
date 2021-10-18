@@ -4,6 +4,7 @@ import cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinExecu
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientCostMapper;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord;
 import cn.gson.hisspring.model.pojos.pojos_vo.PatientCostVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,21 +27,12 @@ public class PatientCostSerivce {
      * @param ptNo 住院编号
      * @return
      */
-    public List<PatientCostVo> selectCostByPtNo(Long ptNo,String text){
-        QueryWrapper<PatientCostVo> qwc = new QueryWrapper<PatientCostVo>().eq("pt_no",ptNo).orderBy(true,false,"pcd_date");
+    public List<PatientCostVo> selectCostByPtNo(Long ptNo, String text, SelectExecuteVo selectExecuteVo){
         if(text != null) {
-            if (text.equals("其它费用")) {
-                qwc.isNotNull("pcd_cause");
-                qwc.notIn("pcd_cause", "医嘱费用", "床位费用","化验费用");
-            } else {
-                qwc.eq("pcd_cause", text);
-            }
+            return pcm.selectPayByWhere(ptNo,text,selectExecuteVo.getStartDate(),selectExecuteVo.getEndDate(),selectExecuteVo.getSIdArr());
         }else{
-            return pcm.selectPayAll(ptNo);
+            return pcm.selectPayAll(ptNo,selectExecuteVo.getStartDate(),selectExecuteVo.getEndDate(),selectExecuteVo.getSIdArr());
         }
-
-        List<PatientCostVo> patientCostVos = pcm.selectList(qwc);
-        return patientCostVos;
     }
 
     /**

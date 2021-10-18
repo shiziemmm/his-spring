@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class MzCenterSurgery {
-
+  private long   susId;
   private long projectId;
   private long susNumber;
   private java.sql.Timestamp startDate;
