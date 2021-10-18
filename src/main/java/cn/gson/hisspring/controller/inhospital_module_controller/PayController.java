@@ -59,4 +59,13 @@ public class PayController {
     public List<Staff> selectByPtNoStaff(Long ptNo){
         return ps.selectByPtNoStaff(ptNo);
     }
+
+
+    /**
+     * 根据住院号查询病人缴费余额
+     */
+    @RequestMapping("select-PayBy-PtNoPrice")
+    public Double selectPayByPtNoPrice(Long ptNo){
+        return ps.selectPayByPtNoPrice(ptNo);
+    }
 }

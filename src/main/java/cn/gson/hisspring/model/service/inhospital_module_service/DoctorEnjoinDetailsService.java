@@ -6,6 +6,7 @@ import cn.gson.hisspring.model.mapper.inhospital_module_mapper.StopDoctorEnjoinM
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoin;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails;
 import cn.gson.hisspring.model.pojos.ZyStopDoctorEnjoin;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,11 @@ public class DoctorEnjoinDetailsService {
 
     /**
      * 根据住院号查询医嘱详情记录
-     * @param ptNo 病人住院号
      * @return
      */
-    public List<ZyDoctorEnjoinDetails> doctorEnjoinDetailsSelectByPtId(Long ptNo){
+    public List<ZyDoctorEnjoinDetails> doctorEnjoinDetailsSelectByPtId(SelectExecuteVo selectExecuteVo){
 
-        return dedm.doctorEnjoinDetailsSelectByPtId(ptNo);
+        return dedm.doctorEnjoinDetailsSelectByPtId(selectExecuteVo);
     }
 
 

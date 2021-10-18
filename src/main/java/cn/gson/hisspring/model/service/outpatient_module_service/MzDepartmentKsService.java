@@ -2,6 +2,7 @@ package cn.gson.hisspring.model.service.outpatient_module_service;
 
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper;
 import cn.gson.hisspring.model.pojos.DepartmentKs;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,9 @@ public class MzDepartmentKsService {
 
     //查询所有科室表
     public List<DepartmentKs> selectDepartmentKs(){
-        List<DepartmentKs> departmentKs = departmentKsMapper.selectList(null);
+        QueryWrapper qw  = new QueryWrapper<>();
+        qw.eq("de_id",2);
+        List<DepartmentKs> departmentKs = departmentKsMapper.selectList(qw);
         return departmentKs;
     }
 

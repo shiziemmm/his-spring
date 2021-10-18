@@ -32,6 +32,20 @@
         </where>
         ORDER BY a.check_pay desc
     </select>
+
+    <select id="selectAllTjObject2" resultMap="Tjproject">
+        SELECT * FROM tj_code_project a  left join  department_ks b on b.ks_id=a.ks_id
+        <where>
+            <if test ="seach !=null and '' != seach"> /*名称like*/
+                  check_name like'%${seach}%'
+            </if>
+            <if test ="seach !=null and '' != seach">/*指标*/
+                or index_name like'%${seach}%'
+            </if>
+        </where>
+        ORDER BY a.check_pay desc
+    </select>
+
 <!--    体检人员所含项目查询-->
     <select id="selectAlonMp" resultMap="Tjproject">
         select * from tj_code_man a

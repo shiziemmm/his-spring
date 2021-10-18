@@ -15,7 +15,7 @@ public class YfDruginformation {
   private int drugId;
 
   private String drugName;
-  private String drugBarcode;
+  private int drugBarcode;
   private Double drugPrice;
   private String drugUsage;//用法
   private Long ykSpecId;
@@ -36,6 +36,22 @@ public class YfDruginformation {
   private YkSupplier ykSupplier;//供应商表
   @TableField(exist = false)
   private YfDrugcategory yfDrugcategory;//类别表
+
+  public String getDrugPastdate() {
+    return drugPastdate;
+  }
+
+  public void setDrugPastdate(String drugPastdate) {
+    this.drugPastdate = drugPastdate;
+  }
+
+  public int getDrugBarcode() {
+    return drugBarcode;
+  }
+
+  public void setDrugBarcode(int drugBarcode) {
+    this.drugBarcode = drugBarcode;
+  }
 
   public Double getDrugParticle() {
     return drugParticle;

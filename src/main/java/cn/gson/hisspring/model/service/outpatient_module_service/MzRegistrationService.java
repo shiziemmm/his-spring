@@ -44,7 +44,7 @@ public class MzRegistrationService {
         }
         List<MzRegistration> mzRegistrations = mzRegistrationMapper.selectMzRegistration(reg, index, dates);
         for (MzRegistration mzRegistration : mzRegistrations) {
-            if(sf.format(mzRegistration.getRtOnsetTime()).equals(sf.format(c.getTime()) )){//如果查询到的是时间和当前系统时间对应那就改它type
+            if(sf.format(mzRegistration.getRtOnsetTime()).equals(sf.format(c.getTime())) && "预约挂号".equals(mzRegistration.getRtType())){//如果查询到的是时间和当前系统时间对应那就改它type
                 mzRegistration.setRtType("当天挂号");
                 mzRegistrationMapper.updateById(mzRegistration);
             }
@@ -76,7 +76,7 @@ public class MzRegistrationService {
         opcNumber.setRtClass(mzRegistration.getRtClass());//挂号类型
         opcNumber.setRtNumber(mzRegistration.getRtNumber());
         opcNumber.setBnIdCard(cardObject.getMcIdCard());
-        opcNumber.setBnKsName(mzRegistration.getRtOverKsName());
+        opcNumber.setKsId(mzRegistration.getKsId());
         opcNumber.setBnSickName(cardObject.getMzSick().getSickName());
         opcNumber.setBnState(0L);//排号状态默认为0
         opcNumber.setBnScience(mzRegistration.getRtScience());
@@ -85,7 +85,7 @@ public class MzRegistrationService {
         Calendar c = Calendar.getInstance();
         //查询当前科室的挂号人数，来生成排号号码
         QueryWrapper<MzOpcNumber> wp = new QueryWrapper<>();//我这次新增的科室，查询科室后面生成号码
-        wp.eq("bn_ks_name",mzRegistration.getRtOverKsName());
+        wp.eq("ks_id",mzRegistration.getRtOverKsName());
         wp.eq("bn_science",mzRegistration.getRtScience());
         wp.eq("date_format(bn_time ,'%Y-%m-%d')",sf.format(mzRegistration.getRtOnsetTime()));// 日期
         System.err.println(sf.format(c.getTime())+"==生成排号号码");
@@ -93,17 +93,17 @@ public class MzRegistrationService {
         if(opcCount.isEmpty()){//如果没有数据，他是第一个就1
             opcNumber.setBnCount(1L);
         }else{//有就号码加1
-            opcNumber.setBnCount(maxCount(mzRegistration.getRtOverKsName(),mzRegistration.getRtScience(),mzRegistration.getRtOnsetTime())+1);
+            opcNumber.setBnCount(maxCount(mzRegistration.getKsId(),mzRegistration.getRtScience(),mzRegistration.getRtOnsetTime())+1);
         }
         opcNumberMapper.insert(opcNumber);
     }
     //返回数据库最大值--科室排号
-    public Long maxCount(String ksName ,String science,Date date){
+    public Long maxCount(long ksId ,String science,Date date){
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         Calendar c = Calendar.getInstance();
         //按区间分号，排号
         QueryWrapper<MzOpcNumber> wp = new QueryWrapper<>();
-        wp.eq("bn_ks_name",ksName);// 科室
+        wp.eq("ks_id",ksId);// 科室
         wp.eq("bn_science",science);// 医生职称
 //        wp.eq("bn_state",0);// 排号状态
         wp.eq("date_format(bn_time ,'%Y-%m-%d')",sf.format(date));// 日期

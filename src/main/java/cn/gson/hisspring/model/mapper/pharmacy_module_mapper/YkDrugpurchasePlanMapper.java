@@ -22,4 +22,6 @@ public interface YkDrugpurchasePlanMapper {
     void addplan(YkDrugpurchasePlan ykDrugpurchasePlan);
     /*新增采购详单*/
     void  addplandeta(YkDrugpurchasePlanDetails ykDrugpurchasePlanDetails);
+    /*查询待入库的药品*/
+    List <YkDrugpurchasePlan>alldairuku();
 }

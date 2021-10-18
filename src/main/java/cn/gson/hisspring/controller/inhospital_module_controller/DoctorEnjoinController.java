@@ -1,6 +1,7 @@
 package cn.gson.hisspring.controller.inhospital_module_controller;
 
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoin;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.DoctorEnjoinService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,10 @@ public class DoctorEnjoinController {
      * @return
      */
     @RequestMapping("select-doctorEnjoin-ByPtNo")
-    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(Long ptNo){
-        System.err.println("住院号"+ptNo);
-       return des.doctorEnjoinSelectByPtId(ptNo);
+    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(@RequestBody String str){
+        SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
+        System.err.println(selectExecuteVo);
+        return des.doctorEnjoinSelectByPtId(selectExecuteVo);
     }
 
 }

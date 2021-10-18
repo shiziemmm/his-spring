@@ -50,5 +50,15 @@
             group by pcd_sid
         )
     </select>
+
+
+    <select id="selectPayByPtNoPrice" resultType="double">
+        select sum(py_price) from zy_pay
+        <where>
+            <if test="ptNo != null and ptNo != ''">
+                and pt_no = #{ptNo}
+            </if>
+        </where>
+    </select>
     
 </mapper>

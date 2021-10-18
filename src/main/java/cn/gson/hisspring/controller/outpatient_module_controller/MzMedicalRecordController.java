@@ -86,26 +86,36 @@ public class MzMedicalRecordController {
      * @return
      */
     @RequestMapping("selectAllRecords")
-    public MzMedicalRecord selectMedicalRecords(@RequestBody String str){
+    public ReCordAllVO selectMedicalRecords(@RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
         String texts = map.get("texts").toString().replace(" ", "");
         return recordService.selectMedicalRecord(texts);
     }
 
     /**
-     * 打印结果集，修改状态
-     * @param str
+     * 缴费页面进行缴费--打印结果集，修改状态
      * @return
      */
     @RequestMapping("forPrinting")
     public String forPrinting(@RequestBody String str){
         try {
-            Map map = JSON.parseObject(str, Map.class);
-            String index = map.get("index").toString();
-            String xmName = map.get("xmName").toString().replace(" ", "");;;
-            MzPayment payment = JSON.parseObject(map.get("payment").toString(),MzPayment.class);
-            System.err.println(index);
-            recordService.updateStateRecipe(index,xmName,payment);
+            Map map = JSON.parseObject(str,Map.class);
+            RecordVo recordVo = JSON.parseObject(map.get("recordVo").toString(),RecordVo.class);
+            Long sId  = Long.parseLong(map.get("sId").toString());
+            Long index = Long.parseLong(map.get("index").toString());
+            System.err.println("判断"+recordVo);
+            if(index == 1){
+//                其他缴费
+                recordService.updateStateRecipe(recordVo,sId,1L);
+            }else{
+                //卡缴费
+                Boolean aBoolean = recordService.setCardPrice(recordVo, sId,2L);
+                if(aBoolean){
+                    return "ok";
+                }else{
+                    return "no";
+                }
+            }
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,13 +123,25 @@ public class MzMedicalRecordController {
         }
     }
 
+
+    /**
+     * 查询所有的就诊完成记录（已经完成缴费记录的）
+     * @return
+     */
+    @RequestMapping("sCardPawd")
+    public MzMedicalCard setCardPrice(@RequestBody String str){
+        Map map = JSON.parseObject(str,Map.class);
+
+        String card = map.get("card").toString();
+        return recordService.setCardPrice(card);
+    }
     /**
      * 查询所有的就诊完成记录（已经完成缴费记录的）
      * @param str
      * @return
      */
     @RequestMapping("selectRecordsAll")
-    public List<MzMedicalRecord> selectRecordsAll(@RequestBody String str){
+    public List<ReCordAllVO> selectRecordsAll(@RequestBody String str){
         Map map = JSON.parseObject(str,Map.class);
         String text = map.get("text").toString().replace(" ", "");;;
         return recordService.selectRecordsAll(text);
@@ -132,7 +154,7 @@ public class MzMedicalRecordController {
      * @return
      */
     @RequestMapping("allRecordsSick")
-    public List<MzMedicalRecord> allRecordsSick(@RequestBody String str){
+    public List<ReCordAllVO> allRecordsSick(@RequestBody String str){
         Map map = JSON.parseObject(str,Map.class);
         String text = map.get("text").toString().replace(" ", "");
         return recordService.allRecordSick(text);

@@ -13,4 +13,6 @@ import java.util.List;
 public interface YKStorageMapper extends BaseMapper<YkStorage> {
     //查询全部的出入库记录
     List<YkStorage>allStorage();
+
+
 }

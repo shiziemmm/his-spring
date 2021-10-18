@@ -3,6 +3,8 @@ package cn.gson.hisspring.model.pojos;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 //药品采购计划详单
 
 @Data//get  set方法
@@ -15,6 +17,8 @@ public class YkDrugpurchasePlanDetails {
   private String ykDrugName;//采购药品名称
   private Long ykChaseCount;//采购数量
   private Double DrugPrice;/*药品价格*/
+  private Timestamp ykDate;//保质期
+  private String ykBatch;//药品批次
 
   private YfDruginformation yfDruginformation;//药品信息
   private YkSupplier ykSupplier;//供应商

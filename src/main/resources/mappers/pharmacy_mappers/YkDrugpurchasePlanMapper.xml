@@ -48,6 +48,8 @@
         <result property="ykDrugName" column="YK_drug_name"/>
         <result property="ykChaseCount" column="YK_chase_count"/>
         <result property="drugPrice" column="Drug_price"/>
+        <result property="ykDate" column="yk_Date"/>
+        <result property="ykBatch" column="yk_batch"/>
         <!--药品-->
         <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
             <result property="drugId" column="Drug_id" />
@@ -117,12 +119,22 @@
                           LEFT JOIN staff sta on ykd.S_id = sta.s_id
                           LEFT JOIN yk_drugpurchase_plan_details ydpd on ykd.YK_purchase_id = ydpd.YK_purchase_id
                           left join yf_drugInformation drug on ydpd.drug_id = drug.drug_id
+                            where ykd.yk_purchase_is = 1
+    </select>
+
+    <!--查询待入库的药品-->
+    <select id="alldairuku" resultMap="PlanMap">
+        select * from yk_drugpurchase_plan ykd
+                          LEFT JOIN staff sta on ykd.S_id = sta.s_id
+                          LEFT JOIN yk_drugpurchase_plan_details ydpd on ykd.YK_purchase_id = ydpd.YK_purchase_id
+                          left join yf_drugInformation drug on ydpd.drug_id = drug.drug_id
+        where ykd.yk_purchase_is = 2
     </select>
 
     <!--查询采购计划详单-->
     <select id="allydpd" resultMap="allPlanDetails">
         select * from yk_drugpurchase_plan_details ydpd left join yf_drugInformation drug on ydpd.drug_id = drug.drug_id
-        left join yk_supplier supp on drug.drug_id = supp.Supplier_id
+        left join yk_supplier gys on drug.YK_Supplier_id = gys.Supplier_id
     </select>
 
     <!--查询药品信息-->
@@ -139,4 +151,5 @@
     <insert id="addplandeta" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails">
         insert ignore  yk_drugpurchase_plan_details(drug_id,YK_purchase_id,YK_chase_count,Drug_price) value (#{drugId},#{ykPurchaseId},#{ykChaseCount},#{DrugPrice})
     </insert>
+
 </mapper>

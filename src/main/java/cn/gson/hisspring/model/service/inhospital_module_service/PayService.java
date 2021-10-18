@@ -30,6 +30,13 @@ public class PayService{
     @Autowired
     PatientBaseMapper pbm;//住院登记mapper
 
+    /**
+     * 根据住院号查询病人缴费金额
+     */
+    public Double selectPayByPtNoPrice(Long ptNo){
+        return pm.selectPayByPtNoPrice(ptNo);
+    }
+
 
     /**
      * 新增缴费记录

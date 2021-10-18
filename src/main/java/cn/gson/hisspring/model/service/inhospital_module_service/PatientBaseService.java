@@ -68,6 +68,13 @@ public class PatientBaseService {
 
 
     /**
+     * 根据科室编号查询科室对象
+     */
+    public DepartmentKs selectKsObj(Long ksId){
+       return dkm.selectById(ksId);
+    }
+
+    /**
      *根据科室编号查询今天排班医生
      */
     public List<Scheduling> selectDateByKsId(Long ksId){
@@ -100,17 +107,29 @@ public class PatientBaseService {
         return false;
     }
 
+    /**
+     * 根据住院号查询出开检验项目的医生
+     */
+    public List<Staff> selectResultByManIdStaff(Long ptNo){
+        QueryWrapper<TjCodeMan>  qwMan = new QueryWrapper<TjCodeMan>().eq("man_Mz_Zy_Is",2).eq("man_Mz_Zy_Id",ptNo);//根据住院号查询体检人员编号
+        List<TjCodeMan> tjCodeManList = tmm.selectList(qwMan);
+        if(!tjCodeManList.isEmpty()){
+            return pbm.selectResultByManIdStaff(tjCodeManList.get(0).getManId());
+        }
+        return null;
+    }
+
 
 
     /**
      * 根据住院号查询所有已开化验项目
      */
-    public List<ResultManVo> selectTjResultByPtNo(Long ptNo){
-        QueryWrapper<TjCodeMan>  qwMan = new QueryWrapper<TjCodeMan>().eq("man_Mz_Zy_Is",2).eq("man_Mz_Zy_Id",ptNo);//根据住院号查询体检人员编号
+    public List<ResultManVo> selectTjResultByPtNo(SelectExecuteVo selectExecuteVo){
+        QueryWrapper<TjCodeMan>  qwMan = new QueryWrapper<TjCodeMan>().eq("man_Mz_Zy_Is",2).eq("man_Mz_Zy_Id",selectExecuteVo.getPtNo());//根据住院号查询体检人员编号
         List<TjCodeMan> tjCodeManList = tmm.selectList(qwMan);
         if(!tjCodeManList.isEmpty()){
-
-            return pbm.selectResultByManId(tjCodeManList.get(0).getManId());
+            selectExecuteVo.setPtNo(tjCodeManList.get(0).getManId());
+            return pbm.selectResultByManId(selectExecuteVo);
         }
         return null;
     }
@@ -203,7 +222,9 @@ public class PatientBaseService {
 
 
            if(deptRecord.getCdrDoctorIs() == 1){//=============医嘱跟随
+
            }else{//============================医嘱不跟随
+
            }
            return true;
 
@@ -234,7 +255,7 @@ public class PatientBaseService {
      * 查询住院登记里面没有分配病床的信息或者是查询所有
      * @return
      */
-    public List<ZyPatientBase> selectPatientNoBed(String is){//is 如果不是空就说明是要查询病床号为空的
+    public List<ZyPatientBase> selectPatientNoBed(String is,SelectExecuteVo selectExecuteVo){//is 如果不是空就说明是要查询病床号为空的
 
 //        QueryWrapper<ZyPatientBase> qw = new QueryWrapper<>();
 
@@ -246,7 +267,7 @@ public class PatientBaseService {
 //        }
 
 
-        List<ZyPatientBase> list = pbm.selectPatientNoBed(is);
+        List<ZyPatientBase> list = pbm.selectPatientNoBed(is,selectExecuteVo.getSearchLike(),selectExecuteVo.getStartDate(),selectExecuteVo.getEndDate());
 
 //        if(list.isEmpty()){
 //            return null;
@@ -295,10 +316,16 @@ public class PatientBaseService {
      * 查询住院病人的信息以及缴费详细
      * @return
      */
-    public List<ZyPatientBase> selectPatientAndPay(){
-       return pbm.selectPatientAndPay();
+    public List<ZyPatientBase> selectPatientAndPay(SelectExecuteVo selectExecuteVo){
+       return pbm.selectPatientAndPay(selectExecuteVo);
     }
 
+    /**
+     * 查询所有没有出院的病人信息
+     */
+    public List<ZyPatientBase> selectPatientNoOutCY(SelectExecuteVo selectExecuteVo){
+        return pbm.selectPatientNoOutCY(selectExecuteVo);
+    }
 
     /**
      * 新增住院登记

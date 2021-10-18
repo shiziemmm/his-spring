@@ -26,6 +26,13 @@
     </resultMap>
 
 
+    <!--查询出所有的主治医生-->
+    <select id="selectPatientStaffAll" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps">
+        select * from staff where s_id in(
+            select s_id from seltInHospitalAndMzSickAndStaffAndKs where in_is = 1 group by s_id
+        )
+    </select>
+
 
 
     <!--视图-->
@@ -36,7 +43,25 @@
             seltInHospitalAndMzSickAndStaffAndKs
         <where>
             <if test="inIs != '' ">
-                In_is = #{inIs}
+                and In_is = #{inIs}
+            </if>
+            <if test="doctorType != null and doctorType != ''">
+                and ks_id = #{doctorType}
+            </if>
+            <if test="searchLike != null and searchLike != ''">
+                and  (sick_phone = #{searchLike} or sick_name like '%${searchLike}%' or sick_id_card = #{searchLike})
+            </if>
+
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(in_apply_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(in_apply_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
+
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(in_apply_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
+
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(in_apply_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
             </if>
         </where>
     </select>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DischargeApplyMapper">
+
+    <resultMap id="dischargeMap" type="cn.gson.hisspring.model.pojos.ZyDischargeApply">
+        <result property="ptNo" column="pt_no"/>
+        <result property="sId" column="s_id"/>
+        <result property="dgaCause" column="dga_cause"/>
+        <result property="dgaDate" column="dga_date"/>
+        <result property="dgaId" column="dga_id"/>
+        <result property="dgaNoCause" column="dga_no_cause"/>
+        <result property="sName" column="s_name"/>
+        <result column="bd_name" property="bdName"/>
+
+        <association property="zyPatientBase" javaType="cn.gson.hisspring.model.pojos.ZyPatientBase" >
+            <result column="Pt_no" property="ptNo"/>
+            <result column="pt_In_date" property="ptInDate"/>
+            <result column="Pt_name" property="ptName"/>
+            <result column="pt_sex" property="ptSex"/>
+            <result column="Pt_Birth_date" property="ptBirthDate"/>
+            <result column="Pt_Capacity_no" property="ptCapacityNo"/>
+            <result column="Pt_Home_adder" property="ptHomeAdder"/>
+            <result column="ks_id" property="ksId"/>
+            <result column="Pt_Diagnose_name" property="ptDiagnoseName"/>
+            <result column="Bd_id" property="bdId"/>
+            <result column="Pt_Out_date" property="ptOutDate"/>
+            <result column="Pt_age" property="ptAge"/>
+            <result column="pt_pay_money" property="ptPayMoney"/>
+            <result column="pt_price" property="ptPrice"/>
+            <result column="pt_iphone" property="ptIphone"/>
+            <result column="s_id" property="sId"/>
+            <result column="ks_name" property="ksName"/>
+            <result column="pt_is" property="ptIs"/>
+            <result property="ptSickNumber" column="pt_sick_number"/>
+        </association>
+
+    </resultMap>
+
+    <!--根据住院号查询费用明细-->
+    <select id="costDischargeAllByPtNo" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientCostMapper.payCostMap">
+        select sum(pcd_price)as pcd_price,if(pcd_cause = '医嘱药品费用' || pcd_cause = '床位费用' || pcd_cause = '化验项目费用' ,pcd_cause,'其他费用') AS cause from seltpatientcostbreakdownDischarge
+        <where>
+            <if test="ptNo != null and ptNo != ''">
+                and pt_no = #{ptNo}
+            </if>
+            <if test="text != null and text != ''">
+                and pcd_cause = #{text}
+            </if>
+        </where>
+    </select>
+
+
+    <!--查询出院信息-->
+    <select resultMap="dischargeMap" id="selectDischargeApplyAll">
+        SELECT
+        *
+        FROM
+        seltdischarge
+        where
+        Dga_is = 1
+
+            <if test="search != null and search != ''">
+                and (pt_no like '%${search}%' or pt_name like '%${search}%')
+            </if>
+    </select>
+
+</mapper>

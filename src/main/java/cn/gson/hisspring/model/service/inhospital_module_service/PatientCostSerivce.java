@@ -35,6 +35,16 @@ public class PatientCostSerivce {
         }
     }
 
+
+    /**
+     * 根据病人住院号查询所有消费记录(出院版)
+     * @param ptNo 住院编号
+     * @return
+     */
+    public List<PatientCostVo> selectCostByPtNoDischarge(Long ptNo, String text, SelectExecuteVo selectExecuteVo){
+            return pcm.selectPayByWhereDischarge(ptNo,text,selectExecuteVo.getStartDate(),selectExecuteVo.getEndDate(),selectExecuteVo.getSIdArr());
+    }
+
     /**
      * 查询出所有不同的费用名称
      * @return

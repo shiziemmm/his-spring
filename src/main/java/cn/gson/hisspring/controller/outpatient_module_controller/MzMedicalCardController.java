@@ -53,7 +53,6 @@ public class MzMedicalCardController {
 
     @GetMapping("allDescCard") //排序所有病人信息
     public List<MzMedicalCard> descCard(String mzSickTest){
-        System.err.println(mzSickTest+"aaaaaaaaaaa");
         return medicalCardService.selectAllCards(mzSickTest);
     }
     @PostMapping("cardState")//挂失补办
@@ -70,7 +69,6 @@ public class MzMedicalCardController {
     }
     @PostMapping("cardQuit")//挂失退额
     public String cardQuit(@RequestBody String str){
-        System.err.println(str);
         Map map = JSON.parseObject(str, Map.class);
         System.err.println(map.get("mcNumber").toString());
         try {
@@ -86,8 +84,6 @@ public class MzMedicalCardController {
     @RequestMapping("setCardPrcie")
     public String setCardPrcie(@RequestBody  String str){
         Map map = JSON.parseObject(str, Map.class);
-        System.err.println(str+"1111111111");
-        System.err.println(map+"2222222222");
         try {
             medicalCardService.setCardPrice(map.get("mcNumber").toString(),map.get("upPrice").toString(),
             map.get("payment").toString(),map.get("userId").toString(), Integer.valueOf(map.get("index").toString()));

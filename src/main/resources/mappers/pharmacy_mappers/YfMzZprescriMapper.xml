@@ -16,6 +16,6 @@
     </resultMap>
 
     <select id="allMzzy" resultMap="zhongyaochufang">
-        select * from mz_zprescription
+        select * from mz_zprescription zy inner join mz_recipe cf on zy.recipe_Number = cf.recipe_number where zy.recipe_number = #{recipeNumber}
     </select>
 </mapper>

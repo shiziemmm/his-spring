@@ -27,7 +27,9 @@ public class MzOpcNumberController {
         Map map = JSON.parseObject(str, Map.class);
         String ksName = map.get("ksName").toString();
         String science = map.get("science").toString();
-        List<MzOpcNumber> mzOpcNumbers = countService.selectMzOpcNumber(ksName, science);
+        System.err.println("门诊排号"+ksName);
+        System.err.println(science);
+        List<MzOpcNumber> mzOpcNumbers = countService.selectMzOpcNumber(Long.parseLong(ksName), Long.parseLong(science));
         return mzOpcNumbers;
     }
     //过号
