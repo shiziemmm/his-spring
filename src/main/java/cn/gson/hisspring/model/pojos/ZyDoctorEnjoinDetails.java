@@ -30,7 +30,7 @@ public class ZyDoctorEnjoinDetails {
   private Double desPrice;//价格
   @JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Timestamp desExecuteDate;//执行时间
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
+  @JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Timestamp desEndDate;//结束时间
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private java.sql.Timestamp desEnteringDate;//详表录入时间

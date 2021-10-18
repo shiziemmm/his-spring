@@ -5,8 +5,10 @@ import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapp
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper;
 import cn.gson.hisspring.model.pojos.MzMedicalCard;
 import cn.gson.hisspring.model.pojos.MzSick;
+import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.ZyInhospitalApply;
 import cn.gson.hisspring.model.pojos.pojos_vo.InHospitalMzVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,11 +81,17 @@ public class InHospitalApplyService {
      * 查询所有未审核的住院申请
      * @return
      */
-    public List<ZyInhospitalApply> selectHspApplyByInIs(){
-        List<ZyInhospitalApply> list = ham.selectHspApplyByInIs("1");//查询未审核的住院申请信息
+    public List<ZyInhospitalApply> selectHspApplyByInIs(SelectExecuteVo selectExecuteVo){
+        List<ZyInhospitalApply> list = ham.selectHspApplyByInIs("1",selectExecuteVo.getDoctorType(),selectExecuteVo.getSearchLike(),selectExecuteVo.getStartDate(),selectExecuteVo.getEndDate());//查询未审核的住院申请信息
         return list.isEmpty() ? null : list;
     }
 
+    /**
+     * 查询出所有主治医生
+     */
+    public List<Staff> selectPatientStaffAll(){
+       return ham.selectPatientStaffAll();
+    }
 
     /**
      * 根据住院申请编号修改住院申请状态为取消状态

@@ -4,6 +4,7 @@ import cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinDetai
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinMapper;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoin;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,8 +52,8 @@ public class DoctorEnjoinService {
     /**
      * 根据住院号查询医嘱信息
      */
-    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(Long ptNo){
-        return dem.doctorEnjoinSelectByPtId(ptNo);
+    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(SelectExecuteVo selectExecuteVo){
+        return dem.doctorEnjoinSelectByPtId(selectExecuteVo);
     }
 
 

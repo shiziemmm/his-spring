@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data//get  set方法
@@ -26,7 +27,7 @@ public class ZyPatientBase {
   private Long ksId;
   private String ptDiagnoseName;
   private Long bdId;
-  private String ptOutDate;
+  private Timestamp ptOutDate;
   private Long ptAge;
   private Double ptPayMoney;
   private Double ptPrice;
@@ -81,6 +82,7 @@ public class ZyPatientBase {
     this.sId = sId;
     this.ksId = ksId;
   }
+
 
   public ZyPatientBase() {
   }

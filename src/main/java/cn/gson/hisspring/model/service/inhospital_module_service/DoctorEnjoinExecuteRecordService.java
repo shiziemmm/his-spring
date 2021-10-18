@@ -151,7 +151,6 @@ public class DoctorEnjoinExecuteRecordService {
 
 
                 if(list.getDesDrugIs() == 1){//将不是处方药的药品直接发药将药房库存扣除  新增发药记录
-
                     QueryWrapper yfQw = new  QueryWrapper<ZyYfDrugInventoryVo>().eq("drug_id",list.getDesDrugId());//根据药品编号查询
                     List<ZyYfDrugInventoryVo> ZyYfDrugInventoryVoList = ydivm.selectList(yfQw);
                     //!
@@ -166,7 +165,6 @@ public class DoctorEnjoinExecuteRecordService {
                     //===========================新增发药记录
                     YfDispensing yfDispensing = new YfDispensing("住院医嘱(药品)",sId,staff.getSName(),list.getDesDrugName(),drugCount,list.getDesDrugId(),1L);
                     ydm.insert(yfDispensing);//新增
-
                 }
 
 

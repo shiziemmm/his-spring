@@ -19,4 +19,6 @@ public interface PayMapper extends BaseMapper<ZyPay> {
     List<ZyPay> selectPayByPtNo(@Param("ptNo") Long ptNo, @Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("sIdArr") List<Long> sId);
 
     List<Staff> selectByPtNoStaff(Long ptNo);
+
+    Double selectPayByPtNoPrice(Long ptNo);
 }

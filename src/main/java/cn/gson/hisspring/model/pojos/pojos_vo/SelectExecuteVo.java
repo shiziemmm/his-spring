@@ -24,5 +24,9 @@ public class SelectExecuteVo {
     private Long doctorType;//医嘱类型
     private Long ptNo;//住院号
     private List<Long> sIdArr;//员工编号
+    private Double startPrice;//开始金额
+    private Double endPrice;//结束金额
+    private List<Long> ksIdArr;//科室数组
+
 
 }

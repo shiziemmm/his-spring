@@ -28,7 +28,6 @@ public class YkDruginventory {
   private Timestamp ykDrvenMftdate;//生产日期
   private Long supplierId;//供应商编号
   private String ykSupplierName;//供应商名称
-  private Double ykSellingprice;//药品售价
 
   public YkDruginventory(long ykDrvenId, Long ykDrvenCount) {
     this.ykDrvenId = ykDrvenId;

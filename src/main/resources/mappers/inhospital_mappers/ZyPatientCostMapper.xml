@@ -19,9 +19,8 @@
     </resultMap>
 
     <select id="selectPayAll" resultMap="payCostMap">
-        select sum(pcd_price)as pcd_price,if(pcd_cause = '医嘱药品费用' || pcd_cause = '床位费用' || pcd_cause = '化验项目费用' ,pcd_cause,'其他费用') AS cause from seltpatientcostbreakdown
+        select sum(pcd_price)as pcd_price,if(pcd_cause = '医嘱药品费用' || pcd_cause = '床位费用' || pcd_cause = '化验项目费用' || pcd_cause = '手术费用' ,pcd_cause,'其他费用') AS cause from seltpatientcostbreakdown
          <where>
-
              <if test="(startDate != null) and (endDate != null)">
                  and (DATE_FORMAT(pcd_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pcd_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
              </if>
@@ -46,6 +45,42 @@
          </where>
 
          group by cause
+    </select>
+
+
+    <select id="selectPayByWhereDischarge" resultMap="payCostMaps">
+        select * from seltpatientcostbreakdownDischarge left join staff on seltpatientcostbreakdownDischarge.pcd_sid = staff.s_id
+        <where>
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(pcd_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pcd_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
+
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(pcd_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
+
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(pcd_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+
+            <if test="text != '病床费用'and sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
+                and pcd_sid in (<foreach collection="sIdArr" item="sId"  separator=",">
+                    #{sId}
+                </foreach>)
+            </if>
+
+            <if test="text != null and text != '' and text != '其它费用'">
+                and pcd_cause = #{text}
+            </if>
+
+            <if test="text == '其它费用'">
+                and pcd_cause is not null and pcd_cause not in('医嘱药品费用', '床位费用','化验项目费用','手术费用')
+            </if>
+
+            <if test="ptNo != null and ptNo != ''">
+                and pt_no = #{ptNo}
+            </if>
+        </where>
     </select>
 
 
@@ -75,7 +110,7 @@
             </if>
 
             <if test="text == '其它费用'">
-                and pcd_cause is not null and pcd_cause not in('医嘱药品费用', '床位费用','化验项目费用')
+                and pcd_cause is not null and pcd_cause not in('医嘱药品费用', '床位费用','化验项目费用','手术费用')
             </if>
 
             <if test="ptNo != null and ptNo != ''">

@@ -12,7 +12,6 @@
         <result property="ykDrvenMftdate" column="YK_drven_mftDate"/>
         <result property="supplierId" column="Supplier_id"/>
         <result property="ykSupplierName" column="YK_Supplier_name"/>
-        <result property="ykSellingprice" column="YK_Sellingprice"/>
             <!--仓库-->
             <association property="ykWarehouse" javaType="cn.gson.hisspring.model.pojos.YkWarehouse">
                 <result property="ykWareId" column="YK_ware_id"/>

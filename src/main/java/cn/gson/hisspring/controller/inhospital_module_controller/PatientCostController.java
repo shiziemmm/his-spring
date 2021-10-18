@@ -37,6 +37,20 @@ public class PatientCostController {
        return pcs.selectCostByPtNo(ptNo,text,executeVo);
     }
 
+    /**
+     * 根据病人编号查询所有的消费记录(出院版)
+     * @return
+     */
+    @RequestMapping("select-by-ptNo-discharge")
+    public List<PatientCostVo> selectCostByPtNoDischarge(@RequestBody String str){
+        Map map = JSON.parseObject(str, Map.class);
+        Long ptNo = JSON.parseObject(map.get("ptNo").toString(),Long.class);//住院编号
+        String text = (String) map.get("text");//类型
+        SelectExecuteVo executeVo = JSON.parseObject(map.get("payWhere").toString(),SelectExecuteVo.class);//条件
+        System.err.println(executeVo);
+        return pcs.selectCostByPtNoDischarge(ptNo,text,executeVo);
+    }
+
 
 
     /**

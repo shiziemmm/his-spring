@@ -1,15 +1,15 @@
 package cn.gson.hisspring.model.mapper.inhospital_module_mapper;
 
-import cn.gson.hisspring.model.pojos.Scheduling;
-import cn.gson.hisspring.model.pojos.TjCodeMan;
-import cn.gson.hisspring.model.pojos.TjCodeProject;
-import cn.gson.hisspring.model.pojos.ZyPatientBase;
+import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.ResultManVo;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,9 +19,11 @@ import java.util.List;
 @Mapper
 public interface PatientBaseMapper extends BaseMapper<ZyPatientBase> {
 
-    List<ZyPatientBase> selectPatientNoBed(String is);
+    List<ZyPatientBase> selectPatientNoBed(@Param("is") String is, @Param("searchLike") String searchLike, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
-    List<ZyPatientBase> selectPatientAndPay();
+    List<ZyPatientBase> selectPatientAndPay(SelectExecuteVo selectExecuteVo);
+
+    List<ZyPatientBase> selectPatientNoOutCY(SelectExecuteVo selectExecuteVo);
 
     List<ZyPatientBase> selectPatientBySId(@Param("sId") Long sId, @Param("ksId") Long ksId,@Param("text") String text);
 
@@ -33,7 +35,9 @@ public interface PatientBaseMapper extends BaseMapper<ZyPatientBase> {
 
     int insertPatientCheckout(@Param("checkList")List<TjCodeProject> list, @Param("manId") Long manId,@Param("sId") Long sId);
 
-    List<ResultManVo> selectResultByManId(Long manId);
+    List<ResultManVo> selectResultByManId(SelectExecuteVo selectExecuteVo);
+
+    List<Staff> selectResultByManIdStaff(Long manId);
 
     List<Scheduling> selectDateByKsId(Long ksId);
 }
