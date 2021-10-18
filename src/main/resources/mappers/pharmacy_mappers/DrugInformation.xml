@@ -6,7 +6,7 @@
     <resultMap id="DrugInforMap" type="cn.gson.hisspring.model.pojos.YfDruginformation">
         <result property="drugId" column="Drug_id" />
         <result property="drugName" column="Drug_name" />
-        <result property="drugBarcode" column="Drug_barCode" />
+            <result property="drugBarcode" column="Drug_barCode" />
         <result property="drugPrice" column="Drug_price" />
         <result property="drugUsage" column="Drug_usage" />
         <result property="ykSpecId" column="YK_spec_id" />
@@ -86,7 +86,7 @@
 
     <!--新增药品-->
     <insert id="addDrug" parameterType="cn.gson.hisspring.model.pojos.YfDruginformation">
-        insert into YF_DrugInformation value (null ,#{drugName},#{drugBarcode},#{drugPrice},#{drugUsage},#{ykSpecId},
+        insert into YF_DrugInformation values (null ,#{drugName},#{drugBarcode},#{drugPrice},#{drugUsage},#{ykSpecId},
             #{ykSupplierId},#{yfDrcaId},#{drugUpper},#{drugRemark},#{drugUnit},#{drugSpecification},#{drugPastdate},#{drugParticle},#{drugQuantity},#{drugPrescription})
     </insert>
 

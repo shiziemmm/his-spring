@@ -17,7 +17,7 @@
 
     <!--查询处方西药要发的药-->
     <select id="allmzxy" resultMap="xiyaofayao">
-        select * from mz_xprescription
+        select * from mz_xprescription xy inner join mz_recipe cf on xy.recipe_Number = cf.recipe_number where xy.recipe_number = #{recipeNumber}
     </select>
 
 </mapper>

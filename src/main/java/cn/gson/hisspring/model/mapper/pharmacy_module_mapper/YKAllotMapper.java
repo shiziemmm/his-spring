@@ -19,7 +19,7 @@ public interface YKAllotMapper {
     //新增调拨详表
     void  addykallotdetail(YkAllotdetail ykAllotdetail);
     //修改药房库存
-    void addyf(YfDruginventory yfDruginventory);
+   /* void addyf(YfDruginventory yfDruginventory);
     //修改药库库存数量
-    void updateyk(YkDruginventory ykDruginventory);
+    void updateyk(YkDruginventory ykDruginventory);*/
 }

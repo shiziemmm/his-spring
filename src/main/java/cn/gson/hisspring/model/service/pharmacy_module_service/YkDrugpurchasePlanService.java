@@ -30,6 +30,10 @@ public class YkDrugpurchasePlanService {
     public List<YfDruginformation> allDrug(){
         return planMapper.allDrug();
     }
+    /*查询待入库的药品*/
+    public List<YkDrugpurchasePlan> alldairuku(){
+        return planMapper.alldairuku();
+    }
     /*新增采购计划*/
     public void addplan(YkDrugpurchasePlan ykDrugpurchasePlan){
 

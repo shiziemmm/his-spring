@@ -50,4 +50,9 @@ public class YkDrugpurchasePlanController {
         YkDrugpurchasePlan drugpurchasePlan = JSON.parseObject(str, YkDrugpurchasePlan.class);
       planService.addplan(drugpurchasePlan);
     }
+    /*查询待入库的药品*/
+    @RequestMapping("dairuku")
+    public List<YkDrugpurchasePlan> alldairuku(){
+        return planService.alldairuku();
+    }
 }
