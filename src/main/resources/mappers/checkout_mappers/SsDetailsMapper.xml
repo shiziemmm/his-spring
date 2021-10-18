@@ -17,7 +17,21 @@
     <result  column="simulation_operation" property="simulationOperation"></result>
 
     <result  column="operation_anaesthesia" property="operationAnaesthesia"></result>
-
+        <!--        执行人信息-->
+        <association property="zd" javaType="cn.gson.hisspring.model.pojos.Staff">
+            <id column="zd_id" jdbcType="INTEGER" property="sId" />
+            <result column="zd_name" jdbcType="VARCHAR" property="sName" />
+        </association>
+        <!--        执行人信息-->
+        <association property="zs" javaType="cn.gson.hisspring.model.pojos.Staff">
+            <id column="zs_id" jdbcType="INTEGER" property="sId" />
+            <result column="zs_name" jdbcType="VARCHAR" property="sName" />
+        </association>
+        <!--        执行人信息-->
+        <association property="mz" javaType="cn.gson.hisspring.model.pojos.Staff">
+            <id column="mz_id" jdbcType="INTEGER" property="sId" />
+            <result column="mz_name" jdbcType="VARCHAR" property="sName" />
+        </association>
     <!--药品信息-->
     <association property="yfdx" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SsApplyMapper.DrugInforMap"></association>
     <!--病人信息-->
@@ -26,25 +40,25 @@
     <association property="ssdx" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper.allProject"></association>
     </resultMap>
     <select id="selectAllsDetails" resultMap="allssDetails">
-        select * from ss_operation_details a
-        inner join zy_patient_base b on a.pt_no =b.pt_no
-        inner join ss_operation_project d on d.project_id=a.project_id
-        inner join  yf_druginformation gg on a.hocus_id = gg.drug_id
-        inner join  ss_operation_anaesthesia mm on a.Operation_hocus= mm.anaesthesia_id
+        select * from  ssdatial
         <where>
             <if test ="seach !=null and '' !=seach"> /*住院号号like*/
-                b.pt_no like'%${ptNo}%'
+                pt_no like'%${ptNo}%'
             </if>
             <if test ="seach !=null and '' !=seach">/*姓名like*/
-                or b.pt_name like'%${ptName}%'
+                or pt_name like'%${ptName}%'
             </if>
             <if test ="seach !=null and '' !=seach">/*身份证like*/
-                or b.pt_capacity_no like'%${ptCapacityNo}%'
+                or pt_capacity_no like'%${ptCapacityNo}%'
             </if>
             <if test ="seach !=null and '' !=seach">/*手术名字*/
-                or d.project_name like'%${projectName}%'
+                or project_name like'%${projectName}%'
             </if>
         </where>
-        ORDER BY a.Operation_date desc
+        ORDER BY Operation_date desc
+    </select>
+    <select id="selectAloneDetails" resultMap="allssDetails">
+        select * from  ssdatial
+        where Operation_num = '${operationNum}'
     </select>
 </mapper>

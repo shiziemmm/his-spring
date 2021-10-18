@@ -38,6 +38,11 @@ public class SsobjectControll {
     public List<SsOperationDetails> allSDetail(String seach){
         return  sprojectService.allSdetails(seach);
     }
+    //单手术记录
+    @RequestMapping("ssdaDetail")
+    public List<SsOperationDetails> allSDetail(Integer operationNum){
+        return  sprojectService.aoneSdetails(operationNum);
+    }
 
 
 
@@ -57,6 +62,10 @@ public class SsobjectControll {
     @RequestMapping("allDescSpro") //排序所有手术信息
     public List<SsOperationProject> descSpro(String input){
         return sprojectService.selectAllSsObject(input);
+    }
+    @RequestMapping("allDescSpro1") //排序所有住院手术信息
+    public List<SsOperationProject> descSpro1(String input){
+        return sprojectService.selectAllSsObject1(input);
     }
 
     /**
@@ -97,6 +106,21 @@ public class SsobjectControll {
         System.out.println(proj);
         return sprojectService.ssqUpdate(proj);
     }
+
+    //    修改费用
+    @RequestMapping("upd-pricess")
+    public String updetprice(double price,long ptNo){
+        System.err.println(price+"ddd");
+        System.err.println(ptNo+"qqqqqqqqq");
+        try {
+            sprojectService.updetPrice(price,ptNo);
+
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
     /**
      * 新增修改手术记录
      */
@@ -125,6 +149,17 @@ public class SsobjectControll {
     public String deletlist(Integer projectId){
         try {
             sprojectService.delet(projectId);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+    //    删除手术申请
+    @PostMapping("delet-ssap")
+    public String deletappl(Integer applyId){
+        try {
+            sprojectService.deletapl(applyId);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();

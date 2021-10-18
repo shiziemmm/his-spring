@@ -78,6 +78,13 @@
                           inner join  staff d on a.s_id=d.s_id
         where  a.man_id =#{manId} and a.man_result_id not in(select tj_man_result.man_result_id from tj_man_result inner join zy_checkout_outpay on tj_man_result.man_result_id = zy_checkout_outpay.man_result_id)
     </select>
+    <!--    查询人员是否有项目-->
+    <select id="sresult" resultMap="TjMres">
+        select * from tj_man_result a
+              inner join tj_code_project c on a.check_id =c.check_id
+              inner join tj_code_man b on a.man_id =b.man_id
+        where c.check_id=#{checkId}
+    </select>
     <!--    检查结果人员中间表批量新增-->
     <insert id="insertTjmres">
         insert into tj_man_result(check_id,man_result,man_id,s_id) values

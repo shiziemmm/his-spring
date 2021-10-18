@@ -86,6 +86,12 @@ public class TjproService {
         System.out.println(listres);
         return  listres;
     }
+    //体检人员是否结果
+    public List<TjManResult> sRes(Integer checkId){
+        List<TjManResult> listres = ent.sresult(checkId);
+        System.out.println(listres);
+        return  listres;
+    }
     //根据编号查询诊疗卡
     public List<MzMedicalCard> alomCaed(String mcIdCard){
         List<MzMedicalCard> listcard = car.allmzmidCard(mcIdCard);
@@ -210,8 +216,7 @@ public class TjproService {
      */
     //检查项目删除
     public void delet(Integer  index){
-        sed.deleteById(index);
-        major.delet(index);
+        major.deleteById(index);
     }
 //指标表查询所有
     public List<TjCodeIndex> allIndex(){

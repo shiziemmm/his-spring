@@ -1,10 +1,12 @@
 package cn.gson.hisspring.model.service.checkout_module_service;
 
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.*;
+import cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper;
 import cn.gson.hisspring.model.pojos.*;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,8 @@ public class SprojectService {
     SsApplyMapper ssq;//手术申请mapper
     @Autowired
     SsDetailsMapper ssd;//手术记录mapper
+    @Autowired
+    PatientBaseMapper pbm;//病人mapper
     //所有手术项目
     public List<SsOperationProject> allProject(){
         List<SsOperationProject> listsp = sproject.allProject();
@@ -37,6 +41,11 @@ public class SprojectService {
     //所有手术记录
     public List<SsOperationDetails> allSdetails(String seach){
         List<SsOperationDetails> listss = ssd.selectAllsDetails(seach);
+        return listss;
+    }
+    //所有手术记录
+    public List<SsOperationDetails> aoneSdetails(Integer operationNum){
+        List<SsOperationDetails> listss = ssd.selectAloneDetails(operationNum);
         return listss;
     }
     //所有手术申请
@@ -103,6 +112,10 @@ public class SprojectService {
         }
         return is == 0?false:true;
     }
+    //    修改费用
+    public void updetPrice(double price,long ptNo){
+          pbm.updatePatientBasePrice(price,ptNo);//修改病人余额
+    }
     /**
      * 新增修改手术项目
      * @return
@@ -127,7 +140,10 @@ public class SprojectService {
     public void delet(Integer  projectId){
          sproject.delet(projectId);
     }
-
+    //手术申请删除
+    public void deletapl(Integer applyId){
+        ssq.deleteById(applyId);
+    }
     //单个手术项目麻醉详情
     public List<SsOperationAnaesthesia> AnaProject(Integer projectId){
         List<SsOperationAnaesthesia> listmp = ana.Ana(projectId);
@@ -136,6 +152,11 @@ public class SprojectService {
     //模糊查询手术项目
     public List<SsOperationProject> selectAllSsObject(String input){
         List<SsOperationProject> listap = sproject.selectAllSsObject(input);
+        return  listap;
+    }
+    //模糊住院手术项目
+    public List<SsOperationProject> selectAllSsObject1(String input){
+        List<SsOperationProject> listap = sproject.selectAllSsObject1(input);
         return  listap;
     }
     //所有麻醉

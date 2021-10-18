@@ -35,11 +35,9 @@
 <!--    体检人员所含项目查询-->
     <select id="selectAlonMp" resultMap="Tjproject">
         select * from tj_code_man a
-                          inner join tj_man_middle b on a.man_id =b.man_id
-
-
+            inner join tj_man_middle b on a.man_id =b.man_id
             inner join tj_code_project c on b.check_id =c.check_id
-                         2 inner join department_ks d on c.ks_id =d.ks_id
+            inner join department_ks d on c.ks_id =d.ks_id
         where a.man_id=#{manId}
     </select>
 </mapper>

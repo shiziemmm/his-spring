@@ -29,4 +29,10 @@ public class SsOperationDetails {
   private SsOperationProject ssdx;//手术信息
   @TableField(exist = false)
   private ZyPatientBase ptdx;//病人信息
+  @TableField(exist = false)
+  private Staff zd;//主刀
+  @TableField(exist = false)
+  private Staff mz;//麻醉
+  @TableField(exist = false)
+  private Staff zs;//助手
 }
