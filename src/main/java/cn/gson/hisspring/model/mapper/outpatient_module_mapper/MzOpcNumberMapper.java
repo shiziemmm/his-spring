@@ -11,5 +11,5 @@ import java.util.List;
   */
 @Mapper
 public interface MzOpcNumberMapper extends BaseMapper<MzOpcNumber> {
-    List<MzOpcNumber> selectMzOpcNumber(String ksName,String science);
+    List<MzOpcNumber> selectMzOpcNumber(long ksName,long science);
 }

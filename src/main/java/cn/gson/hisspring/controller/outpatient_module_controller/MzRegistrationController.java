@@ -51,24 +51,34 @@ public class MzRegistrationController {
 //        System.err.println("科室"+ksId);
 //        System.err.println("后端"+nows);// new Date()为获取当前系统时间
 
+        String dateVue =null;
+        if(guaHaoVO.getDateVue() !=null){
+            dateVue= df.format(guaHaoVO.getDateVue());
+        }
+        String dateJav = df.format(guaHaoVO.getDateJav());
+
         System.err.println("前端"+guaHaoVO.getDateVue());
         System.err.println("科室"+guaHaoVO.getKsId());
-        System.err.println(guaHaoVO.getText());
+        System.err.println("条件"+guaHaoVO.getText());
         System.err.println("后端"+guaHaoVO.getDateJav());// new Date()为获取当前系统时间
         System.err.println(guaHaoVO.getIndex());
-        String dateVue = df.format(guaHaoVO.getDateVue());
-        String dateJav = df.format(guaHaoVO.getDateJav());
+        System.err.println(dateVue);
+        System.err.println(dateJav);
         if(guaHaoVO.getIndex() == 0){
-            return schedulingMapper.selectNowWeek(dateVue,dateJav ,guaHaoVO.getKsId());
+            return schedulingMapper.selectNowWeek(dateVue,dateJav ,guaHaoVO.getKsId(),guaHaoVO.getText());
         }else{
-            Date date1 = df.parse(dateVue);
-            Calendar c = Calendar.getInstance();
-            c.setTime(date1);
-            c.add(Calendar.DAY_OF_MONTH, 1);
-            Date date2 = c.getTime();
-            String date3 = df.format(date2);
-            System.err.println("增加一天后日期:"+date3);
-            return schedulingMapper.selectNowWeek(date3,dateJav ,guaHaoVO.getKsId());
+            String date3 = null;
+            if(dateVue!=null){
+                Date date1 = df.parse(dateVue);
+                Calendar c = Calendar.getInstance();
+                c.setTime(date1);
+                c.add(Calendar.DAY_OF_MONTH, 1);
+                Date date2 = c.getTime();
+                date3 = df.format(date2);
+                System.err.println("增加一天后日期:"+date3);
+
+            }
+            return schedulingMapper.selectNowWeek(date3,dateJav ,guaHaoVO.getKsId(),guaHaoVO.getText());
         }
 
 
@@ -83,9 +93,7 @@ public class MzRegistrationController {
     //新增挂号表
     @PostMapping("addReg")
     public String addReg(@RequestBody String regArr){
-        System.err.println(regArr);
         MzRegistration mzRegistration = JSON.parseObject(regArr, MzRegistration.class);
-        System.err.println(mzRegistration);
         try {
             registrationService.addReg(mzRegistration);
             return "ok";
@@ -97,6 +105,13 @@ public class MzRegistrationController {
     //查询挂号记录表
     @GetMapping("selectReg")
     public List<MzRegistration> selectReg(String reg,Integer index ,String dates){
-        return registrationService.selectMzRegistration(reg,index,dates);
+        System.err.println(reg);
+        System.err.println(index);
+        System.err.println(dates);
+        String regs = null;
+        if(reg!=null){
+            regs = reg.replace(" ", "");
+        }
+        return registrationService.selectMzRegistration(regs,index,dates);
     }
 }

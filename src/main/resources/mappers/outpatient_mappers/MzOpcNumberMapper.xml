@@ -10,7 +10,7 @@
         <result column="bn_Count" property="bnCount"></result>
         <result column="bn_Time" property="bnTime"></result>
         <result column="bn_Id_Card" property="bnIdCard"></result>
-        <result column="bn_Ks_Name" property="bnKsName"></result>
+        <result column="ks_Id" property="ksId"></result>
         <result column="bn_Science" property="bnScience"></result>
         <result column="bn_Sick_Name" property="bnSickName"></result>
         <result column="rt_Number" property="rtNumber"></result>
@@ -25,7 +25,7 @@
         <result column="bn_Count" property="bnCount"></result>
         <result column="bn_Time" property="bnTime"></result>
         <result column="bn_Id_Card" property="bnIdCard"></result>
-        <result column="bn_Ks_Name" property="bnKsName"></result>
+        <result column="ks_Id" property="ksId"></result>
         <result column="bn_Science" property="bnScience"></result>
         <result column="bn_Sick_Name" property="bnSickName"></result>
         <result column="rt_Number" property="rtNumber"></result>
@@ -43,10 +43,10 @@
         LEFT JOIN mz_sick k on reg.sick_number=k.sick_number
         LEFT JOIN staff s on reg.s_id = s.s_id where 1=1
         <if test="ksName!=null and '' !=ksName">
-            and opn.bn_ks_name = #{ksName}
+            and opn.ks_id = #{ksName}
         </if>
         <if test="science !=null and ''!=science">
-            and opn.bn_science = #{science}
+            and s.s_id = #{science}
         </if>
         and opn.bn_state = 0
         and date_format(opn.bn_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')

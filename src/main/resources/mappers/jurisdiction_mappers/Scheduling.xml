@@ -108,14 +108,21 @@
         inner join register gi on gi.t_id = ti.T_id
         inner join department_ks sk on sk.ks_id = yg.ks_id
         WHERE 1=1
+        <if test="text != null and text != ''">
+            and yg.s_name = #{text}
+            and TO_DAYS(NOW())-TO_DAYS(rq) > -7 and TO_DAYS(rq) >= TO_DAYS(NOW())
+        </if>
         <if test="dates != null">
             and pb.rq = date_format(#{dates}, '%Y-%c-%d' )
+        </if>
+        <if test="dates == null">
+            and TO_DAYS(NOW())-TO_DAYS(rq) > -7 and TO_DAYS(rq) >= TO_DAYS(NOW())
         </if>
         <if test="dates == nows">
             and time(fr.F_end_time) > TIME(now())
         </if>
-        <if test="ksId != 0 and  ksId != '' ">
-              and sk.ks_id = #{ksId}
+        <if test="ksId != null and  ksId != '' ">
+            and sk.ks_id = #{ksId}
         </if>
         ORDER BY fr.f_end_time
     </select>

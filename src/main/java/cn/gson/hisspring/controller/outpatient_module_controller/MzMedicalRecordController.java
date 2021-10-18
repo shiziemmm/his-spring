@@ -154,7 +154,7 @@ public class MzMedicalRecordController {
      * @return
      */
     @RequestMapping("allRecordsSick")
-    public List<MzMedicalRecord> allRecordsSick(@RequestBody String str){
+    public List<ReCordAllVO> allRecordsSick(@RequestBody String str){
         Map map = JSON.parseObject(str,Map.class);
         String text = map.get("text").toString().replace(" ", "");
         return recordService.allRecordSick(text);

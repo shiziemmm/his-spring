@@ -23,7 +23,7 @@ public class MzOpcNumber {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private Date bnTime;
   private String bnIdCard;
-  private String bnKsName;
+  private long ksId;
   private String bnScience;
   private String bnSickName;
   private long rtNumber;

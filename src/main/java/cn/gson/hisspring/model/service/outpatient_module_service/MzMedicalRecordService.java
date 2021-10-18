@@ -2,6 +2,7 @@ package cn.gson.hisspring.model.service.outpatient_module_service;
 
 import cn.gson.hisspring.config.MyUtilCardConfig;
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.TjManMapper;
+import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.*;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO;
@@ -56,6 +57,9 @@ public class MzMedicalRecordService {
 
     @Autowired
     MzCardBillService billService; // 诊疗卡账单记录表 service
+
+    @Autowired
+    StaffMapper staffMapper;
     /**
      * 查询所有的Vo对象组合类
      * @param index
@@ -468,7 +472,7 @@ public class MzMedicalRecordService {
      * @return
      */
     public List<ReCordAllVO> selectRecordsAll(String texts){
-        List<ReCordAllVO> mzMedicalRecords = medicalRecordMapper.selectAllReCordObject3(texts);;
+        List<ReCordAllVO> mzMedicalRecords = medicalRecordMapper.selectAllReCordObject3(texts);
         for (ReCordAllVO mzMedicalRecord : mzMedicalRecords) {
             if( mzMedicalRecord !=null){
                 //对处方的回流改集合
@@ -504,7 +508,18 @@ public class MzMedicalRecordService {
                     }
                 }
             }
+
+            QueryWrapper qw1 = new QueryWrapper();
+            qw1.eq("pm_Mr_Count",mzMedicalRecord.getMedicalRecordObject().getMrCount());
+            qw1.eq("sick_number",mzMedicalRecord.getMedicalRecordObject().getSickNumber());
+            List<MzPayment> list = paymentMapper.selectList(qw1);
+            System.err.println(" MzPayment缴费集合 "+list);
+            if(!list.isEmpty()){
+                mzMedicalRecord.setPaymentList(list);
+            }
         }
+
+
         return mzMedicalRecords;
     }
     /**
@@ -515,6 +530,10 @@ public class MzMedicalRecordService {
         System.err.println(recordVo);
         //            卡号信息
         MzMedicalCard mzMedicalCard = setCardPrice(recordVo.getMedicalRecordObject().getMrMcCard());
+//        员工信息
+        QueryWrapper qws = new QueryWrapper();
+        qws.eq("s_id",sId);
+        Staff staff = staffMapper.selectOne(qws);
         //根据处方修改药品
         if(recordVo.getRecipeObject() != null && recordVo.getRecipeObject().getRecipeNumber() !=0){
             double sums1 = 0 ;
@@ -567,9 +586,15 @@ public class MzMedicalRecordService {
                 mzPayment.setPmNumberCount("MZCFJF"+myUtilCardConfig.numberNot(6));
                 //对传过来的对象进行挨个赋值
                 mzPayment.setPmCard(recordVo.getMedicalRecordObject().getMrMcCard());
-
-                mzPayment.setPmSum(Double.parseDouble(df.format((sums1+sums2))));
+                if(index==2){
+                    mzPayment.setPmPayment("诊疗卡支付");
+                }else{
+                    mzPayment.setPmPayment("其他&支付");
+                }
+                mzPayment.setPmSname(staff.getSName());
+                mzPayment.setPmMrCount(recordVo.getMedicalRecordObject().getMrCount());
                 mzPayment.setPmType("处方缴费");
+                mzPayment.setPmSum(Double.parseDouble(df.format((sums1+sums2))));
                 mzPayment.setPmTypeId(recordVo.getRecipeObject().getRecipeNumber());/*添加处方单单号*/
                 mzPayment.setSId(sId);
                 mzPayment.setSickNumber(recordVo.getMedicalRecordObject().getSickNumber());
@@ -625,6 +650,13 @@ public class MzMedicalRecordService {
                 mzPayment.setPmNumberCount("MZTJJF"+myUtilCardConfig.numberNot(6));
                 //对传过来的对象进行挨个赋值
                 mzPayment.setPmCard(recordVo.getMedicalRecordObject().getMrMcCard());
+                if(index==2){
+                    mzPayment.setPmPayment("诊疗卡支付");
+                }else{
+                    mzPayment.setPmPayment("其他&支付");
+                }
+                mzPayment.setPmSname(staff.getSName());
+                mzPayment.setPmMrCount(recordVo.getMedicalRecordObject().getMrCount());
                 mzPayment.setPmSum( Double.parseDouble(df.format(sums3)));
                 mzPayment.setPmType("体检缴费");
                 mzPayment.setPmTypeId(recordVo.getTjCodeManObject().getManId());/*添加体检单单号*/
@@ -680,6 +712,13 @@ public class MzMedicalRecordService {
                 mzPayment.setPmNumberCount("MZSSJF"+myUtilCardConfig.numberNot(6));
                 //对传过来的对象进行挨个赋值
                 mzPayment.setPmCard(recordVo.getMedicalRecordObject().getMrMcCard());
+                if(index==2){
+                    mzPayment.setPmPayment("诊疗卡支付");
+                }else{
+                    mzPayment.setPmPayment("其他&支付");
+                }
+                mzPayment.setPmSname(staff.getSName());
+                mzPayment.setPmMrCount(recordVo.getMedicalRecordObject().getMrCount());
                 mzPayment.setPmSum(Double.parseDouble(df.format(sums4)));
                 mzPayment.setPmType("手术缴费");
                 mzPayment.setPmTypeId(recordVo.getSurgeryStampObject().getSusNumber());/*添加手术单单号*/
@@ -740,9 +779,8 @@ public class MzMedicalRecordService {
      * 病人信息查询 已经就诊完成了的人所有人的就诊记录表（当天看病人数统计表页面）
      * @return
      */
-    public List<MzMedicalRecord> allRecordSick(String text){
-        List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.allRecordSick(text);
-        return mzMedicalRecords;
+    public List<ReCordAllVO> allRecordSick(String text){
+        return  selectRecordsAll(text);
     }
 
     /**

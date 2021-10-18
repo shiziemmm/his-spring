@@ -85,6 +85,8 @@
         <collection property="centerSurgeryList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzssProjectMapper.centerSurgeryMaps"></collection>
         <!--体检集合-->
         <collection property="tjManResultList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzTjManResultMapper.tjResultMaps"></collection>
+        <!-- 缴费记录表集合-->
+        <collection property="paymentList" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzPaymentMapper.mzPaymentMap"></collection>
     </resultMap>
     <!--所有的VO实体类集合对象Maps-->
     <resultMap id="reVoAllMap2" type="cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO">

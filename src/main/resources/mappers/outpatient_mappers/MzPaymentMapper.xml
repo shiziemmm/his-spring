@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzPaymentMapper">
+    <resultMap id="mzPaymentMap" type="cn.gson.hisspring.model.pojos.MzPayment">
+        <result property="pmNumber" column="pm_number"/>
+        <result property="pmNumberCount" column="pm_number_count"/>
+        <result property="pmTime" column="pm_time"/>
+        <result property="pmCard" column="pm_card"/>
+        <result property="pmSum" column="pm_sum"/>
+        <result property="pmType" column="pm_type"/>
+        <result property="pmTypeId" column="pm_type_id"/>
+        <result property="sId" column="s_id"/>
+        <result property="sickNumber" column="sick_number"/>
+        <result property="pm_sname" column="pmSname"></result>
+        <result property="pm_payment" column="pmPayment"></result>
+        <result property="pm_Mr_Count" column="pmMrCount"></result>
+    </resultMap>
+</mapper>
