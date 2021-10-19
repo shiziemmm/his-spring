@@ -11,7 +11,7 @@ import java.util.List;
 public class SchedulingVoService {
     @Autowired
     SchedulingVoMapper sv;
-    public List<SchedulingVo> list(){
-        return sv.chuaxun();
+    public List<SchedulingVo> list(Long ksId){
+        return sv.chuaxun(ksId);
     }
 }

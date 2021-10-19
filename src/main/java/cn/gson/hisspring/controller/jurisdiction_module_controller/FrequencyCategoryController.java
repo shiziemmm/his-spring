@@ -13,10 +13,7 @@ import cn.gson.hisspring.model.service.jurisdiction_module_service.SchedulingVoS
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -55,14 +52,15 @@ public class FrequencyCategoryController {
     @RequestMapping("bc-list")
     public List<Frequency> dome1(long bcId){
         List<Frequency> frequencies = fs.selectAllId(bcId);
+        System.err.println("班次"+frequencies);
         return frequencies;
     }
     /**
      * 根据职称查询人员排班信息
      */
     @RequestMapping("add-sch")
-    public List<SchedulingVo> list(){
-        List<SchedulingVo> list = sv.list();
+    public List<SchedulingVo> list(Long ksId){
+        List<SchedulingVo> list = sv.list(ksId);
         return list;
 
     }
@@ -100,10 +98,13 @@ public class FrequencyCategoryController {
             WeekVo paiBan2=new WeekVo();
 //           将星期，日期，赋值
             paiBan2 = printDay(calendar,paiBan2);
+            System.err.println("日期"+paiBan2);
             //查询这个科室的排班信息，并赋值
             List<Scheduling> panBan = sl.selectWeek(paiBan2.getRq(),ksId);
+            System.err.println("排班数据"+panBan.size());
             paiBan2.setSlist(panBan);
             //将查询出来的结果赋值给需要返回出去的集合
+            System.err.println(paiBan2);
             ban2List.add(paiBan2);
             //判断按钮可否使用
             Date days = simpleDateFormat.parse(paiBan2.getRq());
@@ -115,6 +116,8 @@ public class FrequencyCategoryController {
 //           循环给日期加天数
             calendar.add(Calendar.DATE, 1);
         }
+
+        System.err.println(ban2List);
        return ban2List;
     }
 
@@ -123,7 +126,7 @@ public class FrequencyCategoryController {
      * @return
      */
     @RequestMapping("star-week")
-    public Object star() throws ParseException {
+    public Object star(long ksId,long bcId) throws ParseException {
         Date date=cs();
         List<WeekVo> ban2List=new ArrayList<>();
         //获取当前时间
@@ -136,7 +139,7 @@ public class FrequencyCategoryController {
 //           将星期，日期，赋值
             paiBan2 = printDay(calendar,paiBan2);
             //查询这个科室的排班信息，并赋值
-            List<Scheduling> panBan = sl.selectAllWeek(paiBan2.getRq());
+            List<Scheduling> panBan = sl.selectWeek(paiBan2.getRq(),ksId);
             paiBan2.setSlist(panBan);
             //将查询出来的结果赋值给需要返回出去的集合
             ban2List.add(paiBan2);
@@ -158,7 +161,7 @@ public class FrequencyCategoryController {
      * @return
      */
     @RequestMapping("end-week")
-    public Object end() throws ParseException {
+    public Object end(Long ksId,Long bcId) throws ParseException {
         Date date=cs();
         List<WeekVo> ban2List=new ArrayList<>();
         //获取当前时间
@@ -171,7 +174,7 @@ public class FrequencyCategoryController {
 //           将星期，日期，赋值
             paiBan2 = printDay(calendar,paiBan2);
             //查询这个科室的排班信息，并赋值
-            List<Scheduling> panBan = sl.selectAllWeek(paiBan2.getRq());
+            List<Scheduling> panBan = sl.selectWeek(paiBan2.getRq(),ksId);
             paiBan2.setSlist(panBan);
             //将查询出来的结果赋值给需要返回出去的集合
             ban2List.add(paiBan2);
@@ -194,7 +197,8 @@ public class FrequencyCategoryController {
      * @return
      */
     @RequestMapping("this-week")
-    public Object thisWeek() throws ParseException {
+    public Object thisWeek(Long ksId,Long bcId) throws ParseException {
+        System.err.println(ksId);
         //点击当前周之后清空star的值
         star=new Date();
         Date date=cs();
@@ -209,7 +213,7 @@ public class FrequencyCategoryController {
 //           将星期，日期，赋值
             paiBan2 = printDay(calendar,paiBan2);
             //查询这个科室的排班信息，并赋值
-            List<Scheduling> panBan = sl.selectAllWeek(paiBan2.getRq());
+            List<Scheduling> panBan = sl.selectWeek(paiBan2.getRq(),ksId);
             paiBan2.setSlist(panBan);
             //将查询出来的结果赋值给需要返回出去的集合
             ban2List.add(paiBan2);
@@ -223,7 +227,6 @@ public class FrequencyCategoryController {
 //           循环给日期加天数
             calendar.add(Calendar.DATE, 1);
         }
-        System.out.println(ban2List);
         return ban2List;
     }
     @RequestMapping("select-cate")
