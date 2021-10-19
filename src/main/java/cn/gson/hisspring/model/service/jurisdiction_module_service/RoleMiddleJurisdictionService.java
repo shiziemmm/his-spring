@@ -22,9 +22,14 @@ public class RoleMiddleJurisdictionService {
     public int addRoleInfo(long rId, List<Integer> funs){
         List<RoleMiddleJurisdiction> roleMiddleJurisdiction = roleMiddleJurisdictionMapper.seleltAll(rId);
         System.out.println(roleMiddleJurisdiction);
-        //根据r_id查中间表是否存在改用户权限，不存在直接新增，存在先删除在新增
-        if(roleMiddleJurisdiction.size()>0){
+        if(funs.size()==0){
             roleMiddleJurisdictionMapper.delet(rId);
+            return 0;
+        }
+        //根据r_id查中间表是否存在改用户权限，不存在直接新增，存在先删除在新增
+        if(roleMiddleJurisdiction.size()>0 ){
+            roleMiddleJurisdictionMapper.delet(rId);
+
         }
         return roleMiddleJurisdictionMapper.addRoleInfo(rId,funs);
     }
