@@ -8,5 +8,5 @@ import java.util.List;
 
 @Mapper
 public interface SchedulingVoMapper extends BaseMapper<SchedulingVo> {
-    List<SchedulingVo> chuaxun();
+    List<SchedulingVo> chuaxun(Long ksId);
 }

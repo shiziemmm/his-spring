@@ -11,5 +11,6 @@
   </resultMap>
 <select id="chuaxun" resultMap="BaseResultMap">
   SELECT t.t_id tid,t.t_name tname,s.s_id sid,s.s_name sname FROM title t left JOIN staff s on t.t_id=s.t_id
+  where s.ks_id=#{ksId}
 </select>
 </mapper>

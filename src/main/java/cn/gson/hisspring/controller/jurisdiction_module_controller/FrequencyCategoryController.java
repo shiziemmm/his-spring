@@ -13,10 +13,7 @@ import cn.gson.hisspring.model.service.jurisdiction_module_service.SchedulingVoS
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -62,8 +59,8 @@ public class FrequencyCategoryController {
      * 根据职称查询人员排班信息
      */
     @RequestMapping("add-sch")
-    public List<SchedulingVo> list(){
-        List<SchedulingVo> list = sv.list();
+    public List<SchedulingVo> list(Long ksId){
+        List<SchedulingVo> list = sv.list(ksId);
         return list;
 
     }
@@ -90,7 +87,6 @@ public class FrequencyCategoryController {
      */
     @RequestMapping("week")
     public Object cs(long ksId) throws ParseException {
-        System.err.println(ksId);
         Date date=cs();
         List<WeekVo> ban2List=new ArrayList<>();
         //获取当前时间
@@ -108,6 +104,7 @@ public class FrequencyCategoryController {
             System.err.println("排班数据"+panBan.size());
             paiBan2.setSlist(panBan);
             //将查询出来的结果赋值给需要返回出去的集合
+            System.err.println(paiBan2);
             ban2List.add(paiBan2);
             //判断按钮可否使用
             Date days = simpleDateFormat.parse(paiBan2.getRq());
@@ -119,6 +116,7 @@ public class FrequencyCategoryController {
 //           循环给日期加天数
             calendar.add(Calendar.DATE, 1);
         }
+
         System.err.println(ban2List);
        return ban2List;
     }
