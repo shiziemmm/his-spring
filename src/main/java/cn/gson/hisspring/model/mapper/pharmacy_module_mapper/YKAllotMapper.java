@@ -13,7 +13,7 @@ public interface YKAllotMapper {
     //查询调拨申请
     List<YkAllot> allykallot();
     //查询调拨详表
-    List<YkAllotdetail> alldetail();
+    List<YkAllotdetail> alldetail(Long ykAllotId);
     //新增调拨
     void adddykallot(YkAllot ykAllot);
     //新增调拨详表

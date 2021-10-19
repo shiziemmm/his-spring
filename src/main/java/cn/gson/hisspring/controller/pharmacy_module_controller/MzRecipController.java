@@ -29,16 +29,18 @@ public class MzRecipController {
 
     //发药
     @RequestMapping("fayao")
-    public void fayao(@RequestBody String str) {
-        Map map = JSON.parseObject(str,Map.class);
-
-        MzRecipe mzRecipe = JSON.parseObject(map.get("mzRecipe").toString(), MzRecipe.class);
-        System.err.println(mzRecipe);
-
-        Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);
-
-        mzser.fayao(mzRecipe,sId);
-
+    public String fayao(@RequestBody String str) {
+        try {
+            Map map = JSON.parseObject(str,Map.class);
+            MzRecipe mzRecipe = JSON.parseObject(map.get("mzRecipe").toString(), MzRecipe.class);
+            System.err.println(mzRecipe);
+            Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);
+            mzser.fayao(mzRecipe,sId);
+            return "ok";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "fail";
+        }
 
     }
 }

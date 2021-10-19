@@ -99,6 +99,7 @@
         select * from yk_allotdetail ykaldeta
             left join yf_druginformation drug on ykaldeta.yk_drug_id = drug.drug_id
             left join yk_allot allot on ykaldeta.YK_allot_id = allot.YK_allot_id
+            where ykaldeta.YK_allot_id = #{ykAllotId}
     </select>
 
     <!--新增调拨表-->
