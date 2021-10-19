@@ -32,8 +32,8 @@ public class YkDrugpurchasePlanController {
     }
     /*查询采购计划详单*/
     @RequestMapping("all-ydpd")
-    public List<YkDrugpurchasePlanDetails> allydpd(){
-        List<YkDrugpurchasePlanDetails> allydpd = planService.allydpd();
+    public List<YkDrugpurchasePlanDetails> allydpd(Long ykPurchaseId){
+        List<YkDrugpurchasePlanDetails> allydpd = planService.allydpd(ykPurchaseId);
         for(YkDrugpurchasePlanDetails aa:allydpd){
             System.err.println("wozoule"+aa);
         }

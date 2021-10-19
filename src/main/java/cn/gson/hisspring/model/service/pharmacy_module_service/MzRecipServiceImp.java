@@ -1,6 +1,7 @@
 package cn.gson.hisspring.model.service.pharmacy_module_service;
 
 
+import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper;
 import cn.gson.hisspring.model.mapper.pharmacy_module_mapper.*;
 import cn.gson.hisspring.model.pojos.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -20,10 +21,13 @@ public class MzRecipServiceImp {
     YfMzRecipeMapper mzcipe;//处方单
 
     @Autowired
-    MzZprescriMapper mzpre;//西药
+    MzRecipeMapper recipeMapper;//处方mapper
 
     @Autowired
-    MzXprescriMapper mzxpr;//中药
+    MzZprescriMapper mzpre;//中药
+
+    @Autowired
+    MzXprescriMapper mzxpr;//西药
 
     @Autowired
     YKStorageMapper ysgm;//出库mapper
@@ -47,7 +51,38 @@ public class MzRecipServiceImp {
         storg.setYkStorageOutorenter(3L);//1表示入库  2表示出库   3表示发药
         ysgm.insert(storg);//新增发药记录的主表
 
-            //根据处方单查询出需要发出的药品
+        //修改处方状态
+        QueryWrapper qwRe = new QueryWrapper();
+        qwRe.eq("recipe_Number",mzRecipes.getRecipeNumber());
+        MzRecipe mzRecipe = recipeMapper.selectOne(qwRe);
+        if(mzRecipe!=null){
+            mzRecipe.setRecipeDrugState(2L);
+            recipeMapper.updateById(mzRecipe);
+
+            //西药修改状态
+            QueryWrapper qwXp = new QueryWrapper();
+            qwXp.eq("recipe_Number",mzRecipe.getRecipeNumber());
+            List<MzXprescription> list1 = mzxpr.selectList(qwXp);
+            if(!list1.isEmpty()){
+                for (MzXprescription mzXprescription : list1) {
+                    mzXprescription.setRdStatePrice(2L);
+                    mzxpr.updateById(mzXprescription);
+                }
+            }
+            //中药修改状态
+            QueryWrapper qwZp = new QueryWrapper();
+            qwZp.eq("recipe_Number",mzRecipe.getRecipeNumber());
+            List<MzZprescription> list2 = mzpre.selectList(qwZp);
+            if(!list2.isEmpty()){
+                for (MzZprescription mzZprescription : list2) {
+                    mzZprescription.setZpStatePrice(2L);
+                    mzpre.updateById(mzZprescription);
+                }
+            }
+        }
+
+
+        //根据处方单查询出需要发出的药品
             //查询西药要发药的药品
             QueryWrapper<MzZprescription> zyyz = new QueryWrapper<MzZprescription>().eq("recipe_Number",1).eq("recipe_Number",mzRecipes.getRecipeNumber());
             List<MzZprescription> mzZprescriptionList = mzpre.selectList(zyyz);

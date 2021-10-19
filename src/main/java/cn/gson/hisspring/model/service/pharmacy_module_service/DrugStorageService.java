@@ -11,8 +11,13 @@ import java.util.List;
 public class DrugStorageService {
     @Autowired
     DrugStorageMapper drugStorageMapper;
-
+    /*查询药库的药品库存*/
     public List<YkDruginventory> allDrugStorg(){
         return drugStorageMapper.allDrugStorg();
     }
+
+    /*药品入库*/
+    /*public void putstorage(YkDruginventory ykDruginventory){
+        return drugStorageMapper.putstorage(ykDruginventory);
+    }*/
 }

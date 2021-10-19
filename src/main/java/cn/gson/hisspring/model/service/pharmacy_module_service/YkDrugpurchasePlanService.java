@@ -23,8 +23,8 @@ public class YkDrugpurchasePlanService {
         return planMapper.staff();
     }
     /*查询采购计划详单*/
-    public List<YkDrugpurchasePlanDetails> allydpd(){
-        return planMapper.allydpd();
+    public List<YkDrugpurchasePlanDetails> allydpd(Long ykPurchaseId){
+        return planMapper.allydpd(ykPurchaseId);
     }
     /*查询药品信息*/
     public List<YfDruginformation> allDrug(){

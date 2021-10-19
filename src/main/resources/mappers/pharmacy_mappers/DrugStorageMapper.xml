@@ -56,4 +56,5 @@
                                 #{ykSupplierName},
                                 #{ykSellingprice})
     </insert>
+
 </mapper>

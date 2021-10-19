@@ -15,7 +15,7 @@ public interface YkDrugpurchasePlanMapper {
     //查询采购的员工
     List <Staff> staff();
     //查询采购计划详单
-    List <YkDrugpurchasePlanDetails> allydpd();
+    List <YkDrugpurchasePlanDetails> allydpd(Long ykPurchaseId);
     //查询药品信息
     List <YfDruginformation> allDrug();
     //新增采购计划

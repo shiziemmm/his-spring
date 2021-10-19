@@ -135,6 +135,7 @@
     <select id="allydpd" resultMap="allPlanDetails">
         select * from yk_drugpurchase_plan_details ydpd left join yf_drugInformation drug on ydpd.drug_id = drug.drug_id
         left join yk_supplier gys on drug.YK_Supplier_id = gys.Supplier_id
+        where ydpd.YK_purchase_id = #{ykPurchaseId}
     </select>
 
     <!--查询药品信息-->

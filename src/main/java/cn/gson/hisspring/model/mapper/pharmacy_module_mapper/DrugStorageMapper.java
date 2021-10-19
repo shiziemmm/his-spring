@@ -11,5 +11,5 @@ public interface DrugStorageMapper extends BaseMapper<YkDruginventory> {
     /*查询药库的药品库存*/
     List<YkDruginventory> allDrugStorg();
     /*药品入库*/
-    List<YkDruginventory> putstorage();
+    void putstorage(YkDruginventory ykDruginventory);
 }
