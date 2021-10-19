@@ -19,6 +19,7 @@
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
         <result column="ks_Id" property="ksId"></result>
+        <result column="doctor_sid" property="doctorSid"></result>
     </resultMap>
     <resultMap id="regMap" type="cn.gson.hisspring.model.pojos.MzRegistration">
         <id column="rt_Number" property="rtNumber"></id>
@@ -36,6 +37,7 @@
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
         <result column="ks_Id" property="ksId"></result>
+        <result column="doctor_sid" property="doctorSid"></result>
         <association resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps" property="staffObject">
         </association>
         <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper.allCard" property="cardObject">

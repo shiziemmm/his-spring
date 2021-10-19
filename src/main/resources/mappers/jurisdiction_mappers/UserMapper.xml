@@ -15,6 +15,9 @@
         <result column="ks_id" jdbcType="INTEGER" property="ksId" />
       <result column="t_id" jdbcType="INTEGER" property="tId" />
       <result column="s_zt" jdbcType="INTEGER" property="sZt" />
+      <association property="ks" javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
+        <result column="ks_name" property="ksName"></result>
+      </association>
     </association>
   </resultMap>
   <sql id="Base_Column_List">
@@ -24,7 +27,7 @@
     select * from user where u_name="${uName}" and u_pswd="${uPswd}"
   </select>
   <select id="cha" resultMap="BaseResultMap">
-    select * from user d left join staff e on d.u_id = e.u_id where d.u_name=#{uName} and d.u_pswd=#{uPswd}
+    select * from user d left join staff e on d.u_id = e.u_id left join department_ks ks on e.ks_id = ks.ks_id where d.u_name=#{uName} and d.u_pswd=#{uPswd}
   </select>
   <update id="reset">
     update user set u_pswd=#{upswd} where u_id=#{uid}

@@ -427,6 +427,7 @@ public class MzMedicalRecordService {
      * @return
      */
     public ReCordAllVO selectMedicalRecord(String texts){
+        boolean bool =false;
         ReCordAllVO reCordAllVO1 = medicalRecordMapper.selectAllReCordObject2(texts);
         if( reCordAllVO1 !=null){
             //对处方的回流改集合
@@ -435,9 +436,11 @@ public class MzMedicalRecordService {
                 for (MzRecipe mzRecipe : mzRecipes) {
                     if(!mzRecipe.getXpList().isEmpty()){
                         reCordAllVO1.getRecipeObject().setXpList(mzRecipe.getXpList());
+                        bool =true;
                     }
                     if(!mzRecipe.getZpList().isEmpty()){
                         reCordAllVO1.getRecipeObject().setZpList(mzRecipe.getZpList());
+                        bool = true;
                     }
                 }
             }
@@ -448,6 +451,7 @@ public class MzMedicalRecordService {
                     for (TjCodeMan tjCodeMAN : tjCodeMEN) {
                         if(!tjCodeMAN.getTjManResultList().isEmpty()){
                             reCordAllVO1.setTjManResultList(tjCodeMAN.getTjManResultList());
+                            bool = true;
                         }
                     }
                 }
@@ -459,12 +463,18 @@ public class MzMedicalRecordService {
                     for (MzSurgeryStamp reCordAllVOSs : reCordAllVOSses) {
                         if(!reCordAllVOSs.getCenterSurgeryList().isEmpty()){
                             reCordAllVO1.setCenterSurgeryList(reCordAllVOSs.getCenterSurgeryList());
+                            bool = true;
                         }
                     }
                 }
             }
         }
-        return reCordAllVO1;
+        System.err.println(bool);
+        if(bool == true){
+            return reCordAllVO1;
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -620,6 +630,7 @@ public class MzMedicalRecordService {
             if(!recordVo.getTjManResultList().isEmpty()){
                 List<TjManResult> tjManResultList = recordVo.getTjManResultList();
                 for (TjManResult tjManResult : tjManResultList) {
+                    System.err.println("报错"+tjManResult);
                     if(tjManResult.getManPayState() == 0 && tjManResult.getManResultId() !=0){
                         sums3+= tjManResult.getPro().getCheckPay();
                         QueryWrapper qw2 = new QueryWrapper();
@@ -740,20 +751,18 @@ public class MzMedicalRecordService {
             }
         }
 
-
-
     }
 
     /**
      * 修改卡余额
      * @param recordVo
      */
-    public Boolean setCardPrice(RecordVo recordVo, Long sId,Long index) {
+    public Boolean setCardPrice(RecordVo recordVo, Long sId,Long index ,Double price) {
         QueryWrapper his = new QueryWrapper();
         his.eq("mc_card", recordVo.getMedicalRecordObject().getMrMcCard());
         MzMedicalCard mzMedicalCard = cardMapper.selectOne(his);
         if(mzMedicalCard.getMcBalance()>= recordVo.getMedicalRecordObject().getMrTotalMoney()){
-            double sum = mzMedicalCard.getMcBalance() - recordVo.getMedicalRecordObject().getMrTotalMoney();
+            double sum = mzMedicalCard.getMcBalance() - price;
             DecimalFormat df = new DecimalFormat("0.00");
             mzMedicalCard.setMcBalance(Double.parseDouble(df.format(sum)));
             cardMapper.updateById(mzMedicalCard);/*修改卡余额*/

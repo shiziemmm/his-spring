@@ -41,7 +41,7 @@
         LEFT JOIN mz_registration reg on opn.rt_number= reg.rt_number
         LEFT JOIN mz_medical_card c on reg.mc_number=c.mc_number
         LEFT JOIN mz_sick k on reg.sick_number=k.sick_number
-        LEFT JOIN staff s on reg.s_id = s.s_id where 1=1
+        LEFT JOIN staff s on reg.doctor_sid = s.s_id where 1=1
         <if test="ksName!=null and '' !=ksName">
             and opn.ks_id = #{ksName}
         </if>

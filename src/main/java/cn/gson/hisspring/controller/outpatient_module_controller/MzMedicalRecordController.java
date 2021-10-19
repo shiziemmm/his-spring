@@ -103,13 +103,14 @@ public class MzMedicalRecordController {
             RecordVo recordVo = JSON.parseObject(map.get("recordVo").toString(),RecordVo.class);
             Long sId  = Long.parseLong(map.get("sId").toString());
             Long index = Long.parseLong(map.get("index").toString());
+            Double price = Double.parseDouble(map.get("price").toString());
             System.err.println("判断"+recordVo);
             if(index == 1){
 //                其他缴费
                 recordService.updateStateRecipe(recordVo,sId,1L);
             }else{
                 //卡缴费
-                Boolean aBoolean = recordService.setCardPrice(recordVo, sId,2L);
+                Boolean aBoolean = recordService.setCardPrice(recordVo, sId,2L,price);
                 if(aBoolean){
                     return "ok";
                 }else{

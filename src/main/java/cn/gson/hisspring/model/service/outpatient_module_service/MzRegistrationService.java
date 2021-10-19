@@ -52,24 +52,25 @@ public class MzRegistrationService {
         return mzRegistrations;
     }
     // 新增挂号表
-    public void addReg(MzRegistration mzRegistration){
+    public void addReg(MzRegistration mzRegistration,Integer radioSf){
         //新增挂号记录表
         mzRegistration.setRtState(0);//0为进行中，未完成
         MzMedicalCard cardObject = mzRegistration.getCardObject();
         mzRegistration.setMcNumber(cardObject.getMcNumber());//新增mc_NUmber
         mzRegistration.setSickNumber(cardObject.getSickNumber());//新镇sick_Number
         mzRegistrationMapper.insert(mzRegistration);
-        //修改卡余额
-        cardObject.setMcBalance(cardObject.getMcBalance()-mzRegistration.getRtPrice());//扣除卡余额
-        cardMapper.updateById(cardObject);
-        //新增卡账单记录表
-        MzCardBill bill = new MzCardBill();
-        bill.setCbCause("门诊挂号");//原因
-        bill.setCbPrice(mzRegistration.getRtPrice());//扣费金额
-        bill.setSId(mzRegistration.getSId());//操作人员
-        bill.setMcNumber(mzRegistration.getCardObject().getMcNumber());//对应卡号
-        billService.addMzCardBill(bill);
-
+        if(radioSf == 2){
+            //修改卡余额
+            cardObject.setMcBalance(cardObject.getMcBalance()-mzRegistration.getRtPrice());//扣除卡余额
+            cardMapper.updateById(cardObject);
+            //新增卡账单记录表
+            MzCardBill bill = new MzCardBill();
+            bill.setCbCause("门诊挂号");//原因
+            bill.setCbPrice(mzRegistration.getRtPrice());//扣费金额
+            bill.setSId(mzRegistration.getSId());//操作人员
+            bill.setMcNumber(mzRegistration.getCardObject().getMcNumber());//对应卡号
+            billService.addMzCardBill(bill);
+        }
         //挂号时就得生成排号单
         MzOpcNumber opcNumber = new MzOpcNumber();
         opcNumber.setBnTime(mzRegistration.getRtOnsetTime());//排号时间

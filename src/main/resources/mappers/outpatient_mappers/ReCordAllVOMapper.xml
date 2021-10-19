@@ -74,7 +74,7 @@
     <resultMap id="reVoAllMap" type="cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO">
         <association property="medicalRecordObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalRecordMapper.recordMap3"></association>
 
-        <association property="historyObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMap"></association>
+        <association property="historyObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMaps"></association>
 
         <association property="recipeObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRecipeMapper.recipeMap"></association>
 

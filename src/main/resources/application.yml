@@ -15,6 +15,9 @@ spring:
     password:
   jackson:
     date-format: yyyy-MM-dd hh:mm
+  mvc:
+    async:
+      request-timeout: 80000
 
 mybatis-plus:
   mapper-locations: classpath:mappers/*/*.xml
