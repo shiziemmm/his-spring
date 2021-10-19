@@ -45,6 +45,11 @@ public class StaffController {
         List<Staff> staff = ss.selectALl();
         return staff;
     }
+    @RequestMapping("selectall-staffs")
+    public  int  selectALls(){
+        List<Staff> staff = ss.selectALl();
+        return staff.size();
+    }
     //新增员工
     @RequestMapping("add-staff")
     public void dome(YongGoneVo from){
@@ -102,5 +107,9 @@ public class StaffController {
         }else{
             return 1;
         }
+    }
+    @RequestMapping("gitee")
+    public List<Staff> gitee(Long uId){
+       return ss.selectRole(uId);
     }
 }
