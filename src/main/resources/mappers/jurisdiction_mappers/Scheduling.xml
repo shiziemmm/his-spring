@@ -97,7 +97,7 @@
 
     <select id="selectNowWeek" resultMap="BaseResultMap">
         select * from scheduling pb
-        inner join frequency fr on fr.fc_id = pb.fr_id
+        inner join frequency fr on fr.f_id = pb.fr_id
         inner join staff yg on pb.s_id=yg.s_id
         inner join title ti on yg.t_id=ti.T_id
         inner join register gi on gi.t_id = ti.T_id

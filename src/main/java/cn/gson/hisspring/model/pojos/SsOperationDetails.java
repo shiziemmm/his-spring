@@ -11,14 +11,14 @@ public class SsOperationDetails {
   private String operationTime;
   @JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
   private java.sql.Timestamp operationDate;
-  private long projectId;
+  private Long projectId;
   private String operationHandle;
-  private long operationHocus;
-  private long operationDoctor;
-  private long ptNo;
-  private long hocusId;
-  private long operationAnathe;
-  private long operationHelper;
+  private Long operationHocus;
+  private Long operationDoctor;
+  private Long ptNo;
+  private Long hocusId;
+  private Long operationAnathe;
+  private Long operationHelper;
   private String simulationOperation;
   @TableField(exist = false)
   private String operationAnaesthesia;
