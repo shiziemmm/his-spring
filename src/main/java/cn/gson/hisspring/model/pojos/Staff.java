@@ -23,6 +23,7 @@ public class Staff {
   private Long ksId;
   private Long tId;
   private Long sZt;
+  @TableField(exist = false)
   private Long deptId;
 
   @TableField(exist = false)

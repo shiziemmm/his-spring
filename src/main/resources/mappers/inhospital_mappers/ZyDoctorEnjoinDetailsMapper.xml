@@ -54,6 +54,21 @@
             <if test=" ptNo != '' and ptNo != null">
                 pt_no  = #{ptNo}
             </if>
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(De_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(De_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
+
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(De_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
+
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(De_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+
+            <if test="doctorType != null and doctorType != '' ">
+                and de_longorshort = #{doctorType}
+            </if>
         </where>
         order by des_execute_date desc , des_end_date desc
     </select>

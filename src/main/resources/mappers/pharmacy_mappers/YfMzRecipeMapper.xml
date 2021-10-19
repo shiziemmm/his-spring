@@ -23,9 +23,7 @@
             <result property="rdDw" column="rd_dw"/>
             <result property="rdCount" column="rd_count"/>
             <result property="rdPrice" column="rd_Price"/>
-            <result property="rdSkin" column="rd_Skin"/>
             <result property="rdEntrust" column="rd_Entrust"/>
-            <result property="rdSkinResult" column="rd_Skin_Result"/>
             <result property="rdStatePrice" column="rd_State_Price"/>
             <result property="drugId" column="drug_Id"/>
             <result property="recipeNumber" column="recipe_Number"/>
@@ -46,9 +44,8 @@
     </resultMap>
 
     <select id="allMzRecipess" resultMap="MzRecipeMaps">
-        select * from Mz_recipe mz left join mz_xprescription xy on mz.xp_Notes = xy.rd_number
-            left join mz_zprescription zy on mz.zp_Notes = zy.zp_Number
-            where recipe_drug_state = 0
+        select * from mz_recipe cipe
+                                     where cipe.recipe_drug_state = 1
     </select>
 
 </mapper>

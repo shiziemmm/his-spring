@@ -45,5 +45,8 @@
         <if test =" mcCard!=null and '' != mcCard"> /*一个mzSickTest模糊查询全部like*/
                and mc_Card = #{mcCard}
         </if>
+        <if test =" mcCard!=null and '' != mcCard"> /*一个mzSickTest模糊查询全部like*/
+           or mc_Id_Card = #{mcCard}
+        </if>
     </select>
 </mapper>

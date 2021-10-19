@@ -16,7 +16,7 @@ public class MzxyController {
     MzxyService mzxyser;
 
     @RequestMapping("allmzxy")
-    public List<MzXprescription> allmzxy(){
-        return mzxyser.allmzxy();
+    public List<MzXprescription> allmzxy(Long recipeNumber){
+        return mzxyser.allmzxy(recipeNumber);
     }
 }

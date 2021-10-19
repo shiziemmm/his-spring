@@ -15,11 +15,13 @@ public interface YkDrugpurchasePlanMapper {
     //查询采购的员工
     List <Staff> staff();
     //查询采购计划详单
-    List <YkDrugpurchasePlanDetails> allydpd();
+    List <YkDrugpurchasePlanDetails> allydpd(Long ykPurchaseId);
     //查询药品信息
     List <YfDruginformation> allDrug();
     //新增采购计划
     void addplan(YkDrugpurchasePlan ykDrugpurchasePlan);
     /*新增采购详单*/
     void  addplandeta(YkDrugpurchasePlanDetails ykDrugpurchasePlanDetails);
+    /*查询待入库的药品*/
+    List <YkDrugpurchasePlan>alldairuku();
 }

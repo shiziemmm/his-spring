@@ -61,6 +61,10 @@ public class TjproController {
     public List<TjManResult> allMan(Integer manId){
         return major.AllRes(manId);
     }
+    @RequestMapping("aloneResss") //人员检查是否有结果
+    public List<TjManResult> ssManres(Integer checkId){
+        return major.sRes(checkId);
+    }
     @RequestMapping("aloneCard") //体检套餐诊疗卡检查指标
     public List<MzMedicalCard> allMan(String sId){
         return major.alomCaed(sId);

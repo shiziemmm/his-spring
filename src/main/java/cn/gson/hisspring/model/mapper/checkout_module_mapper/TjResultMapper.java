@@ -14,6 +14,8 @@ import java.util.Map;
 public interface TjResultMapper extends BaseMapper<TjManResult> {
     //查询检查结果
     List<TjManResult> allmresult(Integer manId);
+    //查询人员是否有结果
+    List<TjManResult> sresult(Integer checkId);
     //    批量新增体检套餐与检查项目中间表、
     int insertTjmres(List listArr);
 }

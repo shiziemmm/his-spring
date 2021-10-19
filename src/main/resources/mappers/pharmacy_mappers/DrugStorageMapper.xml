@@ -12,7 +12,6 @@
         <result property="ykDrvenMftdate" column="YK_drven_mftDate"/>
         <result property="supplierId" column="Supplier_id"/>
         <result property="ykSupplierName" column="YK_Supplier_name"/>
-        <result property="ykSellingprice" column="YK_Sellingprice"/>
             <!--仓库-->
             <association property="ykWarehouse" javaType="cn.gson.hisspring.model.pojos.YkWarehouse">
                 <result property="ykWareId" column="YK_ware_id"/>
@@ -33,4 +32,29 @@
         select * from yk_druginventory tory left join yk_warehouse house on tory.YK_ware_id = house.YK_ware_id
         left join yk_supplier supp on tory.Supplier_id = supp.Supplier_id
     </select>
+
+    <insert id="putstorage" parameterType="cn.gson.hisspring.model.pojos.YkDruginventory">
+        insert yk_druginventory(YK_drven_id,
+                                Drug_id,
+                                YK_drven_name,
+                                YK_ware_id,
+                                YK_drven_batch,
+                                YK_drven_count,
+                                YK_drven_mftDate,
+                                Supplier_id,
+                                YK_Supplier_name,
+                                YK_Sellingprice)
+                                values
+                                (#{ykDrvenId},
+                                #{drugId},
+                                #{ykDrvenName},
+                                #{ykWareId},
+                                #{ykDrvenBatch},
+                                #{ykDrvenCount},
+                                #{ykDrvenMftdate},
+                                #{supplierId},
+                                #{ykSupplierName},
+                                #{ykSellingprice})
+    </insert>
+
 </mapper>

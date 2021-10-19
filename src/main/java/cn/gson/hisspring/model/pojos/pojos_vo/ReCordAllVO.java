@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * 包含掉所有的实体类的Vo
+ * 包含掉所有的实体类的Vo 这个和  RecordVo  都是一样的实体类VO
  */
 public class ReCordAllVO {
 
@@ -21,6 +21,25 @@ public class ReCordAllVO {
 
     private MzSurgeryStamp surgeryStampObject; //手术单表
     private List<MzCenterSurgery> centerSurgeryList; //手术集合表
+
+    private List<MzPayment> paymentList;
+
+
+
+
+
+
+
+
+
+
+    public List<MzPayment> getPaymentList() {
+        return paymentList;
+    }
+
+    public void setPaymentList(List<MzPayment> paymentList) {
+        this.paymentList = paymentList;
+    }
 
     public MzMedicalRecord getMedicalRecordObject() {
         return medicalRecordObject;

@@ -9,5 +9,7 @@ import java.util.List;
 @Mapper
 public interface DrugStorageMapper extends BaseMapper<YkDruginventory> {
     /*查询药库的药品库存*/
-    List <YkDruginventory> allDrugStorg();
+    List<YkDruginventory> allDrugStorg();
+    /*药品入库*/
+    void putstorage(YkDruginventory ykDruginventory);
 }

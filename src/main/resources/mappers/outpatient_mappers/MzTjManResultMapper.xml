@@ -9,7 +9,6 @@
     <insert id="addTjManResultArr" parameterType="cn.gson.hisspring.model.pojos.TjManResult">
         insert into tj_man_result (
             check_id,
-            man_result,
             man_id,
             s_id,
             man_pay_state
@@ -17,7 +16,6 @@
         <foreach collection="list"  item="tjr" separator=",">
             (
             #{tjr.checkId},
-            #{tjr.manResult},
             #{tjr.manId},
             #{tjr.sId},
             #{tjr.manPayState}
@@ -33,6 +31,7 @@
         <result column="man_Time" property="manTime"></result>
         <result column="s_Id" property="sId"></result>
         <result column="man_pay_state" property="manPayState"></result>
+        <result column="reProposal" property="manProposal"></result>
         <association property="pro" resultMap="tjProjectMaps"></association>
     </resultMap>
     <resultMap id="tjProjectMaps" type="cn.gson.hisspring.model.pojos.TjCodeProject">

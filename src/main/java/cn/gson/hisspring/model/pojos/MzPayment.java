@@ -23,11 +23,11 @@ public class MzPayment {
   private String pmCard;
   private double pmSum;
   private String pmType;
-
   private long pmTypeId;
   private long sId;
   private long sickNumber;
-
-
+  private String pmSname;
+  private String pmPayment;
+  private String pmMrCount;
 
 }

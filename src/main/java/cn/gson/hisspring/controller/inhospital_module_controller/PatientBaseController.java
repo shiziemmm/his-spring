@@ -56,13 +56,30 @@ public class PatientBaseController {
     }
 
     /**
+     * 根据科室编号查询科室对象
+     */
+    @RequestMapping("select-ks-obj")
+    public DepartmentKs selectKsObj(Long ksId){
+        System.err.println(ksId);
+       return pbs.selectKsObj(ksId);
+    }
+
+    /**
+     * 根据住院号查询已开检验项目的医生
+     */
+    @RequestMapping("select-result-ByManId-Staff")
+    public List<Staff> selectResultByManIdStaff(Long ptNo){
+       return pbs.selectResultByManIdStaff(ptNo);
+    }
+
+    /**
      * 根据住院号查询该病人已开的项目
-     * @param ptNo
      * @return
      */
     @RequestMapping("select-manResult-byPtNo")
-    public List<ResultManVo> selectManResultByPtNo(Long ptNo){
-        return pbs.selectTjResultByPtNo(ptNo);
+    public List<ResultManVo> selectManResultByPtNo(@RequestBody String str){
+        SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);//查询条件
+        return pbs.selectTjResultByPtNo(selectExecuteVo);
     }
 
     /**
@@ -92,7 +109,7 @@ public class PatientBaseController {
      */
     @RequestMapping("selectPBNoBed")
     public List<ZyPatientBase> selectPatientBaseNoBed(){
-        return pbs.selectPatientNoBed("1");
+        return pbs.selectPatientNoBed("1",new SelectExecuteVo());
     }
 
 
@@ -118,14 +135,25 @@ public class PatientBaseController {
        return pbs.PatientUpdateBdIdAndBedUpdateBdIsAndPtNo(bdId,ptNo,price);
     }
 
-
+    /**
+     * 查询所有未出院的病人住院信息
+     * @return
+     */
+    @RequestMapping("patientAlls")
+    public List<ZyPatientBase> selectPatientNoOutCY(@RequestBody String str){
+        SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
+        System.err.println(selectExecuteVo);
+        return pbs.selectPatientNoOutCY(selectExecuteVo);
+    }
     /**
      * 查询所有未出院的病人住院信息
      * @return
      */
     @RequestMapping("patientAll")
-    public List<ZyPatientBase> selectPatientAll(){
-        return pbs.selectPatientNoBed("");
+    public List<ZyPatientBase> selectPatientAll(@RequestBody String str){
+        SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
+        System.err.println(selectExecuteVo);
+        return pbs.selectPatientNoBed("",selectExecuteVo);
     }
 
 
@@ -155,8 +183,10 @@ public class PatientBaseController {
      * 查询住院病人信息以及病人缴费详细
      */
     @RequestMapping("PatientAndPay")
-    public List<ZyPatientBase> selectPatientAndPay(){
-        return pbs.selectPatientAndPay();
+    public List<ZyPatientBase> selectPatientAndPay(@RequestBody String str){
+        SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
+        System.err.println(selectExecuteVo);
+        return pbs.selectPatientAndPay(selectExecuteVo);
     }
 
 

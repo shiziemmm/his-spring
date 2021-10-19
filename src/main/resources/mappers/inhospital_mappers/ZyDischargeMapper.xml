@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DischargeMapper">
+
+    <resultMap id="dischargeMap" type="cn.gson.hisspring.model.pojos.ZyDischarge">
+        <result column="Dg_id" property="dgId"/>
+        <result column="Pt_no" property="ptNo"/>
+        <result column="dg_date" property="dgDate"/>
+        <result column="s_id" property="sId"/>
+        <result column="bd_name" property="bdName"/>
+        <result column="Dg_deposit_price" property="dgDepositPrice"/>
+        <result column="Dg_used_price" property="dgUsedPrice"/>
+        <result column="Dg_bj_price" property="dgBjPrice"/>
+        <result column="dg_sj_price" property="dgSjPrice"/>
+        <result column="dg_day" property="dgDay"/>
+
+        <association property="patientBase" javaType="cn.gson.hisspring.model.pojos.ZyPatientBase">
+            <result column="Pt_no" property="ptNo"/>
+            <result column="pt_In_date" property="ptInDate"/>
+            <result column="Pt_name" property="ptName"/>
+            <result column="pt_sex" property="ptSex"/>
+            <result column="Pt_Birth_date" property="ptBirthDate"/>
+            <result column="Pt_Capacity_no" property="ptCapacityNo"/>
+            <result column="Pt_Home_adder" property="ptHomeAdder"/>
+            <result column="ks_id" property="ksId"/>
+            <result column="Pt_Diagnose_name" property="ptDiagnoseName"/>
+            <result column="Bd_id" property="bdId"/>
+            <result column="Pt_Out_date" property="ptOutDate"/>
+            <result column="Pt_age" property="ptAge"/>
+            <result column="pt_pay_money" property="ptPayMoney"/>
+            <result column="pt_price" property="ptPrice"/>
+            <result column="pt_iphone" property="ptIphone"/>
+            <result column="s_id" property="sId"/>
+            <result column="ks_name" property="ksName"/>
+            <result column="pt_is" property="ptIs"/>
+            <result property="ptSickNumber" column="pt_sick_number"/>
+        </association>
+    </resultMap>
+
+    <select id="selectDischargeAll" resultMap="dischargeMap">
+        select * from zy_discharge inner join zy_patient_base on zy_discharge.pt_no = zy_patient_base.pt_no
+        <where>
+        <if test="doctorType == 1">
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(Pt_Out_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
+
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
+
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+        </if>
+            <if test="doctorType == 2">
+                <if test="(startDate != null) and (endDate != null)">
+                    and (DATE_FORMAT(pt_In_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pt_In_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                </if>
+
+                <if test="(startDate != null) and (endDate == null)">
+                    and DATE_FORMAT(pt_In_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+                </if>
+
+                <if test="(startDate == null) and (endDate != null)">
+                    and DATE_FORMAT(pt_In_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+                </if>
+            </if>
+
+            <if test="searchLike != null and searchLike != ''">
+                and zy_patient_base.pt_no like '%${searchLike}%' or zy_patient_base.pt_name like '%${searchLike}%'
+            </if>
+        </where>
+    </select>
+</mapper>

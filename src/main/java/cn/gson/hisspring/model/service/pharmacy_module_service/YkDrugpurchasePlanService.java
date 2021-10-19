@@ -23,12 +23,16 @@ public class YkDrugpurchasePlanService {
         return planMapper.staff();
     }
     /*查询采购计划详单*/
-    public List<YkDrugpurchasePlanDetails> allydpd(){
-        return planMapper.allydpd();
+    public List<YkDrugpurchasePlanDetails> allydpd(Long ykPurchaseId){
+        return planMapper.allydpd(ykPurchaseId);
     }
     /*查询药品信息*/
     public List<YfDruginformation> allDrug(){
         return planMapper.allDrug();
+    }
+    /*查询待入库的药品*/
+    public List<YkDrugpurchasePlan> alldairuku(){
+        return planMapper.alldairuku();
     }
     /*新增采购计划*/
     public void addplan(YkDrugpurchasePlan ykDrugpurchasePlan){

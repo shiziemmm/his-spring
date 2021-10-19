@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-public class MzAlterLoseController {
+public class  MzAlterLoseController {
     @Autowired
     MzAlterLoseService loseService;
 

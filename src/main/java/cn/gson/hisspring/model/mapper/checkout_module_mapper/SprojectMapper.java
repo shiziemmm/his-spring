@@ -29,5 +29,8 @@ public interface SprojectMapper extends BaseMapper<SsOperationProject> {
     List<SsOperationProject> aloneProject(Integer projectId );
 
     int insertSsObject(long proId,List<Integer> listArr);
+    //所有手术
     List<SsOperationProject> selectAllSsObject(String input);
+    //所有手术
+    List<SsOperationProject> selectAllSsObject1(String input);
 }

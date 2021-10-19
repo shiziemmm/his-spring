@@ -96,14 +96,6 @@ class HisSpringApplicationTests {
         pbs.PatientUpdateBdIdAndBedUpdateBdIsAndPtNo(3L,101L,200d);
     }
 
-    @Test
-    void text5(){
-        List<ZyPatientBase> list = pbs.selectPatientNoBed("");
-        list.forEach(b->{
-            System.out.println(b);
-        });
-    }
-
 
     @Autowired
     WardService wds;

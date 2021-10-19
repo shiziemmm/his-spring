@@ -66,6 +66,7 @@ public class StaffController {
     }
     @RequestMapping("upa-staff")
     public void upa(YongGoneVo from){
+        System.err.println(from);
         User user=new User();
         user.setUName(from.getUName());
         user.setUPswd(from.getUPswd());

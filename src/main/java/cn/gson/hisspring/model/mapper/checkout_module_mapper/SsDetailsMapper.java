@@ -14,4 +14,6 @@ import java.util.List;
 public interface SsDetailsMapper  extends BaseMapper<SsOperationDetails> {
     //查询手术记录
     List<SsOperationDetails> selectAllsDetails(String seach);
+    //查询单手术记录
+    List<SsOperationDetails> selectAloneDetails(Integer operationNum);
 }

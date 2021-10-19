@@ -32,8 +32,8 @@ public class YkDrugpurchasePlanController {
     }
     /*查询采购计划详单*/
     @RequestMapping("all-ydpd")
-    public List<YkDrugpurchasePlanDetails> allydpd(){
-        List<YkDrugpurchasePlanDetails> allydpd = planService.allydpd();
+    public List<YkDrugpurchasePlanDetails> allydpd(Long ykPurchaseId){
+        List<YkDrugpurchasePlanDetails> allydpd = planService.allydpd(ykPurchaseId);
         for(YkDrugpurchasePlanDetails aa:allydpd){
             System.err.println("wozoule"+aa);
         }
@@ -49,5 +49,10 @@ public class YkDrugpurchasePlanController {
     public void addplan(@RequestBody String str){
         YkDrugpurchasePlan drugpurchasePlan = JSON.parseObject(str, YkDrugpurchasePlan.class);
       planService.addplan(drugpurchasePlan);
+    }
+    /*查询待入库的药品*/
+    @RequestMapping("dairuku")
+    public List<YkDrugpurchasePlan> alldairuku(){
+        return planService.alldairuku();
     }
 }

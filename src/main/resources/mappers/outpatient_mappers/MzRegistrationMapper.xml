@@ -18,6 +18,7 @@
         <result column="s_Id" property="sId"></result>
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
+        <result column="ks_Id" property="ksId"></result>
     </resultMap>
     <resultMap id="regMap" type="cn.gson.hisspring.model.pojos.MzRegistration">
         <id column="rt_Number" property="rtNumber"></id>
@@ -34,6 +35,7 @@
         <result column="s_Id" property="sId"></result>
         <result column="sick_Number" property="sickNumber"></result>
         <result column="mc_Number" property="mcNumber"></result>
+        <result column="ks_Id" property="ksId"></result>
         <association resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps" property="staffObject">
         </association>
         <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper.allCard" property="cardObject">
@@ -49,6 +51,9 @@
             LEFT JOIN staff s on reg.s_id = s.s_id where 1=1
             <if test="reg != null and '' != reg">
                 and (c.mc_Card = #{reg}
+                or reg.rt_Doctor=#{reg}
+                or k.sick_name = #{reg}
+                or k.sick_phone = #{reg}
                 or c.mc_Id_Card = #{reg} )
             </if>
             <if test=" index==1 ">

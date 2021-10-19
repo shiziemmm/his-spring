@@ -166,8 +166,8 @@ public class YKAllotService {
     }
 
     //查询调拨详表
-    public List<YkAllotdetail> alldetail(){
-        return ykAllotMapper.alldetail();
+    public List<YkAllotdetail> alldetail(Long ykAllotId){
+        return ykAllotMapper.alldetail(ykAllotId);
     }
 
     //新增调拨记录

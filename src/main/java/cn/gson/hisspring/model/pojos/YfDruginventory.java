@@ -39,9 +39,24 @@ public class YfDruginventory {
   private YfDrugcategory yfDrugcategory;//药品类别
   @TableField(exist = false)
   private Integer yfNumbers;
-
-@TableField(exist = false)
+  @TableField(exist = false)
   private YkAllot ykAllot;
+
+  public Long getYfDrvenId() {
+    return yfDrvenId;
+  }
+
+  public void setYfDrvenId(Long yfDrvenId) {
+    this.yfDrvenId = yfDrvenId;
+  }
+
+  public Long getYfDrvenCount() {
+    return yfDrvenCount;
+  }
+
+  public void setYfDrvenCount(Long yfDrvenCount) {
+    this.yfDrvenCount = yfDrvenCount;
+  }
 
   public YkAllot getYkAllot() {
     return ykAllot;
@@ -75,5 +90,13 @@ public class YfDruginventory {
 
   public void setYfDrvenBatch(String yfDrvenBatch) {
     this.yfDrvenBatch = yfDrvenBatch;
+  }
+
+  public YfDruginventory() {
+  }
+
+  public YfDruginventory(Long yfDrvenId, Long yfDrvenCount) {
+    this.yfDrvenId = yfDrvenId;
+    this.yfDrvenCount = yfDrvenCount;
   }
 }

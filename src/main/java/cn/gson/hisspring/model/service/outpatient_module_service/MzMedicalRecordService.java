@@ -2,6 +2,7 @@ package cn.gson.hisspring.model.service.outpatient_module_service;
 
 import cn.gson.hisspring.config.MyUtilCardConfig;
 import cn.gson.hisspring.model.mapper.checkout_module_mapper.TjManMapper;
+import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.*;
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.pojos.pojos_vo.ReCordAllVO;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,8 @@ import java.util.List;
 @Service
 @Transactional
 public class MzMedicalRecordService {
+    @Autowired
+    MzMedicalCardMapper cardMapper;
     @Autowired
     MzMedicalRecordMapper medicalRecordMapper; //就诊记录mapper
     @Autowired
@@ -49,7 +53,13 @@ public class MzMedicalRecordService {
     MzSurgeryStampMapper surgeryStampMapper;//手术单表mapper
 
     @Autowired
-    ReCordAllVOMapper reCordAllVOMapper;
+    ReCordAllVOMapper reCordAllVOMapper; /*vo类mapper*/
+
+    @Autowired
+    MzCardBillService billService; // 诊疗卡账单记录表 service
+
+    @Autowired
+    StaffMapper staffMapper;
     /**
      * 查询所有的Vo对象组合类
      * @param index
@@ -90,7 +100,6 @@ public class MzMedicalRecordService {
                     List<MzSurgeryStamp> reCordAllVOSses = reCordAllVOMapper.selectAllReCordOrSs(reCordAllVO.getSurgeryStampObject().getSusNumber());
                     for (MzSurgeryStamp reCordAllVOSs : reCordAllVOSses) {
                         if(!reCordAllVOSs.getCenterSurgeryList().isEmpty()){
-                            System.err.println(reCordAllVOSs.getCenterSurgeryList());
                             reCordAllVO.setCenterSurgeryList(reCordAllVOSs.getCenterSurgeryList());
                         }
                     }
@@ -206,7 +215,6 @@ public class MzMedicalRecordService {
         //如果“体检”的id有值，说明是双击回传过来的就诊列表的人
         if(recordVo.getTjCodeManObject() != null){
             if(recordVo.getTjCodeManObject().getManId()!=null){
-                System.err.println("这里体检");
                 //有就做修改
                 UpdateWrapper qwTj = new UpdateWrapper();
                 qwTj.eq("tj_code_man.man_id", recordVo.tjCodeManObject.getManId());
@@ -219,11 +227,9 @@ public class MzMedicalRecordService {
                     for (TjManResult manResult : tjManResult) {
                         if(manResult.getManResultId() !=0){
                             UpdateWrapper qwResult = new UpdateWrapper();
-                            System.err.println("这里进一"+listResult);
                             qwResult.eq("tj_man_result.man_result_id",manResult.getManResultId());
                             TjManResult tjManResult1 = tjManResultMapper.selectOne(qwResult);
                             if(tjManResult1!=null){
-                                System.err.println("检验"+manResult);
                                 tjManResultMapper.update(manResult,qwResult);
                             }
                         }else if(manResult.getManResultId() == 0 && manResult.getCheckId()!=0){
@@ -233,7 +239,6 @@ public class MzMedicalRecordService {
                             listResult.add(manResult);
                         }
                     }
-                    System.err.println("这里进二"+listResult);
                     //如果不是一个空集合就说明上面存进去了值，就可以新增
                     if(!listResult.isEmpty()){
                         tjManResultMapper.addTjManResultArr(listResult);
@@ -257,7 +262,6 @@ public class MzMedicalRecordService {
                         uwCen.eq("mz_center_surgery.sus_id",mzCenterSurgery.getSusId());
                         MzCenterSurgery mzCenterSurgery1 = centerSurgeryMapper.selectOne(uwCen);
                         if(mzCenterSurgery1!=null){
-                            System.err.println("这里进一"+mzCenterSurgery1);
                             centerSurgeryMapper.update(mzCenterSurgery,uwCen);
                         }
                     }else if(mzCenterSurgery.getSusId()==0 && mzCenterSurgery.getProjectId()!=0){
@@ -266,7 +270,6 @@ public class MzMedicalRecordService {
                         centerSurgeryList2.add(mzCenterSurgery);
                     }
                 }
-                System.err.println("这里进二"+centerSurgeryList2);
                 //如果不是一个空集合就说明上面存进去了值，就可以新增
                 if(!centerSurgeryList2.isEmpty()){
                     centerSurgeryMapper.addCenterSurgery(centerSurgeryList2);
@@ -371,7 +374,6 @@ public class MzMedicalRecordService {
         tjCodeManObject.setManState(0L);
         tjCodeManObject.setManMzZyIs(1);//判断是门诊状态
         tjCodeManObject.setManMzZyId(medicalRecordObject.getMrCount());//添加问诊号
-        System.err.println("生日"+ recordVo.getTjCodeManObject().getManBirthtime());
         tjCodeManObject.setManTime(new Timestamp(System.currentTimeMillis()));
         tjManMapper.insert(tjCodeManObject);
         if(!recordVo.getTjManResultList().isEmpty()) {//如果没有值说明为空
@@ -420,89 +422,365 @@ public class MzMedicalRecordService {
         }
         return recipeObject;
     }
+    /**
+     *  查询就诊记录表--未缴费，开始输入号码缴费
+     * @return
+     */
+    public ReCordAllVO selectMedicalRecord(String texts){
+        ReCordAllVO reCordAllVO1 = medicalRecordMapper.selectAllReCordObject2(texts);
+        if( reCordAllVO1 !=null){
+            //对处方的回流改集合
+            if(reCordAllVO1.getRecipeObject().getRecipeNumber() != 0 ){
+                List<MzRecipe> mzRecipes = reCordAllVOMapper.selectAllReCordOrDrug2(reCordAllVO1.getRecipeObject().getRecipeNumber(),0l);
+                for (MzRecipe mzRecipe : mzRecipes) {
+                    if(!mzRecipe.getXpList().isEmpty()){
+                        reCordAllVO1.getRecipeObject().setXpList(mzRecipe.getXpList());
+                    }
+                    if(!mzRecipe.getZpList().isEmpty()){
+                        reCordAllVO1.getRecipeObject().setZpList(mzRecipe.getZpList());
+                    }
+                }
+            }
+            //体检值不为null ，回流添加改换集合
+            if(reCordAllVO1.getTjCodeManObject() != null){
+                if(reCordAllVO1.getTjCodeManObject().getManId() != 0){
+                    List<TjCodeMan> tjCodeMEN = reCordAllVOMapper.selectAllReCordOrTj2(reCordAllVO1.getTjCodeManObject().getManId(), 0L);
+                    for (TjCodeMan tjCodeMAN : tjCodeMEN) {
+                        if(!tjCodeMAN.getTjManResultList().isEmpty()){
+                            reCordAllVO1.setTjManResultList(tjCodeMAN.getTjManResultList());
+                        }
+                    }
+                }
+            }
+        //手术值不为null ，回流添加改换集合
+            if(reCordAllVO1.getSurgeryStampObject() != null){
+                if(reCordAllVO1.getSurgeryStampObject().getSusNumber() != 0){
+                    List<MzSurgeryStamp> reCordAllVOSses = reCordAllVOMapper.selectAllReCordOrSs2(reCordAllVO1.getSurgeryStampObject().getSusNumber(),0L);
+                    for (MzSurgeryStamp reCordAllVOSs : reCordAllVOSses) {
+                        if(!reCordAllVOSs.getCenterSurgeryList().isEmpty()){
+                            reCordAllVO1.setCenterSurgeryList(reCordAllVOSs.getCenterSurgeryList());
+                        }
+                    }
+                }
+            }
+        }
+        return reCordAllVO1;
+    }
 
     /**
-     *  查询就诊记录表
+     * 查询所有的缴费完成记录--已经缴费，开始查询打印
+     * @return
      */
-    public List<MzMedicalRecord> selectMedicalRecord(String index,String texts){
-       return medicalRecordMapper.selectMzMedicalRecord(index, texts);
+    public List<ReCordAllVO> selectRecordsAll(String texts){
+        List<ReCordAllVO> mzMedicalRecords = medicalRecordMapper.selectAllReCordObject3(texts);
+        for (ReCordAllVO mzMedicalRecord : mzMedicalRecords) {
+            if( mzMedicalRecord !=null){
+                //对处方的回流改集合
+                if(mzMedicalRecord.getRecipeObject() !=null && mzMedicalRecord.getRecipeObject().getRecipeNumber() != 0){
+                    List<MzRecipe> mzRecipes = reCordAllVOMapper.selectAllReCordOrDrug2(mzMedicalRecord.getRecipeObject().getRecipeNumber(),1l);
+                    for (MzRecipe mzRecipe : mzRecipes) {
+                        if(!mzRecipe.getXpList().isEmpty()){
+                            mzMedicalRecord.getRecipeObject().setXpList(mzRecipe.getXpList());
+                        }
+                        if(!mzRecipe.getZpList().isEmpty()){
+                            mzMedicalRecord.getRecipeObject().setZpList(mzRecipe.getZpList());
+                        }
+                    }
+                }
+                //体检值不为null ，回流添加改换集合
+                if(mzMedicalRecord.getTjCodeManObject() != null){
+                    if(mzMedicalRecord.getTjCodeManObject().getManId() != 0){
+                        List<TjCodeMan> tjCodeMEN = reCordAllVOMapper.selectAllReCordOrTj2(mzMedicalRecord.getTjCodeManObject().getManId(), 1L);
+                        for (TjCodeMan tjCodeMAN : tjCodeMEN) {
+                            if(!tjCodeMAN.getTjManResultList().isEmpty()){
+                                mzMedicalRecord.setTjManResultList(tjCodeMAN.getTjManResultList());
+                            }
+                        }
+                    }
+                }
+                //手术值不为null ，回流添加改换集合
+                if(mzMedicalRecord.getSurgeryStampObject() != null && mzMedicalRecord.getSurgeryStampObject().getSusNumber() != 0){
+                    List<MzSurgeryStamp> reCordAllVOSses = reCordAllVOMapper.selectAllReCordOrSs2(mzMedicalRecord.getSurgeryStampObject().getSusNumber(),1L);
+                    for (MzSurgeryStamp reCordAllVOSs : reCordAllVOSses) {
+                        if(!reCordAllVOSs.getCenterSurgeryList().isEmpty()){
+                            mzMedicalRecord.setCenterSurgeryList(reCordAllVOSs.getCenterSurgeryList());
+                        }
+                    }
+                }
+            }
+
+            QueryWrapper qw1 = new QueryWrapper();
+            qw1.eq("pm_Mr_Count",mzMedicalRecord.getMedicalRecordObject().getMrCount());
+            qw1.eq("sick_number",mzMedicalRecord.getMedicalRecordObject().getSickNumber());
+            List<MzPayment> list = paymentMapper.selectList(qw1);
+            System.err.println(" MzPayment缴费集合 "+list);
+            if(!list.isEmpty()){
+                mzMedicalRecord.setPaymentList(list);
+            }
+        }
+
+
+        return mzMedicalRecords;
     }
-    /**
-     *  查询就诊记录表--缴费记录查询
-     */
-    public MzMedicalRecord selectMedicalRecord(String texts){
-        return medicalRecordMapper.selectMzMedicalRecords(texts);
-    }
-
-
-
     /**
      * 修改处方表的缴费状态
      */
-    public void updateStateRecipe(String index,String xmName,MzPayment payment){
-        //条件构造寻找对应的id
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("recipe_Number",index);
-        if(xmName.equals("西药处方")){
-            List<MzXprescription> xp = xpMapper.selectList(qw);
-            for (MzXprescription mzXprescription : xp) {
-                mzXprescription.setRdStatePrice(1);
-                xpMapper.updateById(mzXprescription);
+    public void updateStateRecipe(RecordVo recordVo,Long sId ,Long index){
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.err.println(recordVo);
+        //            卡号信息
+        MzMedicalCard mzMedicalCard = setCardPrice(recordVo.getMedicalRecordObject().getMrMcCard());
+//        员工信息
+        QueryWrapper qws = new QueryWrapper();
+        qws.eq("s_id",sId);
+        Staff staff = staffMapper.selectOne(qws);
+        //根据处方修改药品
+        if(recordVo.getRecipeObject() != null && recordVo.getRecipeObject().getRecipeNumber() !=0){
+            double sums1 = 0 ;
+            /*西药药品修改*/
+            if(!recordVo.getRecipeObject().getXpList().isEmpty() ){
+                List<MzXprescription> xp = recordVo.getRecipeObject().getXpList();
+                for (MzXprescription mzXprescription : xp) {
+                    if(mzXprescription.getRdStatePrice() ==0 && mzXprescription.getRdNumber() !=0){
+                        sums1+=(mzXprescription.getRdPrice()*mzXprescription.getRdCount());
+                        QueryWrapper qwXp = new QueryWrapper();
+                        qwXp.eq("rd_number",mzXprescription.getRdNumber());
+                        MzXprescription mzXprescription1 = xpMapper.selectOne(qwXp);
+                        if(mzXprescription1!=null){
+                            mzXprescription1.setRdStatePrice(1L);
+                            xpMapper.updateById(mzXprescription1);
+                        }
+                    }
+                }
             }
-            //添加到缴费记录表中
-            extracted(payment, qw);
-        }
-        if(xmName.equals("中药处方")){
-            List<MzZprescription> zp =  zpMapper.selectList(qw);
-            for (MzZprescription mzZprescription : zp) {
-                mzZprescription.setZpStatePrice(1);
-                zpMapper.updateById(mzZprescription);
+            double sums2=0;
+            /*中药药品修改*/
+            if(!recordVo.getRecipeObject().getZpList().isEmpty()){
+                List<MzZprescription> zp =  recordVo.getRecipeObject().getZpList();
+                for (MzZprescription mzZprescription : zp) {
+                    if(mzZprescription.getZpStatePrice() == 0 && mzZprescription.getZpNumber() !=0){
+                        sums2 =( mzZprescription.getZpPrice() * mzZprescription.getZpCount());
+                        QueryWrapper qwZp = new QueryWrapper();
+                        qwZp.eq("zp_number",mzZprescription.getZpNumber());
+                        MzZprescription mzZprescription1 = zpMapper.selectOne(qwZp);
+                        if(mzZprescription1!=null){
+                            mzZprescription1.setZpStatePrice(1L);
+                            zpMapper.updateById(mzZprescription1);
+                        }
+                    }
+                }
             }
-            //添加到缴费记录表中
-            extracted(payment, qw);
+            if(recordVo.getRecipeObject().getRecipeDrugState() == 0){
+                /*先修改处方状态 -----------------*/
+                QueryWrapper qw1 = new QueryWrapper();
+                qw1.eq("recipe_Number",recordVo.getRecipeObject().getRecipeNumber());
+                MzRecipe mzRecipe = recipeMapper.selectOne(qw1);
+                mzRecipe.setRecipeDrugState(1);
+                recipeMapper.updateById(mzRecipe);
+            }
+            if(sums1!= 0 || sums2 !=0){
+                // 修改状态后存入缴费记录表中================
+                MzPayment mzPayment = new MzPayment();
+                //自动生成缴费单号
+                MyUtilCardConfig myUtilCardConfig = new MyUtilCardConfig();
+                mzPayment.setPmNumberCount("MZCFJF"+myUtilCardConfig.numberNot(6));
+                //对传过来的对象进行挨个赋值
+                mzPayment.setPmCard(recordVo.getMedicalRecordObject().getMrMcCard());
+                if(index==2){
+                    mzPayment.setPmPayment("诊疗卡支付");
+                }else{
+                    mzPayment.setPmPayment("其他&支付");
+                }
+                mzPayment.setPmSname(staff.getSName());
+                mzPayment.setPmMrCount(recordVo.getMedicalRecordObject().getMrCount());
+                mzPayment.setPmType("处方缴费");
+                mzPayment.setPmSum(Double.parseDouble(df.format((sums1+sums2))));
+                mzPayment.setPmTypeId(recordVo.getRecipeObject().getRecipeNumber());/*添加处方单单号*/
+                mzPayment.setSId(sId);
+                mzPayment.setSickNumber(recordVo.getMedicalRecordObject().getSickNumber());
+                paymentMapper.insert(mzPayment);
+            }
+
+
+            if(index==2){
+                if(sums1!= 0 || sums2 !=0){
+                    //新增卡账单记录表
+                    MzCardBill bill = new MzCardBill();
+                    bill.setCbCause("处方缴费");//原因
+                    bill.setCbPrice(Double.parseDouble(df.format((sums1+sums2))));//扣费金额
+                    bill.setSId(sId);//操作人员
+                    bill.setMcNumber(recordVo.getMedicalRecordObject().getMcNumber());//对应卡号
+                    billService.addMzCardBill(bill);
+                }
+            }
         }
+        //        根据体检修改项目
+        if(recordVo.getTjCodeManObject() !=null && recordVo.getTjCodeManObject().getManId() !=0){
+            double sums3 = 0;
+            if(!recordVo.getTjManResultList().isEmpty()){
+                List<TjManResult> tjManResultList = recordVo.getTjManResultList();
+                for (TjManResult tjManResult : tjManResultList) {
+                    if(tjManResult.getManPayState() == 0 && tjManResult.getManResultId() !=0){
+                        sums3+= tjManResult.getPro().getCheckPay();
+                        QueryWrapper qw2 = new QueryWrapper();
+                        qw2.eq("man_result_id",tjManResult.getManResultId());
+                        TjManResult tjManResult1 = tjManResultMapper.selectOne(qw2);
+                        System.err.println("进入体检修改1");
+                        if(tjManResult1 !=null){
+                            System.err.println("进入体检修改2");
+                            tjManResult1.setManPayState(1L);
+                            tjManResultMapper.updateById(tjManResult1);
+                        }
+                    }
+                }
+            }
+            if(recordVo.getTjCodeManObject().getManState() == 0){
+                //先修改手术对象的缴费状态
+                QueryWrapper qw1 = new QueryWrapper();
+                qw1.eq("man_id",recordVo.getTjCodeManObject().getManId());
+                TjCodeMan tjCodeMan = tjManMapper.selectOne(qw1);
+                tjCodeMan.setManState(1L);
+                tjManMapper.updateById(tjCodeMan);
+            }
+            if(sums3 !=0){
+                // 修改状态后存入缴费记录表中
+                MzPayment mzPayment = new MzPayment();
+                //自动生成缴费单号
+                MyUtilCardConfig myUtilCardConfig = new MyUtilCardConfig();
+                mzPayment.setPmNumberCount("MZTJJF"+myUtilCardConfig.numberNot(6));
+                //对传过来的对象进行挨个赋值
+                mzPayment.setPmCard(recordVo.getMedicalRecordObject().getMrMcCard());
+                if(index==2){
+                    mzPayment.setPmPayment("诊疗卡支付");
+                }else{
+                    mzPayment.setPmPayment("其他&支付");
+                }
+                mzPayment.setPmSname(staff.getSName());
+                mzPayment.setPmMrCount(recordVo.getMedicalRecordObject().getMrCount());
+                mzPayment.setPmSum( Double.parseDouble(df.format(sums3)));
+                mzPayment.setPmType("体检缴费");
+                mzPayment.setPmTypeId(recordVo.getTjCodeManObject().getManId());/*添加体检单单号*/
+                mzPayment.setSId(sId);
+                mzPayment.setSickNumber(recordVo.getMedicalRecordObject().getSickNumber());
+                paymentMapper.insert(mzPayment);
+            }
+
+            if( index ==2){
+                if(sums3 !=0) {
+                    //新增卡账单记录表
+                    MzCardBill bill = new MzCardBill();
+                    bill.setCbCause("体检缴费");//原因
+                    bill.setCbPrice(Double.parseDouble(df.format(sums3)));//扣费金额
+                    bill.setSId(sId);//操作人员
+                    bill.setMcNumber(recordVo.getMedicalRecordObject().getMcNumber());//对应卡号
+                    billService.addMzCardBill(bill);
+                }
+            }
+        }
+//        根据手术修改药品
+        if(recordVo.getSurgeryStampObject() !=null && recordVo.getSurgeryStampObject().getSusNumber() !=0){
+            double sums4 = 0;
+            if(!recordVo.getCenterSurgeryList().isEmpty()){
+                List<MzCenterSurgery> centerSurgeryList = recordVo.getCenterSurgeryList();
+                for (MzCenterSurgery mzCenterSurgery : centerSurgeryList) {
+                    if(mzCenterSurgery.getSusPayState() ==0 && mzCenterSurgery.getSusId() !=0){
+                        sums4  += mzCenterSurgery.getSsObject().getProjectPay();
+                        QueryWrapper qw2 = new QueryWrapper();
+                        qw2.eq("sus_id",mzCenterSurgery.getSusId());
+                        MzCenterSurgery mzCenterSurgery1 = centerSurgeryMapper.selectOne(qw2);
+                        if(mzCenterSurgery1 !=null ){
+                            mzCenterSurgery1.setSusPayState(1L);
+                            centerSurgeryMapper.updateById(mzCenterSurgery1);
+                        }
+                    }
+                }
+
+            }
+            if(recordVo.getSurgeryStampObject().getSusState() == 0) {
+                //先修改手术对象的缴费状态-----------
+                QueryWrapper qw1 = new QueryWrapper();
+                qw1.eq("sus_number", recordVo.getSurgeryStampObject().getSusNumber());
+                MzSurgeryStamp mzSurgeryStamp = surgeryStampMapper.selectOne(qw1);
+                mzSurgeryStamp.setSusState(1);
+                surgeryStampMapper.updateById(mzSurgeryStamp);
+            }
+            if(sums4 !=0){
+                // 修改状态后存入缴费记录表中============
+                MzPayment mzPayment = new MzPayment();
+                //自动生成缴费单号
+                MyUtilCardConfig myUtilCardConfig = new MyUtilCardConfig();
+                mzPayment.setPmNumberCount("MZSSJF"+myUtilCardConfig.numberNot(6));
+                //对传过来的对象进行挨个赋值
+                mzPayment.setPmCard(recordVo.getMedicalRecordObject().getMrMcCard());
+                if(index==2){
+                    mzPayment.setPmPayment("诊疗卡支付");
+                }else{
+                    mzPayment.setPmPayment("其他&支付");
+                }
+                mzPayment.setPmSname(staff.getSName());
+                mzPayment.setPmMrCount(recordVo.getMedicalRecordObject().getMrCount());
+                mzPayment.setPmSum(Double.parseDouble(df.format(sums4)));
+                mzPayment.setPmType("手术缴费");
+                mzPayment.setPmTypeId(recordVo.getSurgeryStampObject().getSusNumber());/*添加手术单单号*/
+                mzPayment.setSId(sId);
+                mzPayment.setSickNumber(recordVo.getMedicalRecordObject().getSickNumber());
+                paymentMapper.insert(mzPayment);
+            }
+
+            if( index ==2){
+                if(sums4!=0) {
+                    //新增卡账单记录表
+                    MzCardBill bill = new MzCardBill();
+                    bill.setCbCause("手术缴费");//原因
+                    bill.setCbPrice(Double.parseDouble(df.format(sums4)));//扣费金额
+                    bill.setSId(sId);//操作人员
+                    bill.setMcNumber(recordVo.getMedicalRecordObject().getMcNumber());//对应卡号
+                    billService.addMzCardBill(bill);
+                }
+            }
+        }
+
+
+
     }
 
     /**
-     * 添加到缴费记录表中
+     * 修改卡余额
+     * @param recordVo
      */
-    private void extracted(MzPayment payment, QueryWrapper qw) {
-        // 查询一遍处方表
-        MzRecipe mzRecipe = recipeMapper.selectOne(qw);
-        // 修改状态后存入缴费记录表中
-        MzPayment mzPayment = new MzPayment();
-        //自动生成缴费单号
-        MyUtilCardConfig myUtilCardConfig = new MyUtilCardConfig();
-        mzPayment.setPmNumberCount("MZJF"+myUtilCardConfig.numberNot(6));
-        //对传过来的对象进行挨个赋值
-        mzPayment.setPmCard(payment.getPmCard());
-        mzPayment.setPmSum(payment.getPmSum());
-        mzPayment.setPmType(payment.getPmType());
-        mzPayment.setPmTypeId(payment.getPmTypeId());
-        mzPayment.setSId(payment.getSId());
-        mzPayment.setSickNumber(payment.getSickNumber());
+    public Boolean setCardPrice(RecordVo recordVo, Long sId,Long index) {
+        QueryWrapper his = new QueryWrapper();
+        his.eq("mc_card", recordVo.getMedicalRecordObject().getMrMcCard());
+        MzMedicalCard mzMedicalCard = cardMapper.selectOne(his);
+        if(mzMedicalCard.getMcBalance()>= recordVo.getMedicalRecordObject().getMrTotalMoney()){
+            double sum = mzMedicalCard.getMcBalance() - recordVo.getMedicalRecordObject().getMrTotalMoney();
+            DecimalFormat df = new DecimalFormat("0.00");
+            mzMedicalCard.setMcBalance(Double.parseDouble(df.format(sum)));
+            cardMapper.updateById(mzMedicalCard);/*修改卡余额*/
+            //修改和添加缴费记录
+            updateStateRecipe(recordVo,sId,index);
+            return true;
+        }else{
+            return false;
+        }
 
-        paymentMapper.insert(mzPayment);
+    }
+    /**
+     * 缴费查询卡号 校验密码
+     */
+    public MzMedicalCard setCardPrice(String card) {
+        QueryWrapper ca = new QueryWrapper();
+        ca.eq("mc_card",card);
+        MzMedicalCard mzMedicalCard = cardMapper.selectOne(ca);
+        return mzMedicalCard;
     }
 
-
     /**
-     * 查询所有的缴费完成记录
+     * 病人信息查询 已经就诊完成了的人所有人的就诊记录表（当天看病人数统计表页面）
      * @return
      */
-    public List<MzMedicalRecord> selectRecordsAll(String text){
-        List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.selectRecordsAll(text);
-        return mzMedicalRecords;
-    }
-
-
-    /**
-     * 病人信息查询 已经就诊完成了的人
-     * @return
-     */
-    public List<MzMedicalRecord> allRecordSick(String text){
-        List<MzMedicalRecord> mzMedicalRecords = medicalRecordMapper.allRecordSick(text);
-        return mzMedicalRecords;
+    public List<ReCordAllVO> allRecordSick(String text){
+        return  selectRecordsAll(text);
     }
 
     /**
