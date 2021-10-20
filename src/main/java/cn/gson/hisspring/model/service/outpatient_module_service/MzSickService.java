@@ -26,6 +26,28 @@ public class MzSickService {
     MzSickMapper mzSickMapper;//病人信息
     @Autowired
     MzMedicalCardMapper mzMedicalCardMapper;//诊疗卡
+
+
+
+    /**
+     * 身份证校验
+     * @param idCard
+     * @return
+     */
+    public Boolean idCard(String idCard){
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("sick_id_card",idCard);
+        MzSick mzSick = mzSickMapper.selectOne(qw);
+        if(mzSick!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+
+
     //新增病人信息
     public void addMzSick(MzSick mzSick){
         if(mzSick!=null){

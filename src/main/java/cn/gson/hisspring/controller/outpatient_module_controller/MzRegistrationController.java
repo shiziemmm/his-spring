@@ -8,7 +8,9 @@ import cn.gson.hisspring.model.pojos.pojos_vo.GuaHaoVO;
 import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalCardService;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzRegistrationService;
+import cn.gson.hisspring.model.service.outpatient_module_service.MzSickService;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +36,26 @@ public class MzRegistrationController {
 
     @Autowired
     SchedulingMapper schedulingMapper; //七日排班mapper
+
+    @Autowired
+    MzSickService sickService;
+
+    @GetMapping("idCardJiaoyan")
+    public String idCardJiaoyan(String idCard){
+        try {
+            Boolean aBoolean = sickService.idCard(idCard);
+            if(aBoolean){
+                return "ok";
+            }else{
+                return "no";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+
+
     @RequestMapping("week-sch")
     public List<Scheduling> cs(@RequestBody GuaHaoVO guaHaoVO) throws ParseException {
 //        Map map = JSON.parseObject(str,Map.class);

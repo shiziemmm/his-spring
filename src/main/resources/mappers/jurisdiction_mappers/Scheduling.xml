@@ -120,7 +120,12 @@
             and sk.ks_id = #{ksId}
         </if>
         and sk.de_id =2
-        ORDER BY fr.f_end_time
+        <if test="dates !=null">
+            ORDER BY fr.f_end_time
+        </if>
+        <if test="dates ==null">
+            ORDER BY pb.rq
+        </if>
     </select>
 
     <select id="seletSch" resultMap="BaseResultMap">
