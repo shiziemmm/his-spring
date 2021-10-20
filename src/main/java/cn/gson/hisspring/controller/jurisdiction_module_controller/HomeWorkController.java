@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,33 +51,37 @@ public class HomeWorkController {
         HashMap<Object, Object> res = new HashMap<>();
         List<Double> name = new ArrayList<>();
         List<Double> num = new ArrayList<>();
+        String dome=JSON.toJSONString(res);
+        if(echarts.size()!=0){
+            num.add(Double.parseDouble(echarts.get(0).getC1()));
+            num.add(Double.parseDouble(echarts.get(0).getC2()));
+            num.add(Double.parseDouble(echarts.get(0).getC3()));
+            num.add(Double.parseDouble(echarts.get(0).getC4()));
+            num.add(Double.parseDouble(echarts.get(0).getC5()));
+            num.add(Double.parseDouble(echarts.get(0).getC6()));
+            num.add(Double.parseDouble(echarts.get(0).getC7()));
+            num.add(Double.parseDouble(echarts.get(0).getC8()));
+            num.add(Double.parseDouble(echarts.get(0).getC9()));
+            num.add(Double.parseDouble(echarts.get(0).getC10()));
+            num.add(Double.parseDouble(echarts.get(0).getC11()));
+            num.add(Double.parseDouble(echarts.get(0).getC12()));
+        }
+        if(echartss.size()!=0){
+            name.add(Double.parseDouble(echartss.get(0).getC1()));
+            name.add(Double.parseDouble(echartss.get(0).getC2()));
+            name.add(Double.parseDouble(echartss.get(0).getC3()));
+            name.add(Double.parseDouble(echartss.get(0).getC4()));
+            name.add(Double.parseDouble(echartss.get(0).getC5()));
+            name.add(Double.parseDouble(echartss.get(0).getC6()));
+            name.add(Double.parseDouble(echartss.get(0).getC7()));
+            name.add(Double.parseDouble(echartss.get(0).getC8()));
+            name.add(Double.parseDouble(echartss.get(0).getC9()));
+            name.add(Double.parseDouble(echartss.get(0).getC10()));
+            name.add(Double.parseDouble(echartss.get(0).getC11()));
+            name.add(Double.parseDouble(echartss.get(0).getC12()));
+        }
 
-        num.add(Double.parseDouble(echarts.get(0).getC1()));
-        num.add(Double.parseDouble(echarts.get(0).getC2()));
-        num.add(Double.parseDouble(echarts.get(0).getC3()));
-        num.add(Double.parseDouble(echarts.get(0).getC4()));
-        num.add(Double.parseDouble(echarts.get(0).getC5()));
-        num.add(Double.parseDouble(echarts.get(0).getC6()));
-        num.add(Double.parseDouble(echarts.get(0).getC7()));
-        num.add(Double.parseDouble(echarts.get(0).getC8()));
-        num.add(Double.parseDouble(echarts.get(0).getC9()));
-        num.add(Double.parseDouble(echarts.get(0).getC10()));
-        num.add(Double.parseDouble(echarts.get(0).getC11()));
-        num.add(Double.parseDouble(echarts.get(0).getC12()));
 
-
-        name.add(Double.parseDouble(echartss.get(0).getC1()));
-        name.add(Double.parseDouble(echartss.get(0).getC2()));
-        name.add(Double.parseDouble(echartss.get(0).getC3()));
-        name.add(Double.parseDouble(echartss.get(0).getC4()));
-        name.add(Double.parseDouble(echartss.get(0).getC5()));
-        name.add(Double.parseDouble(echartss.get(0).getC6()));
-        name.add(Double.parseDouble(echartss.get(0).getC7()));
-        name.add(Double.parseDouble(echartss.get(0).getC8()));
-        name.add(Double.parseDouble(echartss.get(0).getC9()));
-        name.add(Double.parseDouble(echartss.get(0).getC10()));
-        name.add(Double.parseDouble(echartss.get(0).getC11()));
-        name.add(Double.parseDouble(echartss.get(0).getC12()));
 
         res.put("name",name);
         res.put("num",num);
@@ -95,14 +100,35 @@ public class HomeWorkController {
     public double moneny(){
         List<echartsVo> list= echatrsMapper.zhuyu();
         List<echartsVo> map= echatrsMapper.menzhen();
+        System.err.println(list+"1");
+        System.err.println(map+"2");
         double nums=0.00;
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < map.size(); j++) {
-                nums=list.get(i).getPcdPrice()+map.get(j).getPcdPrice();
+        if(list.isEmpty()){
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = 0; j < map.size(); j++) {
+                    nums=0+map.get(j).getPcdPrice();
+                }
             }
+            BigDecimal b   =   new   BigDecimal(nums);
+            double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+            return f1;
         }
-       return nums;
+        if(map.isEmpty()){
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = 0; j < map.size(); j++) {
+                    nums=list.get(i).getPcdPrice()+0;
+                }
+            }
+            BigDecimal b   =   new   BigDecimal(nums);
+            double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+            return f1;
+        }
+        BigDecimal b   =   new   BigDecimal(nums);
+        double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+        return f1;
+        }
+
     }
 
-}
+
 
