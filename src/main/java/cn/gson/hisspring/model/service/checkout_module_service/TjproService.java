@@ -197,11 +197,6 @@ public class TjproService {
     public boolean tprojectUpdate(TjCodeProject troj){
         int is = 0;//判断是否新增成功
         if(troj.getCheckId() == 0){//新增
-//            TjCodeIndex tjCodeIndex = new TjCodeIndex();
-//            sed.insert(troj.getTjCodeIndex());
-//            System.err.println("新增进去"+troj.getTjCodeIndex().getIndexId());
-//            troj.setIndexId(troj.getTjCodeIndex().getIndexId());
-//            System.out.println(troj.getTjCodeIndex().getIndexId());
             is = major.insert(troj);
         }else{//修改
 //            sed.updateById(troj.getTjCodeIndex());
@@ -217,6 +212,10 @@ public class TjproService {
     //检查项目删除
     public void delet(Integer  index){
         major.deleteById(index);
+    }
+    //体检人员删除
+    public void deletman(Integer manId){
+        man.deleteById(manId);
     }
 //指标表查询所有
     public List<TjCodeIndex> allIndex(){

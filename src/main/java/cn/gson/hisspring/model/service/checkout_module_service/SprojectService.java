@@ -43,9 +43,14 @@ public class SprojectService {
         List<SsOperationDetails> listss = ssd.selectAllsDetails(seach);
         return listss;
     }
-    //所有手术记录
+    //单手术记录
     public List<SsOperationDetails> aoneSdetails(Integer operationNum){
         List<SsOperationDetails> listss = ssd.selectAloneDetails(operationNum);
+        return listss;
+    }
+    //根据手术项目手术记录
+    public List<SsOperationDetails> aoneprSdetails(Integer projectId){
+        List<SsOperationDetails> listss = ssd.selectDat(projectId);
         return listss;
     }
     //所有手术申请

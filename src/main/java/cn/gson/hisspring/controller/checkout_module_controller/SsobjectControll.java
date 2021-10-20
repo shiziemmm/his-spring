@@ -43,6 +43,11 @@ public class SsobjectControll {
     public List<SsOperationDetails> allSDetail(Integer operationNum){
         return  sprojectService.aoneSdetails(operationNum);
     }
+    //根据手术id查手术记录
+    @RequestMapping("ssdproDetail")
+    public List<SsOperationDetails> allproDetail(Integer projectId){
+        return  sprojectService.aoneprSdetails(projectId);
+    }
 
 
 
@@ -166,6 +171,7 @@ public class SsobjectControll {
             return "fail";
         }
     }
+
     //查询所有手术药品
     @RequestMapping("yp-ss")
     public List<YfDruginformation> yfDruginformations(){

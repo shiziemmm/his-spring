@@ -181,6 +181,17 @@ public class TjproController {
             return "fail";
         }
     }
+    //    删除手术申请
+    @PostMapping("delet-man")
+    public String deletman(Integer manId){
+        try {
+            major.deletman(manId);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
     //    删除检查项目
     @PostMapping("delet-troj")
     public String deletlist(Integer index){
