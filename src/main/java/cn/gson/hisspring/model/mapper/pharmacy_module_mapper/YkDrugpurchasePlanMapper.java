@@ -4,12 +4,13 @@ import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.YfDruginformation;
 import cn.gson.hisspring.model.pojos.YkDrugpurchasePlan;
 import cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
-public interface YkDrugpurchasePlanMapper {
+public interface YkDrugpurchasePlanMapper extends BaseMapper<YkDrugpurchasePlan> {
     //查询采购计划
     List <YkDrugpurchasePlan> allplan();
     //查询采购的员工
@@ -24,4 +25,8 @@ public interface YkDrugpurchasePlanMapper {
     void  addplandeta(YkDrugpurchasePlanDetails ykDrugpurchasePlanDetails);
     /*查询待入库的药品*/
     List <YkDrugpurchasePlan>alldairuku();
+    /*执行采购计划*/
+    //public void zhixing(Long ykPurchaseId);
+    /*保存入库的药品*/
+    void preserve(YkDrugpurchasePlanDetails ykDrugpurchasePlanDetails);
 }

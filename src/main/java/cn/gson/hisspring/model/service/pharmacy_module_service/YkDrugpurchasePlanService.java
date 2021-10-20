@@ -5,6 +5,7 @@ import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.YfDruginformation;
 import cn.gson.hisspring.model.pojos.YkDrugpurchasePlan;
 import cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class YkDrugpurchasePlanService {
     @Autowired
     YkDrugpurchasePlanMapper planMapper;
+
     /*查询所有的采购计划*/
     public List<YkDrugpurchasePlan> allplan(){
         return planMapper.allplan();
@@ -53,5 +55,29 @@ public class YkDrugpurchasePlanService {
            planMapper.addplandeta(details);
         }
 //        planMapper.addplan(ykDrugpurchasePlan);
+    }
+
+    /*执行采购计划 把状态修改成2*/
+    public void zhixing(YkDrugpurchasePlan Drugpurchase){
+        QueryWrapper qwra =new QueryWrapper();
+        qwra.eq("YK_purchase_is",Drugpurchase.getYkPurchaseIs());
+        YkDrugpurchasePlan ykDrugpurchasePlan = planMapper.selectOne(qwra);
+        if (ykDrugpurchasePlan!=null){
+            ykDrugpurchasePlan.setYkPurchaseIs(2L);
+            planMapper.updateById(ykDrugpurchasePlan);
+        }
+    }
+
+    /*保存入库的药品*/
+    public void preserve(List<YkDrugpurchasePlanDetails> ykDrugpurchasePlanDetails){
+        YkDrugpurchasePlanDetails planDetails = new YkDrugpurchasePlanDetails();
+        for (YkDrugpurchasePlanDetails ykDrugpurchasePlanDetail : ykDrugpurchasePlanDetails) {
+            planDetails.setYkChaseId(ykDrugpurchasePlanDetail.getYkChaseId());
+            planDetails.setYkBatch(ykDrugpurchasePlanDetail.getYkBatch());
+            planDetails.setYkChaseCount(ykDrugpurchasePlanDetail.getYkChaseCount());
+            planDetails.setYkDate(ykDrugpurchasePlanDetail.getYkDate());
+            planMapper.preserve(planDetails);
+        }
+
     }
 }

@@ -7,12 +7,10 @@ import cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails;
 import cn.gson.hisspring.model.service.pharmacy_module_service.YkDrugpurchasePlanService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin /*跨域*/
@@ -54,5 +52,28 @@ public class YkDrugpurchasePlanController {
     @RequestMapping("dairuku")
     public List<YkDrugpurchasePlan> alldairuku(){
         return planService.alldairuku();
+    }
+    /*执行采购计划*/
+    @RequestMapping("zhixing")
+    public String zhixing(YkDrugpurchasePlan ykDrugpurchasePlan){
+        try {
+            planService.zhixing(ykDrugpurchasePlan);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+
+    /*保存入库的药品*/
+    @PostMapping("preserve")
+    public String preserve(@RequestBody String str){
+        System.err.println(str);
+            List<YkDrugpurchasePlanDetails> planDetails = JSON.parseArray(str,YkDrugpurchasePlanDetails.class);
+            System.out.println(planDetails);
+            planService.preserve(planDetails);
+//            planService.preserve(planDetails);
+            return "ok";
+
     }
 }

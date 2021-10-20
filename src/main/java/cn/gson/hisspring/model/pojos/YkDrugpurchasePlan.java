@@ -18,7 +18,7 @@ public class YkDrugpurchasePlan {
   @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
   private Timestamp ykPurchaseTime;//药品计划采购日期
   private Long sId;//指定采购计划人员 连接员工编号
-  private String ykPurchaseSName;//采购员名称
+  private String ykPurchaseSname;//采购员名称
   private Long ykPurchaseIs;//是否已经执行过该计划  1是未执行 2是已执行
 
   @TableField(exist = false)
@@ -37,7 +37,7 @@ public class YkDrugpurchasePlan {
             ", ykPurchaseName='" + ykPurchaseName + '\'' +
             ", ykPurchaseTime=" + ykPurchaseTime +
             ", sId=" + sId +
-            ", ykPurchaseSName='" + ykPurchaseSName + '\'' +
+            ", ykPurchaseSName='" + ykPurchaseSname + '\'' +
             ", ykPurchaseIs=" + ykPurchaseIs +
             ", staff=" + staff +
             ", ykDrugpurchasePlanDetails=" + ykDrugpurchasePlanDetails +
