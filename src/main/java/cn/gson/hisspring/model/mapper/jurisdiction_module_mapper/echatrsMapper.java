@@ -11,4 +11,6 @@ public interface echatrsMapper {
 
     List<echartsVo> getAllEcharts();
     List<echartsVo> getList();
+    List<echartsVo> zhuyu();
+    List<echartsVo> menzhen();
 }

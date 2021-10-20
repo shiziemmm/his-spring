@@ -100,7 +100,9 @@
         <association property="historyObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMap"></association>
         <association property="sickObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap"></association>
     </resultMap>
-
+<select id="chaxunnums" resultMap="recordMap">
+    SELECT * from mz_medical_record WHERE mz_medical_record.mr_State=2
+</select>
     <resultMap id="recordMap2" type="cn.gson.hisspring.model.pojos.MzMedicalRecord">
         <id column="mr_Number" property="mrNumber"></id>
         <result column="mr_Count" property="mrCount"></result>

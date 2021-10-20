@@ -2,6 +2,8 @@ package cn.gson.hisspring.controller.jurisdiction_module_controller;
 
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMapper;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.echatrsMapper;
+import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalRecordMapper;
+import cn.gson.hisspring.model.pojos.MzMedicalRecord;
 import cn.gson.hisspring.model.pojos.Scheduling;
 import cn.gson.hisspring.model.pojos.pojos_vo.WeekVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.echartsVo;
@@ -27,6 +29,8 @@ public class HomeWorkController {
     SchedulingMapper schedulingMapper;
     @Autowired
     echatrsMapper echatrsMapper;
+    @Autowired
+    MzMedicalRecordMapper mzMedicalRecordMapper;
     //今日排班
     @RequestMapping("home-sch")
     public List<Scheduling> homeSch(){
@@ -81,6 +85,23 @@ public class HomeWorkController {
         System.err.println(res_string);
         return res_string;
 
+    }
+    @RequestMapping("chaxunnums")
+    public int nums(){
+        List<MzMedicalRecord> list=mzMedicalRecordMapper.chaxunnums();
+        return list.size();
+    }
+    @RequestMapping("moneny")
+    public double moneny(){
+        List<echartsVo> list= echatrsMapper.zhuyu();
+        List<echartsVo> map= echatrsMapper.menzhen();
+        double nums=0.00;
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < map.size(); j++) {
+                nums=list.get(i).getPcdPrice()+map.get(j).getPcdPrice();
+            }
+        }
+       return nums;
     }
 
 }

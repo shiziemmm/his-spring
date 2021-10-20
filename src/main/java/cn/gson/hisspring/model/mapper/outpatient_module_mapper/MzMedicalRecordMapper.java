@@ -17,7 +17,8 @@ import java.util.List;
 public interface MzMedicalRecordMapper extends BaseMapper<MzMedicalRecord> {
     //查询未缴费的记录。开始缴费查询
     ReCordAllVO selectAllReCordObject2(String texts);
-
+    //查询就诊记录
+    List<MzMedicalRecord>chaxunnums();
     /**
      * 查询所有的缴费完成记录
      */
