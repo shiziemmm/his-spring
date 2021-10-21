@@ -80,26 +80,24 @@ public class MzRegistrationService {
         opcNumber.setKsId(mzRegistration.getKsId());
         opcNumber.setBnSickName(cardObject.getMzSick().getSickName());
         opcNumber.setBnState(0L);//排号状态默认为0
-        opcNumber.setBnScience(mzRegistration.getRtScience());
+        opcNumber.setBnScience(mzRegistration.getDoctorSid());
         //日期格式来加个判断
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-        Calendar c = Calendar.getInstance();
         //查询当前科室的挂号人数，来生成排号号码
         QueryWrapper<MzOpcNumber> wp = new QueryWrapper<>();//我这次新增的科室，查询科室后面生成号码
-        wp.eq("ks_id",mzRegistration.getRtOverKsName());
-        wp.eq("bn_science",mzRegistration.getRtScience());
+        wp.eq("ks_id",mzRegistration.getKsId());
+        wp.eq("bn_science",mzRegistration.getDoctorSid());
         wp.eq("date_format(bn_time ,'%Y-%m-%d')",sf.format(mzRegistration.getRtOnsetTime()));// 日期
-        System.err.println(sf.format(c.getTime())+"==生成排号号码");
         List<MzOpcNumber> opcCount = opcNumberMapper.selectList(wp);
         if(opcCount.isEmpty()){//如果没有数据，他是第一个就1
             opcNumber.setBnCount(1L);
         }else{//有就号码加1
-            opcNumber.setBnCount(maxCount(mzRegistration.getKsId(),mzRegistration.getRtScience(),mzRegistration.getRtOnsetTime())+1);
+            opcNumber.setBnCount(maxCount(mzRegistration.getKsId(),mzRegistration.getDoctorSid(),mzRegistration.getRtOnsetTime())+1);
         }
         opcNumberMapper.insert(opcNumber);
     }
     //返回数据库最大值--科室排号
-    public Long maxCount(long ksId ,String science,Date date){
+    public Long maxCount(long ksId ,long science,Date date){
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         Calendar c = Calendar.getInstance();
         //按区间分号，排号

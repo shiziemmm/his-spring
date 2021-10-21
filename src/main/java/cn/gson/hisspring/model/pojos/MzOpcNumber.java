@@ -24,7 +24,7 @@ public class MzOpcNumber {
   private Date bnTime;
   private String bnIdCard;
   private long ksId;
-  private String bnScience;
+  private long bnScience;
   private String bnSickName;
   private long rtNumber;
   @TableField(insertStrategy =  FieldStrategy.IGNORED )
