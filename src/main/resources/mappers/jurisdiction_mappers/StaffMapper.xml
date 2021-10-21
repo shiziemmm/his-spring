@@ -32,6 +32,7 @@
             <id column="de_id" jdbcType="INTEGER" property="deId" />
             <result column="de_name" jdbcType="VARCHAR" property="deName" />
         </association>
+
     </resultMap>
     <select id="selectALl" resultMap="BaseResultMap">
         SELECT  * FROM staff s inner join `user` u on s.u_id=u.u_id inner join department_ks d on
@@ -47,5 +48,8 @@
     <update id="upa">
         update staff set s_zt=1 where s_id=#{sid}
     </update>
-
+<select id="selectRole" resultMap="BaseResultMap">
+    SELECT * FROM staff s inner join role_middle_user ru on s.u_id = ru.U_id
+        inner join role r on ru.R_id=r.R_id WHERE s.u_id=#{uId}
+</select>
 </mapper>

@@ -17,7 +17,18 @@ public class DrugStorageService {
     }
 
     /*药品入库*/
-    /*public void putstorage(YkDruginventory ykDruginventory){
-        return drugStorageMapper.putstorage(ykDruginventory);
-    }*/
+    public void putstorage(YkDruginventory ykDruginventory){
+        YkDruginventory ykdrug= new YkDruginventory();
+        ykdrug.setDrugId(ykdrug.getDrugId());
+        ykdrug.setSupplierId(ykdrug.getSupplierId());
+        ykdrug.setYkDrvenId(ykdrug.getYkDrvenId());
+        ykdrug.setYkDrvenBatch(ykdrug.getYkDrvenBatch());
+        ykdrug.setYkDrvenCount(ykdrug.getYkDrvenCount());
+        ykdrug.setYkDrvenMftdate(ykdrug.getYkDrvenMftdate());
+        ykdrug.setYkDrvenName(ykdrug.getYkDrvenName());
+        ykdrug.setYkSupplierName(ykdrug.getYkSupplierName());
+        ykdrug.setYkWarehouse(ykdrug.getYkWarehouse());
+
+         drugStorageMapper.putstorage(ykDruginventory);
+    }
 }

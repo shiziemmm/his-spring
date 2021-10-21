@@ -32,6 +32,16 @@
         <result column="Des_present_date" property="desPresentDate" />
     </resultMap>
 
+
+    <!--循环医嘱表的医嘱编号修改医嘱详表里面的执行日期-->
+    <update id="doctorEnjoinDetailsByDeIdFor">
+        update zy_doctor_enjoin_details set Des_end_date = current_timestamp where  De_id in(
+        <foreach collection="list" item="des" separator=",">
+            #{des.deId}
+        </foreach>
+        )
+    </update>
+
     <!--循环修改医嘱详表里面的执行日期-->
     <update id="doctorEnjoinDetailsExecuteFor">
         update ZY_doctor_enjoin_details set Des_present_date = current_timestamp where Des_id in(

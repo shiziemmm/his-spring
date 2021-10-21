@@ -119,7 +119,13 @@
         <if test="ksId != null and  ksId != '' ">
             and sk.ks_id = #{ksId}
         </if>
-        ORDER BY fr.f_end_time
+        and sk.de_id =2
+        <if test="dates !=null">
+            ORDER BY fr.f_end_time
+        </if>
+        <if test="dates ==null">
+            ORDER BY pb.rq
+        </if>
     </select>
 
     <select id="seletSch" resultMap="BaseResultMap">

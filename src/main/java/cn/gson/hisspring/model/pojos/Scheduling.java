@@ -18,6 +18,8 @@ public class Scheduling {
   private String rq;
 
   @TableField(exist = false)
+  private long indexs;
+  @TableField(exist = false)
   private Staff staff;
   @TableField(exist = false)
   private Frequency frequency;

@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper">
+    <resultMap id="historyMaps" type="cn.gson.hisspring.model.pojos.MzCaseHistory">
+        <id column="ch_Number" property="chNumber"></id>
+        <result column="ch_Time" property="chTime"></result>
+        <result column="ch_Doctor" property="chDoctor"></result>
+        <result column="ch_Complaint" property="chComplaint"></result>
+        <result column="ch_History" property="chHistory"></result>
+        <result column="ch_Family_History" property="chFamilyHistory"></result>
+        <result column="ch_Cause" property="chCause"></result>
+        <result column="ch_Doctor_Text" property="chDoctorText"></result>
+        <result column="sick_Number" property="sickNumber"></result>
+        <result column="ch_zy_mz_id" property="chZyMzId"></result>
+        <result column="ch_is" property="chIs"></result>
+        <result column="ch_sid" property="chSid"></result>
+    </resultMap>
 
     <resultMap id="historyMap" type="cn.gson.hisspring.model.pojos.MzCaseHistory">
         <id column="ch_Number" property="chNumber"></id>

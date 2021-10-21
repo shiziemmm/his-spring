@@ -1,5 +1,6 @@
 package cn.gson.hisspring.model.mapper.inhospital_module_mapper;
 
+import cn.gson.hisspring.model.pojos.ZyDoctorEnjoin;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import cn.gson.hisspring.model.pojos.ZyStopDoctorEnjoin;
@@ -29,6 +30,8 @@ public interface DoctorEnjoinDetailsMapper extends BaseMapper<ZyDoctorEnjoinDeta
     List<ZyDoctorEnjoinDetails> patientDoctorByPtNo(Long ptNo);
 
     int doctorEnjoinDetailsExecuteFor(List<ZyDoctorEnjoinDetails> list);
+
+    int doctorEnjoinDetailsByDeIdFor(List<ZyDoctorEnjoin> doctorEnjoins);
 
     int doctorEnjoinDetailsExecute(Long desId);
 

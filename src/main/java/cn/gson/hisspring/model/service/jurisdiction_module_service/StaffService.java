@@ -44,5 +44,8 @@ public class StaffService{
     public int upa(long id){
         return sm.upa(id);
     }
+    public List<Staff> selectRole(long uId){
+        return sm.selectRole(uId);
+    }
 
 }

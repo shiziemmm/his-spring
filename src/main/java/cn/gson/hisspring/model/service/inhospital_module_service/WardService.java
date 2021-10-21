@@ -6,6 +6,7 @@ import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.ZyBed;
 import cn.gson.hisspring.model.pojos.ZyPatientBase;
 import cn.gson.hisspring.model.pojos.ZyWard;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -30,10 +31,10 @@ public class WardService{
      * 查询所有病房
      * @return
      */
-    public List<ZyWard> selectWardAllPage(String search, Staff staff){
+    public List<ZyWard> selectWardAllPage(SelectExecuteVo selectExecuteVo){
 //        QueryWrapper<ZyWard> qw = new QueryWrapper<ZyWard>().eq("ks_id",staff.getKsId());
 //        wdm.selectList(qw);
-        List<ZyWard> listWard = wdm.selectWardAllPage(search,staff.getKsId().toString());
+        List<ZyWard> listWard = wdm.selectWardAllPage(selectExecuteVo);
         for(ZyWard wd : listWard){
             if(!wd.getListBed().isEmpty()){//判断该病房下面是否有病床 防止报空指针
                 int count = 0;//病房病人数量
@@ -54,6 +55,18 @@ public class WardService{
     }
 
     /**
+     * 判断病房是否存在
+     */
+    public boolean selectWdNameRepetition(String wdName){
+        QueryWrapper<ZyWard> zyWardQueryWrapper = new QueryWrapper<ZyWard>().eq("wd_name",wdName);
+        List<ZyWard> zyWards = wdm.selectList(zyWardQueryWrapper);
+        if(zyWards.isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * 新增病房
      * @return
      */ 
@@ -71,9 +84,9 @@ public class WardService{
      * 根据科室查询病房信息
      */
     public List<ZyWard> selectWardByKsId(String ksId){
-        List<ZyWard> list = wdm.selectWardAllPage("",ksId);
+       return wdm.selectWardAllByKsId(ksId);
 
-        return list.isEmpty() ? null : list;
     }
+
 
 }

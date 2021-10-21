@@ -35,6 +35,7 @@ public class MzRegistration {
   private long sickNumber;
   private long mcNumber;
   private long ksId;
+  private long doctorSid; //医师员工id
 
   @TableField(exist = false)//不是数据库字段--诊疗卡对象
   private MzMedicalCard cardObject;

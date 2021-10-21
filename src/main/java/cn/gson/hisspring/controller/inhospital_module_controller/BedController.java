@@ -44,6 +44,13 @@ public class BedController {
        return bs.bedAddOrUpdate(beds);
     };
 
+    /**
+     * 判断病床名称是否重复
+     */
+    @RequestMapping("selectBdNameRepetition")
+    public boolean selectBdNameRepetition(String bdName){
+        return bs.selectBdNameRepetition(bdName);
+    }
 
     /**
      * 根据病床编号修改病床状态

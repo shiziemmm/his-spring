@@ -5,9 +5,12 @@ import cn.gson.hisspring.model.pojos.MzMedicalCard;
 import cn.gson.hisspring.model.pojos.MzRegistration;
 import cn.gson.hisspring.model.pojos.Scheduling;
 import cn.gson.hisspring.model.pojos.pojos_vo.GuaHaoVO;
+import cn.gson.hisspring.model.pojos.pojos_vo.RecordVo;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzMedicalCardService;
 import cn.gson.hisspring.model.service.outpatient_module_service.MzRegistrationService;
+import cn.gson.hisspring.model.service.outpatient_module_service.MzSickService;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -32,6 +36,26 @@ public class MzRegistrationController {
 
     @Autowired
     SchedulingMapper schedulingMapper; //七日排班mapper
+
+    @Autowired
+    MzSickService sickService;
+
+    @GetMapping("idCardJiaoyan")
+    public String idCardJiaoyan(String idCard){
+        try {
+            Boolean aBoolean = sickService.idCard(idCard);
+            if(aBoolean){
+                return "ok";
+            }else{
+                return "no";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+
+
     @RequestMapping("week-sch")
     public List<Scheduling> cs(@RequestBody GuaHaoVO guaHaoVO) throws ParseException {
 //        Map map = JSON.parseObject(str,Map.class);
@@ -91,11 +115,14 @@ public class MzRegistrationController {
         return mzMedicalCard;
     }
     //新增挂号表
-    @PostMapping("addReg")
-    public String addReg(@RequestBody String regArr){
-        MzRegistration mzRegistration = JSON.parseObject(regArr, MzRegistration.class);
+    @RequestMapping("addReg")
+    public String addReg(@RequestBody String str){
+        Map map = JSON.parseObject(str,Map.class);
+        MzRegistration mzRegistration = JSON.parseObject(map.get("regArr").toString(),MzRegistration.class);
+        Integer radioSf = Integer.parseInt(map.get("radioSf").toString());
         try {
-            registrationService.addReg(mzRegistration);
+            System.err.println("&&&&"+radioSf);
+            registrationService.addReg(mzRegistration,radioSf);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,9 +132,6 @@ public class MzRegistrationController {
     //查询挂号记录表
     @GetMapping("selectReg")
     public List<MzRegistration> selectReg(String reg,Integer index ,String dates){
-        System.err.println(reg);
-        System.err.println(index);
-        System.err.println(dates);
         String regs = null;
         if(reg!=null){
             regs = reg.replace(" ", "");

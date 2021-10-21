@@ -8,7 +8,7 @@
         <result property="ykPurchaseName" column="YK_purchase_name"/>
         <result property="ykPurchaseTime" column="YK_purchase_time"/>
         <result property="sId" column="S_id"/>
-        <result property="ykPurchaseSName" column="YK_purchase_sName"/>
+        <result property="ykPurchaseSname" column="YK_purchase_sName"/>
         <result property="ykPurchaseIs" column="YK_purchase_is"/>
             <!--员工表-->
             <!--association property对应采购计划表实体类里面staff字段-->
@@ -118,8 +118,8 @@
         select * from yk_drugpurchase_plan ykd
                           LEFT JOIN staff sta on ykd.S_id = sta.s_id
                           LEFT JOIN yk_drugpurchase_plan_details ydpd on ykd.YK_purchase_id = ydpd.YK_purchase_id
-                          left join yf_drugInformation drug on ydpd.drug_id = drug.drug_id
-                            where ykd.yk_purchase_is = 1
+                          LEFT JOIN yf_drugInformation drug on ydpd.drug_id = drug.drug_id
+                          where ykd.yk_purchase_is = 1
     </select>
 
     <!--查询待入库的药品-->
@@ -145,7 +145,7 @@
 
     <!--新增采购计划-->
     <insert id="addplan" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlan">
-        insert ignore  yk_drugpurchase_plan(YK_purchase_id,YK_purchase_name,YK_purchase_time,s_id,YK_purchase_sName) value (#{ykPurchaseId},#{ykPurchaseName},#{ykPurchaseTime},#{sId},#{ykPurchaseSName})
+        insert ignore  yk_drugpurchase_plan(YK_purchase_id,YK_purchase_name,YK_purchase_time,s_id,YK_purchase_sName) value (#{ykPurchaseId},#{ykPurchaseName},#{ykPurchaseTime},#{sId},#{ykPurchaseSname})
     </insert>
 
     <!--新增详表-->
@@ -153,4 +153,15 @@
         insert ignore  yk_drugpurchase_plan_details(drug_id,YK_purchase_id,YK_chase_count,Drug_price) value (#{drugId},#{ykPurchaseId},#{ykChaseCount},#{DrugPrice})
     </insert>
 
+    <!--执行计划-->
+    <!--<update id="zhixing" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlan">
+        update yk_drugpurchase_plan set YK_purchase_is = 2 where YK_purchase_id = #{ykPurchaseId}
+    </update>-->
+
+    <!--保存入库的药品-->
+    <update id="preserve" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails">
+        update yk_drugpurchase_plan_details set YK_chase_count = #{ykChaseCount},
+                                                YK_Date = #{ykDate},
+                                                YK_batch = #{ykBatch} where YK_chase_id = #{ykChaseId}
+    </update>
 </mapper>
