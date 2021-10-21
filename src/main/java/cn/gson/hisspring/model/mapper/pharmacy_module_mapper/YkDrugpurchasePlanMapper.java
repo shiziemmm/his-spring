@@ -16,7 +16,7 @@ public interface YkDrugpurchasePlanMapper extends BaseMapper<YkDrugpurchasePlan>
     //查询采购的员工
     List <Staff> staff();
     //查询采购计划详单
-    List <YkDrugpurchasePlanDetails> allydpd(Long ykPurchaseId);
+    List <YkDrugpurchasePlanDetails> allydpd(String ykPurchaseId);
     //查询药品信息
     List <YfDruginformation> allDrug();
     //新增采购计划
@@ -26,7 +26,7 @@ public interface YkDrugpurchasePlanMapper extends BaseMapper<YkDrugpurchasePlan>
     /*查询待入库的药品*/
     List <YkDrugpurchasePlan>alldairuku();
     /*执行采购计划*/
-    //public void zhixing(Long ykPurchaseId);
+    void zhixing(String ykPurchaseId);
     /*保存入库的药品*/
     void preserve(YkDrugpurchasePlanDetails ykDrugpurchasePlanDetails);
 }
