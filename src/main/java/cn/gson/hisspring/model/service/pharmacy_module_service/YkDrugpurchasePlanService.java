@@ -25,7 +25,7 @@ public class YkDrugpurchasePlanService {
         return planMapper.staff();
     }
     /*查询采购计划详单*/
-    public List<YkDrugpurchasePlanDetails> allydpd(Long ykPurchaseId){
+    public List<YkDrugpurchasePlanDetails> allydpd(String ykPurchaseId){
         return planMapper.allydpd(ykPurchaseId);
     }
     /*查询药品信息*/
@@ -52,13 +52,14 @@ public class YkDrugpurchasePlanService {
            details.setYkChaseCount(list.getYkChaseCount());
            details.setDrugId(list.getDrugId());
            details.setYkPurchaseId(ykDrugpurchasePlan.getYkPurchaseId());
+           details.setYkDrugName(list.getYkDrugName());
            planMapper.addplandeta(details);
         }
 //        planMapper.addplan(ykDrugpurchasePlan);
     }
 
     /*执行采购计划 把状态修改成2*/
-    public void zhixing(YkDrugpurchasePlan Drugpurchase){
+    /*public void zhixing(YkDrugpurchasePlan Drugpurchase){
         QueryWrapper qwra =new QueryWrapper();
         qwra.eq("YK_purchase_is",Drugpurchase.getYkPurchaseIs());
         YkDrugpurchasePlan ykDrugpurchasePlan = planMapper.selectOne(qwra);
@@ -66,6 +67,10 @@ public class YkDrugpurchasePlanService {
             ykDrugpurchasePlan.setYkPurchaseIs(2L);
             planMapper.updateById(ykDrugpurchasePlan);
         }
+    }*/
+    /*执行采购计划*/
+    public void zhixing (String ykPurchaseId){
+         planMapper.zhixing(ykPurchaseId);
     }
 
     /*保存入库的药品*/

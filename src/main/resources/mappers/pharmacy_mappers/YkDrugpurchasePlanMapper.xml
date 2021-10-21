@@ -154,9 +154,9 @@
     </insert>
 
     <!--执行计划-->
-    <!--<update id="zhixing" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlan">
+    <update id="zhixing" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlan">
         update yk_drugpurchase_plan set YK_purchase_is = 2 where YK_purchase_id = #{ykPurchaseId}
-    </update>-->
+    </update>
 
     <!--保存入库的药品-->
     <update id="preserve" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails">
