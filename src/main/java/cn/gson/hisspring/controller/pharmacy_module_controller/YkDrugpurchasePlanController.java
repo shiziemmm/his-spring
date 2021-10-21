@@ -30,7 +30,7 @@ public class YkDrugpurchasePlanController {
     }
     /*查询采购计划详单*/
     @RequestMapping("all-ydpd")
-    public List<YkDrugpurchasePlanDetails> allydpd(Long ykPurchaseId){
+    public List<YkDrugpurchasePlanDetails> allydpd(String ykPurchaseId){
         List<YkDrugpurchasePlanDetails> allydpd = planService.allydpd(ykPurchaseId);
         for(YkDrugpurchasePlanDetails aa:allydpd){
             System.err.println("wozoule"+aa);
@@ -53,8 +53,9 @@ public class YkDrugpurchasePlanController {
     public List<YkDrugpurchasePlan> alldairuku(){
         return planService.alldairuku();
     }
+
     /*执行采购计划*/
-    @RequestMapping("zhixing")
+    /*@RequestMapping("zhixing")
     public String zhixing(YkDrugpurchasePlan ykDrugpurchasePlan){
         try {
             planService.zhixing(ykDrugpurchasePlan);
@@ -63,7 +64,15 @@ public class YkDrugpurchasePlanController {
             e.printStackTrace();
             return "fail";
         }
+    }*/
+
+    /*执行采购计划*/
+    @RequestMapping("zhixing")
+    public void zhixing(String ykPurchaseId){
+         planService.zhixing(ykPurchaseId);
     }
+
+
 
     /*保存入库的药品*/
     @PostMapping("preserve")

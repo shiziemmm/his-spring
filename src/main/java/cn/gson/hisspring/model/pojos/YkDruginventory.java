@@ -28,6 +28,7 @@ public class YkDruginventory {
   private Timestamp ykDrvenMftdate;//生产日期
   private Long supplierId;//供应商编号
   private String ykSupplierName;//供应商名称
+  private Double ykSelingprice;//药品售价
 
   public YkDruginventory(long ykDrvenId, Long ykDrvenCount) {
     this.ykDrvenId = ykDrvenId;
@@ -37,8 +38,106 @@ public class YkDruginventory {
   public YkDruginventory() {
   }
 
+
+
+
   @TableField(exist = false)
   private YkWarehouse ykWarehouse;//仓库
   @TableField(exist = false)
   private YkSupplier ykSupplier;//供应商
+
+  public long getYkDrvenId() {
+    return ykDrvenId;
+  }
+
+  public void setYkDrvenId(long ykDrvenId) {
+    this.ykDrvenId = ykDrvenId;
+  }
+
+  public Long getDrugId() {
+    return drugId;
+  }
+
+  public void setDrugId(Long drugId) {
+    this.drugId = drugId;
+  }
+
+  public String getYkDrvenName() {
+    return ykDrvenName;
+  }
+
+  public void setYkDrvenName(String ykDrvenName) {
+    this.ykDrvenName = ykDrvenName;
+  }
+
+  public Long getYkWareId() {
+    return ykWareId;
+  }
+
+  public void setYkWareId(Long ykWareId) {
+    this.ykWareId = ykWareId;
+  }
+
+  public String getYkDrvenBatch() {
+    return ykDrvenBatch;
+  }
+
+  public void setYkDrvenBatch(String ykDrvenBatch) {
+    this.ykDrvenBatch = ykDrvenBatch;
+  }
+
+  public Long getYkDrvenCount() {
+    return ykDrvenCount;
+  }
+
+  public void setYkDrvenCount(Long ykDrvenCount) {
+    this.ykDrvenCount = ykDrvenCount;
+  }
+
+  public Timestamp getYkDrvenMftdate() {
+    return ykDrvenMftdate;
+  }
+
+  public void setYkDrvenMftdate(Timestamp ykDrvenMftdate) {
+    this.ykDrvenMftdate = ykDrvenMftdate;
+  }
+
+  public Long getSupplierId() {
+    return supplierId;
+  }
+
+  public void setSupplierId(Long supplierId) {
+    this.supplierId = supplierId;
+  }
+
+  public String getYkSupplierName() {
+    return ykSupplierName;
+  }
+
+  public void setYkSupplierName(String ykSupplierName) {
+    this.ykSupplierName = ykSupplierName;
+  }
+
+  public Double getYkSelingprice() {
+    return ykSelingprice;
+  }
+
+  public void setYkSelingprice(Double ykSelingprice) {
+    this.ykSelingprice = ykSelingprice;
+  }
+
+  public YkDruginventory(long ykDrvenId, Long drugId, String ykDrvenName, Long ykWareId, String ykDrvenBatch, Long ykDrvenCount, Timestamp ykDrvenMftdate, Long supplierId, String ykSupplierName, Double ykSelingprice, YkWarehouse ykWarehouse, YkSupplier ykSupplier) {
+    this.ykDrvenId = ykDrvenId;
+    this.drugId = drugId;
+    this.ykDrvenName = ykDrvenName;
+    this.ykWareId = ykWareId;
+    this.ykDrvenBatch = ykDrvenBatch;
+    this.ykDrvenCount = ykDrvenCount;
+    this.ykDrvenMftdate = ykDrvenMftdate;
+    this.supplierId = supplierId;
+    this.ykSupplierName = ykSupplierName;
+    this.ykSelingprice = ykSelingprice;
+    this.ykWarehouse = ykWarehouse;
+    this.ykSupplier = ykSupplier;
+  }
 }
