@@ -103,29 +103,54 @@ public class HomeWorkController {
         System.err.println(list+"1");
         System.err.println(map+"2");
         double nums=0.00;
-        if(list.isEmpty()){
+        double  mapnums=0.00;
+        if(!list.isEmpty()){
             for (int i = 0; i < list.size(); i++) {
-                for (int j = 0; j < map.size(); j++) {
-                    nums=0+map.get(j).getPcdPrice();
-                }
-            }
-            BigDecimal b   =   new   BigDecimal(nums);
-            double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
-            return f1;
-        }
-        if(map.isEmpty()){
-            for (int i = 0; i < list.size(); i++) {
-                for (int j = 0; j < map.size(); j++) {
                     nums=list.get(i).getPcdPrice()+0;
                 }
-            }
-            BigDecimal b   =   new   BigDecimal(nums);
-            double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
-            return f1;
         }
-        BigDecimal b   =   new   BigDecimal(nums);
+        if(!map.isEmpty()){
+                for (int j = 0; j < map.size(); j++) {
+                    mapnums=0+map.get(j).getPcdPrice();
+                }
+        }
+        double moeny=nums+mapnums;
+        BigDecimal b   =   new   BigDecimal(moeny);
         double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
         return f1;
+//        if(!list.isEmpty()){
+//            for (int i = 0; i < list.size(); i++) {
+//                for (int j = 0; j < map.size(); j++) {
+//                    nums=0+map.get(j).getPcdPrice();
+//                }
+//            }
+//            BigDecimal b   =   new   BigDecimal(nums);
+//            double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+//            return f1;
+//        }
+//        if(map.isEmpty()){
+//            for (int i = 0; i < list.size(); i++) {
+//                for (int j = 0; j < map.size(); j++) {
+//                    nums=list.get(i).getPcdPrice()+0;
+//                }
+//            }
+//            BigDecimal b   =   new   BigDecimal(nums);
+//            double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+//            return f1;
+//        }
+//        if(!map.isEmpty()&&!list.isEmpty()){
+//            for (int i = 0; i < list.size(); i++) {
+//                for (int j = 0; j < map.size(); j++) {
+//                    nums=list.get(i).getPcdPrice()+map.get(j).getPcdPrice();
+//                }
+//            }
+//            BigDecimal b   =   new   BigDecimal(nums);
+//            double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+//            return f1;
+//        }
+//        BigDecimal b   =   new   BigDecimal(nums);
+//        double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+//        return f1;
         }
 
     }
