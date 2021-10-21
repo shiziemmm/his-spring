@@ -42,8 +42,7 @@
                 or tj.man_phone like '%${sermen}%'
             </if>
         </where>
-
-
+        order by TO_DAYS(tj.man_time)
     </select>
     <!--    //体检人员未填完结果-->
     <select id="selectAllMan1" resultMap="TjMan">
