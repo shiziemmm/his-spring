@@ -66,6 +66,70 @@ public class PatientBaseService {
     @Autowired
     CheckoutOutPayMapper cpm;//已退费化验项目
 
+    @Autowired
+    DoctorEnjoinMapper dem;//医嘱mapper
+
+    @Autowired
+    DoctorEnjoinDetailsMapper dedm;//医嘱详情mapper
+
+    @Autowired
+    StopDoctorEnjoinMapper sdem;//停用医嘱mapper
+
+    /**
+     * 根据病人编号进行转科
+     */
+    public boolean patientChangeDept(ZyChangeDeptRecord deptRecord){
+        System.err.println("==========================================="+deptRecord.getBdId());
+        //=======================新增转科记录
+        cdm.insert(deptRecord);//新增
+
+        //==============================根据病人病床为空以及修改管理护士
+        ZyPatientBase pb = new ZyPatientBase(deptRecord.getPtNo(),0L,deptRecord.getDoctorId(),deptRecord.getCdrAfterKs());
+        pbm.updateById(pb);//修改
+
+        //===================================修改病床使用记录的结束时间
+        if(deptRecord.getBdId() != 0 || !deptRecord.getBdId().equals("")){//判断是否入住病床
+            ZyBedUseRecord bedUseRecord = selectBedUseRecord(deptRecord.getPtNo());//查询
+            if(bedUseRecord != null){
+                ZyBedUseRecord zbr = new ZyBedUseRecord(bedUseRecord.getUrId(),new Timestamp(new Date().getTime()));
+                burm.updateById(zbr);//修改
+            }
+
+            //===========================================根据病床编号修改病床住院号为0
+            ZyBed bed = new ZyBed(deptRecord.getBdId(),1L,0L);
+            bm.updateById(bed);//修改
+        }
+        if(deptRecord.getCdrDoctorIs() != 1){//=============医嘱不跟随
+            //根据住院号查询医嘱主表
+            QueryWrapper<ZyDoctorEnjoin> zyDoctorEnjoinQW = new QueryWrapper<ZyDoctorEnjoin>().eq("pt_no",deptRecord.getPtNo());
+            List<ZyDoctorEnjoin> zyDoctorEnjoinList = dem.selectList(zyDoctorEnjoinQW);
+            System.err.println("医嘱信息");
+            System.err.println(zyDoctorEnjoinList);
+            if(!zyDoctorEnjoinList.isEmpty()){
+                dedm.doctorEnjoinDetailsByDeIdFor(zyDoctorEnjoinList);//循环停嘱
+                for (ZyDoctorEnjoin zyDoctorEnjoin : zyDoctorEnjoinList) {
+                    zyDoctorEnjoin.setDeEndDate(new Timestamp(new Date().getTime()));
+                    dem.updateById(zyDoctorEnjoin);//修改
+                }
+            }
+
+            //查询出所有医嘱详情集合
+            SelectExecuteVo selectExecuteVo = new SelectExecuteVo();
+            selectExecuteVo.setPtNo(deptRecord.getPtNo());
+            List<ZyDoctorEnjoinDetails> zyDoctorEnjoinDetailsList = dedm.doctorEnjoinDetailsSelectByPtId(selectExecuteVo);
+            System.err.println(zyDoctorEnjoinDetailsList);
+            if(!zyDoctorEnjoinDetailsList.isEmpty()){
+                ZyStopDoctorEnjoin stopDoctorEnjoin = new ZyStopDoctorEnjoin();
+                stopDoctorEnjoin.setPtNo(deptRecord.getPtNo());//住院号
+                stopDoctorEnjoin.setSdeDate(new Timestamp(new Date().getTime()));//停嘱日期
+                stopDoctorEnjoin.setSdeStopCause("转科停嘱");//停嘱原因
+                stopDoctorEnjoin.setSId(deptRecord.getSId());//操作员
+                sdem.insertStopDoctorEnjoinFor(zyDoctorEnjoinDetailsList,stopDoctorEnjoin);//批量新增停用记录
+            }
+        }
+        return true;
+    }
+
 
     /**
      * 根据科室编号查询科室对象
@@ -193,45 +257,6 @@ public class PatientBaseService {
             return pbm.doctorEnjoinExecute(sId,ksId,text);
     }
 
-
-    /**
-     * 根据病人编号进行转科
-     */
-    public boolean patientChangeDept(ZyChangeDeptRecord deptRecord){
-        System.err.println("==========================================="+deptRecord.getBdId());
-       try {
-           //=======================新增转科记录
-           cdm.insert(deptRecord);//新增
-
-           //==============================根据病人病床为空以及修改管理护士
-           ZyPatientBase pb = new ZyPatientBase(deptRecord.getPtNo(),0L,deptRecord.getDoctorId(),deptRecord.getCdrAfterKs());
-           pbm.updateById(pb);//修改
-
-           //===================================修改病床使用记录的结束时间
-           if(deptRecord.getBdId() != 0 || !deptRecord.getBdId().equals("")){//判断是否入住病床
-               ZyBedUseRecord bedUseRecord = selectBedUseRecord(deptRecord.getPtNo());//查询
-               if(bedUseRecord != null){
-                   ZyBedUseRecord zbr = new ZyBedUseRecord(bedUseRecord.getUrId(),new Timestamp(new Date().getTime()));
-                   burm.updateById(zbr);//修改
-               }
-
-               //===========================================根据病床编号修改病床住院号为0
-               ZyBed bed = new ZyBed(deptRecord.getBdId(),1L,0L);
-               bm.updateById(bed);//修改
-           }
-
-
-           if(deptRecord.getCdrDoctorIs() == 1){//=============医嘱跟随
-
-           }else{//============================医嘱不跟随
-
-           }
-           return true;
-
-       }catch (Exception e){
-            return false;
-       }
-    }
 
 
     /**

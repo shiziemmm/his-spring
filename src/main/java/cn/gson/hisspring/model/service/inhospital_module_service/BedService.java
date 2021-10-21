@@ -17,6 +17,18 @@ public class BedService {
     @Autowired
     BedMapper bm;
 
+    /**
+     * 判断病房床名称是否重复
+     */
+    public boolean selectBdNameRepetition(String bdName){
+        QueryWrapper<ZyBed> zyBedQueryWrapper = new QueryWrapper<ZyBed>().eq("bd_name",bdName);
+        List<ZyBed> zyBeds = bm.selectList(zyBedQueryWrapper);
+        if (zyBeds.isEmpty()){
+            return false;
+        }
+        return true;
+
+    }
 
 
     /**

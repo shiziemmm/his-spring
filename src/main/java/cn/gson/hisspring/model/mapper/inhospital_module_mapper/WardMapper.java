@@ -2,6 +2,7 @@ package cn.gson.hisspring.model.mapper.inhospital_module_mapper;
 
 
 import cn.gson.hisspring.model.pojos.ZyWard;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -18,7 +19,8 @@ import java.util.List;
 @Repository
 public interface WardMapper extends BaseMapper<ZyWard> {
 
-    List<ZyWard> selectWardAllPage(String search,String ksId);
+    List<ZyWard> selectWardAllPage(SelectExecuteVo selectExecuteVo);
 
+    List<ZyWard> selectWardAllByKsId(String ksId);
 
 }

@@ -322,7 +322,7 @@
 
         <where>
 
-                zy_patient_base.Pt_Out_date is null and zy_patient_base.pt_is = 1
+                zy_patient_base.Pt_Out_date is null
 
             <if test="sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
                 and zy_patient_base.s_id in (<foreach collection="sIdArr" item="sId"  separator=",">
@@ -406,12 +406,13 @@
 
 
         <where>
+             zy_patient_base.pt_is = 1
             <if test="is != ''">
-                zy_patient_base.Bd_id = 0 and zy_patient_base.Pt_Out_date is null and zy_patient_base.pt_is = 1
+                and zy_patient_base.Bd_id = 0 and zy_patient_base.Pt_Out_date is null
             </if>
 
             <if test="is == ''">
-                zy_patient_base.Pt_Out_date is null
+                and zy_patient_base.Pt_Out_date is null
             </if>
 
             <if test="searchLike != null and searchLike != ''">

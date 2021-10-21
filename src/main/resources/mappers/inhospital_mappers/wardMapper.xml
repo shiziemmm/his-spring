@@ -30,7 +30,21 @@
         <result column="pt_no" property="ptNo"/>
     </resultMap>
 
-
+    <select resultMap="wardMap" id="selectWardAllByKsId">
+        SELECT
+        *
+        FROM
+        zy_ward
+        LEFT JOIN zy_bed ON zy_ward.wd_id = zy_bed.Wd_id
+        INNER JOIN staff ON staff.s_id = zy_ward.s_id
+        INNER JOIN department_ks ON zy_ward.ks_id = department_ks.ks_id
+        <where>
+            <if test="ksId != null and ksId != ''">
+                and department_ks.ks_id = #{ksId}
+            </if>
+        </where>
+        order by department_ks.ks_name
+    </select>
 
 
     <select resultMap="wardMap" id="selectWardAllPage">
@@ -42,12 +56,14 @@
             INNER JOIN staff ON staff.s_id = zy_ward.s_id
             INNER JOIN department_ks ON zy_ward.ks_id = department_ks.ks_id
             <where>
-                <if test="search != ''">
-                   and zy_ward.wd_name LIKE '%${search}%' or
-                    staff.s_name LIKE '%${search}%' or department_ks.ks_name like '%${search}%'
+                <if test="searchLike != null and searchLike != ''">
+                   and zy_ward.wd_name LIKE '%${searchLike}%' or
+                    staff.s_name LIKE '%${searchLike}%' or department_ks.ks_name like '%${searchLike}%'
                 </if>
-                <if test="ksId != ''">
-                   and department_ks.ks_id = #{ksId}
+                <if test="ksIdArr != null and sIdArr != '' and ksIdArr.size() > 0"><!--如果不是病床费用就根据科室编号查询-->
+                    and department_ks.ks_id in (<foreach collection="ksIdArr" item="ksId"  separator=",">
+                        #{ksId}
+                    </foreach>)
                 </if>
             </where>
         order by department_ks.ks_name

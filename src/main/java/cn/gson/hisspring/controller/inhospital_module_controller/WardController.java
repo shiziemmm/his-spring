@@ -3,6 +3,7 @@ package cn.gson.hisspring.controller.inhospital_module_controller;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper;
 import cn.gson.hisspring.model.pojos.Staff;
 import cn.gson.hisspring.model.pojos.ZyWard;
+import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import cn.gson.hisspring.model.service.inhospital_module_service.WardService;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.DepartmentKsService;
 import com.alibaba.fastjson.JSON;
@@ -28,11 +29,8 @@ public class WardController {
      */
     @RequestMapping("zyWard")
     public List<ZyWard> selectWardAllPage(@RequestBody String str)  {
-        System.err.println(str);
-        Map map = JSON.parseObject(str, Map.class);
-        Staff staff = JSON.parseObject(map.get("staff").toString(), Staff.class);//员工对象
-        String search = map.get("search").toString();//搜索条件
-        return wds.selectWardAllPage(search,staff);
+        SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
+        return wds.selectWardAllPage(selectExecuteVo);
     }
 
     /**
@@ -42,6 +40,14 @@ public class WardController {
     public boolean wardAddOrUpdate(@RequestBody String wardStr){
         ZyWard ward = JSON.parseObject(wardStr, ZyWard.class);//将病房对象字符串转换为病房对象
         return wds.wardInsertOrUpdate(ward);
+    }
+
+    /**
+     * 判断病房名称是否存在
+     */
+    @RequestMapping("wdNameSelectRepetition")
+    public boolean selectWdNameRepetition(String wdName){
+        return wds.selectWdNameRepetition(wdName);
     }
 
     /**
