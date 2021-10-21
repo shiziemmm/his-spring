@@ -55,12 +55,13 @@ public class MzOpcService {
     public void addInHospitalApply(ZyInhospitalApply inhospitalApply,String rtNumber,String mrNumber){
         //修改排号状态
         opcNumberService.upRtNumber(rtNumber);
-        inhospitalApply.setInIs(0L);
+        inhospitalApply.setInIs(1L);
         QueryWrapper qw = new QueryWrapper();
         qw.eq("rt_Number",rtNumber);
         MzOpcNumber opcNumber = opcNumberMapper.selectOne(qw);
         opcNumber.setBnState(1);
         opcNumberMapper.updateById(opcNumber);
+
         inhospitalApply.setInApplyDate(new Date());
         inHospitalApplyMapper.insert(inhospitalApply);
         if(mrNumber != null){
