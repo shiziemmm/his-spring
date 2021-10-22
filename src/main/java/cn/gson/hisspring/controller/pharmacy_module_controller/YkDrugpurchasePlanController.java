@@ -6,6 +6,7 @@ import cn.gson.hisspring.model.pojos.YkDrugpurchasePlan;
 import cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails;
 import cn.gson.hisspring.model.service.pharmacy_module_service.YkDrugpurchasePlanService;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,14 +76,12 @@ public class YkDrugpurchasePlanController {
 
 
     /*保存入库的药品*/
-    @PostMapping("preserve")
+    @RequestMapping("preserve")
     public String preserve(@RequestBody String str){
-        System.err.println(str);
-            List<YkDrugpurchasePlanDetails> planDetails = JSON.parseArray(str,YkDrugpurchasePlanDetails.class);
-            System.out.println(planDetails);
-            planService.preserve(planDetails);
-//            planService.preserve(planDetails);
-            return "ok";
+        List<YkDrugpurchasePlanDetails> planDetails = JSON.parseArray(str,YkDrugpurchasePlanDetails.class);
+        System.out.println(planDetails);
+        planService.preserve(planDetails);
+        return "ok";
 
     }
 }
