@@ -23,6 +23,12 @@ public class ZyChangeDeptRecord {
   private java.sql.Timestamp cdrDate;
   private Long sId;//操作员
 
+  //关系
+  @TableField(exist = false)
+  private String beforeKsName;//转科前科室名称
+  @TableField(exist = false)
+  private String afterKsName;//转科后科室名称
+
   //关系字段
   @TableField(exist = false)
   private Long bdId;//病床编号

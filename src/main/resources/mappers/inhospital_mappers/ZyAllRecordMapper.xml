@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.AllRecordMapper">
+
+    <resultMap id="changeBed" type="cn.gson.hisspring.model.pojos.ZyBedChangeRecord">
+        <result property="sId" column="s_id"/>
+        <result property="ptNo" column="pt_no"/>
+        <result property="ptName" column="ptName"/>
+        <result property="afterBdName" column="afterBdName"/>
+        <result property="bcCause" column="bcCause"/>
+        <result property="beforeBdName" column="beforeBdName"/>
+        <result property="bcDate" column="bc_date"/>
+        <result property="bcId" column="bc_id"/>
+    </resultMap>
+
+    <resultMap id="changeKs" type="cn.gson.hisspring.model.pojos.ZyChangeDeptRecord">
+        <result property="ptNo" column="pt_no"/>
+        <result property="sId" column="s_id"/>
+        <result property="afterKsName" column="afterKsName"/>
+        <result property="beforeKsName" column="beforeKsName"/>
+        <result property="cdrDate" column="cdr_date"/>
+        <result property="cdrCause" column="cdr_cause"/>
+    </resultMap>
+
+
+    <!--查询出病人的转科记录-->
+    <select id="seltzychangebedrecord" resultMap="changeBed">
+        select * from seltzychangebedrecord
+        <where>
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(Bc_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(Bc_date,'%Y-%m-%d') between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
+
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(Bc_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
+
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(Bc_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+
+            <if test="searchLike != null and searchLike != ''">
+                and pt_name like '%${searchLike}%'
+            </if>
+
+            <if test="ptNo != null and ptNo != ''">
+                and pt_no = #{ptNo}
+            </if>
+
+        </where>
+    </select>
+
+    <!--查询出病人的转科记录-->
+    <select id="seltzychangeksrecord" resultMap="changeKs">
+        select * from seltzychangeksrecord
+        <where>
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(Bc_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(Bc_date,'%Y-%m-%d') between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
+
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(Bc_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
+
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(Bc_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+
+            <if test="searchLike != null and searchLike != ''">
+                and pt_name like '%${searchLike}%'
+            </if>
+
+            <if test="ptNo != null and ptNo != ''">
+                and pt_no = #{ptNo}
+            </if>
+        </where>
+    </select>
+
+
+
+</mapper>
