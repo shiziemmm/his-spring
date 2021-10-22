@@ -53,6 +53,16 @@ public class TjproController {
     public List<TjCodeProject> allManp(Integer manId){
         return major.selectAlonMm(manId);
     }
+
+    @RequestMapping("alonecpro") //根据名字查询项目用于去重
+    public List<TjCodeProject> allsManp(String checkName){
+        return major.selectslpro(checkName);
+    }
+    @RequestMapping("allsMan") //根据身份证查人员用于去重
+    public List<TjCodeMan> allsManrr(String manSid){
+        return major.selecsman(manSid);
+    }
+
     @RequestMapping("aloneProt") //体检套餐所含检查指标44
     public List<TjCodeProject> allPro(Integer codeId){
         return major.selectTjpro(codeId);

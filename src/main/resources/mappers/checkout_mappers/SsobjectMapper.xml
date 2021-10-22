@@ -26,6 +26,25 @@
         select * from  ss_operation_project a left join department_ks b on a.ks_id=b.ks_id
         <where>
             <if test ="projectNumber !=null and '' != projectNumber"> /*卡号like*/
+                  Project_number like'%${projectNumber}%'
+            </if>
+            <if test ="projectType !=null and '' != projectType">/*手术类别like*/
+                or project_type like'%${projectType}%'
+            </if>
+            <if test ="projectName !=null and '' != projectName">/*手术名称like*/
+                or project_name like'%${projectName}%'
+            </if>
+            <if test ="ksName !=null and '' != ksName">/*科室*/
+                or b.ks_name like'%${ksName}%'
+            </if>
+        </where>
+        ORDER BY a.project_id desc
+    </select>
+    <select id="selectAllSsObject1" resultMap="allProject">
+        select * from  ss_operation_project a left join department_ks b on a.ks_id=b.ks_id
+        <where>
+            a.project_type='三级手术'||a.project_type='四级手术'
+            <if test ="projectNumber !=null and '' != projectNumber"> /*卡号like*/
                  and Project_number like'%${projectNumber}%'
             </if>
             <if test ="projectType !=null and '' != projectType">/*手术类别like*/
@@ -38,25 +57,6 @@
                 or b.ks_name like'%${ksName}%'
             </if>
         </where>
-        ORDER BY a.project_pay desc
-    </select>
-    <select id="selectAllSsObject1" resultMap="allProject">
-        select * from  ss_operation_project a left join department_ks b on a.ks_id=b.ks_id
-        <where>
-            a.project_type='三级手术'||a.project_type='四级手术'
-            <if test ="projectNumber !=null and '' != projectNumber"> /*卡号like*/
-                and Project_number like'%${projectNumber}%'
-            </if>
-            <if test ="projectType !=null and '' != projectType">/*手术类别like*/
-                or project_type like'%${projectType}%'
-            </if>
-            <if test ="projectName !=null and '' != projectName">/*手术名称like*/
-                or project_name like'%${projectName}%'
-            </if>
-            <if test ="ksName !=null and '' != ksName">/*科室*/
-                or b.ks_name like'%${ksName}%'
-            </if>
-        </where>
-        ORDER BY a.project_pay desc
+        ORDER BY a.project_id desc
     </select>
 </mapper>

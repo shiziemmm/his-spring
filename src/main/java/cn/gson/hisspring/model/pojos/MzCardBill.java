@@ -24,5 +24,6 @@ public class MzCardBill {
   private long sId;
   private long mcNumber;
 
+  private Staff staff;
 
 }

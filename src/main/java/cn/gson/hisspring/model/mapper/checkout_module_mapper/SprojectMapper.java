@@ -28,6 +28,10 @@ public interface SprojectMapper extends BaseMapper<SsOperationProject> {
     @Select("SELECT * FROM ss_operation_project  where project_id=#{projectId}")
     List<SsOperationProject> aloneProject(Integer projectId );
 
+    //查询单个手术项目表用于去重
+    @Select("SELECT * FROM ss_operation_project  where project_name=#{projectName}")
+    List<SsOperationProject> alonqProject(String  projectName );
+
     int insertSsObject(long proId,List<Integer> listArr);
     //所有手术
     List<SsOperationProject> selectAllSsObject(String input);

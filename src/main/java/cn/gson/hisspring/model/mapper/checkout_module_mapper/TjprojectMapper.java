@@ -1,6 +1,7 @@
 package cn.gson.hisspring.model.mapper.checkout_module_mapper;
 
 
+import cn.gson.hisspring.model.pojos.TjCodeMan;
 import cn.gson.hisspring.model.pojos.TjCodeProject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Delete;
@@ -32,4 +33,7 @@ public interface TjprojectMapper extends BaseMapper<TjCodeProject> {
     List<TjCodeProject> inspect(Integer codeId );
     //体检人员所含项目查询-->
     List<TjCodeProject> selectAlonMp(Integer manId);
+    //根据名字查询项目用于去重
+    @Select("select * from tj_code_project  where check_name=#{checkName}")
+    List<TjCodeProject> selectcpro(String checkName);
 }

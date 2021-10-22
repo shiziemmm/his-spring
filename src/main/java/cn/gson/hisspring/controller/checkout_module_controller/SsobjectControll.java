@@ -43,6 +43,11 @@ public class SsobjectControll {
     public List<SsOperationDetails> allSDetail(Integer operationNum){
         return  sprojectService.aoneSdetails(operationNum);
     }
+    //查询单个手术项目表用于去重
+    @RequestMapping("ssqProject")
+    public List<SsOperationProject> ssOperatioqProjects(String projectName){
+        return  sprojectService.alonqProject(projectName);
+    }
     //根据手术id查手术记录
     @RequestMapping("ssdproDetail")
     public List<SsOperationDetails> allproDetail(Integer projectId){
