@@ -28,7 +28,13 @@ public class YkDruginventory {
   private Timestamp ykDrvenMftdate;//生产日期
   private Long supplierId;//供应商编号
   private String ykSupplierName;//供应商名称
-  private Double ykSelingprice;//药品售价
+  private Double ykSellingprice;//药品售价
+
+
+  @TableField(exist = false)
+  private YkWarehouse ykWarehouse;//仓库
+  @TableField(exist = false)
+  private YkSupplier ykSupplier;//供应商
 
   public YkDruginventory(long ykDrvenId, Long ykDrvenCount) {
     this.ykDrvenId = ykDrvenId;
@@ -41,10 +47,6 @@ public class YkDruginventory {
 
 
 
-  @TableField(exist = false)
-  private YkWarehouse ykWarehouse;//仓库
-  @TableField(exist = false)
-  private YkSupplier ykSupplier;//供应商
 
   public long getYkDrvenId() {
     return ykDrvenId;
@@ -119,14 +121,14 @@ public class YkDruginventory {
   }
 
   public Double getYkSelingprice() {
-    return ykSelingprice;
+    return ykSellingprice;
   }
 
   public void setYkSelingprice(Double ykSelingprice) {
-    this.ykSelingprice = ykSelingprice;
+    this.ykSellingprice = ykSelingprice;
   }
 
-  public YkDruginventory(long ykDrvenId, Long drugId, String ykDrvenName, Long ykWareId, String ykDrvenBatch, Long ykDrvenCount, Timestamp ykDrvenMftdate, Long supplierId, String ykSupplierName, Double ykSelingprice, YkWarehouse ykWarehouse, YkSupplier ykSupplier) {
+  public YkDruginventory(long ykDrvenId, Long drugId, String ykDrvenName, Long ykWareId, String ykDrvenBatch, Long ykDrvenCount, Timestamp ykDrvenMftdate, Long supplierId, String ykSupplierName, Double ykSellingprice, YkWarehouse ykWarehouse, YkSupplier ykSupplier) {
     this.ykDrvenId = ykDrvenId;
     this.drugId = drugId;
     this.ykDrvenName = ykDrvenName;
@@ -136,7 +138,7 @@ public class YkDruginventory {
     this.ykDrvenMftdate = ykDrvenMftdate;
     this.supplierId = supplierId;
     this.ykSupplierName = ykSupplierName;
-    this.ykSelingprice = ykSelingprice;
+    this.ykSellingprice = ykSellingprice;
     this.ykWarehouse = ykWarehouse;
     this.ykSupplier = ykSupplier;
   }

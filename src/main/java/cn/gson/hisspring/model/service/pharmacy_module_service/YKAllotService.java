@@ -97,7 +97,6 @@ public class YKAllotService {
                             ydtm.insert(yfDrugObj);//新增药房数据
                         }else{
                             //修改药房该批次的库存数量
-
                             yfDrugObj.setYfDrvenId(yfDruginventoriesList.get(0).getYfDrvenId());
                             yfDrugObj.setYfDrvenCount(yfDruginventoriesList.get(0).getYfDrvenCount()+drugCount);
                             ydtm.updateById(yfDrugObj);//修改药房数据
@@ -142,7 +141,6 @@ public class YKAllotService {
                         }
                     }
                 }
-
             }
         }
 
