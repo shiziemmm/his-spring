@@ -42,7 +42,7 @@
                 or tj.man_phone like '%${sermen}%'
             </if>
         </where>
-        order by TO_DAYS(tj.man_time)
+        order by tj.man_time
     </select>
     <!--    //体检人员未填完结果-->
     <select id="selectAllMan1" resultMap="TjMan">
@@ -79,8 +79,9 @@
             FROM
             tj_man_result
             where
-            tj_man_result.man_result is not null or tj_man_result.man_result != ''
+            tj_man_result.man_result is not null or tj_man_result.man_result != '' or tj_man_result.man_result is null
             group by tj_man_result.man_id
+            having  COUNT(man_result) = COUNT(*)
             )
             <if test ="sermen !=null and '' != sermen"> /*名称like*/
                 and tj.man_name like '%${sermen}%'
@@ -92,7 +93,7 @@
                 or tj.man_phone like '%${sermen}%'
             </if>
         </where>
-        order by TO_DAYS(tj.man_time) = TO_DAYS(NOW()) desc
+        order by tj.man_id desc
     </select>
 
     <!--    体检人员检查项目中间表批量新增-->

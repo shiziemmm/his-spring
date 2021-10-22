@@ -80,6 +80,18 @@ public class TjproService {
         System.out.println(listman);
         return  listman;
     }
+    //根据名字查询项目用于去重
+    public List<TjCodeProject> selectslpro(String checkName){
+        List<TjCodeProject> listman = major.selectcpro(checkName);
+        System.out.println(listman);
+        return  listman;
+    }
+    //根据身份证查人员用于去重
+    public List<TjCodeMan> selecsman(String manSid){
+        List<TjCodeMan> listman = man.selectsMan(manSid);
+        System.out.println(listman);
+        return  listman;
+    }
     //体检结果传参
     public List<TjManResult> AllRes(Integer manId){
         List<TjManResult> listres = ent.allmresult(manId);

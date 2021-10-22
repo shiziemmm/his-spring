@@ -55,7 +55,7 @@
                 or project_name like'%${projectName}%'
             </if>
         </where>
-        ORDER BY Operation_date desc
+        ORDER BY Operation_num desc
     </select>
     <select id="selectAloneDetails" resultMap="allssDetails">
         select * from  ssdatial
