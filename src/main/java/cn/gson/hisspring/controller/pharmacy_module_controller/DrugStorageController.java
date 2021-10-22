@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin /*跨域*/
@@ -29,19 +30,16 @@ public class DrugStorageController {
 
     /*药品入库*/
     @RequestMapping("putstorage")
-    public void putstorage(@RequestParam("grant") String grant){
-        JSONObject o = JSONObject.parseObject(grant);
-        System.err.println(grant);
-        List<YkDrugpurchasePlanDetails> list = new ArrayList<>();
-
-        grant = JSON.toJSONString(list);// 放进去的是List
-        System.err.println(o.get("str").toString()+"输出");
-        List<YkDrugpurchasePlanDetails> funs = JSONArray.parseArray(o.get("str").toString(),YkDrugpurchasePlanDetails.class);
-        System.err.println(funs+"funssss");
+    public void putstorage(@RequestBody String grant){
+        Map map = JSON.parseObject(grant, Map.class);
+        String id = map.get("ykPurchaseId").toString();
+        System.err.println(id+"idid");
+        List<YkDrugpurchasePlanDetails> ykDrugpurchasePlanDetails = JSON.parseArray(map.get("list").toString(), YkDrugpurchasePlanDetails.class);
+        System.err.println(ykDrugpurchasePlanDetails+"77777777777777777777777777777");
 //        List<YkDrugpurchasePlanDetails> objList3 = JSON.parseArray(grant, YkDrugpurchasePlanDetails.class);// 取一个Lis
 //        List<YkDrugpurchasePlanDetails> ykDrugpurchasePlanDetails = JSON.parseArray(str, YkDrugpurchasePlanDetails.class);
 //        System.err.println(str);
 //        System.err.println(funs);
-//        drugStorageService.putstorage(funs);
+        drugStorageService.putstorage(ykDrugpurchasePlanDetails,id);
     }
 }
