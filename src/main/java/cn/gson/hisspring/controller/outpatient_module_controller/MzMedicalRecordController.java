@@ -54,6 +54,20 @@ public class MzMedicalRecordController {
         String texts = map.get("texts").toString().replace(" ", "");;
         return recordService.selectAllRecord(index,texts);
     }
+    @RequestMapping("selectRAs1")
+    public long selectRA1(@RequestBody String str){
+        Map map = JSON.parseObject(str,Map.class);
+        String index = map.get("index").toString();
+        String texts = map.get("texts").toString().replace(" ", "");;
+        return recordService.selectAllRecord(index,texts).size();
+    }
+    @RequestMapping("selectRAs2")
+    public long selectRA2(@RequestBody String str){
+        Map map = JSON.parseObject(str,Map.class);
+        String index = map.get("index").toString();
+        String texts = map.get("texts").toString().replace(" ", "");;
+        return recordService.selectAllRecord(index,texts).size();
+    }
 
     /**
      * 添加所有就诊信息

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCardBillMapper">
+    <resultMap id="cardBillMap" type="cn.gson.hisspring.model.pojos.MzCardBill">
+        <id column="cb_Number" property="cbNumber"></id>
+        <result column="cb_Time" property="cbTime"></result>
+        <result column="cb_Cause" property="cbCause"></result>
+        <result column="cb_Price" property="cbPrice"></result>
+        <result column="s_Id" property="sId"></result>
+        <result column="mc_Number" property="mcNumber"></result>
+        <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
+            <result column="s_name" property="sName" ></result>
+        </association>
+    </resultMap>
+
+    <select id="cardBillSe" resultMap="cardBillMap">
+        select * from mz_card_bill ca inner join staff st on ca.s_id=st.s_id
+        where ca.mc_number = #{card}
+    </select>
+</mapper>
