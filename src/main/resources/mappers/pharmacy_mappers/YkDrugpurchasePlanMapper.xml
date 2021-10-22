@@ -10,6 +10,7 @@
         <result property="sId" column="S_id"/>
         <result property="ykPurchaseSname" column="YK_purchase_sName"/>
         <result property="ykPurchaseIs" column="YK_purchase_is"/>
+        <result property="ykBaocun" column="YK_baocun"/>
             <!--员工表-->
             <!--association property对应采购计划表实体类里面staff字段-->
             <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
@@ -50,6 +51,7 @@
         <result property="drugPrice" column="Drug_price"/>
         <result property="ykDate" column="yk_Date"/>
         <result property="ykBatch" column="yk_batch"/>
+        <result property="ykRuku" column="YK_ruku"/>
         <!--药品-->
         <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
             <result property="drugId" column="Drug_id" />
@@ -160,7 +162,7 @@
 
     <!--保存入库的药品-->
     <update id="preserve" parameterType="cn.gson.hisspring.model.pojos.YkDrugpurchasePlanDetails">
-        update yk_drugpurchase_plan_details set YK_chase_count = #{ykChaseCount},
+        update yk_drugpurchase_plan_details set YK_ruku = #{ykRuku},
                                                 YK_Date = #{ykDate},
                                                 YK_batch = #{ykBatch} where YK_chase_id = #{ykChaseId}
     </update>

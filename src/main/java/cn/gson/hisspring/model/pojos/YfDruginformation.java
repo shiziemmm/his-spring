@@ -25,7 +25,7 @@ public class YfDruginformation {
   private String drugRemark;//药品功效
   private String drugUnit;
   private String drugSpecification;
-  private String drugPastdate;//保质期
+  private Long drugPastdate;//保质期
   private Double drugParticle;//单粒价格
   private String drugQuantity;//每瓶数量
   private Long drugPrescription;//处方药
@@ -37,13 +37,6 @@ public class YfDruginformation {
   @TableField(exist = false)
   private YfDrugcategory yfDrugcategory;//类别表
 
-  public String getDrugPastdate() {
-    return drugPastdate;
-  }
-
-  public void setDrugPastdate(String drugPastdate) {
-    this.drugPastdate = drugPastdate;
-  }
 
   public int getDrugBarcode() {
     return drugBarcode;
