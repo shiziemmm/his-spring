@@ -13,5 +13,5 @@ import java.util.List;
 @Mapper
 public interface YkStorageDetailMapper extends BaseMapper<YkStorageDetail> {
     //查询全部调拨记录的详细信息
-    List<YkStorageDetail> allstoragedetail();
+    List<YkStorageDetail> allstoragedetail(Float ykStorageId);
 }

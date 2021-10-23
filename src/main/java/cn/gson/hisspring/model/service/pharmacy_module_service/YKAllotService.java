@@ -164,7 +164,7 @@ public class YKAllotService {
     }
 
     //查询调拨详表
-    public List<YkAllotdetail> alldetail(Long ykAllotId){
+    public List<YkAllotdetail> alldetail(String ykAllotId){
         return ykAllotMapper.alldetail(ykAllotId);
     }
 

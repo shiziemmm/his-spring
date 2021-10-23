@@ -29,9 +29,10 @@
             <result property="drugPrescription" column="Drug_prescription"/>
         </association>
     </resultMap>
-
+    <!--查询出库详情-->
     <select id="allstoragedetail" resultMap="allykstoragedetail">
         select * from yk_storage_detail detail left join yf_druginformation drug on detail.Drug_id = drug.Drug_id
+        where detail.YK_Storage_id = #{ykStorageId}
     </select>
 
 </mapper>

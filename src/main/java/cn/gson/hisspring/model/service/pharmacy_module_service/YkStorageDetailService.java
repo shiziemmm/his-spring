@@ -11,8 +11,8 @@ import java.util.List;
 public class YkStorageDetailService {
     @Autowired
     YkStorageDetailMapper demap;
-
-    public List<YkStorageDetail> allstoragedetail(){
-        return demap.allstoragedetail();
+    //查询全部调拨记录的详细信息
+    public List<YkStorageDetail> allstoragedetail(Float ykStorageId){
+        return demap.allstoragedetail(ykStorageId);
     }
 }

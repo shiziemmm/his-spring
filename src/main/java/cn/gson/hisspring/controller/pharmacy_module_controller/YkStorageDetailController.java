@@ -16,7 +16,7 @@ public class YkStorageDetailController {
     YkStorageDetailService deser;
     //查询出入库记录详表
     @RequestMapping("allstoragedetail")
-    public List<YkStorageDetail> allstoragedetail(){
-        return deser.allstoragedetail();
+    public List<YkStorageDetail> allstoragedetail(Float ykStorageId){
+        return deser.allstoragedetail(ykStorageId);
     }
 }

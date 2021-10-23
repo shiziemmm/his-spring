@@ -25,7 +25,7 @@ public class YKAllotController {
     }
     /*调拨详表查询*/
     @RequestMapping("all-detail")
-    public List<YkAllotdetail> alldetail(Long ykAllotId){
+    public List<YkAllotdetail> alldetail(String ykAllotId){
         List<YkAllotdetail> allotdetails = ykAllotService.alldetail(ykAllotId);
         return allotdetails;
     }
