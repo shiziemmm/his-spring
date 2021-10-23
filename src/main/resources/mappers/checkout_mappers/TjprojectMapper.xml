@@ -30,7 +30,7 @@
                 or index_name like'%${indexName}%'
             </if>
         </where>
-        ORDER BY a.check_pay desc
+        ORDER BY a.check_id desc
     </select>
 
     <select id="selectAllTjObject2" resultMap="Tjproject">
@@ -43,7 +43,7 @@
                 or index_name like'%${seach}%'
             </if>
         </where>
-        ORDER BY a.check_pay desc
+        ORDER BY a.check_id desc
     </select>
 
 <!--    体检人员所含项目查询-->

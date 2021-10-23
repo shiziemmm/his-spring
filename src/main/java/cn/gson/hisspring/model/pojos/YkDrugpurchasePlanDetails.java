@@ -21,6 +21,7 @@ public class YkDrugpurchasePlanDetails {
   @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
   private Timestamp ykDate;//保质期
   private String ykBatch;//药品批次
+  private Long ykRuku;//实际入库数量
 
   private YfDruginformation yfDruginformation;//药品信息
   private YkSupplier ykSupplier;//供应商

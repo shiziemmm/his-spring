@@ -32,4 +32,7 @@ public interface TjManMapper extends BaseMapper<TjCodeMan> {
     //根据id查人员
     @Select("select * from tj_code_man  where man_id=#{manId}")
     List<TjCodeMan> selectMan(Integer manId);
+    //根据身份证查人员
+    @Select("select * from tj_code_man  where man_sid=#{manSid}")
+    List<TjCodeMan> selectsMan(String manSid);
 }

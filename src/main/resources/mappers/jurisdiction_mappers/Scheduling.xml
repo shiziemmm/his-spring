@@ -124,6 +124,7 @@
             ORDER BY fr.f_end_time
         </if>
         <if test="dates ==null">
+            and time(fr.F_end_time) > TIME(now())
             ORDER BY pb.rq
         </if>
     </select>

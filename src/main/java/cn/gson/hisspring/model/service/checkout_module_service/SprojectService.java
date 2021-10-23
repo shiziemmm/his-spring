@@ -33,6 +33,13 @@ public class SprojectService {
         List<SsOperationProject> listsp = sproject.allProject();
         return listsp;
     }
+
+    //查询单个手术项目表用于去重
+    public List<SsOperationProject> alonqProject(String projectName){
+        List<SsOperationProject> listsp = sproject.alonqProject(projectName);
+        return listsp;
+    }
+
     //所有手术室
     public List<SsOperationRoom> allSroom(String seach){
         List<SsOperationRoom> listss = sss.allSroom(seach);
