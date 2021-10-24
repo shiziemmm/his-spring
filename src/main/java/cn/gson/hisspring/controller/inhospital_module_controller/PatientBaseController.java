@@ -87,7 +87,7 @@ public class PatientBaseController {
      * @param
      * @return
      */
-    @RequestMapping("add-patient-checkout")
+    @RequestMapping("add-patient6-checkout")
     public boolean addPatientCheckout(@RequestBody String str){
         PatientCheckoutVo patientCheckoutVo = JSON.parseObject(str, PatientCheckoutVo.class);
         System.err.println(str);
