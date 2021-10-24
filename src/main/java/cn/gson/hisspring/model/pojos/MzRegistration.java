@@ -36,8 +36,8 @@ public class MzRegistration {
   private long mcNumber;
   private long ksId;
   private long doctorSid; //医师员工id
-  private double shPrice;
-  private double zlPrice;
+//  private double shPrice;
+//  private double zlPrice;
 
 
 
