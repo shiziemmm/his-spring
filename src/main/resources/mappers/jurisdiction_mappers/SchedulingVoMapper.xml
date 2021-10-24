@@ -4,13 +4,21 @@
   <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.pojos_vo.SchedulingVo">
     <id column="tid" jdbcType="INTEGER" property="tId" />
     <result column="tname" jdbcType="VARCHAR" property="tName" />
-    <collection property="staff"  ofType="cn.gson.hisspring.model.pojos.pojos_vo.SchedulingVo">
-      <id column="sid" jdbcType="INTEGER" property="tId" />
-      <result column="sname" jdbcType="VARCHAR" property="tName" />
-    </collection>
+<!--    <collection property="staff"  ofType="cn.gson.hisspring.model.pojos.pojos_vo.SchedulingVo">-->
+<!--      <id column="sid" jdbcType="INTEGER" property="tId" />-->
+<!--      <result column="sname" jdbcType="VARCHAR" property="tName" />-->
+<!--    </collection>-->
+  </resultMap>
+  <resultMap id="BaseResultMaps" type="cn.gson.hisspring.model.pojos.pojos_vo.SchedulingVo">
+    <id column="tid" jdbcType="INTEGER" property="tId" />
+    <result column="tname" jdbcType="VARCHAR" property="tName" />
+
   </resultMap>
 <select id="chuaxun" resultMap="BaseResultMap">
-  SELECT t.t_id tid,t.t_name tname,s.s_id sid,s.s_name sname FROM title t left JOIN staff s on t.t_id=s.t_id
+  SELECT * FROM title t left JOIN staff s on t.t_id=s.t_id
   where s.ks_id=#{ksId}
 </select>
+  <select id="selectStaff"  resultMap="BaseResultMaps">
+    SELECT s.s_id tid,s_name tname FROM title t right JOIN staff s on t.t_id=s.t_id where s.t_id=#{tid} and s.ks_id=#{ksId}
+  </select>
 </mapper>

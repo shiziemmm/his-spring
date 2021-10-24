@@ -42,6 +42,9 @@ public class LoginController {
     }
     @RequestMapping("jwt")
     public AjaxResponse login(User user){
+        System.err.println(user);
+        System.err.println("加密"+convertMD5("F@BAEL"));
+        user.setUPswd(convertMD5(user.getUPswd()));
         User cha = userService.login(user);
         CustomError resultBean = new CustomError();
         if(cha!=null){
@@ -106,6 +109,15 @@ public class LoginController {
         }else{
             System.out.println("not null");
         }
+    }
+
+    public static String convertMD5(String inStr){
+        char[] a = inStr.toCharArray();
+        for (int i = 0; i < a.length; i++){
+            a[i] = (char) (a[i] ^ 't');
+        }
+        String s = new String(a);
+        return s;
     }
 
 }

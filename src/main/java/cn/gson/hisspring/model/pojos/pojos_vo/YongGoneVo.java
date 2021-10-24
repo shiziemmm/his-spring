@@ -16,4 +16,5 @@ public class YongGoneVo {
     private Long uId;
     private Long ksId;
     private Long tId;
+
 }

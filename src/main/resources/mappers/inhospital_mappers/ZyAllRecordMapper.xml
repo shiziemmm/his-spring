@@ -8,7 +8,7 @@
         <result property="ptNo" column="pt_no"/>
         <result property="ptName" column="ptName"/>
         <result property="afterBdName" column="afterBdName"/>
-        <result property="bcCause" column="bcCause"/>
+        <result property="bcCause" column="bc_Cause"/>
         <result property="beforeBdName" column="beforeBdName"/>
         <result property="bcDate" column="bc_date"/>
         <result property="bcId" column="bc_id"/>
@@ -17,10 +17,11 @@
     <resultMap id="changeKs" type="cn.gson.hisspring.model.pojos.ZyChangeDeptRecord">
         <result property="ptNo" column="pt_no"/>
         <result property="sId" column="s_id"/>
-        <result property="afterKsName" column="afterKsName"/>
-        <result property="beforeKsName" column="beforeKsName"/>
+        <result property="afterKsName" column="after_Ks_Name"/>
+        <result property="beforeKsName" column="before_Ks_Name"/>
         <result property="cdrDate" column="cdr_date"/>
         <result property="cdrCause" column="cdr_cause"/>
+        <result property="sName" column="s_name"/>
     </resultMap>
 
 
@@ -56,15 +57,15 @@
         select * from seltzychangeksrecord
         <where>
             <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(Bc_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(Bc_date,'%Y-%m-%d') between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                and (DATE_FORMAT(cdr_Date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(cdr_Date,'%Y-%m-%d') between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
             </if>
 
             <if test="(startDate != null) and (endDate == null)">
-                and DATE_FORMAT(Bc_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+                and DATE_FORMAT(cdr_Date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
             </if>
 
             <if test="(startDate == null) and (endDate != null)">
-                and DATE_FORMAT(Bc_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+                and DATE_FORMAT(cdr_Date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
             </if>
 
             <if test="searchLike != null and searchLike != ''">

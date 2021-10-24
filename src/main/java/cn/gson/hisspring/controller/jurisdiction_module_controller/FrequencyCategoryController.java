@@ -60,17 +60,26 @@ public class FrequencyCategoryController {
      */
     @RequestMapping("add-sch")
     public List<SchedulingVo> list(Long ksId){
-        List<SchedulingVo> list = sv.list(ksId);
-        return list;
+        return  sv.list(ksId);
 
     }
 
+    /**
+     * 根据职称查员工
+     * @param tid
+     * @return
+     */
+    @RequestMapping("add-schstaff")
+    private List<SchedulingVo> lists(Long tid,Long ksId){
+        return sv.lists(tid,ksId);
+    }
     /**
      * 新增排班记录
      * @param grant
      */
     @RequestMapping("saveGrant")
     private void saveGrant(@RequestParam("grant") String grant) throws ParseException {
+        System.err.println(grant+"Id");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");//注意月份是MM
         JSONObject o = JSONObject.parseObject(grant);
         String rq=o.get("rq").toString();

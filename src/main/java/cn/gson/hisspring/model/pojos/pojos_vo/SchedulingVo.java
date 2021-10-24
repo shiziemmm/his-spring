@@ -10,6 +10,8 @@ import java.util.List;
 public class SchedulingVo {
     private long tId;
     private String tName;
+    private long sId;
+    private String sName;
     //接收员工集合
    private List<SchedulingVo> staff;
 }

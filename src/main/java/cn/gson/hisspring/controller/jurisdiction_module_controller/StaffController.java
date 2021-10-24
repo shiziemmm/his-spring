@@ -56,7 +56,7 @@ public class StaffController {
         System.err.println(from);
         User user=new User();
         user.setUName(from.getUName());
-        user.setUPswd(from.getUPswd());
+        user.setUPswd(convertMD5(from.getUPswd()));
         Staff s= new Staff();
         s.setSName(from.getSName());
         s.setSSore(from.getSSore());
@@ -71,10 +71,11 @@ public class StaffController {
     }
     @RequestMapping("upa-staff")
     public void upa(YongGoneVo from){
-        System.err.println(from);
+        System.err.println(from+"修改信息");
         User user=new User();
+        user.setUId(from.getUId());
         user.setUName(from.getUName());
-        user.setUPswd(from.getUPswd());
+        user.setUPswd(convertMD5(from.getUPswd()));
         Staff s= new Staff();
         s.setSId(from.getSId());
         s.setSName(from.getSName());
@@ -100,7 +101,8 @@ public class StaffController {
     }
     @RequestMapping("reset")
     public int  reset(Long uid , String ssore){
-        String upswd=ssore.substring(ssore.length() - 6);
+        String upswd=convertMD5(ssore.substring(ssore.length() - 6));
+        System.err.println(upswd+"转");
         int reset = us.reset(upswd, uid);
         if(reset>0){
             return 0;
@@ -111,5 +113,19 @@ public class StaffController {
     @RequestMapping("gitee")
     public List<Staff> gitee(Long uId){
        return ss.selectRole(uId);
+    }
+
+    /**
+     * MD5加密
+     * @param inStr
+     * @return
+     */
+    public static String convertMD5(String inStr){
+        char[] a = inStr.toCharArray();
+        for (int i = 0; i < a.length; i++){
+            a[i] = (char) (a[i] ^ 't');
+        }
+        String s = new String(a);
+        return s;
     }
 }

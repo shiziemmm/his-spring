@@ -30,6 +30,7 @@ public class UserService {
         ss.addStaff(staff);
     }
     public int upa(User user){
+        System.err.println(user+"Service++");
         return  us.updateById(user);
     }
     public int reset(String upswd,Long uid){

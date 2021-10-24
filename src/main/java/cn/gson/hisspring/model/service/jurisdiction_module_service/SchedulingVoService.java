@@ -14,4 +14,8 @@ public class SchedulingVoService {
     public List<SchedulingVo> list(Long ksId){
         return sv.chuaxun(ksId);
     }
+
+    public List<SchedulingVo> lists(Long tid,Long ksId){
+        return sv.selectStaff(tid,ksId);
+    }
 }
