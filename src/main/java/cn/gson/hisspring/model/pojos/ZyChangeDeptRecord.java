@@ -28,8 +28,10 @@ public class ZyChangeDeptRecord {
   private String beforeKsName;//转科前科室名称
   @TableField(exist = false)
   private String afterKsName;//转科后科室名称
+  @TableField(exist = false)
+  private String sName;//操作员
 
-  //关系字段
+
   @TableField(exist = false)
   private Long bdId;//病床编号
 
