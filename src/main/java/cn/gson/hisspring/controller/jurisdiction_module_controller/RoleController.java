@@ -101,6 +101,8 @@ public class RoleController {
     }
     @RequestMapping("staff-funs")
     public List<Integer> staffFuns(Integer rId){
+        System.err.println(rId);
+        System.err.println(roleService.staffFuns(rId));
             return roleService.staffFuns(rId);
     }
     @RequestMapping("save-staff")

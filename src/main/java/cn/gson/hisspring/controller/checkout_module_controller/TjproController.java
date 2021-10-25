@@ -2,6 +2,7 @@ package cn.gson.hisspring.controller.checkout_module_controller;
 
 import cn.gson.hisspring.model.pojos.*;
 import cn.gson.hisspring.model.service.checkout_module_service.TjproService;
+import cn.gson.hisspring.model.service.outpatient_module_service.MzCardBillService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ import java.util.Map;
 public class TjproController {
     @Autowired
     TjproService major;
+    @Autowired
+    MzCardBillService bill;
     @RequestMapping("allDescTjpro") //排序所有检查信息
     public List<TjCodeProject> descSpro(String seach,Integer checkTpye){
         return major.selectAllTjObject(seach,checkTpye);
@@ -134,6 +137,19 @@ public class TjproController {
         return major.tjmanUpdate(manj);
     }
     /**
+     * 新增扣费记录
+     */
+    @PostMapping("addbill")
+    public String Updatebill(MzCardBill mcb){
+        try {
+            bill.addMzCardBill(mcb);
+            return "ok";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
+    }
+    /**
      * 新增修改体检人员单表
      */
     @RequestMapping("addOrUpdataMan1")
@@ -144,6 +160,7 @@ public class TjproController {
         System.out.println(manj);
         return major.tjmanUpdate1(manj);
     }
+
     /**
      * 批量修改体检时间
      */
