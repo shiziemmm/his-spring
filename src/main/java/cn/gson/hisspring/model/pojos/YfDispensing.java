@@ -40,7 +40,7 @@ public class YfDispensing {
   public YfDispensing() {
   }
 
-  public YfDispensing(String ykDisGo, Long sId, String ykDisName, String yfDisDurgName, Long yfDisDurgCount, Long drugId,Long is) {
+  public YfDispensing(String ykDisGo, Long sId, String ykDisName, String yfDisDurgName, Long yfDisDurgCount, Long drugId,Long is,String yfDrvenBatch) {
     this.yfDisDate = new Timestamp(new Date().getTime());
     this.yfDisGo = ykDisGo;
     this.sId = sId;
@@ -49,5 +49,6 @@ public class YfDispensing {
     this.yfDisDurgCount = yfDisDurgCount;
     this.drugId = drugId;
     this.yfDrugIs = is;
+    this.yfDrvenBatch = yfDrvenBatch;
   }
 }
