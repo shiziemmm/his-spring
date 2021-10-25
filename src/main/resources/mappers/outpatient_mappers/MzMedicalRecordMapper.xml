@@ -25,7 +25,7 @@
             and  mr_Count = #{texts}
         </if>
 --         and (sus_state =0 or recipe_drug_state = 0 or man_state = 0)
-        and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
+--         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         GROUP BY mr_count
     </select>
     <!--未缴费页面查询 ，缴费完成，按条件查询就诊号-->

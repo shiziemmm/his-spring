@@ -80,14 +80,13 @@ public class MzRegistrationController {
             dateVue= df.format(guaHaoVO.getDateVue());
         }
         String dateJav = df.format(guaHaoVO.getDateJav());
-
-        System.err.println("前端"+guaHaoVO.getDateVue());
-        System.err.println("科室"+guaHaoVO.getKsId());
-        System.err.println("条件"+guaHaoVO.getText());
-        System.err.println("后端"+guaHaoVO.getDateJav());// new Date()为获取当前系统时间
-        System.err.println(guaHaoVO.getIndex());
-        System.err.println(dateVue);
-        System.err.println(dateJav);
+//        System.err.println("前端"+guaHaoVO.getDateVue());
+//        System.err.println("科室"+guaHaoVO.getKsId());
+//        System.err.println("条件"+guaHaoVO.getText());
+//        System.err.println("后端"+guaHaoVO.getDateJav());// new Date()为获取当前系统时间
+//        System.err.println(guaHaoVO.getIndex());
+//        System.err.println(dateVue);
+//        System.err.println(dateJav);
         if(guaHaoVO.getIndex() == 0){
             return schedulingMapper.selectNowWeek(dateVue,dateJav ,guaHaoVO.getKsId(),guaHaoVO.getText());
         }else{
@@ -100,19 +99,14 @@ public class MzRegistrationController {
                 Date date2 = c.getTime();
                 date3 = df.format(date2);
                 System.err.println("增加一天后日期:"+date3);
-
             }
             return schedulingMapper.selectNowWeek(date3,dateJav ,guaHaoVO.getKsId(),guaHaoVO.getText());
         }
-
-
     }
-
     //查询单个诊疗卡
     @GetMapping("byIdCard")
     public MzMedicalCard selectById(String mcCard){
-        MzMedicalCard mzMedicalCard = cardService.selectById(mcCard.replace(" ", ""));
-        return mzMedicalCard;
+        return cardService.selectById(mcCard.replace(" ", ""));
     }
     //新增挂号表
     @RequestMapping("addReg")
