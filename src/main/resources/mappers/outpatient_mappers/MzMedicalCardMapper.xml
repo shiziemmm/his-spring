@@ -41,12 +41,21 @@
     </select>
     <select id="selectByIdObject" resultMap="allCard">
         select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
-
         <if test =" mcCard!=null and '' != mcCard"> /*一个mzSickTest模糊查询全部like*/
                and mc_Card = #{mcCard}
         </if>
         <if test =" mcCard!=null and '' != mcCard"> /*一个mzSickTest模糊查询全部like*/
            or mc_Id_Card = #{mcCard}
         </if>
+        and c.mc_sate = 0
+    </select>
+
+
+    <select id="selectAllMzMedicalCard2" resultMap="allCard">
+        select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
+        <if test =" card!=null and '' != card"> /*新增病人信息的身份证条件查询*/
+            and mc_Id_Card =#{card}
+        </if>
+        and mc_Sate = 0
     </select>
 </mapper>

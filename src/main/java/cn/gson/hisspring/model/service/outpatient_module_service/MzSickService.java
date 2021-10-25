@@ -35,9 +35,7 @@ public class MzSickService {
      * @return
      */
     public Boolean idCard(String idCard){
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("sick_id_card",idCard);
-        MzSick mzSick = mzSickMapper.selectOne(qw);
+        MzMedicalCard mzSick = mzMedicalCardMapper.selectAllMzMedicalCard2(idCard);
         if(mzSick!=null){
             return true;
         }else{
