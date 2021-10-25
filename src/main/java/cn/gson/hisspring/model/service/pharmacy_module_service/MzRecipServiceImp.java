@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,8 @@ public class MzRecipServiceImp {
     @Autowired
     YFDruglnventoryMapper ydtm;//药房mapper
 
+    @Autowired YfDispensingMapper dissing;//发药记录
+
     //生成随机单号
     public static Long getOrderIdByTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -54,14 +57,6 @@ public class MzRecipServiceImp {
     public void fayao(MzRecipe mzRecipes, Long sId) {
         //生成发药记录的编号
         Long fyStorageId = getOrderIdByTime();
-
-        //新增发药记录的主表
-        YkStorage storg = new YkStorage();
-        storg.setYkStorageId(fyStorageId);
-        storg.setSId(sId);
-        storg.setYkStorageCause("药品发药");
-        storg.setYkStorageOutorenter(3L);//1表示入库  2表示出库   3表示发药
-        ysgm.insert(storg);//新增发药记录的主表
 
         //修改处方状态
         QueryWrapper qwRe = new QueryWrapper();
@@ -114,13 +109,14 @@ public class MzRecipServiceImp {
                     YfDruginventory yfkc = new YfDruginventory(yfList.getYfDrvenId(), yfList.getYfDrvenCount() - zyfy);
                     ydtm.updateById(yfkc);//修改药房库存
 
-                    //新增发药详表记录
-                    YkStorageDetail storgdetail = new YkStorageDetail();
-                    storgdetail.setYkDrvenId(fyStorageId);
-                    storgdetail.setYkDrvenId(yfList.getYfDrvenId());//药房编号
-                    storgdetail.setYkStorageDetailCount(zyfy);//发药数量
-                    storgdetail.setDrugId(yfList.getDrugId());//药品编号
-                    ysgdm.insert(storgdetail);//新增发药详表
+                    //发药记录
+                    YfDispensing sing = new YfDispensing();
+                    sing.setYfDisDate(new Timestamp(new Date().getTime()));//发药时间
+                    sing.setDrugId(yfList.getDrugId());//药品编号
+                    sing.setYfDisGo("门诊发药");//发药去向
+                    sing.setYfDrvenBatch(yfList.getYfDrvenBatch());//发药批次
+                    sing.setYfDisDurgCount(zyfy);//发药数量
+                    dissing.insert(sing);//生产发药记录
                 }
             }
         }
@@ -140,13 +136,15 @@ public class MzRecipServiceImp {
                     //扣除药房库存
                     YfDruginventory yfkcc = new YfDruginventory(yflists.getYfDrvenId(), yflists.getYfDrvenCount() - xyfy);
                     ydtm.updateById(yfkcc);//修改药房库存
-                    //新增发药详表记录
-                    YkStorageDetail storgdetail = new YkStorageDetail();
-                    storgdetail.setYkDrvenId(fyStorageId);
-                    storgdetail.setYkDrvenId(yflists.getYfDrvenId());//药房编号
-                    storgdetail.setYkStorageDetailCount(xyfy);//发药数量
-                    storgdetail.setDrugId(yflists.getDrugId());//药品编号
-                    ysgdm.insert(storgdetail);//新增发药详表
+
+                    //新增发药记录
+                    YfDispensing sing = new YfDispensing();
+                    sing.setYfDisDate(new Timestamp(new Date().getTime()));//发药时间
+                    sing.setDrugId(yflists.getDrugId());//药品编号
+                    sing.setYfDisGo("门诊发药");//发药去向
+                    sing.setYfDrvenBatch(yflists.getYfDrvenBatch());//发药批次
+                    sing.setYfDisDurgCount(xyfy);//发药数量
+                    dissing.insert(sing);//生产发药记录
                 }
             }
         }
