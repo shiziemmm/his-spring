@@ -37,24 +37,24 @@
             or mr_id_card = #{texts})
         </if>
         and (sus_state =1 or recipe_drug_state = 1 or man_state = 1)
+        and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_Over_Time desc
---         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
     </select>
 
 
 
-    <!--病人信息页面查询 已经就诊完成了的人(没用到改换上面了)-->
-    <select id="allRecordSick" resultMap="recordMap2">
-        select * from mzmedicalrecord where 1=1
-        <if test="text !=null and ''!=text ">
-            and  (mr_mc_card = #{text}
-            or mr_count = #{text}
-            or mr_id_card = #{text})
-        </if>
-        and mr_state = 1
---         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
-        order by mr_number desc
-    </select>
+<!--    &lt;!&ndash;病人信息页面查询 已经就诊完成了的人(没用到改换上面了)&ndash;&gt;-->
+<!--    <select id="allRecordSick" resultMap="recordMap2">-->
+<!--        select * from mzmedicalrecord where 1=1-->
+<!--        <if test="text !=null and ''!=text ">-->
+<!--            and  (mr_mc_card = #{text}-->
+<!--            or mr_count = #{text}-->
+<!--            or mr_id_card = #{text})-->
+<!--        </if>-->
+<!--        and mr_state = 1-->
+<!--        and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')-->
+<!--        order by mr_number desc-->
+<!--    </select>-->
 
     <resultMap id="recordMaps" type="cn.gson.hisspring.model.pojos.MzMedicalRecord">
         <id column="mr_Number" property="mrNumber"></id>

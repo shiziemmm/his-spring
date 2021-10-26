@@ -140,9 +140,11 @@ public class TjproController {
      * 新增扣费记录
      */
     @PostMapping("addbill")
-    public String Updatebill(MzCardBill mcb){
+    public String Updatebill(@RequestBody  String mcb){
+        Map map = JSON.parseObject(mcb, Map.class);//将项目对象字符串转换为检查对象
+        MzCardBill manj = JSON.parseObject(map.get("manj").toString(), MzCardBill.class);
         try {
-            bill.addMzCardBill(mcb);
+            bill.addMzCardBill(manj);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();

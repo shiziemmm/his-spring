@@ -95,6 +95,47 @@
         and time(frequency.F_end_time) &gt; TIME(NOW())
     </select>
 
+
+
+    <select id="selectKsName" resultMap="BaseResultMap">
+        SELECT
+            staff.s_id,
+            staff.s_name,
+            staff.s_sore,
+            staff.s_phone,
+            staff.s_date,
+            staff.u_id,
+            staff.ks_id,
+            staff.t_id,
+            staff.s_zt,
+            frequency.F_id,
+            frequency.F_start_time,
+            frequency.F_end_time,
+            frequency.fc_id,
+            department_ks.ks_name,
+            department_ks.ks_dz,
+            department_ks.de_id,
+            title.T_name,
+            scheduling.Sc_id,
+            scheduling.rq
+        FROM
+            staff
+                INNER JOIN title ON staff.t_id = title.T_id
+                INNER JOIN department_ks ON staff.ks_id = department_ks.ks_id
+                INNER JOIN scheduling ON staff.s_id = scheduling.S_id
+                INNER JOIN frequency ON frequency.F_id = scheduling.fr_id
+        where
+        <if test="(ksName!= null and ksName!='')">
+             department_ks.ks_id=#{ksName} and
+        </if>
+        <if test="(sName != null and sName!='')">
+             staff.s_name=#{sName} and
+        </if>
+        DATE_FORMAT(NOW(),'%Y-%m-%d') = DATE_FORMAT(scheduling.rq,'%Y-%m-%d')
+        and time(frequency.F_start_time) &lt; time(NOW())
+        and time(frequency.F_end_time) &gt; TIME(NOW())
+    </select>
+
     <select id="selectNowWeek" resultMap="BaseResultMap">
         select * from scheduling pb
         inner join frequency fr on fr.f_id = pb.fr_id

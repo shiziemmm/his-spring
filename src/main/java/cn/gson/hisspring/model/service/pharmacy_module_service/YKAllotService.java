@@ -75,6 +75,7 @@ public class YKAllotService {
                         ysgdObj.setYkDrvenId(ykList.getYkDrvenId());//药库编号
                         ysgdObj.setYkStorageDetailCount(drugCount);//出库数量
                         ysgdObj.setDrugId(ykList.getDrugId());//药品编号
+                        ysgdObj.setYkStorageDrugName(ykList.getYkDrvenName());
                         ysgdm.insert(ysgdObj);//新增出库详表记录
 
                         //先查询药房是否存在这一批次的药品
@@ -94,6 +95,7 @@ public class YKAllotService {
                             yfDrugObj.setYfDrvenBatch(ykList.getYkDrvenBatch());//药品批次编号
                             yfDrugObj.setYfDrvenName(yfDruginformation.getDrugName());//药品名称
                             yfDrugObj.setYfDrvenCount(drugCount);
+                            yfDrugObj.setYfDrvenMftdate(ykList.getYkDrvenMftdate());
                             ydtm.insert(yfDrugObj);//新增药房数据
                         }else{
                             //修改药房该批次的库存数量
@@ -132,6 +134,7 @@ public class YKAllotService {
                             yfDrugObj.setYfDrvenBatch(ykList.getYkDrvenBatch());//药品批次编号
                             yfDrugObj.setYfDrvenName(yfDruginformation.getDrugName());//药品名称
                             yfDrugObj.setYfDrvenCount(ykList.getYkDrvenCount());
+                            yfDrugObj.setYfDrvenMftdate(ykList.getYkDrvenMftdate());
                             ydtm.insert(yfDrugObj);//新增药房数据
                         }else{
                             //修改药房该批次的库存数量
@@ -142,6 +145,7 @@ public class YKAllotService {
                     }
                 }
             }
+
         }
 
     }
@@ -185,6 +189,7 @@ public class YKAllotService {
         for (YfDruginventory y : ykAllot.getYfDruginventories()) {
 
            YkAllotdetail a=new YkAllotdetail();
+
             a.setYkAllotId(allot.getYkAllotId());
            a.setYkDrugId(y.getDrugId());
            a.setYkAllotdetailCount(y.getYfNumbers());

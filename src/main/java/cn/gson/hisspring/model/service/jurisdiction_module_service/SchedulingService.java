@@ -2,6 +2,8 @@ package cn.gson.hisspring.model.service.jurisdiction_module_service;
 
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMapper;
 import cn.gson.hisspring.model.pojos.Scheduling;
+import cn.gson.hisspring.model.pojos.pojos_vo.ReportForm;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +31,8 @@ public class SchedulingService {
     public List<Scheduling> selectNow(String rq,long ksId,long sId){
         return schedulingMapper.selectNow(rq,ksId,sId);
     }
+    public List<Scheduling> selectKsName(ReportForm reportForm){
+        return schedulingMapper.selectKsName(reportForm);
+    };
+
 }

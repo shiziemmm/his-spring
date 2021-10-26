@@ -58,6 +58,10 @@ public class MzRegistrationService {
         MzMedicalCard cardObject = mzRegistration.getCardObject();
         mzRegistration.setMcNumber(cardObject.getMcNumber());//新增mc_NUmber
         mzRegistration.setSickNumber(cardObject.getSickNumber());//新镇sick_Number
+        if(radioSf == 2){
+            mzRegistration.setShPrice(null);
+            mzRegistration.setZlPrice(null);
+        }
         mzRegistrationMapper.insert(mzRegistration);
         if(radioSf == 2){
             //修改卡余额

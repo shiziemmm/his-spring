@@ -36,8 +36,8 @@ public class MzRegistration {
   private long mcNumber;
   private long ksId;
   private long doctorSid; //医师员工id
-//  private double shPrice;
-//  private double zlPrice;
+  private Double shPrice;//实收
+  private Double zlPrice;//找零
 
 
 
@@ -45,7 +45,8 @@ public class MzRegistration {
   private MzMedicalCard cardObject;
   @TableField(exist = false)//不是数据库字段--员工对象
   private Staff staffObject;
-
+  @TableField(exist = false)//不是数据库字段--排号表对象
+  private MzOpcNumber opcNumberObject;
   public long getKsId() {
     return ksId;
   }

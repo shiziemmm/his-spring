@@ -24,7 +24,7 @@ public interface MzMedicalRecordMapper extends BaseMapper<MzMedicalRecord> {
      */
     List<ReCordAllVO> selectAllReCordObject3(String texts);
     ///病人信息查询 已经就诊完成了的人
-    List<MzMedicalRecord> allRecordSick(String text);
+//    List<MzMedicalRecord> allRecordSick(String text);
     //查询手术等级
     @Select("select DISTINCT project_type from ss_operation_project")
     List<Object> selectAllSsObjectType();

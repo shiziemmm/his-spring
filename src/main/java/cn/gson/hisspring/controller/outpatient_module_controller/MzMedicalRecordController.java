@@ -102,7 +102,7 @@ public class MzMedicalRecordController {
     @RequestMapping("selectAllRecords")
     public ReCordAllVO selectMedicalRecords(@RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
-        String texts = map.get("texts").toString().replace(" ", "");
+        String texts = map.get("texts").toString().replaceAll(" ", "");
         return recordService.selectMedicalRecord(texts);
     }
 
