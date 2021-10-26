@@ -2,7 +2,10 @@ package cn.gson.hisspring.model.pojos.pojos_vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.sql.Timestamp;
 
 /**
  * 药房
@@ -20,6 +23,9 @@ public class ZyYfDrugInventoryVo {
   private String yfSupplierName;//供应商名称
   private String yfDrcaName;//药品类别
   private String drugPrescription;//处方药
+  @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+  private Timestamp yfDrvenMftdate;//生产日期
+  private String yfDrvenBatch;//批次
 
   public ZyYfDrugInventoryVo(long drugId, String yfDrvenName, long yfDrvenCount, long supplierId) {
     this.drugId = drugId;

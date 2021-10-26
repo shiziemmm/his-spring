@@ -1,6 +1,8 @@
 package cn.gson.hisspring.model.pojos;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -14,7 +16,8 @@ public class YfDispensing {
 
   @TableId(value = "yf_dis_id")
   private long yfDisId;
-  private java.sql.Timestamp yfDisDate;
+  @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+  private Timestamp yfDisDate;
   private String yfDisGo;
   private Long sId;
   private String yfDisName;
@@ -22,8 +25,12 @@ public class YfDispensing {
   private Long yfDisDurgCount;
   private Long drugId;
   private Long yfDrugIs;
+  private String yfDrvenBatch;
 
-
+  @TableField(exist = false)
+  private Staff staff;/*员工表*/
+  @TableField(exist = false)
+  private YfDruginformation yfDruginformation;//药品信息
 
 
   public void setsId(Long sId) {

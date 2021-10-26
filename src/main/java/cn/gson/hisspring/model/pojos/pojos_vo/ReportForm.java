@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class ReportForm {
-    private String xq;
-    private int sl;
-    private double mo;
+    private String ksName;
+    private String sName;
 }

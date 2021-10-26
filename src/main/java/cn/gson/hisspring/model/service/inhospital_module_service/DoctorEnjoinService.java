@@ -3,7 +3,10 @@ package cn.gson.hisspring.model.service.inhospital_module_service;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinDetailsMapper;
 import cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinMapper;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.StaffMapper;
+import cn.gson.hisspring.model.mapper.pharmacy_module_mapper.DrugInformationMapper;
+import cn.gson.hisspring.model.pojos.YfDruginformation;
 import cn.gson.hisspring.model.pojos.ZyDoctorEnjoin;
+import cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails;
 import cn.gson.hisspring.model.pojos.pojos_vo.SelectExecuteVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,25 +30,30 @@ public class DoctorEnjoinService {
     @Autowired
     StaffMapper sm;//员工mapper
 
+    @Autowired
+    DrugInformationMapper dfm;//药品信息
+
 
     /**
      * 添加医嘱以及医嘱详表数据
      */
     public boolean addDoctorEnjoin(ZyDoctorEnjoin zyDoctorEnjoin){
-        try{
             //===================================新增医嘱主表
             dem.insert(zyDoctorEnjoin);
 
-            System.err.println(zyDoctorEnjoin.getDeId());
+            System.err.println(zyDoctorEnjoin);
 
+            if(zyDoctorEnjoin.getDeLongorshort() == 2){
+                for (ZyDoctorEnjoinDetails zyDoctorEnjoinDetails : zyDoctorEnjoin.getDedList()) {
 
+                    YfDruginformation yfDruginformation = dfm.selectById(zyDoctorEnjoinDetails.getDesDrugId());
+                    zyDoctorEnjoinDetails.setDesPrice(yfDruginformation.getDrugPrice());
+                }
+
+            }
             //===================================新增医嘱详情表
             dedm.insertDeDetailsFor(zyDoctorEnjoin.getDedList(),zyDoctorEnjoin.getDeId(),zyDoctorEnjoin.getDeExecuteDate());//循环新增
             return true;
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
     }
 
 

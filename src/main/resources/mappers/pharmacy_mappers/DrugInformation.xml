@@ -6,7 +6,7 @@
     <resultMap id="DrugInforMap" type="cn.gson.hisspring.model.pojos.YfDruginformation">
         <result property="drugId" column="Drug_id" />
         <result property="drugName" column="Drug_name" />
-            <result property="drugBarcode" column="Drug_barCode" />
+        <result property="drugBarcode" column="Drug_barCode" />
         <result property="drugPrice" column="Drug_price" />
         <result property="drugUsage" column="Drug_usage" />
         <result property="ykSpecId" column="YK_spec_id" />
@@ -103,4 +103,17 @@
                                       where Drug_id=#{drugId}
     </update>
 
+    <!--<select id="" parameterType="" >
+        select * from yf_drugInformation yp left join
+                      yk_drugSpecifcations gg on yp.YK_spec_id = gg.spec_id
+                                            left join yk_supplier gys on yp.YK_Supplier_id = gys.Supplier_id
+                                                    left join yf_drugcategory lb on yp.YF_drca_id = lb.YF_drca_id
+        <where>
+            <if test="drugId != null and drugId !=''">
+            and yp.drug_id like '%${drugId}%'
+            </if>
+
+        </where>
+
+    </select>-->
 </mapper>

@@ -46,10 +46,8 @@ public class DoctorEnjoinExecuteRecordController {
     public Map<String, String> doctorEnjoinExecute(@RequestBody String str){
         Map map = JSON.parseObject(str, Map.class);
         List<ZyDoctorEnjoinDetails> zyDoctorEnjoinExecuteRecordList  = JSON.parseArray(map.get("doctorEnjoinList").toString(),ZyDoctorEnjoinDetails.class);
-        zyDoctorEnjoinExecuteRecordList.forEach(c->{
-            System.out.println(c);
-        });
         Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);
+        System.err.println("qiwuftyhgquiwhfnuqiwhfui"+sId);
 
         return deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList,sId);
     }

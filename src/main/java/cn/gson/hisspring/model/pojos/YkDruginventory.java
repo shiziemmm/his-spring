@@ -35,6 +35,8 @@ public class YkDruginventory {
   private YkWarehouse ykWarehouse;//仓库
   @TableField(exist = false)
   private YkSupplier ykSupplier;//供应商
+  @TableField(exist = false)
+  private YfDruginformation yfDruginformation;//药品信息
 
   public YkDruginventory(long ykDrvenId, Long ykDrvenCount) {
     this.ykDrvenId = ykDrvenId;
