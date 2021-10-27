@@ -40,7 +40,6 @@ public class BedController {
     public boolean bedAddOrUpdate(@RequestBody String bed){
         ZyBed beds = JSON.parseObject(bed, ZyBed.class);
         System.out.println(beds);
-//        return false;
        return bs.bedAddOrUpdate(beds);
     };
 
