@@ -116,7 +116,7 @@ public class HomeWorkController {
                     nums=list.get(i).getPcdPrice()+0;
                 }
         }
-        if(!map.isEmpty()){
+        if(map!=null || !map.isEmpty()){
                 for (int j = 0; j < map.size(); j++) {
                     mapnums=0+map.get(j).getPcdPrice();
                 }

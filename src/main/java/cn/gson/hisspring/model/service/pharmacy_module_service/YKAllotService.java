@@ -96,6 +96,7 @@ public class YKAllotService {
                             yfDrugObj.setYfDrvenName(yfDruginformation.getDrugName());//药品名称
                             yfDrugObj.setYfDrvenCount(drugCount);
                             yfDrugObj.setYfDrvenMftdate(ykList.getYkDrvenMftdate());
+                            yfDrugObj.setYfSellingprice(ykList.getYkSellingprice());
                             ydtm.insert(yfDrugObj);//新增药房数据
                         }else{
                             //修改药房该批次的库存数量

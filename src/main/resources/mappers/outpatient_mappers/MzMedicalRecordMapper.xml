@@ -22,7 +22,9 @@
     <select id="selectAllReCordObject2" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.ReCordAllVOMapper.reVoAllMap" >
         select * from mzmedicalrecord where 1=1
         <if test="texts !=null and ''!=texts ">
-            and  mr_Count = #{texts}
+            and  (mr_Count = #{texts}
+            or   mr_mc_card = #{texts}
+            or mr_id_card = #{texts})
         </if>
 --         and (sus_state =0 or recipe_drug_state = 0 or man_state = 0)
 --         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
@@ -36,7 +38,7 @@
             or   mr_mc_card = #{texts}
             or mr_id_card = #{texts})
         </if>
-        and (sus_state =1 or recipe_drug_state = 1 or man_state = 1)
+        and (sus_state =1 or man_state = 1  or (recipe_drug_state = 1 or recipe_drug_state = 2))
         and date_format(mr_over_time,'%Y-%m-%d') = date_format(NOW(),'%Y-%m-%d')
         order by mr_Over_Time desc
     </select>
