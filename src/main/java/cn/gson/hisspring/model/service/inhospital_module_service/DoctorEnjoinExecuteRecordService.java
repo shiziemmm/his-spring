@@ -91,6 +91,7 @@ public class DoctorEnjoinExecuteRecordService {
         if(!detailsList.isEmpty()){
             //添加执行医嘱记录
             for (ZyDoctorEnjoinDetails list : detailsList) {
+                System.err.println("长期短期"+list.getDeLongorshort());
 //                QueryWrapper pharmacyQw = new QueryWrapper<ZyDrugPharmacy>().eq("drug_id",list.getDesDrugId()).eq("ks_id",staff.getKsId());//根据药品编号查询
 //                List<ZyDrugPharmacy> pharmacy = dpms.selectList(pharmacyQw);
 //                if(!pharmacy.isEmpty()){
@@ -106,6 +107,7 @@ public class DoctorEnjoinExecuteRecordService {
 //                        }
 //                    continue;
 //                }
+                System.err.println(list);
 
                 if(list.getDesPresentDate() != null && simpleDateFormat.format(list.getDesPresentDate()).equals(simpleDateFormat.format(new Timestamp(new Date().getTime())))){
                     System.err.println("跳过"+list.getDesDrugName());
@@ -136,35 +138,48 @@ public class DoctorEnjoinExecuteRecordService {
                     deerm.insert(record);//新增
                 }
 
-                if(list.getDesDrugIs() == 2){//耗材药品
+                if(list.getDeLongorshort() != 1){//判断是否是长期医嘱
 
-                    QueryWrapper yfHc = new  QueryWrapper<ZyHCindConsumables>().eq("Consumables_id",list.getDesDrugId());//根据药品编号查询
-                    List<ZyHCindConsumables> zyHCindConsumablesList  = zhcm.selectList(yfHc);
+                    if(list.getDesDrugIs() == 2){//耗材药品
 
-                    ZyHCindConsumables zyHCindConsumabless = new ZyHCindConsumables(zyHCindConsumablesList.get(0).getConsumablesId(),zyHCindConsumablesList.get(0).getConsumablesPhy() - drugCount);
-                    zhcm.updateById(zyHCindConsumabless);//修改药房库存
-                    //===========================新增发药记录
-                    YfDispensing yfDispensing = new YfDispensing("住院医嘱(耗材)",sId,staff.getSName(),list.getDesDrugName(),drugCount,list.getDesDrugId(),2L);
-                    ydm.insert(yfDispensing);//新增
+                        QueryWrapper yfHc = new  QueryWrapper<ZyHCindConsumables>().eq("Consumables_id",list.getDesDrugId());//根据药品编号查询
+                        List<ZyHCindConsumables> zyHCindConsumablesList  = zhcm.selectList(yfHc);
 
-                }
+                        ZyHCindConsumables zyHCindConsumabless = new ZyHCindConsumables(zyHCindConsumablesList.get(0).getConsumablesId(),zyHCindConsumablesList.get(0).getConsumablesPhy() - drugCount);
+                        zhcm.updateById(zyHCindConsumabless);//修改药房库存
+                        //===========================新增发药记录
+                        YfDispensing yfDispensing = new YfDispensing("住院医嘱(耗材)",sId,staff.getSName(),list.getDesDrugName(),drugCount,list.getDesDrugId(),2L,null);
+                        ydm.insert(yfDispensing);//新增
 
-
-                if(list.getDesDrugIs() == 1){//将不是处方药的药品直接发药将药房库存扣除  新增发药记录
-                    QueryWrapper yfQw = new  QueryWrapper<ZyYfDrugInventoryVo>().eq("drug_id",list.getDesDrugId());//根据药品编号查询
-                    List<ZyYfDrugInventoryVo> ZyYfDrugInventoryVoList = ydivm.selectList(yfQw);
-                    //!
-                    if(ZyYfDrugInventoryVoList.isEmpty()){//如果药房没有改药品就新增该药品信息（一般不会出现这种状况）*
-                        System.err.println(list);
-                        ZyYfDrugInventoryVo zydi = new ZyYfDrugInventoryVo(list.getDesDrugId(),"s",0 - drugCount,drugVo.getYkSupplierId());
-                        ydivm.insert(zydi);//新增
-                    }else{
-                        ZyYfDrugInventoryVo zyYfDrugInventoryVo = new ZyYfDrugInventoryVo(ZyYfDrugInventoryVoList.get(0).getYfDrvenId(),ZyYfDrugInventoryVoList.get(0).getYfDrvenCount() - drugCount);
-                        ydivm.updateById(zyYfDrugInventoryVo);//修改药房库存
                     }
-                    //===========================新增发药记录
-                    YfDispensing yfDispensing = new YfDispensing("住院医嘱(药品)",sId,staff.getSName(),list.getDesDrugName(),drugCount,list.getDesDrugId(),1L);
-                    ydm.insert(yfDispensing);//新增
+
+                        //===根据药品编号查询药房库存
+                        QueryWrapper yfQw = new QueryWrapper<ZyYfDrugInventoryVo>().eq("drug_id",drugVo.getDrugId()).orderBy(false,false,"yf_Drven_mftdate");//根据药品编号查询
+                        List<ZyYfDrugInventoryVo> ZyYfDrugInventoryVoList = ydivm.selectList(yfQw);
+                        for (ZyYfDrugInventoryVo yfObj : ZyYfDrugInventoryVoList) {
+                            if(drugCount < yfObj.getYfDrvenCount()){
+                                //===========================新增发药记录
+                                YfDispensing yfDispensing = new YfDispensing("住院医嘱(药品)",sId,staff.getSName(),list.getDesDrugName(),drugCount,list.getDesDrugId(),1L,yfObj.getYfDrvenBatch());
+                                ydm.insert(yfDispensing);//新增
+                                break;//结束循环
+                            }else{
+                                //===========================新增发药记录
+                                drugCount = drugCount - yfObj.getYfDrvenCount();
+                                YfDispensing yfDispensing = new YfDispensing("住院医嘱(药品)",sId,staff.getSName(),list.getDesDrugName(),drugCount,list.getDesDrugId(),1L,yfObj.getYfDrvenBatch());
+                                ydm.insert(yfDispensing);//新增
+                            }
+                        }
+                        //!
+                        if(ZyYfDrugInventoryVoList.isEmpty()){//如果药房没有改药品就新增该药品信息（一般不会出现这种状况）*
+                            System.err.println(list);
+                            ZyYfDrugInventoryVo zydi = new ZyYfDrugInventoryVo(list.getDesDrugId(),"s",0 - drugCount,drugVo.getYkSupplierId());
+                            ydivm.insert(zydi);//新增
+                        }else{
+                            ZyYfDrugInventoryVo zyYfDrugInventoryVo = new ZyYfDrugInventoryVo(ZyYfDrugInventoryVoList.get(0).getYfDrvenId(),ZyYfDrugInventoryVoList.get(0).getYfDrvenCount() - drugCount);
+                            ydivm.updateById(zyYfDrugInventoryVo);//修改药房库存
+                        }
+
+
                 }
 
 

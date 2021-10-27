@@ -3,12 +3,15 @@ package cn.gson.hisspring.controller.jurisdiction_module_controller;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMapper;
 import cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.echatrsMapper;
 import cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalRecordMapper;
+import cn.gson.hisspring.model.pojos.Department;
 import cn.gson.hisspring.model.pojos.MzMedicalRecord;
 import cn.gson.hisspring.model.pojos.Scheduling;
+import cn.gson.hisspring.model.pojos.pojos_vo.ReportForm;
 import cn.gson.hisspring.model.pojos.pojos_vo.WeekVo;
 import cn.gson.hisspring.model.pojos.pojos_vo.echartsVo;
 import cn.gson.hisspring.model.service.jurisdiction_module_service.SchedulingService;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,11 +41,15 @@ public class HomeWorkController {
         List<Scheduling> schedulings = schedulingMapper.selectDate();
         return schedulings;
     }
-//    @RequestMapping("week-sch")
-//    public List<Scheduling>  cs(){
-//        List<Scheduling> list = schedulingMapper.selectNowWeek();
-//        return list;
-//    }
+    @RequestMapping("home-sch-name")
+    public  List<Scheduling> homeSch(String ksFrom){
+        System.err.println(ksFrom);
+        ReportForm dome= JSONObject.parseObject(ksFrom, ReportForm.class);
+        List<Scheduling> list = schedulingMapper.selectKsName(dome);
+        System.err.println(list);
+        return list;
+    }
+
     @RequestMapping("echarts")
     public String getAllEcharts(){
         List<echartsVo> echarts = echatrsMapper.getAllEcharts();
@@ -109,7 +116,7 @@ public class HomeWorkController {
                     nums=list.get(i).getPcdPrice()+0;
                 }
         }
-        if(!map.isEmpty()){
+        if(map!=null || !map.isEmpty()){
                 for (int j = 0; j < map.size(); j++) {
                     mapnums=0+map.get(j).getPcdPrice();
                 }

@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * 医嘱详表
  */
 @Data
-public class ZyDoctorEnjoinDetails {
+public class  ZyDoctorEnjoinDetails {
 
   @TableId(value = "des_id",type = IdType.AUTO)
   private long desId;//医嘱详细编号
@@ -48,7 +48,6 @@ public class ZyDoctorEnjoinDetails {
   private Long sId;//开医嘱医生编号
   @TableField(exist = false)
   private String deDoctorName;//开嘱医生名称
-
   public ZyDoctorEnjoinDetails(long desId, Timestamp desEndDate) {
     this.desId = desId;
     this.desEndDate = desEndDate;

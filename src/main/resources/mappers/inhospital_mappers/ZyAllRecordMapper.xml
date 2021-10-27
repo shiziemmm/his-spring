@@ -42,7 +42,7 @@
             </if>
 
             <if test="searchLike != null and searchLike != ''">
-                and pt_name like '%${searchLike}%'
+                and (afterBdName like '%${searchLike}%' or beforeBdName like '%{searchLike}%')
             </if>
 
             <if test="ptNo != null and ptNo != ''">
@@ -69,7 +69,7 @@
             </if>
 
             <if test="searchLike != null and searchLike != ''">
-                and pt_name like '%${searchLike}%'
+                and (afterKsName like '%${searchLike}%' or beforeKsName like '%{searchLike}%')
             </if>
 
             <if test="ptNo != null and ptNo != ''">
