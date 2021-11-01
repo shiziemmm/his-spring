@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 public class ZyNurseClass {
 
-  private long ncId;
-  private String ncName;
-  private Double ncPrice;
-  private String ncExplain;
+    private long ncId;
+    private String ncName;
+    private Double ncPrice;
+    private String ncExplain;
 
 }

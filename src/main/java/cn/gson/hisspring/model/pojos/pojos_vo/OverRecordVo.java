@@ -12,7 +12,4 @@ import lombok.Data;
 public class OverRecordVo {
 
 
-
-
-
 }

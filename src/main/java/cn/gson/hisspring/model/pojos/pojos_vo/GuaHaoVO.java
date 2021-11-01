@@ -8,9 +8,9 @@ import java.util.Date;
 
 @Data
 public class GuaHaoVO {
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")//将数据库的类型返回成指定类型
     private Date dateVue;
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")//将数据库的类型返回成指定类型
     private Date dateJav;
     private Long ksId;
     private String text;

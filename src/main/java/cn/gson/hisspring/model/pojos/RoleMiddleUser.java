@@ -8,10 +8,10 @@ import java.util.List;
 @Data//get  set方法
 public class RoleMiddleUser {
 
-  private long uId;
-  private long rId;
-  @TableField(exist = false)
-  List<RoleMiddleUser> funs;
+    private long uId;
+    private long rId;
+    @TableField(exist = false)
+    List<RoleMiddleUser> funs;
 
 
 }

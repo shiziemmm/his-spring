@@ -21,8 +21,10 @@ public class MzPaymentService {
     MzCardBillService billService;
 
 
-    public List<MzCardBill> select(long card){
+    public List<MzCardBill> select(long card) {
         return billService.selectCardBill(card);
-    };
+    }
+
+    ;
 
 }

@@ -5,8 +5,8 @@ import lombok.Data;
 @Data//get  set方法
 public class TjManMiddle {
 
-  private long manId;
-  private long checkId;
+    private long manId;
+    private long checkId;
 
 
 }

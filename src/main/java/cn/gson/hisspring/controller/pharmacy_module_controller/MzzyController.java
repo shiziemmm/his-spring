@@ -17,7 +17,7 @@ public class MzzyController {
 
     //查询门诊中药需要发的药品
     @RequestMapping("allmzzy")
-    public List<MzZprescription> allmzzy(Long recipeNumber){
+    public List<MzZprescription> allmzzy(Long recipeNumber) {
         return mzzyser.allmzzy(recipeNumber);
     }
 }

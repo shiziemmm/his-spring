@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ContactsMapper extends BaseMapper<ZyContacts> {
-    int insertContactsList(@Param("list") List<ZyContacts> list,@Param("ptNo") Long ptNo);
+    int insertContactsList(@Param("list") List<ZyContacts> list, @Param("ptNo") Long ptNo);
 }

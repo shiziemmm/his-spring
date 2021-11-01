@@ -8,12 +8,12 @@
     <!--sql循环添加体检中间表-->
     <insert id="addTjManResultArr" parameterType="cn.gson.hisspring.model.pojos.TjManResult">
         insert into tj_man_result (
-            check_id,
-            man_id,
-            s_id,
-            man_pay_state
-        )  values
-        <foreach collection="list"  item="tjr" separator=",">
+        check_id,
+        man_id,
+        s_id,
+        man_pay_state
+        ) values
+        <foreach collection="list" item="tjr" separator=",">
             (
             #{tjr.checkId},
             #{tjr.manId},
@@ -36,11 +36,11 @@
     </resultMap>
     <resultMap id="tjProjectMaps" type="cn.gson.hisspring.model.pojos.TjCodeProject">
         <id column="check_id" property="checkId"></id>
-        <result  column="check_name" property="checkName"></result>
-        <result  column="check_pay" property="checkPay"></result>
-        <result  column="index_name" property="indexName"></result>
-        <result  column="index_significance" property="indexSignificance"></result>
-        <result  column="ks_id" property="ksId"></result>
-        <result  column="check_tpye" property="checkTpye"></result>
+        <result column="check_name" property="checkName"></result>
+        <result column="check_pay" property="checkPay"></result>
+        <result column="index_name" property="indexName"></result>
+        <result column="index_significance" property="indexSignificance"></result>
+        <result column="ks_id" property="ksId"></result>
+        <result column="check_tpye" property="checkTpye"></result>
     </resultMap>
 </mapper>

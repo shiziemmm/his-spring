@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- *住院申请 ，门诊患者信息实体类
+ * 住院申请 ，门诊患者信息实体类
  */
 @Data
 public class InHospitalMzVo {
@@ -22,7 +22,7 @@ public class InHospitalMzVo {
     private long sickAge;
     private String sickSex;
     private String sickSite;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Shanghai")//将数据库的类型返回成指定类型
     private Date sickTime;
     @TableField(exist = false)//标注这个字段不是数据库字段
     private Long mcNumberCard;//诊疗卡字段

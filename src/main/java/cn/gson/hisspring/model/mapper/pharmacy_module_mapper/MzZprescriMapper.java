@@ -9,5 +9,5 @@ import java.util.List;
 @Mapper
 public interface MzZprescriMapper extends BaseMapper<MzZprescription> {
     //查询门诊中药需要发的药品
-    List<MzZprescription>allMzzy(Long recipeNumber);
+    List<MzZprescription> allMzzy(Long recipeNumber);
 }

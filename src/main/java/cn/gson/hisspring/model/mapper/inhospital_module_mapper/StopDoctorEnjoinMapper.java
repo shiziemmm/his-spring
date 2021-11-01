@@ -13,5 +13,5 @@ import java.util.List;
  */
 @Repository
 public interface StopDoctorEnjoinMapper extends BaseMapper<ZyStopDoctorEnjoin> {
-    int insertStopDoctorEnjoinFor(@Param("dedList")List<ZyDoctorEnjoinDetails> dedList,@Param("sde") ZyStopDoctorEnjoin sde);
+    int insertStopDoctorEnjoinFor(@Param("dedList") List<ZyDoctorEnjoinDetails> dedList, @Param("sde") ZyStopDoctorEnjoin sde);
 }

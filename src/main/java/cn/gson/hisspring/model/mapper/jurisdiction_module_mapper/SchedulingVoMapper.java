@@ -10,5 +10,6 @@ import java.util.List;
 @Mapper
 public interface SchedulingVoMapper extends BaseMapper<SchedulingVo> {
     List<SchedulingVo> chuaxun(Long ksId);
-    List<SchedulingVo> selectStaff(@Param("tid") Long tid,@Param("ksId") Long ksId);
+
+    List<SchedulingVo> selectStaff(@Param("tid") Long tid, @Param("ksId") Long ksId);
 }

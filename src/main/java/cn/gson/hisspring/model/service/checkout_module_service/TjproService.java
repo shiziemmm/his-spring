@@ -30,208 +30,240 @@ public class TjproService {
     TjResultMapper ent;
     @Autowired
     MzMedicalCardMapper1 car;//诊疗卡体检用mapper
-//检查项目模糊查询与传参
-    public List<TjCodeProject> selectAllTjObject(String seach,Integer checkTpye){
-        List<TjCodeProject> listjc = major.selectAllTjObject(seach,checkTpye);
-        return  listjc;
+
+    //检查项目模糊查询与传参
+    public List<TjCodeProject> selectAllTjObject(String seach, Integer checkTpye) {
+        List<TjCodeProject> listjc = major.selectAllTjObject(seach, checkTpye);
+        return listjc;
     }
+
     //体检套餐模糊查询与传参
-    public List<TjCodeMeal> selectAllTjMeal(String checkIndex,String codeName,String codeType){
-        List<TjCodeMeal> listm = crd.selectAllTjMeal(checkIndex,codeName,codeType);
-        return  listm;
+    public List<TjCodeMeal> selectAllTjMeal(String checkIndex, String codeName, String codeType) {
+        List<TjCodeMeal> listm = crd.selectAllTjMeal(checkIndex, codeName, codeType);
+        return listm;
     }
+
     //体检套餐类型
-    public List<TjCodeType> allType(){
-        List<TjCodeType> listfix= fix.alltype();
-        return  listfix;
+    public List<TjCodeType> allType() {
+        List<TjCodeType> listfix = fix.alltype();
+        return listfix;
     }
+
     //体检套餐所含检查项目
-    public List<TjCodeProject> selectTjpro(Integer codeId){
+    public List<TjCodeProject> selectTjpro(Integer codeId) {
         List<TjCodeProject> listm = major.inspect(codeId);
-        return  listm;
+        return listm;
     }
+
     //体检人员未填写
-    public List<TjCodeMan> selectAllman(String sermen){
+    public List<TjCodeMan> selectAllman(String sermen) {
         List<TjCodeMan> listman = man.selectAllMan(sermen);
         System.out.println(listman);
-        return  listman;
+        return listman;
     }
+
     //体检人员模糊查询与传参
-    public List<TjCodeMan> selectAllman1(String sermen){
+    public List<TjCodeMan> selectAllman1(String sermen) {
         List<TjCodeMan> listman = man.selectAllMan1(sermen);
         System.out.println(listman);
-        return  listman;
+        return listman;
     }
+
     //体检人员已填写
-    public List<TjCodeMan> selectAllman2(String sermen){
+    public List<TjCodeMan> selectAllman2(String sermen) {
         List<TjCodeMan> listman = man.selectAllMan2(sermen);
         System.out.println(listman);
-        return  listman;
+        return listman;
     }
+
     //根据id查人员
-    public List<TjCodeMan> selectman(Integer manId){
+    public List<TjCodeMan> selectman(Integer manId) {
         List<TjCodeMan> listman = man.selectMan(manId);
         System.out.println(listman);
-        return  listman;
+        return listman;
     }
+
     //查体检人员所含项目
-    public List<TjCodeProject> selectAlonMm(Integer manId){
+    public List<TjCodeProject> selectAlonMm(Integer manId) {
         List<TjCodeProject> listman = major.selectAlonMp(manId);
         System.out.println(listman);
-        return  listman;
+        return listman;
     }
+
     //根据名字查询项目用于去重
-    public List<TjCodeProject> selectslpro(String checkName){
+    public List<TjCodeProject> selectslpro(String checkName) {
         List<TjCodeProject> listman = major.selectcpro(checkName);
         System.out.println(listman);
-        return  listman;
+        return listman;
     }
+
     //根据身份证查人员用于去重
-    public List<TjCodeMan> selecsman(String manSid){
+    public List<TjCodeMan> selecsman(String manSid) {
         List<TjCodeMan> listman = man.selectsMan(manSid);
         System.out.println(listman);
-        return  listman;
+        return listman;
     }
+
     //体检结果传参
-    public List<TjManResult> AllRes(Integer manId){
+    public List<TjManResult> AllRes(Integer manId) {
         List<TjManResult> listres = ent.allmresult(manId);
         System.out.println(listres);
-        return  listres;
+        return listres;
     }
+
     //体检人员是否结果
-    public List<TjManResult> sRes(Integer checkId){
+    public List<TjManResult> sRes(Integer checkId) {
         List<TjManResult> listres = ent.sresult(checkId);
         System.out.println(listres);
-        return  listres;
+        return listres;
     }
+
     //根据编号查询诊疗卡
-    public List<MzMedicalCard> alomCaed(String mcIdCard){
+    public List<MzMedicalCard> alomCaed(String mcIdCard) {
         List<MzMedicalCard> listcard = car.allmzmidCard(mcIdCard);
         System.out.println(listcard);
-        return  listcard;
+        return listcard;
     }
+
     /**
      * 新增修改检查结果
+     *
      * @return
      */
-    public boolean tjresUpdate(TjManResult mroj){
+    public boolean tjresUpdate(TjManResult mroj) {
         int is = 0;//判断是否新增成功
-        if(mroj.getManResultId() == 0){//新增
+        if (mroj.getManResultId() == 0) {//新增
             is = ent.insert(mroj);
-        }else{//修改
+        } else {//修改
             is = ent.updateById(mroj);
         }
-        return is == 0?false:true;
+        return is == 0 ? false : true;
     }
+
     /**
      * 新增修改套惨
+     *
      * @return
      */
-    public boolean tjmealUpdate(TjCodeMeal mroj){
+    public boolean tjmealUpdate(TjCodeMeal mroj) {
         int is = 0;//判断是否新增成功
-        if(mroj.getCodeId() == 0){//新增
+        if (mroj.getCodeId() == 0) {//新增
             is = crd.insert(mroj);
-            System.out.println("新增编号"+mroj.getCodeId());
-            crd.insertTjmid(mroj.getTjAn(),mroj.getCodeId());
-        }else{//修改
+            System.out.println("新增编号" + mroj.getCodeId());
+            crd.insertTjmid(mroj.getTjAn(), mroj.getCodeId());
+        } else {//修改
 //            sproject.delet((int) proj.getProjectId());
             //删除原本中间表
             midd.delete((int) mroj.getCodeId());
 //            重新新增中间表
-            crd.insertTjmid(mroj.getTjAn(),mroj.getCodeId());
+            crd.insertTjmid(mroj.getTjAn(), mroj.getCodeId());
             is = crd.updateById(mroj);
         }
 
-        return is == 0?false:true;
+        return is == 0 ? false : true;
     }
+
     /**
      * 新增修改体检人员
+     *
      * @return
      */
-    public boolean tjmanUpdate(TjCodeMan manj){
+    public boolean tjmanUpdate(TjCodeMan manj) {
         int is = 0;//判断是否新增成功
-        if(manj.getManId() != 0){//新增
+        if (manj.getManId() != 0) {//新增
             //修改
             //删除原本中间表
             sen.delet(manj.getManId().intValue());
 //            重新新增中间表
-            man.insertTjman(manj.getManId(),manj.getJcXm());
+            man.insertTjman(manj.getManId(), manj.getJcXm());
             is = man.updateById(manj);
-        }else{
+        } else {
             is = man.insert(manj);
-            System.out.println("新增编号"+manj.getManId());
-            man.insertTjman(manj.getManId(),manj.getJcXm());
+            System.out.println("新增编号" + manj.getManId());
+            man.insertTjman(manj.getManId(), manj.getJcXm());
         }
 
-        return is == 0?false:true;
+        return is == 0 ? false : true;
     }
-//    改人员单表
-    public boolean tjmanUpdate1(TjCodeMan manj){
+
+    //    改人员单表
+    public boolean tjmanUpdate1(TjCodeMan manj) {
         int is = 0;//判断是否新增成功
-        if(manj.getManId() == 0){//新增
+        if (manj.getManId() == 0) {//新增
             is = man.insert(manj);
-        }else{
+        } else {
             is = man.updateById(manj);
         }
 
-        return is == 0?false:true;
+        return is == 0 ? false : true;
     }
+
     //    批量修改体检人员
-    public void updTjman(String manTime,Integer manId){
+    public void updTjman(String manTime, Integer manId) {
         int is = 0;//判断是否修改成功
-        man.updTjman(manTime,manId);
+        man.updTjman(manTime, manId);
     }
 
     //修改体检人员状态
-    public void updamzt(Integer manState,Integer manId){
-        man.updatezt(manState,manId);
+    public void updamzt(Integer manState, Integer manId) {
+        man.updatezt(manState, manId);
     }
+
     //修改体检人员医生建议
-    public void updamanY(String manProposal,Integer manId){
-        man.updTjmanY(manProposal,manId);
+    public void updamanY(String manProposal, Integer manId) {
+        man.updTjmanY(manProposal, manId);
     }
+
     //修改诊疗卡金额根据身份证
-    public void updMoney(Integer mcBalance,String mcIdCard){car.updMoney(mcBalance,mcIdCard);}
-//    批量新增结果
-    public boolean inserjg(List listArr){
+    public void updMoney(Integer mcBalance, String mcIdCard) {
+        car.updMoney(mcBalance, mcIdCard);
+    }
+
+    //    批量新增结果
+    public boolean inserjg(List listArr) {
         int is = 0;//判断是否新增成功
-        listArr.forEach(v->{
+        listArr.forEach(v -> {
             System.err.println(v);
         });
-        is=ent.insertTjmres(listArr);
-        return is == 0?false:true;
+        is = ent.insertTjmres(listArr);
+        return is == 0 ? false : true;
     }
 
     /**
      * 新增修改检查项目
+     *
      * @return
      */
-    public boolean tprojectUpdate(TjCodeProject troj){
+    public boolean tprojectUpdate(TjCodeProject troj) {
         int is = 0;//判断是否新增成功
-        if(troj.getCheckId() == 0){//新增
+        if (troj.getCheckId() == 0) {//新增
             is = major.insert(troj);
-        }else{//修改
+        } else {//修改
 //            sed.updateById(troj.getTjCodeIndex());
             is = major.updateById(troj);
         }
 
-        return is == 0?false:true;
+        return is == 0 ? false : true;
     }
+
     /**
      * 新增修改检查项目
+     *
      * @return
      */
     //检查项目删除
-    public void delet(Integer  index){
+    public void delet(Integer index) {
         major.deleteById(index);
     }
+
     //体检人员删除
-    public void deletman(Integer manId){
+    public void deletman(Integer manId) {
         man.deleteById(manId);
     }
-//指标表查询所有
-    public List<TjCodeIndex> allIndex(){
-        List<TjCodeIndex> listzb =sed.allIndex();
-        return  listzb;
+
+    //指标表查询所有
+    public List<TjCodeIndex> allIndex() {
+        List<TjCodeIndex> listzb = sed.allIndex();
+        return listzb;
     }
 }

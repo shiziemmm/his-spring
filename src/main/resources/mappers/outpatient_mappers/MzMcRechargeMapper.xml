@@ -21,10 +21,12 @@
         <result column="s_id" property="sId"></result>
         <result column="mc_Number" property="mcNumber"></result>
 
-        <association resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps" property="staffObject">
+        <association resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps"
+                     property="staffObject">
 
         </association>
-        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper.allCard" property="cardObject">
+        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper.allCard"
+                     property="cardObject">
 
         </association>
     </resultMap>
@@ -33,7 +35,7 @@
         select * from mz_mc_recharge m LEFT JOIN mz_medical_card c on m.mc_number=c.mc_number
         LEFT JOIN mz_sick k on c.sick_number=k.sick_number
         LEFT JOIN staff s on m.s_id = s.s_id where 1=1
-        <if test =" like!=null and '' != like"> /*一个mzSickTest模糊查询全部like*/
+        <if test=" like!=null and '' != like">/*一个mzSickTest模糊查询全部like*/
             and (c.mc_Card = #{like}
             or c.mc_Id_Card = #{like}
             or k.sick_name = #{like})

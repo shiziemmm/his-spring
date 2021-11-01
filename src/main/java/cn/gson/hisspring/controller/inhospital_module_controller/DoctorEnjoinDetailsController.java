@@ -24,14 +24,14 @@ public class DoctorEnjoinDetailsController {
 
 
     @RequestMapping("select-doctorEnjoinDetails-ByPtNo")
-    public List<ZyDoctorEnjoinDetails> doctorEnjoinDetailsSelectByPtId(@RequestBody String str){
+    public List<ZyDoctorEnjoinDetails> doctorEnjoinDetailsSelectByPtId(@RequestBody String str) {
         SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
         System.err.println(selectExecuteVo);
         return deds.doctorEnjoinDetailsSelectByPtId(selectExecuteVo);
     }
 
     @RequestMapping("selectDoctorEnjoinDetailsByPtNo")
-    public List<ZyDoctorEnjoinDetails> patientDoctorByPtNo(Long ptNo){
+    public List<ZyDoctorEnjoinDetails> patientDoctorByPtNo(Long ptNo) {
         return deds.patientDoctorByPtNo(ptNo);
     }
 }

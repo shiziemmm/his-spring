@@ -12,8 +12,9 @@ import java.util.List;
 @Mapper
 public interface SsApplyMapper extends BaseMapper<SsOperationApply> {
     //查询手术申请单
-List<SsOperationApply> selectSsApply(String seach);
-//手术麻醉药品
-List <YfDruginformation> querysById();
+    List<SsOperationApply> selectSsApply(String seach);
+
+    //手术麻醉药品
+    List<YfDruginformation> querysById();
 
 }

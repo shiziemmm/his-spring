@@ -24,38 +24,43 @@ public class MzOpcController {
 
     /**
      * 新增住院记录表
+     *
      * @param str
      * @return
      */
     @RequestMapping("addInHospita")
-    public String addInHospitalApply(@RequestBody String str){
+    public String addInHospitalApply(@RequestBody String str) {
         try {
             Map map = JSON.parseObject(str, Map.class);
             String rtNumber = map.get("rtNumber").toString();
-            ZyInhospitalApply inhospitalApply = JSON.parseObject(map.get("inhospitalApply").toString(),ZyInhospitalApply.class);
+            ZyInhospitalApply inhospitalApply = JSON.parseObject(map.get("inhospitalApply").toString(), ZyInhospitalApply.class);
             String mrNumber = map.get("mrNumber").toString();
-            opcService.addInHospitalApply(inhospitalApply ,rtNumber,mrNumber);
+            opcService.addInHospitalApply(inhospitalApply, rtNumber, mrNumber);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
             return "fail";
         }
     }
+
     /**
      * 查询手术项目总览
+     *
      * @param seach
      * @return
      */
     @RequestMapping("allDescTjpros") //排序所有检查信息
-    public List<TjCodeProject> descSpro(String seach){
+    public List<TjCodeProject> descSpro(String seach) {
         return opcService.selectAllTjObjects(seach);
     }
+
     /**
      * 查询所有科室信息
+     *
      * @return
      */
     @RequestMapping("selectKs")
-    public List<DepartmentKs> selectKs(Integer index){
+    public List<DepartmentKs> selectKs(Integer index) {
         System.err.println(index);
         return opcService.selectKs(index);
     }
@@ -64,8 +69,8 @@ public class MzOpcController {
      * 查询所有的病例信息
      */
     @RequestMapping("selectBl")
-    public List<MzCaseHistory> selectBl(Integer index){
-        System.err.println(index+"ssssssssssssssssssssss");
+    public List<MzCaseHistory> selectBl(Integer index) {
+        System.err.println(index + "ssssssssssssssssssssss");
         return opcService.selectCaseHistory(index);
     }
 

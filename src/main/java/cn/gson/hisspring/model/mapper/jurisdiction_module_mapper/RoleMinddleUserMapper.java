@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper
 public interface RoleMinddleUserMapper extends BaseMapper<RoleMiddleUser> {
-    int upa(@Param("uId") long uId,@Param("rId") long rId);
+    int upa(@Param("uId") long uId, @Param("rId") long rId);
 
     @Select("select * from role_middle_user where u_id=#{uId}")
     List<RoleMiddleUser> dome(long rId);
@@ -19,6 +19,7 @@ public interface RoleMinddleUserMapper extends BaseMapper<RoleMiddleUser> {
     @Select("delete from role_middle_user where u_id=#{uId}")
     void delet(long uId);
 
-    int addStaff(Long uId ,List<Integer> funs);
+    int addStaff(Long uId, List<Integer> funs);
+
     List<RoleMiddleUser> select(Integer uId);
 }

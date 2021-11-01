@@ -13,7 +13,7 @@
         <result property="sName" column="s_name"/>
         <result column="bd_name" property="bdName"/>
 
-        <association property="zyPatientBase" javaType="cn.gson.hisspring.model.pojos.ZyPatientBase" >
+        <association property="zyPatientBase" javaType="cn.gson.hisspring.model.pojos.ZyPatientBase">
             <result column="Pt_no" property="ptNo"/>
             <result column="pt_In_date" property="ptInDate"/>
             <result column="Pt_name" property="ptName"/>
@@ -38,8 +38,10 @@
     </resultMap>
 
     <!--根据住院号查询费用明细-->
-    <select id="costDischargeAllByPtNo" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientCostMapper.payCostMap">
-        select sum(pcd_price)as pcd_price,if(pcd_cause = '医嘱药品费用' || pcd_cause = '床位费用' || pcd_cause = '化验项目费用' ,pcd_cause,'其他费用') AS cause from seltpatientcostbreakdownDischarge
+    <select id="costDischargeAllByPtNo"
+            resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientCostMapper.payCostMap">
+        select sum(pcd_price)as pcd_price,if(pcd_cause = '医嘱药品费用' || pcd_cause = '床位费用' || pcd_cause = '化验项目费用'
+        ,pcd_cause,'其他费用') AS cause from seltpatientcostbreakdownDischarge
         <where>
             <if test="ptNo != null and ptNo != ''">
                 and pt_no = #{ptNo}
@@ -60,9 +62,9 @@
         where
         Dga_is = 1
 
-            <if test="search != null and search != ''">
-                and (pt_no like '%${search}%' or pt_name like '%${search}%')
-            </if>
+        <if test="search != null and search != ''">
+            and (pt_no like '%${search}%' or pt_name like '%${search}%')
+        </if>
     </select>
 
 </mapper>

@@ -22,15 +22,18 @@
         <result column="s_Id" property="sId"></result>
         <result column="sick_Number" property="sickNumber"></result>
         <result column="al_Time" property="alTime"></result>
-        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap" property="sickObject">
+        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap"
+                     property="sickObject">
         </association>
-        <association property="cardObject" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper.allCard">
+        <association property="cardObject"
+                     resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper.allCard">
         </association>
     </resultMap>
 
     <select id="selectMzAlterLose" resultMap="alterLose">
-        select * from mz_alter_lose a LEFT JOIN mz_medical_card c ON a.mc_number=c.mc_number left join mz_sick s on a.sick_number=s.sick_number where 1=1
-        <if test =" like!=null and '' != like"> /*一个mzSickTest模糊查询全部like*/
+        select * from mz_alter_lose a LEFT JOIN mz_medical_card c ON a.mc_number=c.mc_number left join mz_sick s on
+        a.sick_number=s.sick_number where 1=1
+        <if test=" like!=null and '' != like">/*一个mzSickTest模糊查询全部like*/
             and (mc_Card like "%"#{like}"%"
             or sick_Phone like "%"#{like}"%"
             or al_Card like "%"#{like}

@@ -14,28 +14,34 @@ import java.util.List;
 public class YfDruginformationService {
     @Autowired
     DrugInformationMapper information_mapper;
+
     /*查询药品信息*/
-    public List<YfDruginformation> queryById(){
+    public List<YfDruginformation> queryById() {
         return information_mapper.queryById();
     }
+
     /*新增药品信息*/
-    public void addDrug(YfDruginformation yfDruginformation){
+    public void addDrug(YfDruginformation yfDruginformation) {
         information_mapper.addDrug(yfDruginformation);
     }
+
     /*修改药品信息*/
-    public void updaDrug(YfDruginformation yfDruginformation){
+    public void updaDrug(YfDruginformation yfDruginformation) {
         information_mapper.updaDrug(yfDruginformation);
     }
+
     /*查询规格*/
-    public List<YkDrugspecifcations> allspec(){
-        return  information_mapper.allspec();
+    public List<YkDrugspecifcations> allspec() {
+        return information_mapper.allspec();
     }
+
     /*查询供应商*/
-    public List<YkSupplier> allsupp(){
+    public List<YkSupplier> allsupp() {
         return information_mapper.allsupp();
     }
+
     /*查询类别*/
-    public List<YfDrugcategory> alldrca(){
+    public List<YfDrugcategory> alldrca() {
         return information_mapper.alldrca();
     }
 }

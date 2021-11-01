@@ -17,9 +17,10 @@ import java.util.List;
 public class TitleController {
     @Autowired
     TitleService titleService;
+
     //查询所有职称
     @RequestMapping("titel-list")
-    public List<Title> selectAll(){
+    public List<Title> selectAll() {
         return titleService.selectList();
     }
 }

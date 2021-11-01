@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.FrequencyMapper">
-  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.Frequency">
-    <id column="f_id" jdbcType="INTEGER" property="fId" />
-    <result column="f_start_time" jdbcType="VARCHAR" property="fStartTime" />
-    <result column="f_end_time" jdbcType="VARCHAR" property="fEndTime"/>
-    <result column="fc_id" jdbcType="INTEGER" property="fcId"></result>
-    <collection property="fc" ofType="cn.gson.hisspring.model.pojos.FrequencyCategory">
-      <id column="fc_id" jdbcType="INTEGER" property="fcId" />
-      <result column="fc_name" jdbcType="VARCHAR" property="fcName"/>
-    </collection>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.Frequency">
+        <id column="f_id" jdbcType="INTEGER" property="fId"/>
+        <result column="f_start_time" jdbcType="VARCHAR" property="fStartTime"/>
+        <result column="f_end_time" jdbcType="VARCHAR" property="fEndTime"/>
+        <result column="fc_id" jdbcType="INTEGER" property="fcId"></result>
+        <collection property="fc" ofType="cn.gson.hisspring.model.pojos.FrequencyCategory">
+            <id column="fc_id" jdbcType="INTEGER" property="fcId"/>
+            <result column="fc_name" jdbcType="VARCHAR" property="fcName"/>
+        </collection>
+    </resultMap>
 
 
-<select id="selectById" resultMap="BaseResultMap">
-  select * from frequency where f_id=#{fId}
-</select>
-  <update id="updateById">
-    UPDATE frequency f set f.F_start_time=#{fStartTime},f.F_end_time=#{fEndTime},f.fc_id=#{fcId} WHERE f.F_id=#{fId}
-  </update>
-  <insert id="addRoleInfo" parameterType="java.util.List">
-    insert into frequency (f_start_time,f_end_time,fc_id) values
-    <foreach collection="mapList" item="list" index="index"  separator="," >
-      ( #{list.start},#{list.end},#{fcId})
-    </foreach>
-  </insert>
-  <select id="selectAllId" resultMap="BaseResultMap">
-    select * from frequency where fc_id=#{fcId}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    SELECT * FROM frequency f LEFT JOIN frequency_category fc on f.fc_id=fc.fc_id  ORDER BY f.f_id ASC
-  </select>
+    <select id="selectById" resultMap="BaseResultMap">
+        select * from frequency where f_id=#{fId}
+    </select>
+    <update id="updateById">
+        UPDATE frequency f set f.F_start_time=#{fStartTime},f.F_end_time=#{fEndTime},f.fc_id=#{fcId} WHERE f.F_id=#{fId}
+    </update>
+    <insert id="addRoleInfo" parameterType="java.util.List">
+        insert into frequency (f_start_time,f_end_time,fc_id) values
+        <foreach collection="mapList" item="list" index="index" separator=",">
+            ( #{list.start},#{list.end},#{fcId})
+        </foreach>
+    </insert>
+    <select id="selectAllId" resultMap="BaseResultMap">
+        select * from frequency where fc_id=#{fcId}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM frequency f LEFT JOIN frequency_category fc on f.fc_id=fc.fc_id ORDER BY f.f_id ASC
+    </select>
 </mapper>

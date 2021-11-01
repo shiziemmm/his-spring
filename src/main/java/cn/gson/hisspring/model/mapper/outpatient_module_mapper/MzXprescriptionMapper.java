@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- *  西药处方
+ * 西药处方
  */
 @Mapper
 public interface MzXprescriptionMapper extends BaseMapper<MzXprescription> {

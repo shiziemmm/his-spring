@@ -21,17 +21,18 @@ public class DeptDrugAllotService {
 
     /**
      * 根据科室编号查询凋敝信息
+     *
      * @param ksId
      * @return
      */
-    public List<ZyDeptDrugAllot> selectByKsId(Long ksId){
+    public List<ZyDeptDrugAllot> selectByKsId(Long ksId) {
         return ddam.selectByKsId(ksId);
     }
 
 
-    public boolean addDeptDrugAllotFor(List<ZyDeptDrugAllot> list){
+    public boolean addDeptDrugAllotFor(List<ZyDeptDrugAllot> list) {
         int i = ddam.addDeptDrugAllotList(list);
-        if(i > 0)
+        if (i > 0)
             return true;
         return false;
     }

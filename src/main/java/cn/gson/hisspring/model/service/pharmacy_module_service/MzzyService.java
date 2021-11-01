@@ -13,7 +13,7 @@ public class MzzyService {
     MzZprescriMapper mzzymp;
 
     //查询门诊中药需要发的药品
-    public List<MzZprescription> allmzzy(Long recipeNumber){
+    public List<MzZprescription> allmzzy(Long recipeNumber) {
         return mzzymp.allMzzy(recipeNumber);
     }
 }

@@ -19,23 +19,24 @@ public class ZyDrugInFormationService {
 
     /**
      * 根据条件查询
+     *
      * @return
      */
-    public List<DrugVo> selectDrugByDrugName(DrugSearchVo search){
-       return zdm.selectDrugByDrugName(search);
+    public List<DrugVo> selectDrugByDrugName(DrugSearchVo search) {
+        return zdm.selectDrugByDrugName(search);
     }
 
     /**
      * 查询所有药品单位
      */
-    public List<Object> selectDrugUnit(){
+    public List<Object> selectDrugUnit() {
         return zdm.selectDrugUnit();
     }
 
     /**
      * 查询所有药品用法
      */
-    public List<Object> selectDrugUsage(){
+    public List<Object> selectDrugUsage() {
         return zdm.selectDrugUsage();
     }
 

@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- *  排号表mapper
-  */
+ * 排号表mapper
+ */
 @Mapper
 public interface MzOpcNumberMapper extends BaseMapper<MzOpcNumber> {
-    List<MzOpcNumber> selectMzOpcNumber(long ksName,long science);
+    List<MzOpcNumber> selectMzOpcNumber(long ksName, long science);
 }

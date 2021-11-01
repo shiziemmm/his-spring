@@ -15,24 +15,30 @@ public class SchedulingService {
     @Autowired
     SchedulingMapper schedulingMapper;
 
-    public List<Scheduling> selectList(){
+    public List<Scheduling> selectList() {
         return schedulingMapper.selectList(null);
     }
-    public boolean addSch(Date rq,Integer sid, List<Integer> list){
-        return schedulingMapper.addSch(rq,sid,list) < 0 ? false : true;
+
+    public boolean addSch(Date rq, Integer sid, List<Integer> list) {
+        return schedulingMapper.addSch(rq, sid, list) < 0 ? false : true;
     }
 
-    public List<Scheduling> selectWeek(String rq,long ksId){
-        return schedulingMapper.selectWeek(rq,ksId);
+    public List<Scheduling> selectWeek(String rq, long ksId) {
+        return schedulingMapper.selectWeek(rq, ksId);
     }
-    public List<Scheduling> selectAllWeek(String rq,long ksId){
-        return schedulingMapper.selectWeek(rq,ksId);
+
+    public List<Scheduling> selectAllWeek(String rq, long ksId) {
+        return schedulingMapper.selectWeek(rq, ksId);
     }
-    public List<Scheduling> selectNow(String rq,long ksId,long sId){
-        return schedulingMapper.selectNow(rq,ksId,sId);
+
+    public List<Scheduling> selectNow(String rq, long ksId, long sId) {
+        return schedulingMapper.selectNow(rq, ksId, sId);
     }
-    public List<Scheduling> selectKsName(ReportForm reportForm){
+
+    public List<Scheduling> selectKsName(ReportForm reportForm) {
         return schedulingMapper.selectKsName(reportForm);
-    };
+    }
+
+    ;
 
 }

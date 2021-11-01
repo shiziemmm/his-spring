@@ -25,15 +25,15 @@ public interface PatientBaseMapper extends BaseMapper<ZyPatientBase> {
 
     List<ZyPatientBase> selectPatientNoOutCY(SelectExecuteVo selectExecuteVo);
 
-    List<ZyPatientBase> selectPatientBySId(@Param("sId") Long sId, @Param("ksId") Long ksId,@Param("text") String text);
+    List<ZyPatientBase> selectPatientBySId(@Param("sId") Long sId, @Param("ksId") Long ksId, @Param("text") String text);
 
-    List<ZyPatientBase> doctorEnjoinExecute(@Param("sId") Long sId, @Param("ksId") Long ksId,@Param("text") String text);
+    List<ZyPatientBase> doctorEnjoinExecute(@Param("sId") Long sId, @Param("ksId") Long ksId, @Param("text") String text);
 
     int updatePatientBasePrice(@Param("price") double price, @Param("ptNo") Long ptNo);
 
     int updatePatientBasePriceAndMoney(@Param("price") double price, @Param("ptNo") Long ptNo);
 
-    int insertPatientCheckout(@Param("checkList")List<TjCodeProject> list, @Param("manId") Long manId,@Param("sId") Long sId);
+    int insertPatientCheckout(@Param("checkList") List<TjCodeProject> list, @Param("manId") Long manId, @Param("sId") Long sId);
 
     List<ResultManVo> selectResultByManId(SelectExecuteVo selectExecuteVo);
 

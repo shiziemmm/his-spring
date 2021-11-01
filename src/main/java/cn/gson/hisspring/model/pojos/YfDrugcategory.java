@@ -7,8 +7,8 @@ import lombok.Data;
 @Data//get  set方法
 public class YfDrugcategory {
 
-  private long yfDrcaId;
-  private String yfDrcaName;
+    private long yfDrcaId;
+    private String yfDrcaName;
 
 
 }

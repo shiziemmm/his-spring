@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface SchangeMapper extends BaseMapper<SsChangeAnaesthesia> {
-//    删除中间表根据编号
+    //    删除中间表根据编号
     @Delete("delete from ss_change_anaesthesia where project_id=#{projectId}")
     public void delet(Integer projectId);
 }

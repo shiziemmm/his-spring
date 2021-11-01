@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 public class echartsVo {
-//    private Long pcdId;//医嘱编号  床位费用编号
+    //    private Long pcdId;//医嘱编号  床位费用编号
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
 //    private String pcdDate;//扣费日期
     private Double pcdPrice;//扣除金额

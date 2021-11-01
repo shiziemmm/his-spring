@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 /**
  * 门诊-诊疗卡Service
  */
@@ -36,7 +37,7 @@ public class MzMedicalCardService {
     MzMcRechargeMapper rechargeMapper;//recharge层级mapper
 
     //查询单卡
-    public MzMedicalCard selectById(String mcCard){
+    public MzMedicalCard selectById(String mcCard) {
         return meCardMapper.selectByIdObject(mcCard);
     }
 
@@ -45,21 +46,23 @@ public class MzMedicalCardService {
         System.out.println("按创建时间排序。。。。。。。。。。。。。。");
         QueryWrapper<MzMedicalCard> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("create_time");
-        long count=meCardMapper.selectCount(wrapper);
+        long count = meCardMapper.selectCount(wrapper);
         IPage<MzMedicalCard> page = new Page<>(index, pageSize, count);
-        return  meCardMapper.selectPage(page, wrapper);
+        return meCardMapper.selectPage(page, wrapper);
     }
+
     //查询所有加排序
-    public List<MzMedicalCard> selectAllCards(String mzSickTest){
+    public List<MzMedicalCard> selectAllCards(String mzSickTest) {
         System.out.println("按创建时间排序。。。。。。。。。。。。。。");
         List<MzMedicalCard> mzMedicalCards = meCardMapper.selectAllMzMedicalCard(mzSickTest);
         return mzMedicalCards;
     }
+
     //重置密码卡密码和修改卡密码
-    public void pawdReset(String mcNumber,String pawd1,String userId){
+    public void pawdReset(String mcNumber, String pawd1, String userId) {
         MzMedicalCard card = meCardMapper.selectById(mcNumber);
-        if (card!=null){
-            if(pawd1!=null){//修改密码
+        if (card != null) {
+            if (pawd1 != null) {//修改密码
 
                 card.setMcPawd(pawd1);
                 meCardMapper.updateById(card);
@@ -73,17 +76,18 @@ public class MzMedicalCardService {
 
                 this.mzAlterLose.insert(lose);
 
-            }else{//重置密码
+            } else {//重置密码
                 card.setMcPawd(mzSick.getIdCard(card.getMcIdCard()));
                 meCardMapper.updateById(card);
             }
         }
     }
+
     //挂失卡号，--挂失补办&挂失退额
-    public void cardState(String mcNumber,String mcCard,String userId){
+    public void cardState(String mcNumber, String mcCard, String userId) {
         MzMedicalCard card = meCardMapper.selectById(mcNumber);
-        if (card!=null){
-            if(mcCard!=null){ // 卡号！=null就进入挂失补办
+        if (card != null) {
+            if (mcCard != null) { // 卡号！=null就进入挂失补办
 
                 MzMedicalCard cards = new MzMedicalCard();//新增卡
                 cards.setMcCard(Long.parseLong(mcCard));
@@ -107,7 +111,7 @@ public class MzMedicalCardService {
                 lose.setMcNumber(cards.getMcNumber());//新增新卡的id
                 this.mzAlterLose.insert(lose);
 
-            }else{//进入挂失退额
+            } else {//进入挂失退额
                 card.setMcSate(1L);//修改卡状态
                 card.setMcBalance(0);//清空卡余额
                 meCardMapper.updateById(card);
@@ -125,12 +129,12 @@ public class MzMedicalCardService {
     }
 
     //诊疗卡的充值记录表
-    public void setCardPrice(String mcNumber, String upPrice,String payment, String userId, Integer index){
+    public void setCardPrice(String mcNumber, String upPrice, String payment, String userId, Integer index) {
         MzMedicalCard card = meCardMapper.selectById(mcNumber);
-        if (card!=null){
-            if(index == 1  ){ // 充值卡余额 1就充值2就退钱
+        if (card != null) {
+            if (index == 1) { // 充值卡余额 1就充值2就退钱
                 //诊疗卡余额修改
-                card.setMcBalance(card.getMcBalance()+Double.parseDouble(upPrice));//卡余额 +
+                card.setMcBalance(card.getMcBalance() + Double.parseDouble(upPrice));//卡余额 +
                 meCardMapper.updateById(card);//修改余额--充值
                 //新增到记录表去
                 MzMcRecharge mzMcRecharge = new MzMcRecharge();
@@ -140,10 +144,10 @@ public class MzMedicalCardService {
                 mzMcRecharge.setMcrcState("诊卡充值");
                 mzMcRecharge.setMcrcPrice(Double.parseDouble(upPrice));
                 rechargeMapper.insert(mzMcRecharge);
-            }else{
+            } else {
                 System.err.println("111111111111111111111111111111111111111111");
                 //诊疗卡余额修改
-                card.setMcBalance(card.getMcBalance()-Double.parseDouble(upPrice));//卡余额 -
+                card.setMcBalance(card.getMcBalance() - Double.parseDouble(upPrice));//卡余额 -
                 meCardMapper.updateById(card);//修改余额--退款
                 //新增到记录表去
                 MzMcRecharge mzMcRecharge = new MzMcRecharge();
@@ -158,35 +162,36 @@ public class MzMedicalCardService {
     }
 
 
-
     //生成随机卡号
-    public Long inserCard(){
+    public Long inserCard() {
         List<MzMedicalCard> mzMedicalCards = meCardMapper.selectList(null);
-        if (mzMedicalCards.isEmpty()){//如果数据库没有字段那就自己生成
+        if (mzMedicalCards.isEmpty()) {//如果数据库没有字段那就自己生成
             System.out.println(Long.parseLong(getNum("258852", 6)));
             return Long.parseLong(getNum("258852", 6));
-        }else{
-            System.out.println(addMzMedicalCard()+1);
-            return addMzMedicalCard()+1;//有就号码加1
+        } else {
+            System.out.println(addMzMedicalCard() + 1);
+            return addMzMedicalCard() + 1;//有就号码加1
         }
     }
+
     //数据库最大值
-    public Long addMzMedicalCard(){
+    public Long addMzMedicalCard() {
         QueryWrapper<MzMedicalCard> wp = new QueryWrapper<>();
         wp.orderByDesc("mc_card").last("limit 1");
         MzMedicalCard mz = meCardMapper.selectOne(wp);
         //System.out.println("最大编号"+mz.getMcNumberCard());
-        return  mz.getMcCard();
+        return mz.getMcCard();
     }
+
     //假设数据库里有个20100505005的编号
     public String getNum(String firstPart, int len) {
         //调用数据库获得20100505005这个编号
-        String oldNum = "258852"+"000000";
-        int num = Integer.parseInt(oldNum.replace(firstPart,""));
-        String numStr = ++num +"";
+        String oldNum = "258852" + "000000";
+        int num = Integer.parseInt(oldNum.replace(firstPart, ""));
+        String numStr = ++num + "";
         int length = numStr.length();
         for (int i = length; i < len; i++) {
-            numStr = "0"+numStr;
+            numStr = "0" + numStr;
         }
         return firstPart + numStr;
     }

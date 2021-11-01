@@ -31,7 +31,8 @@
         <result column="rt_Number" property="rtNumber"></result>
         <result column="rt_Class" property="rtClass"></result>
 
-        <association property="rtRegObject"  resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRegistrationMapper.regMap">
+        <association property="rtRegObject"
+                     resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzRegistrationMapper.regMap">
         </association>
 
     </resultMap>

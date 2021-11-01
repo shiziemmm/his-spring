@@ -33,88 +33,98 @@ public class RoleController {
     查询角色
      */
     @RequestMapping("role-list")
-    public List<Role> selectList(){
+    public List<Role> selectList() {
 //        List<Role> list=new List;
         List<Role> roles = roleService.chaxun();
-       roles.forEach(s->{
-           System.out.println(s);
-       });
+        roles.forEach(s -> {
+            System.out.println(s);
+        });
         return roles;
     }
+
     @RequestMapping("roles-list")
-    public List<Role> selectAll(){
+    public List<Role> selectAll() {
         return roleService.selectList();
     }
+
     /*
     新增角色
      */
     @PostMapping("add-role")
-    public int addRole(@RequestBody Role role){
+    public int addRole(@RequestBody Role role) {
         System.out.println(role);
-        int i=roleService.addRoles(role);
-        if(i>0){
+        int i = roleService.addRoles(role);
+        if (i > 0) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }
+
     /*
     查询权限组
      */
     @RequestMapping("func-list")
-    public  List<FunctionJurisdiction> select(){
+    public List<FunctionJurisdiction> select() {
         List<FunctionJurisdiction> select = roleService.select();
         return select;
     }
+
     /*
     批量新增角色-权限中间表
      */
     @RequestMapping("save-grant")
-    public void saceGrant(@RequestParam("grant") String grant){
+    public void saceGrant(@RequestParam("grant") String grant) {
         JSONObject o = JSONObject.parseObject(grant);
         Integer roleId = Integer.parseInt(o.get("roleId").toString());
-        List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(),Integer.TYPE);
-        System.out.println(roleId+"==== "+funs);
-        roleinfo.addRoleInfo(roleId,funs);
+        List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(), Integer.TYPE);
+        System.out.println(roleId + "==== " + funs);
+        roleinfo.addRoleInfo(roleId, funs);
     }
+
     /*
     查看角色拥有权限
      */
     @RequestMapping("role-funs")
-    public List<Integer> allGrantFuns(Integer roleId){
+    public List<Integer> allGrantFuns(Integer roleId) {
         return roleService.roleFuns(roleId);
     }
+
     /*
     查询页面权限
      */
     @RequestMapping("home-menus")
-    public List<FunctionJurisdiction> homeMenu(Integer userId){
+    public List<FunctionJurisdiction> homeMenu(Integer userId) {
         return roleService.homeMenu(userId);
     }
+
     /**
      * 查询员工权限
      */
     @RequestMapping("staff-menus")
-    public List<Role> selectStaff(){
+    public List<Role> selectStaff() {
         List<Role> roles = roleService.selectStaff();
         return roles;
     }
+
     @RequestMapping("staff-funs")
-    public List<Integer> staffFuns(Integer rId){
+    public List<Integer> staffFuns(Integer rId) {
         System.err.println(rId);
         System.err.println(roleService.staffFuns(rId));
-            return roleService.staffFuns(rId);
+        return roleService.staffFuns(rId);
     }
+
     @RequestMapping("save-staff")
-    public void saceStaff(@RequestParam("grant") String grant){
+    public void saceStaff(@RequestParam("grant") String grant) {
         JSONObject o = JSONObject.parseObject(grant);
         Integer roleId = Integer.parseInt(o.get("rId").toString());
-        List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(),Integer.TYPE);
-        System.out.println(roleId+"==== "+funs);
-        roleinfo.addStaff(roleId,funs);
+        List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(), Integer.TYPE);
+        System.out.println(roleId + "==== " + funs);
+        roleinfo.addStaff(roleId, funs);
     }
+
     @RequestMapping("menus/{userId}")
-    public void menus(@PathVariable("userId") Long userId){
-        System.err.println("测试用户编号："+userId);
+    public void menus(@PathVariable("userId") Long userId) {
+        System.err.println("测试用户编号：" + userId);
     }
 }

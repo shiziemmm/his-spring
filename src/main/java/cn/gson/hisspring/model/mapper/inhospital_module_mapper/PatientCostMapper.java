@@ -15,9 +15,9 @@ import java.util.List;
 @Mapper
 public interface PatientCostMapper extends BaseMapper<PatientCostVo> {
 
-    List<PatientCostVo> selectPayAll(@Param("ptNo") Long ptNo, @Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("sIdArr") List<Long> sId);
+    List<PatientCostVo> selectPayAll(@Param("ptNo") Long ptNo, @Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("sIdArr") List<Long> sId);
 
-    List<PatientCostVo> selectPayByWhere(@Param("ptNo") Long ptNo, @Param("text") String text, @Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("sIdArr") List<Long> sId);
+    List<PatientCostVo> selectPayByWhere(@Param("ptNo") Long ptNo, @Param("text") String text, @Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("sIdArr") List<Long> sId);
 
-    List<PatientCostVo> selectPayByWhereDischarge(@Param("ptNo") Long ptNo, @Param("text") String text, @Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("sIdArr") List<Long> sId);
+    List<PatientCostVo> selectPayByWhereDischarge(@Param("ptNo") Long ptNo, @Param("text") String text, @Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("sIdArr") List<Long> sId);
 }

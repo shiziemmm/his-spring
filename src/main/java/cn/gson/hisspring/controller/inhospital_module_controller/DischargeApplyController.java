@@ -26,18 +26,19 @@ public class DischargeApplyController {
      * 根据住院号查询费用信息
      */
     @RequestMapping("cost-discharge-ptno")
-    public Double costDischargeAllByPtNo(Long ptNo,String text){
-        System.out.println(ptNo+"==========="+text);
+    public Double costDischargeAllByPtNo(Long ptNo, String text) {
+        System.out.println(ptNo + "===========" + text);
         return das.costDischargeAllByPtNo(ptNo, text);
     }
 
     /**
      * 新增出院申请
+     *
      * @param str
      * @return
      */
     @RequestMapping("addDischarge")
-    public String insertDischargeApply(@RequestBody String str){
+    public String insertDischargeApply(@RequestBody String str) {
         System.out.println(str);
         ZyDischargeApply apply = JSON.parseObject(str, ZyDischargeApply.class);
         System.out.println(apply);
@@ -46,20 +47,21 @@ public class DischargeApplyController {
 
 
     @RequestMapping("updata-patient-apply")
-    public boolean callPatientApply(@RequestBody String str){
+    public boolean callPatientApply(@RequestBody String str) {
         System.out.println(str);
         Map map = JSON.parseObject(str, Map.class);
-        return das.callPatientApply(Long.parseLong(map.get("ptNo").toString()),map.get("dgaNoCause").toString());
+        return das.callPatientApply(Long.parseLong(map.get("ptNo").toString()), map.get("dgaNoCause").toString());
     }
 
 
     /**
      * 查询出院申请的病人信息
+     *
      * @param search
      * @return
      */
     @RequestMapping("select-discharge-all")
-    public List<ZyDischargeApply> selectDischargeAll(String search){
+    public List<ZyDischargeApply> selectDischargeAll(String search) {
         return das.selectDischargeApplyAll(search);
     }
 
@@ -67,7 +69,7 @@ public class DischargeApplyController {
      * 根据住院号将病人出院
      */
     @RequestMapping("add-discharge-byptNo")
-    public boolean addDischargeByPtNo(@RequestBody String str){
+    public boolean addDischargeByPtNo(@RequestBody String str) {
         ZyDischarge zyDischarge = JSON.parseObject(str, ZyDischarge.class);
         System.err.println(zyDischarge);
         return das.addDischargeByPtNo(zyDischarge);
@@ -77,10 +79,10 @@ public class DischargeApplyController {
      * 查询出所有已经出院的病人信息
      */
     @RequestMapping("select-discharge-all-where")
-    public List<ZyDischarge> selectDischargeAllWhere(@RequestBody String str){
+    public List<ZyDischarge> selectDischargeAllWhere(@RequestBody String str) {
         SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
 
-       return das.selectDischargeAll(selectExecuteVo);
+        return das.selectDischargeAll(selectExecuteVo);
     }
 
 }

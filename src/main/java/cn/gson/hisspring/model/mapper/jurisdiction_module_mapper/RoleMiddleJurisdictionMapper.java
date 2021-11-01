@@ -11,13 +11,13 @@ import java.util.List;
 
 @Mapper
 public interface RoleMiddleJurisdictionMapper extends BaseMapper<RoleMiddleJurisdiction> {
-    int addRoleInfo(Long rId ,List<Integer> funs);
+    int addRoleInfo(Long rId, List<Integer> funs);
 
 
-   @Select("select * from role_middle_jurisdiction")
+    @Select("select * from role_middle_jurisdiction")
     List<RoleMiddleJurisdiction> seleltAll(long rId);
 
-   @Select("delete from role_middle_jurisdiction where r_id=#{rId}")
+    @Select("delete from role_middle_jurisdiction where r_id=#{rId}")
     void delet(long rId);
 
 

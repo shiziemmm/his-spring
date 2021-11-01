@@ -23,6 +23,6 @@
     <!--修改-->
     <update id="updateConsumables" parameterType="cn.gson.hisspring.model.pojos.HcIndConsumables">
         update hc_ind_consumables set consumables_name=#{consumablesName},consumables_Purchase=#{consumablesPurchase},
-                                      consumables_unit=#{consumablesUnit},consumables_price=#{consumablesPrice} where consumables_id=#{consumablesId}
+        consumables_unit=#{consumablesUnit},consumables_price=#{consumablesPrice} where consumables_id=#{consumablesId}
     </update>
 </mapper>

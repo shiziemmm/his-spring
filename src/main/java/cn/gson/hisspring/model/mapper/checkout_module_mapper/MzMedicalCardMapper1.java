@@ -14,10 +14,11 @@ import java.util.List;
  */
 @Mapper
 public interface MzMedicalCardMapper1 extends BaseMapper<MzMedicalCard> {
-//    查询诊疗卡
+    //    查询诊疗卡
     @Select("select * from  mz_medical_card where mc_Id_Card=#{mcIdCard}")
     List<MzMedicalCard> allmzmidCard(String mcIdCard);
+
     //修改诊疗卡金额
     @Update("update  mz_medical_card set mc_balance=#{mcBalance} where mc_Id_Card=#{mcIdCard}")
-    public void updMoney(Integer mcBalance,String mcIdCard);
+    public void updMoney(Integer mcBalance, String mcIdCard);
 }

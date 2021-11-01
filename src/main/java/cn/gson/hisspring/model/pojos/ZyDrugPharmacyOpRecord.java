@@ -9,14 +9,14 @@ import lombok.Data;
 @Data
 public class ZyDrugPharmacyOpRecord {
 
-  @TableId(value = "dpor_id")
-  private long dporId;
+    @TableId(value = "dpor_id")
+    private long dporId;
 
-  private Long dporIs;
-  private String dporCause;
-  private Long dporSid;
-  private java.sql.Timestamp dporDate;
-  private Long drugId;
-  private Double dporCount;
-  private String dporDrugUnit;
+    private Long dporIs;
+    private String dporCause;
+    private Long dporSid;
+    private java.sql.Timestamp dporDate;
+    private Long drugId;
+    private Double dporCount;
+    private String dporDrugUnit;
 }

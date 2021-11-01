@@ -10,7 +10,7 @@
         <result column="Pt_no" property="ptNo"/>
         <result column="S_id" property="sId"/>
         <result column="De_doctor_name" property="deDoctorName"/>
-        <result column="des_Execute_Date" property="desExecuteDate" />
+        <result column="des_Execute_Date" property="desExecuteDate"/>
         <result column="des_end_date" property="desEndDate"/>
 
 
@@ -27,15 +27,15 @@
         <result column="Des_usage" property="desUsage"/>
         <result column="des_entering_date" property="desEnteringDate"/>
         <result column="des_count" property="desCount"/>
-        <result column="Des_price" property="desPrice" />
-        <result column="Des_is" property="desIs" />
-        <result column="Des_present_date" property="desPresentDate" />
+        <result column="Des_price" property="desPrice"/>
+        <result column="Des_is" property="desIs"/>
+        <result column="Des_present_date" property="desPresentDate"/>
     </resultMap>
 
 
     <!--循环医嘱表的医嘱编号修改医嘱详表里面的执行日期-->
     <update id="doctorEnjoinDetailsByDeIdFor">
-        update zy_doctor_enjoin_details set Des_end_date = current_timestamp where  De_id in(
+        update zy_doctor_enjoin_details set Des_end_date = current_timestamp where De_id in(
         <foreach collection="list" item="des" separator=",">
             #{des.deId}
         </foreach>
@@ -62,10 +62,12 @@
         select * from seltDoctorEnjoin
         <where>
             <if test=" ptNo != '' and ptNo != null">
-                pt_no  = #{ptNo}
+                pt_no = #{ptNo}
             </if>
             <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(De_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(De_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                and (DATE_FORMAT(De_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(De_execute_date,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
             </if>
 
             <if test="(startDate != null) and (endDate == null)">
@@ -95,9 +97,8 @@
     </select>
 
 
-
     <update id="updateDesByDeIdOrDesId">
-        update zy_doctor_enjoin_details set Des_is = 2 
+        update zy_doctor_enjoin_details set Des_is = 2
         <where>
             <if test="desId != '' and desId != null">
                 des_id = #{desId}
@@ -110,57 +111,55 @@
     </update>
 
 
-
     <!--循环新增医嘱详表数据-->
     <insert id="insertDeDetailsFor">
         insert into zy_doctor_enjoin_details(
-                                            De_id,
-                                            des_drug_id,
-                                            des_drug_is,
-                                            Des_drug_name,
-                                            Des_text,
-                                            Des_specification,
-                                            Des_measure,
-                                            Des_frequency,
-                                            Des_unit,
-                                            Des_usage,
-                                            des_entering_date,
-                                            des_count,
-                                            Des_price,
-                                            Des_is,
-                                            Des_present_date,
-                                            Des_execute_date,
-                                            Des_end_date
-                                            )
-                                            values
-                                        <foreach collection="dedList" separator="," item="des">
-                                            (
-                                            #{deId},
-                                            #{des.desDrugId},
-                                            #{des.desDrugIs},
-                                            #{des.desDrugName},
-                                            #{des.desText},
-                                            #{des.desSpecification},
-                                            #{des.desMeasure},
-                                            #{des.desFrequency},
-                                            #{des.desUnit},
-                                            #{des.desUsage},
-                                            #{des.desEnteringDate},
-                                            #{des.desCount},
-                                            #{des.desPrice},
-                                            1,
-                                            null,
-                                            #{DesExecuteDate},
-                                            null
-                                            )
-                                        </foreach>
+        De_id,
+        des_drug_id,
+        des_drug_is,
+        Des_drug_name,
+        Des_text,
+        Des_specification,
+        Des_measure,
+        Des_frequency,
+        Des_unit,
+        Des_usage,
+        des_entering_date,
+        des_count,
+        Des_price,
+        Des_is,
+        Des_present_date,
+        Des_execute_date,
+        Des_end_date
+        )
+        values
+        <foreach collection="dedList" separator="," item="des">
+            (
+            #{deId},
+            #{des.desDrugId},
+            #{des.desDrugIs},
+            #{des.desDrugName},
+            #{des.desText},
+            #{des.desSpecification},
+            #{des.desMeasure},
+            #{des.desFrequency},
+            #{des.desUnit},
+            #{des.desUsage},
+            #{des.desEnteringDate},
+            #{des.desCount},
+            #{des.desPrice},
+            1,
+            null,
+            #{DesExecuteDate},
+            null
+            )
+        </foreach>
     </insert>
-
-
 
 
     <!--批量修改停嘱日期-->
     <update id="updateDoctorEnjoinDetailsFor">
-        update zy_doctor_enjoin_details set Des_end_date = #{sde.sdeDate} where des_end_date is null and de_id = #{sde.derId}
+        update zy_doctor_enjoin_details set Des_end_date = #{sde.sdeDate} where des_end_date is null and de_id =
+        #{sde.derId}
     </update>
 </mapper>

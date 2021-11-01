@@ -13,15 +13,17 @@ public class ConsumableService {
     ConsumableMapper consumableMapper;
 
     //查询耗材
-    public List<HcIndConsumables> allConsumables(){
+    public List<HcIndConsumables> allConsumables() {
         return consumableMapper.allConsumables();
     }
+
     //新增耗材
-    public void addConsumables(HcIndConsumables hcIndConsumables){
+    public void addConsumables(HcIndConsumables hcIndConsumables) {
         consumableMapper.addConsumables(hcIndConsumables);
     }
+
     //修改耗材
-    public void updateConsumables(HcIndConsumables hcIndConsumables){
+    public void updateConsumables(HcIndConsumables hcIndConsumables) {
         consumableMapper.updateConsumables(hcIndConsumables);
     }
 }

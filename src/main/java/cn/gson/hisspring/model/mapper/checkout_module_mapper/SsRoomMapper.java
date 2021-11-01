@@ -11,9 +11,10 @@ import java.util.List;
 //手术室mapper
 @Mapper
 public interface SsRoomMapper extends BaseMapper<SsOperationRoom> {
-  //手术室列表
+    //手术室列表
     List<SsOperationRoom> allSroom(String seach);
-  //修改手术室状态
-  @Update("update ss_operation_room set operation_zt=#{operationZt} where operation_id=#{operationId}")
-  public void  updSroom(Integer operationZt,Integer operationId);
+
+    //修改手术室状态
+    @Update("update ss_operation_room set operation_zt=#{operationZt} where operation_id=#{operationId}")
+    public void updSroom(Integer operationZt, Integer operationId);
 }

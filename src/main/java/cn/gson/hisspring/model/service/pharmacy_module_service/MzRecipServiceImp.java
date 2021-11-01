@@ -39,7 +39,8 @@ public class MzRecipServiceImp {
     @Autowired
     YFDruglnventoryMapper ydtm;//药房mapper
 
-    @Autowired YfDispensingMapper dissing;//发药记录
+    @Autowired
+    YfDispensingMapper dissing;//发药记录
 
     //生成随机单号
     public static Long getOrderIdByTime() {

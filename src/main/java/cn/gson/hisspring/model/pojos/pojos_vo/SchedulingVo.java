@@ -13,5 +13,5 @@ public class SchedulingVo {
     private long sId;
     private String sName;
     //接收员工集合
-   private List<SchedulingVo> staff;
+    private List<SchedulingVo> staff;
 }

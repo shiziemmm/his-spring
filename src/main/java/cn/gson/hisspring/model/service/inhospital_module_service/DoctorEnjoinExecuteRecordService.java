@@ -58,22 +58,21 @@ public class DoctorEnjoinExecuteRecordService {
     /**
      * 多条件查询执行医嘱
      */
-    public List<ZyDoctorEnjoinExecuteRecord> selectExecuteDoctor(SelectExecuteVo selectExecuteVo){
+    public List<ZyDoctorEnjoinExecuteRecord> selectExecuteDoctor(SelectExecuteVo selectExecuteVo) {
         return deerm.selectExecuteDoctor(selectExecuteVo);
     }
-
 
 
     /**
      * 新开病人费用
      */
-    public boolean patientAddPay(PatientPayObjVo payObjVo){
+    public boolean patientAddPay(PatientPayObjVo payObjVo) {
         //===================新增费用记录
-        ZyDoctorEnjoinExecuteRecord deer = new ZyDoctorEnjoinExecuteRecord(payObjVo.getPoPrice(),payObjVo.getPoPtNo(),payObjVo.getPoSid(),payObjVo.getPoText());
+        ZyDoctorEnjoinExecuteRecord deer = new ZyDoctorEnjoinExecuteRecord(payObjVo.getPoPrice(), payObjVo.getPoPtNo(), payObjVo.getPoSid(), payObjVo.getPoText());
         deerm.insert(deer);//新增
 
         //================扣除病人费用
-        pbm.updatePatientBasePrice(payObjVo.getPoPrice(),payObjVo.getPoPtNo());//修改病人余额
+        pbm.updatePatientBasePrice(payObjVo.getPoPrice(), payObjVo.getPoPtNo());//修改病人余额
 
 
         return false;
@@ -83,15 +82,15 @@ public class DoctorEnjoinExecuteRecordService {
     /**
      * 执行医嘱方法
      */
-    public Map<String,String> doctorEnjoinExecute(List<ZyDoctorEnjoinDetails> detailsList, Long sId){
+    public Map<String, String> doctorEnjoinExecute(List<ZyDoctorEnjoinDetails> detailsList, Long sId) {
         double price = 0;//药品价格
-        Map<String,String> erro = new HashMap<>();//错误提示
+        Map<String, String> erro = new HashMap<>();//错误提示
 
 
-        if(!detailsList.isEmpty()){
+        if (!detailsList.isEmpty()) {
             //添加执行医嘱记录
             for (ZyDoctorEnjoinDetails list : detailsList) {
-                System.err.println("长期短期"+list.getDeLongorshort());
+                System.err.println("长期短期" + list.getDeLongorshort());
 //                QueryWrapper pharmacyQw = new QueryWrapper<ZyDrugPharmacy>().eq("drug_id",list.getDesDrugId()).eq("ks_id",staff.getKsId());//根据药品编号查询
 //                List<ZyDrugPharmacy> pharmacy = dpms.selectList(pharmacyQw);
 //                if(!pharmacy.isEmpty()){
@@ -109,8 +108,8 @@ public class DoctorEnjoinExecuteRecordService {
 //                }
                 System.err.println(list);
 
-                if(list.getDesPresentDate() != null && simpleDateFormat.format(list.getDesPresentDate()).equals(simpleDateFormat.format(new Timestamp(new Date().getTime())))){
-                    System.err.println("跳过"+list.getDesDrugName());
+                if (list.getDesPresentDate() != null && simpleDateFormat.format(list.getDesPresentDate()).equals(simpleDateFormat.format(new Timestamp(new Date().getTime())))) {
+                    System.err.println("跳过" + list.getDesDrugName());
                     continue;
                 }
 
@@ -123,12 +122,8 @@ public class DoctorEnjoinExecuteRecordService {
                 Long drugCount = 0L;
 
 
-
-
-
-
                 //========================================================执行业务操作逻辑
-                for (int i = 0;i < count;i++){
+                for (int i = 0; i < count; i++) {
                     drugCount += list.getDesCount();//叠加药品数量
                     record.setDerDrugPrice(list.getDesPrice() * list.getDesCount());//执行一次的价格
                     record.setDesId(list.getDesId());//医嘱详情编号
@@ -138,46 +133,46 @@ public class DoctorEnjoinExecuteRecordService {
                     deerm.insert(record);//新增
                 }
 
-                if(list.getDeLongorshort() != 1){//判断是否是长期医嘱
+                if (list.getDeLongorshort() != 1) {//判断是否是长期医嘱
 
-                    if(list.getDesDrugIs() == 2){//耗材药品
+                    if (list.getDesDrugIs() == 2) {//耗材药品
 
-                        QueryWrapper yfHc = new  QueryWrapper<ZyHCindConsumables>().eq("Consumables_id",list.getDesDrugId());//根据药品编号查询
-                        List<ZyHCindConsumables> zyHCindConsumablesList  = zhcm.selectList(yfHc);
+                        QueryWrapper yfHc = new QueryWrapper<ZyHCindConsumables>().eq("Consumables_id", list.getDesDrugId());//根据药品编号查询
+                        List<ZyHCindConsumables> zyHCindConsumablesList = zhcm.selectList(yfHc);
 
-                        ZyHCindConsumables zyHCindConsumabless = new ZyHCindConsumables(zyHCindConsumablesList.get(0).getConsumablesId(),zyHCindConsumablesList.get(0).getConsumablesPhy() - drugCount);
+                        ZyHCindConsumables zyHCindConsumabless = new ZyHCindConsumables(zyHCindConsumablesList.get(0).getConsumablesId(), zyHCindConsumablesList.get(0).getConsumablesPhy() - drugCount);
                         zhcm.updateById(zyHCindConsumabless);//修改药房库存
                         //===========================新增发药记录
-                        YfDispensing yfDispensing = new YfDispensing("住院医嘱(耗材)",sId,staff.getSName(),list.getDesDrugName(),drugCount,list.getDesDrugId(),2L,null);
+                        YfDispensing yfDispensing = new YfDispensing("住院医嘱(耗材)", sId, staff.getSName(), list.getDesDrugName(), drugCount, list.getDesDrugId(), 2L, null);
                         ydm.insert(yfDispensing);//新增
 
                     }
 
-                        //===根据药品编号查询药房库存
-                        QueryWrapper yfQw = new QueryWrapper<ZyYfDrugInventoryVo>().eq("drug_id",drugVo.getDrugId()).orderBy(false,false,"yf_Drven_mftdate");//根据药品编号查询
-                        List<ZyYfDrugInventoryVo> ZyYfDrugInventoryVoList = ydivm.selectList(yfQw);
-                        for (ZyYfDrugInventoryVo yfObj : ZyYfDrugInventoryVoList) {
-                            if(drugCount < yfObj.getYfDrvenCount()){
-                                //===========================新增发药记录
-                                YfDispensing yfDispensing = new YfDispensing("住院医嘱(药品)",sId,staff.getSName(),list.getDesDrugName(),drugCount,list.getDesDrugId(),1L,yfObj.getYfDrvenBatch());
-                                ydm.insert(yfDispensing);//新增
-                                break;//结束循环
-                            }else{
-                                //===========================新增发药记录
-                                drugCount = drugCount - yfObj.getYfDrvenCount();
-                                YfDispensing yfDispensing = new YfDispensing("住院医嘱(药品)",sId,staff.getSName(),list.getDesDrugName(),drugCount,list.getDesDrugId(),1L,yfObj.getYfDrvenBatch());
-                                ydm.insert(yfDispensing);//新增
-                            }
+                    //===根据药品编号查询药房库存
+                    QueryWrapper yfQw = new QueryWrapper<ZyYfDrugInventoryVo>().eq("drug_id", drugVo.getDrugId()).orderBy(false, false, "yf_Drven_mftdate");//根据药品编号查询
+                    List<ZyYfDrugInventoryVo> ZyYfDrugInventoryVoList = ydivm.selectList(yfQw);
+                    for (ZyYfDrugInventoryVo yfObj : ZyYfDrugInventoryVoList) {
+                        if (drugCount < yfObj.getYfDrvenCount()) {
+                            //===========================新增发药记录
+                            YfDispensing yfDispensing = new YfDispensing("住院医嘱(药品)", sId, staff.getSName(), list.getDesDrugName(), drugCount, list.getDesDrugId(), 1L, yfObj.getYfDrvenBatch());
+                            ydm.insert(yfDispensing);//新增
+                            break;//结束循环
+                        } else {
+                            //===========================新增发药记录
+                            drugCount = drugCount - yfObj.getYfDrvenCount();
+                            YfDispensing yfDispensing = new YfDispensing("住院医嘱(药品)", sId, staff.getSName(), list.getDesDrugName(), drugCount, list.getDesDrugId(), 1L, yfObj.getYfDrvenBatch());
+                            ydm.insert(yfDispensing);//新增
                         }
-                        //!
-                        if(ZyYfDrugInventoryVoList.isEmpty()){//如果药房没有改药品就新增该药品信息（一般不会出现这种状况）*
-                            System.err.println(list);
-                            ZyYfDrugInventoryVo zydi = new ZyYfDrugInventoryVo(list.getDesDrugId(),"s",0 - drugCount,drugVo.getYkSupplierId());
-                            ydivm.insert(zydi);//新增
-                        }else{
-                            ZyYfDrugInventoryVo zyYfDrugInventoryVo = new ZyYfDrugInventoryVo(ZyYfDrugInventoryVoList.get(0).getYfDrvenId(),ZyYfDrugInventoryVoList.get(0).getYfDrvenCount() - drugCount);
-                            ydivm.updateById(zyYfDrugInventoryVo);//修改药房库存
-                        }
+                    }
+                    //!
+                    if (ZyYfDrugInventoryVoList.isEmpty()) {//如果药房没有改药品就新增该药品信息（一般不会出现这种状况）*
+                        System.err.println(list);
+                        ZyYfDrugInventoryVo zydi = new ZyYfDrugInventoryVo(list.getDesDrugId(), "s", 0 - drugCount, drugVo.getYkSupplierId());
+                        ydivm.insert(zydi);//新增
+                    } else {
+                        ZyYfDrugInventoryVo zyYfDrugInventoryVo = new ZyYfDrugInventoryVo(ZyYfDrugInventoryVoList.get(0).getYfDrvenId(), ZyYfDrugInventoryVoList.get(0).getYfDrvenCount() - drugCount);
+                        ydivm.updateById(zyYfDrugInventoryVo);//修改药房库存
+                    }
 
 
                 }
@@ -188,11 +183,11 @@ public class DoctorEnjoinExecuteRecordService {
             dedm.doctorEnjoinDetailsExecuteFor(detailsList);
 
             //===============扣费
-            pbm.updatePatientBasePrice(price,detailsList.get(0).getPtNo());//修改病人余额
+            pbm.updatePatientBasePrice(price, detailsList.get(0).getPtNo());//修改病人余额
 
             return erro;
 
-        }else{
+        } else {
             return erro;
         }
     }

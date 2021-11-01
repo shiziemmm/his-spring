@@ -17,7 +17,7 @@ public class YkStorageController {
 
     //查询全部的出入库记录
     @RequestMapping("allStorage")
-    public List<YkStorage> allStorage(){
-         return storgser.allStorage();
+    public List<YkStorage> allStorage() {
+        return storgser.allStorage();
     }
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- *  问诊保存时新增的VO类 这个和  RecordVo  都是一样的实体类VO
+ * 问诊保存时新增的VO类 这个和  RecordVo  都是一样的实体类VO
  */
 @Data
 public class RecordVo {

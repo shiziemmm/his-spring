@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMapper">
-  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.Scheduling">
-    <id column="sc_id"  property="scId" />
-      <result column="s_id"  property="sId" />
-      <result column="fr_id"  property="frId" />
-      <result column="rq"  property="rq" />
-      <association property="frequency" javaType="cn.gson.hisspring.model.pojos.Frequency">
-          <id column="F_id" property="fcId"></id>
-          <result column="F_start_time" property="fStartTime"></result>
-          <result column="F_end_time" property="fEndTime"></result>
-          <result column="fc_id" property="fcId"></result>
-      </association>
-      <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
-          <id column="s_id" jdbcType="INTEGER" property="sId" />
-          <result column="s_name" jdbcType="VARCHAR" property="sName" />
-          <result column="ks_id" jdbcType="VARCHAR" property="ksId" />
-      </association>
-      <association property="departmentKs" javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
-          <id column="ks_id" jdbcType="INTEGER" property="ksId" />
-          <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
-          <result column="ks_dz" jdbcType="VARCHAR" property="ksDz" />
-          <result column="de_id" jdbcType="VARCHAR" property="deId" />
-      </association>
-      <association property="title" javaType="cn.gson.hisspring.model.pojos.Title">
-          <id column="t_id" jdbcType="INTEGER" property="tId" />
-          <result column="t_name" jdbcType="VARCHAR" property="tName" />
-      </association>
-      <association property="register" javaType="cn.gson.hisspring.model.pojos.Register">
-          <id column="r_id" jdbcType="INTEGER" property="rId" />
-          <result column="r_moeny" jdbcType="VARCHAR" property="rMoeny" />
-      </association>
-      <collection property="fre" ofType="cn.gson.hisspring.model.pojos.Frequency">
-          <id column="f_id" jdbcType="INTEGER" property="fId" />
-          <result column="f_start_time" jdbcType="INTEGER" property="fStartTime" />
-          <result column="f_end_time" jdbcType="INTEGER" property="fEndTime" />
-      </collection>
+    <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.Scheduling">
+        <id column="sc_id" property="scId"/>
+        <result column="s_id" property="sId"/>
+        <result column="fr_id" property="frId"/>
+        <result column="rq" property="rq"/>
+        <association property="frequency" javaType="cn.gson.hisspring.model.pojos.Frequency">
+            <id column="F_id" property="fcId"></id>
+            <result column="F_start_time" property="fStartTime"></result>
+            <result column="F_end_time" property="fEndTime"></result>
+            <result column="fc_id" property="fcId"></result>
+        </association>
+        <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
+            <id column="s_id" jdbcType="INTEGER" property="sId"/>
+            <result column="s_name" jdbcType="VARCHAR" property="sName"/>
+            <result column="ks_id" jdbcType="VARCHAR" property="ksId"/>
+        </association>
+        <association property="departmentKs" javaType="cn.gson.hisspring.model.pojos.DepartmentKs">
+            <id column="ks_id" jdbcType="INTEGER" property="ksId"/>
+            <result column="ks_name" jdbcType="VARCHAR" property="ksName"/>
+            <result column="ks_dz" jdbcType="VARCHAR" property="ksDz"/>
+            <result column="de_id" jdbcType="VARCHAR" property="deId"/>
+        </association>
+        <association property="title" javaType="cn.gson.hisspring.model.pojos.Title">
+            <id column="t_id" jdbcType="INTEGER" property="tId"/>
+            <result column="t_name" jdbcType="VARCHAR" property="tName"/>
+        </association>
+        <association property="register" javaType="cn.gson.hisspring.model.pojos.Register">
+            <id column="r_id" jdbcType="INTEGER" property="rId"/>
+            <result column="r_moeny" jdbcType="VARCHAR" property="rMoeny"/>
+        </association>
+        <collection property="fre" ofType="cn.gson.hisspring.model.pojos.Frequency">
+            <id column="f_id" jdbcType="INTEGER" property="fId"/>
+            <result column="f_start_time" jdbcType="INTEGER" property="fStartTime"/>
+            <result column="f_end_time" jdbcType="INTEGER" property="fEndTime"/>
+        </collection>
 
 
-  </resultMap>
+    </resultMap>
 
     <resultMap id="dome" type="cn.gson.hisspring.model.pojos.Scheduling">
-        <id column="sc_id"  property="scId" />
-        <result column="s_id"  property="sId" />
-        <result column="fr_id"  property="frId" />
-<!--        <result column="rq"  property="rq" />-->
+        <id column="sc_id" property="scId"/>
+        <result column="s_id" property="sId"/>
+        <result column="fr_id" property="frId"/>
+        <!--        <result column="rq"  property="rq" />-->
 
     </resultMap>
     <insert id="addSch">
-    insert into scheduling(s_id,fr_id,rq) values
-    <foreach collection="list" item="i" separator=", ">
-        (#{i},#{sid},#{rq})
-    </foreach>
+        insert into scheduling(s_id,fr_id,rq) values
+        <foreach collection="list" item="i" separator=", ">
+            (#{i},#{sid},#{rq})
+        </foreach>
     </insert>
     <select id="selectWeek" resultMap="BaseResultMap">
-        select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id  where
-                date_format(pb.rq,'%Y/%m/%d')=#{rq} and yg.ks_id=#{ksId}
+        select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id where
+        date_format(pb.rq,'%Y/%m/%d')=#{rq} and yg.ks_id=#{ksId}
     </select>
     <select id="selectAllWeek" resultMap="BaseResultMap">
-        select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id   where
-            date_format(pb.rq,'%Y/%m/%d')=#{rq} and pb.fr_id=#{frId} and ks.ks_id=#{ksId}
+        select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id where
+        date_format(pb.rq,'%Y/%m/%d')=#{rq} and pb.fr_id=#{frId} and ks.ks_id=#{ksId}
     </select>
     <select id="selectNow" resultMap="BaseResultMap">
-        select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id  where
-            date_format(pb.rq,'%Y/%m/%d')=#{rq} and yg.ks_id=#{ksId} and yg.s_id=#{sId}
+        select * from scheduling pb inner join staff yg on pb.s_id=yg.s_id where
+        date_format(pb.rq,'%Y/%m/%d')=#{rq} and yg.ks_id=#{ksId} and yg.s_id=#{sId}
     </select>
     <select id="selectDate" resultMap="BaseResultMap">
         SELECT
@@ -92,50 +92,49 @@
         INNER JOIN department_ks ON staff.ks_id = department_ks.ks_id
         INNER JOIN scheduling ON staff.s_id = scheduling.S_id
         INNER JOIN frequency ON frequency.F_id = scheduling.fr_id
-        where  DATE_FORMAT(NOW(),'%Y-%m-%d') = DATE_FORMAT(scheduling.rq,'%Y-%m-%d')
---         and time(frequency.F_start_time) &lt; time(NOW())
---         and time(frequency.F_end_time) &gt; TIME(NOW())
+        where DATE_FORMAT(NOW(),'%Y-%m-%d') = DATE_FORMAT(scheduling.rq,'%Y-%m-%d')
+        -- and time(frequency.F_start_time) &lt; time(NOW())
+        -- and time(frequency.F_end_time) &gt; TIME(NOW())
     </select>
-
 
 
     <select id="selectKsName" resultMap="BaseResultMap">
         SELECT
-            staff.s_id,
-            staff.s_name,
-            staff.s_sore,
-            staff.s_phone,
-            staff.s_date,
-            staff.u_id,
-            staff.ks_id,
-            staff.t_id,
-            staff.s_zt,
-            frequency.F_id,
-            frequency.F_start_time,
-            frequency.F_end_time,
-            frequency.fc_id,
-            department_ks.ks_name,
-            department_ks.ks_dz,
-            department_ks.de_id,
-            title.T_name,
-            scheduling.Sc_id,
-            scheduling.rq
+        staff.s_id,
+        staff.s_name,
+        staff.s_sore,
+        staff.s_phone,
+        staff.s_date,
+        staff.u_id,
+        staff.ks_id,
+        staff.t_id,
+        staff.s_zt,
+        frequency.F_id,
+        frequency.F_start_time,
+        frequency.F_end_time,
+        frequency.fc_id,
+        department_ks.ks_name,
+        department_ks.ks_dz,
+        department_ks.de_id,
+        title.T_name,
+        scheduling.Sc_id,
+        scheduling.rq
         FROM
-            staff
-                INNER JOIN title ON staff.t_id = title.T_id
-                INNER JOIN department_ks ON staff.ks_id = department_ks.ks_id
-                INNER JOIN scheduling ON staff.s_id = scheduling.S_id
-                INNER JOIN frequency ON frequency.F_id = scheduling.fr_id
+        staff
+        INNER JOIN title ON staff.t_id = title.T_id
+        INNER JOIN department_ks ON staff.ks_id = department_ks.ks_id
+        INNER JOIN scheduling ON staff.s_id = scheduling.S_id
+        INNER JOIN frequency ON frequency.F_id = scheduling.fr_id
         where
         <if test="(ksName!= null and ksName!='')">
-             department_ks.ks_id=#{ksName} and
+            department_ks.ks_id=#{ksName} and
         </if>
         <if test="(sName != null and sName!='')">
-             staff.s_name=#{sName} and
+            staff.s_name=#{sName} and
         </if>
         DATE_FORMAT(NOW(),'%Y-%m-%d') = DATE_FORMAT(scheduling.rq,'%Y-%m-%d')
---         and time(frequency.F_start_time) &lt; time(NOW())
---         and time(frequency.F_end_time) &gt; TIME(NOW())
+        -- and time(frequency.F_start_time) &lt; time(NOW())
+        -- and time(frequency.F_end_time) &gt; TIME(NOW())
     </select>
 
     <select id="selectNowWeek" resultMap="BaseResultMap">

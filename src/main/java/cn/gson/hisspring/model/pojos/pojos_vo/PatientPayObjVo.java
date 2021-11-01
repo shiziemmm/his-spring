@@ -9,6 +9,6 @@ import lombok.Data;
 public class PatientPayObjVo {
     private String poText;
     private Long poSid;
-    private  Double poPrice;
+    private Double poPrice;
     private Long poPtNo;
 }

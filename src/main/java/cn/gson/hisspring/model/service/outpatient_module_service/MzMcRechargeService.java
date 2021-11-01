@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 /**
- *  充值记录-
+ * 充值记录-
  */
 
 @Service
@@ -18,11 +19,10 @@ public class MzMcRechargeService {
     MzMcRechargeMapper rechargeMapper;
 
     //查询所有充值记录表，和laik查询
-    public List<MzMcRecharge> allLikeMzMcRecharge(String like){
+    public List<MzMcRecharge> allLikeMzMcRecharge(String like) {
         List<MzMcRecharge> mzMcRecharges = rechargeMapper.selectMzMcRecharge(like);
         return mzMcRecharges;
     }
-
 
 
 }

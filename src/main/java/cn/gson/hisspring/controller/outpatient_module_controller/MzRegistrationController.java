@@ -41,12 +41,12 @@ public class MzRegistrationController {
     MzSickService sickService;
 
     @GetMapping("idCardJiaoyan")
-    public String idCardJiaoyan(String idCard){
+    public String idCardJiaoyan(String idCard) {
         try {
             Boolean aBoolean = sickService.idCard(idCard);
-            if(aBoolean){
+            if (aBoolean) {
                 return "ok";
-            }else{
+            } else {
                 return "no";
             }
         } catch (Exception e) {
@@ -75,9 +75,9 @@ public class MzRegistrationController {
 //        System.err.println("科室"+ksId);
 //        System.err.println("后端"+nows);// new Date()为获取当前系统时间
 
-        String dateVue =null;
-        if(guaHaoVO.getDateVue() !=null){
-            dateVue= df.format(guaHaoVO.getDateVue());
+        String dateVue = null;
+        if (guaHaoVO.getDateVue() != null) {
+            dateVue = df.format(guaHaoVO.getDateVue());
         }
         String dateJav = df.format(guaHaoVO.getDateJav());
 //        System.err.println("前端"+guaHaoVO.getDateVue());
@@ -87,49 +87,52 @@ public class MzRegistrationController {
 //        System.err.println(guaHaoVO.getIndex());
 //        System.err.println(dateVue);
 //        System.err.println(dateJav);
-        if(guaHaoVO.getIndex() == 0){
-            return schedulingMapper.selectNowWeek(dateVue,dateJav ,guaHaoVO.getKsId(),guaHaoVO.getText());
-        }else{
+        if (guaHaoVO.getIndex() == 0) {
+            return schedulingMapper.selectNowWeek(dateVue, dateJav, guaHaoVO.getKsId(), guaHaoVO.getText());
+        } else {
             String date3 = null;
-            if(dateVue!=null){
+            if (dateVue != null) {
                 Date date1 = df.parse(dateVue);
                 Calendar c = Calendar.getInstance();
                 c.setTime(date1);
                 c.add(Calendar.DAY_OF_MONTH, 1);
                 Date date2 = c.getTime();
                 date3 = df.format(date2);
-                System.err.println("增加一天后日期:"+date3);
+                System.err.println("增加一天后日期:" + date3);
             }
-            return schedulingMapper.selectNowWeek(date3,dateJav ,guaHaoVO.getKsId(),guaHaoVO.getText());
+            return schedulingMapper.selectNowWeek(date3, dateJav, guaHaoVO.getKsId(), guaHaoVO.getText());
         }
     }
+
     //查询单个诊疗卡
     @GetMapping("byIdCard")
-    public MzMedicalCard selectById(String mcCard){
+    public MzMedicalCard selectById(String mcCard) {
         return cardService.selectById(mcCard.replace(" ", ""));
     }
+
     //新增挂号表
     @RequestMapping("addReg")
-    public String addReg(@RequestBody String str){
-        Map map = JSON.parseObject(str,Map.class);
-        MzRegistration mzRegistration = JSON.parseObject(map.get("regArr").toString(),MzRegistration.class);
+    public String addReg(@RequestBody String str) {
+        Map map = JSON.parseObject(str, Map.class);
+        MzRegistration mzRegistration = JSON.parseObject(map.get("regArr").toString(), MzRegistration.class);
         Integer radioSf = Integer.parseInt(map.get("radioSf").toString());
         try {
-            System.err.println("&&&&"+radioSf);
-            registrationService.addReg(mzRegistration,radioSf);
+            System.err.println("&&&&" + radioSf);
+            registrationService.addReg(mzRegistration, radioSf);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
             return "fail";
         }
     }
+
     //查询挂号记录表
     @GetMapping("selectReg")
-    public List<MzRegistration> selectReg(String reg,Integer index ,String dates){
+    public List<MzRegistration> selectReg(String reg, Integer index, String dates) {
         String regs = null;
-        if(reg!=null){
+        if (reg != null) {
             regs = reg.replace(" ", "");
         }
-        return registrationService.selectMzRegistration(regs,index,dates);
+        return registrationService.selectMzRegistration(regs, index, dates);
     }
 }

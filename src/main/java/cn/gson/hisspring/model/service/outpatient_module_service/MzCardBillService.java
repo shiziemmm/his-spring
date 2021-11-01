@@ -19,11 +19,13 @@ public class MzCardBillService {
     MzCardBillMapper cardBillMapper;
 
     //新增账单记录表
-    public void addMzCardBill(MzCardBill bill){
+    public void addMzCardBill(MzCardBill bill) {
         cardBillMapper.insert(bill);
     }
 
-    public List<MzCardBill> selectCardBill(long card){
+    public List<MzCardBill> selectCardBill(long card) {
         return cardBillMapper.cardBillSe(card);
-    };
+    }
+
+    ;
 }

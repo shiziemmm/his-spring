@@ -2,58 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--门诊-诊疗卡mapper-->
-<mapper  namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper">
+<mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzMedicalCardMapper">
     <resultMap id="allCards" type="cn.gson.hisspring.model.pojos.MzMedicalCard">
         <id column="mc_Number" property="mcNumber"></id>
-        <result  column="mc_Card" property="mcCard"></result>
-        <result  column="mc_Pawd" property="mcPawd"></result>
-        <result  column="mc_Balance" property="mcBalance"></result>
-        <result  column="mc_Sate" property="mcSate"></result>
-        <result  column="sick_Number" property="sickNumber"></result>
-        <result  column="mc_Id_Card" property="mcIdCard"></result>
-        <result  column="create_Time" property="createTime"></result>
-        <result  column="update_Time" property="updateTime"></result>
+        <result column="mc_Card" property="mcCard"></result>
+        <result column="mc_Pawd" property="mcPawd"></result>
+        <result column="mc_Balance" property="mcBalance"></result>
+        <result column="mc_Sate" property="mcSate"></result>
+        <result column="sick_Number" property="sickNumber"></result>
+        <result column="mc_Id_Card" property="mcIdCard"></result>
+        <result column="create_Time" property="createTime"></result>
+        <result column="update_Time" property="updateTime"></result>
     </resultMap>
     <resultMap id="allCard" type="cn.gson.hisspring.model.pojos.MzMedicalCard">
         <id column="mc_Number" property="mcNumber"></id>
-        <result  column="mc_Card" property="mcCard"></result>
-        <result  column="mc_Pawd" property="mcPawd"></result>
-        <result  column="mc_Balance" property="mcBalance"></result>
-        <result  column="mc_Sate" property="mcSate"></result>
-        <result  column="sick_Number" property="sickNumber"></result>
-        <result  column="mc_Id_Card" property="mcIdCard"></result>
-        <result  column="create_Time" property="createTime"></result>
-        <result  column="update_Time" property="updateTime"></result>
-        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap" property="mzSick" javaType="cn.gson.hisspring.model.pojos.MzSick">
+        <result column="mc_Card" property="mcCard"></result>
+        <result column="mc_Pawd" property="mcPawd"></result>
+        <result column="mc_Balance" property="mcBalance"></result>
+        <result column="mc_Sate" property="mcSate"></result>
+        <result column="sick_Number" property="sickNumber"></result>
+        <result column="mc_Id_Card" property="mcIdCard"></result>
+        <result column="create_Time" property="createTime"></result>
+        <result column="update_Time" property="updateTime"></result>
+        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap"
+                     property="mzSick" javaType="cn.gson.hisspring.model.pojos.MzSick">
         </association>
     </resultMap>
 
     <select id="selectAllMzMedicalCard" resultMap="allCard">
-        select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
-            <if test =" mzSickTest!=null and '' != mzSickTest"> /*一个mzSickTest模糊查询全部like*/
-                and (mc_Card like "%"#{mzSickTest}"%"
-                or sick_Phone like "%"#{mzSickTest}"%"
-                or mc_Id_Card like "%"#{mzSickTest}"%"
-                or sick_Name like "%"#{mzSickTest}"%")
-            </if>
-            and mc_Sate = 0
-            ORDER BY mc_number desc
+        select * from mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
+        <if test=" mzSickTest!=null and '' != mzSickTest">/*一个mzSickTest模糊查询全部like*/
+            and (mc_Card like "%"#{mzSickTest}"%"
+            or sick_Phone like "%"#{mzSickTest}"%"
+            or mc_Id_Card like "%"#{mzSickTest}"%"
+            or sick_Name like "%"#{mzSickTest}"%")
+        </if>
+        and mc_Sate = 0
+        ORDER BY mc_number desc
     </select>
     <select id="selectByIdObject" resultMap="allCard">
-        select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
-        <if test =" mcCard!=null and '' != mcCard"> /*一个mzSickTest模糊查询全部like*/
-               and mc_Card = #{mcCard}
+        select * from mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
+        <if test=" mcCard!=null and '' != mcCard">/*一个mzSickTest模糊查询全部like*/
+            and mc_Card = #{mcCard}
         </if>
-        <if test =" mcCard!=null and '' != mcCard"> /*一个mzSickTest模糊查询全部like*/
-           or mc_Id_Card = #{mcCard}
+        <if test=" mcCard!=null and '' != mcCard">/*一个mzSickTest模糊查询全部like*/
+            or mc_Id_Card = #{mcCard}
         </if>
         and c.mc_sate = 0
     </select>
 
 
     <select id="selectAllMzMedicalCard2" resultMap="allCard">
-        select * from  mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
-        <if test =" card!=null and '' != card"> /*新增病人信息的身份证条件查询*/
+        select * from mz_medical_card c left join mz_sick s on c.sick_number=s.sick_number where 1=1
+        <if test=" card!=null and '' != card">/*新增病人信息的身份证条件查询*/
             and mc_Id_Card =#{card}
         </if>
         and mc_Sate = 0

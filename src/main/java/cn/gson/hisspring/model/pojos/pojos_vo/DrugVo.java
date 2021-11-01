@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
- *住院查询要实体类
+ * 住院查询要实体类
  */
 @Data
 @TableName("YF_DrugInformation")

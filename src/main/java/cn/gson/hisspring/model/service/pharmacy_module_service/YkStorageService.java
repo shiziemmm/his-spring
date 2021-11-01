@@ -13,7 +13,7 @@ public class YkStorageService {
     YKStorageMapper yksorg;
 
     //查询全部的出入库记录
-    public List<YkStorage> allStorage(){
+    public List<YkStorage> allStorage() {
         return yksorg.allStorage();
     }
 

@@ -12,6 +12,8 @@ import java.util.List;
  */
 @Mapper
 public interface MzTjManResultMapper extends BaseMapper<TjManResult> {
-    /**循环检验表添加*/
+    /**
+     * 循环检验表添加
+     */
     public void addTjManResultArr(@Param("list") List<TjManResult> list);
 }

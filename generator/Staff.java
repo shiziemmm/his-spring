@@ -2,11 +2,13 @@ package generator;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import lombok.Data;
 
 /**
  * staff
- * @author 
+ *
+ * @author
  */
 @Data
 public class Staff implements Serializable {

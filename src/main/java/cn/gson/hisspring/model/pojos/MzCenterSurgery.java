@@ -10,24 +10,24 @@ import lombok.Data;
  */
 @Data
 public class MzCenterSurgery {
-  @TableId(type = IdType.AUTO)
-  private long   susId;
-  private long projectId;
-  private long susNumber;
-  private java.sql.Timestamp startDate;
-  private java.sql.Timestamp overDate;
-  private String susMessage;
-  private String susDoctorText;
-  private long susPayState;
+    @TableId(type = IdType.AUTO)
+    private long susId;
+    private long projectId;
+    private long susNumber;
+    private java.sql.Timestamp startDate;
+    private java.sql.Timestamp overDate;
+    private String susMessage;
+    private String susDoctorText;
+    private long susPayState;
 
-  @TableField(exist = false)
-  private SsOperationProject ssObject;
+    @TableField(exist = false)
+    private SsOperationProject ssObject;
 
-  public long getSusId() {
-    return susId;
-  }
+    public long getSusId() {
+        return susId;
+    }
 
-  public void setSusId(long susId) {
-    this.susId = susId;
-  }
+    public void setSusId(long susId) {
+        this.susId = susId;
+    }
 }

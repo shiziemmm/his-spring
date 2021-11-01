@@ -19,9 +19,9 @@ public class MzDepartmentKsService {
     DepartmentKsMapper departmentKsMapper;//权限科室表mapper
 
     //查询所有科室表
-    public List<DepartmentKs> selectDepartmentKs(){
-        QueryWrapper qw  = new QueryWrapper<>();
-        qw.eq("de_id",2);
+    public List<DepartmentKs> selectDepartmentKs() {
+        QueryWrapper qw = new QueryWrapper<>();
+        qw.eq("de_id", 2);
         List<DepartmentKs> departmentKs = departmentKsMapper.selectList(qw);
         return departmentKs;
     }

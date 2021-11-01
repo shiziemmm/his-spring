@@ -27,9 +27,10 @@ public class DoctorEnjoinDetailsService {
 
     /**
      * 根据住院号查询医嘱详情记录
+     *
      * @return
      */
-    public List<ZyDoctorEnjoinDetails> doctorEnjoinDetailsSelectByPtId(SelectExecuteVo selectExecuteVo){
+    public List<ZyDoctorEnjoinDetails> doctorEnjoinDetailsSelectByPtId(SelectExecuteVo selectExecuteVo) {
 
         return dedm.doctorEnjoinDetailsSelectByPtId(selectExecuteVo);
     }
@@ -38,10 +39,9 @@ public class DoctorEnjoinDetailsService {
     /**
      * 根据住院号查询医嘱详情
      */
-    public List<ZyDoctorEnjoinDetails> patientDoctorByPtNo(Long ptNo){
-        return dedm.patientDoctorByPtNo(ptNo) ;
+    public List<ZyDoctorEnjoinDetails> patientDoctorByPtNo(Long ptNo) {
+        return dedm.patientDoctorByPtNo(ptNo);
     }
-
 
 
 }

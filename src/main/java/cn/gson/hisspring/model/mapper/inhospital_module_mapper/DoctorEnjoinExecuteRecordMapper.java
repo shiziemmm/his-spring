@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface DoctorEnjoinExecuteRecordMapper extends BaseMapper<ZyDoctorEnjoinExecuteRecord> {
     List<ZyDoctorEnjoinExecuteRecord> selectExecutePharmacyByKsIdOrDrugId(DispensingVo dispensingVo);
+
     int updateDoctorExecuteIs(List<ZyDoctorEnjoinExecuteRecord> zyDoctorEnjoinExecuteRecord);
+
     List<ZyDoctorEnjoinExecuteRecord> selectExecuteDoctor(SelectExecuteVo selectExecuteVo);
 }

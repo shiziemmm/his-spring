@@ -44,15 +44,15 @@ public class DischargeApplyService {
     /**
      * 查询出所有已经出院的病人信息
      */
-    public List<ZyDischarge> selectDischargeAll(SelectExecuteVo selectExecuteVo){
+    public List<ZyDischarge> selectDischargeAll(SelectExecuteVo selectExecuteVo) {
         return dm.selectDischargeAll(selectExecuteVo);
     }
 
 
     /**
-     *添加病人申请
+     * 添加病人申请
      */
-    public String addDischargeApply(ZyDischargeApply zyDischarge){
+    public String addDischargeApply(ZyDischargeApply zyDischarge) {
         String err = "";//错误提示
         zyDischarge.setDgaIs("1");
 
@@ -60,7 +60,6 @@ public class DischargeApplyService {
 
 
         //======================判断是否有手术
-
 
 
         //================修改病人住院信息为申请出院中
@@ -78,9 +77,9 @@ public class DischargeApplyService {
     /**
      * 根据住院号查询费用信息
      */
-    public Double costDischargeAllByPtNo(Long ptNo,String text){
+    public Double costDischargeAllByPtNo(Long ptNo, String text) {
         List<PatientCostVo> patientCostVos = dam.costDischargeAllByPtNo(ptNo, text);
-        if (!patientCostVos.isEmpty()){
+        if (!patientCostVos.isEmpty()) {
             return patientCostVos.get(0).getPcdPrice();
         }
         return 0d;
@@ -90,7 +89,7 @@ public class DischargeApplyService {
     /**
      * 查询已经申请的病人信息
      */
-    public List<ZyDischargeApply> selectDischargeApplyAll(String search){
+    public List<ZyDischargeApply> selectDischargeApplyAll(String search) {
         List<ZyDischargeApply> zyDischargeApplyList = dam.selectDischargeApplyAll(search);
         return zyDischargeApplyList;
     }
@@ -98,12 +97,13 @@ public class DischargeApplyService {
 
     /**
      * 取消申请出院
+     *
      * @param ptNo
      * @param cause
      * @return
      */
-    public boolean callPatientApply(Long ptNo,String cause){
-        try{
+    public boolean callPatientApply(Long ptNo, String cause) {
+        try {
             //修改住院病人信息
             ZyPatientBase zpb = new ZyPatientBase();
             zpb.setPtNo(ptNo);
@@ -112,14 +112,14 @@ public class DischargeApplyService {
 
             //修改申请出院信息
             QueryWrapper<ZyDischargeApply> qw = new QueryWrapper<>();
-            qw.eq("pt_no",ptNo);
-            qw.eq("dga_is",1);
+            qw.eq("pt_no", ptNo);
+            qw.eq("dga_is", 1);
             ZyDischargeApply zda = new ZyDischargeApply();
             zda.setDgaNoCause(cause);//取消原因
             zda.setDgaIs("3");
-            dam.update(zda,qw);
+            dam.update(zda, qw);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
@@ -127,7 +127,7 @@ public class DischargeApplyService {
     /**
      * 根据住院号出院
      */
-    public boolean addDischargeByPtNo(ZyDischarge zyDischarge){
+    public boolean addDischargeByPtNo(ZyDischarge zyDischarge) {
         //根据住院号修改出院状态
         ZyPatientBase zyPatientBase = new ZyPatientBase();
         zyPatientBase.setPtIs(2L);
@@ -136,9 +136,9 @@ public class DischargeApplyService {
         pbm.updateById(zyPatientBase);//修改
 
         //根据住院号清空病人病床
-        QueryWrapper<ZyBed> qw = new QueryWrapper<ZyBed>().eq("pt_no",zyDischarge.getPtNo());
+        QueryWrapper<ZyBed> qw = new QueryWrapper<ZyBed>().eq("pt_no", zyDischarge.getPtNo());
         List<ZyBed> BedList = bm.selectList(qw);
-        if(!BedList.isEmpty()){
+        if (!BedList.isEmpty()) {
             ZyBed zyBed = new ZyBed();
             zyBed.setPtNo(zyDischarge.getPtNo());
             zyBed.setBdIs(1L);

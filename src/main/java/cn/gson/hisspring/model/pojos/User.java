@@ -9,13 +9,13 @@ import java.util.List;
 
 @Data//get  set方法
 public class User {
-  @TableId(type = IdType.AUTO)//自增id
-  private long uId;
-  private String uName;
-  private String uPswd;
+    @TableId(type = IdType.AUTO)//自增id
+    private long uId;
+    private String uName;
+    private String uPswd;
 
-  @TableField(exist = false)
-  private Staff list;
+    @TableField(exist = false)
+    private Staff list;
 
 
 }

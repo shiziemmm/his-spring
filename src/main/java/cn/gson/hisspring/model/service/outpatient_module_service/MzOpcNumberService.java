@@ -34,17 +34,19 @@ public class MzOpcNumberService {
 
 
     //排号列表查询
-    public List<MzOpcNumber> selectMzOpcNumber(long ksName,long science){
+    public List<MzOpcNumber> selectMzOpcNumber(long ksName, long science) {
         //查询科室
-        List<MzOpcNumber> mzOpcNumbers = countMapper.selectMzOpcNumber(ksName,science);
+        List<MzOpcNumber> mzOpcNumbers = countMapper.selectMzOpcNumber(ksName, science);
         return mzOpcNumbers;
     }
+
     // 过号
-    public void jumpMark(MzOpcNumber opcNumber){
+    public void jumpMark(MzOpcNumber opcNumber) {
         Long aLong = registrationService.maxCount(opcNumber.getKsId(), opcNumber.getBnScience(), opcNumber.getBnTime());
-        opcNumber.setBnCount(aLong+1);
+        opcNumber.setBnCount(aLong + 1);
         countMapper.updateById(opcNumber);//修改掉他的卡号
     }
+
     //删除排号
 //    public void delecteOpcCount(Long bnNumber){
 //        QueryWrapper qw = new QueryWrapper();
@@ -52,9 +54,9 @@ public class MzOpcNumberService {
 //        countMapper.delete(qw);
 //    }
     //修改挂号表状态
-    public void  upRtNumber(String rtNumber ){
+    public void upRtNumber(String rtNumber) {
         QueryWrapper qw = new QueryWrapper();
-        qw.eq("rt_number",rtNumber);
+        qw.eq("rt_number", rtNumber);
         MzRegistration mzRegistration = mzRegistrationMapper.selectOne(qw);
         mzRegistration.setRtState(1);
         mzRegistrationMapper.updateById(mzRegistration);

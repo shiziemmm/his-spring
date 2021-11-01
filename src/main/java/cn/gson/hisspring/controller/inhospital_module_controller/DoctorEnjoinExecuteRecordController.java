@@ -28,7 +28,7 @@ public class DoctorEnjoinExecuteRecordController {
      * 多条件查询已执行医嘱
      */
     @RequestMapping("doctor-where-execute")
-    public List<ZyDoctorEnjoinExecuteRecord> selectExecuteDoctor(@RequestBody String str){
+    public List<ZyDoctorEnjoinExecuteRecord> selectExecuteDoctor(@RequestBody String str) {
         System.err.println(str);
         SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
         System.out.println(selectExecuteVo);
@@ -36,20 +36,20 @@ public class DoctorEnjoinExecuteRecordController {
     }
 
 
-
     /**
      * 执行医嘱方法
+     *
      * @param str 医嘱集合  员工编号
      * @return
      */
     @RequestMapping("addDoctorEnjoinExecute")
-    public Map<String, String> doctorEnjoinExecute(@RequestBody String str){
+    public Map<String, String> doctorEnjoinExecute(@RequestBody String str) {
         Map map = JSON.parseObject(str, Map.class);
-        List<ZyDoctorEnjoinDetails> zyDoctorEnjoinExecuteRecordList  = JSON.parseArray(map.get("doctorEnjoinList").toString(),ZyDoctorEnjoinDetails.class);
-        Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);
-        System.err.println("qiwuftyhgquiwhfnuqiwhfui"+sId);
+        List<ZyDoctorEnjoinDetails> zyDoctorEnjoinExecuteRecordList = JSON.parseArray(map.get("doctorEnjoinList").toString(), ZyDoctorEnjoinDetails.class);
+        Long sId = JSON.parseObject(map.get("sId").toString(), Long.class);
+        System.err.println("qiwuftyhgquiwhfnuqiwhfui" + sId);
 
-        return deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList,sId);
+        return deers.doctorEnjoinExecute(zyDoctorEnjoinExecuteRecordList, sId);
     }
 
 
@@ -57,9 +57,9 @@ public class DoctorEnjoinExecuteRecordController {
      * 新开病人费用方法
      */
     @RequestMapping("addPatientPay")
-    public boolean patientAddPay(@RequestBody PatientPayObjVo patientPayObjVo){
+    public boolean patientAddPay(@RequestBody PatientPayObjVo patientPayObjVo) {
         System.err.println(patientPayObjVo);
-        if(patientPayObjVo.getPoPtNo() == null && patientPayObjVo.getPoSid() == null){
+        if (patientPayObjVo.getPoPtNo() == null && patientPayObjVo.getPoSid() == null) {
             return false;
         }
         deers.patientAddPay(patientPayObjVo);

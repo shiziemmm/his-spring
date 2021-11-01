@@ -1,4 +1,5 @@
 package cn.gson.hisspring.config;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,16 +17,17 @@ import java.util.concurrent.TimeUnit;
  * JAVA版本的自动生成有规则的订单号(或编号)
  * 生成的格式是: 200908010001 前面几位为当前的日期,后面五位为系统自增长类型的编号
  * 原理:
- *      1.获取当前日期格式化值;
- *      2.读取文件,上次编号的值+1最为当前此次编号的值
- *      (新的一天会重新从1开始编号)
+ * 1.获取当前日期格式化值;
+ * 2.读取文件,上次编号的值+1最为当前此次编号的值
+ * (新的一天会重新从1开始编号)
  */
 
 public class MyUtilCardConfig {
 
     public static void main(String[] args) throws InterruptedException {
-        System.err.println("FK"+numberNot(1)); //后面的1是表示后面要几位数
+        System.err.println("FK" + numberNot(1)); //后面的1是表示后面要几位数
     }
+
     public static String numberNot(int i) {
         SerialNumber serial = new FileEveryDaySerialNumber(i, "EveryDaySerialNumber.dat");
         try {
@@ -43,6 +45,7 @@ abstract class SerialNumber {
     public synchronized String getSerialNumber() {
         return process();
     }
+
     protected abstract String process();
 }
 
@@ -53,11 +56,11 @@ abstract class EveryDaySerialNumber extends SerialNumber {
     protected DecimalFormat df = null;
 
     public EveryDaySerialNumber(int width) {
-        if(width < 1) {
+        if (width < 1) {
             throw new IllegalArgumentException("Parameter length must be great than 1!");
         }
         char[] chs = new char[width];
-        for(int i = 0; i < width; i++) {
+        for (int i = 0; i < width; i++) {
             chs[i] = '0';
         }
         df = new DecimalFormat(new String(chs));
@@ -72,12 +75,14 @@ abstract class EveryDaySerialNumber extends SerialNumber {
     protected String format(Date date) {
         return sdf.format(date);
     }
+
     protected String format(int num) {
         return df.format(num);
     }
 
     /**
      * 获得序列号，同时更新持久化存储中的序列
+     *
      * @param current 当前的日期
      * @param start   初始化的序号
      * @return 所获得新的序列号
@@ -106,10 +111,10 @@ class FileEveryDaySerialNumber extends EveryDaySerialNumber {
     protected int getOrUpdateNumber(Date current, int start) {
         String date = format(current);
         int num = start;
-        if(file.exists()) {
+        if (file.exists()) {
             List<String> list = FileUtil.readList(file);
             String[] data = list.get(0).split(FIELD_SEPARATOR);
-            if(date.equals(data[0])) {
+            if (date.equals(data[0])) {
                 num = Integer.parseInt(data[1]);
             }
         }
@@ -128,10 +133,10 @@ class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(bw != null) {
+            if (bw != null) {
                 try {
                     bw.close();
-                } catch(IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -143,16 +148,16 @@ class FileUtil {
         List<String> data = new ArrayList<String>();
         try {
             br = new BufferedReader(new FileReader(file));
-            for(String str = null; (str = br.readLine()) != null; ) {
+            for (String str = null; (str = br.readLine()) != null; ) {
                 data.add(str);
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(br != null) {
+            if (br != null) {
                 try {
                     br.close();
-                } catch(IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

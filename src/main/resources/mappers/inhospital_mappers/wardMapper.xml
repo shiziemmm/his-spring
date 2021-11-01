@@ -13,11 +13,13 @@
         <result column="ks_name" property="ksName"/>
 
         <!--将员工结果封装到病房里面的实体-->
-        <association property="staff" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps" javaType="cn.gson.hisspring.model.pojos.Staff" >
+        <association property="staff"
+                     resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps"
+                     javaType="cn.gson.hisspring.model.pojos.Staff">
         </association>
 
         <!--将病床结果封装到病房里面的实体-->
-        <collection  resultMap="bedMap" property="listBed">
+        <collection resultMap="bedMap" property="listBed">
         </collection>
     </resultMap>
 
@@ -48,34 +50,34 @@
 
 
     <select resultMap="wardMap" id="selectWardAllPage">
-           SELECT
-            *
-            FROM
-            zy_ward
-            LEFT JOIN zy_bed ON zy_ward.wd_id = zy_bed.Wd_id
-            INNER JOIN staff ON staff.s_id = zy_ward.s_id
-            INNER JOIN department_ks ON zy_ward.ks_id = department_ks.ks_id
-            <where>
-                <if test="searchLike != null and searchLike != ''">
-                   and zy_ward.wd_name LIKE '%${searchLike}%' or
-                    staff.s_name LIKE '%${searchLike}%' or department_ks.ks_name like '%${searchLike}%'
-                </if>
-                <if test="ksIdArr != null and sIdArr != '' and ksIdArr.size() > 0"><!--如果不是病床费用就根据科室编号查询-->
-                    and department_ks.ks_id in (<foreach collection="ksIdArr" item="ksId"  separator=",">
-                        #{ksId}
-                    </foreach>)
-                </if>
-            </where>
+        SELECT
+        *
+        FROM
+        zy_ward
+        LEFT JOIN zy_bed ON zy_ward.wd_id = zy_bed.Wd_id
+        INNER JOIN staff ON staff.s_id = zy_ward.s_id
+        INNER JOIN department_ks ON zy_ward.ks_id = department_ks.ks_id
+        <where>
+            <if test="searchLike != null and searchLike != ''">
+                and zy_ward.wd_name LIKE '%${searchLike}%' or
+                staff.s_name LIKE '%${searchLike}%' or department_ks.ks_name like '%${searchLike}%'
+            </if>
+            <if test="ksIdArr != null and sIdArr != '' and ksIdArr.size() > 0"><!--如果不是病床费用就根据科室编号查询-->
+                and department_ks.ks_id in (<foreach collection="ksIdArr" item="ksId" separator=",">
+                    #{ksId}
+                </foreach>)
+            </if>
+        </where>
         order by department_ks.ks_name
     </select>
 
-<!--    <select resultMap="wardMap" id="selectWardByKsId">-->
-<!--        SELECT-->
-<!--            *-->
-<!--            FROM-->
-<!--            zy_ward-->
-<!--            LEFT JOIN zy_bed ON zy_ward.wd_id = zy_bed.Wd_id-->
-<!--            INNER JOIN staff ON staff.s_id = zy_ward.s_id-->
-<!--            INNER JOIN department_ks ON zy_ward.ks_id = department_ks.ks_id-->
-<!--    </select>-->
+    <!--    <select resultMap="wardMap" id="selectWardByKsId">-->
+    <!--        SELECT-->
+    <!--            *-->
+    <!--            FROM-->
+    <!--            zy_ward-->
+    <!--            LEFT JOIN zy_bed ON zy_ward.wd_id = zy_bed.Wd_id-->
+    <!--            INNER JOIN staff ON staff.s_id = zy_ward.s_id-->
+    <!--            INNER JOIN department_ks ON zy_ward.ks_id = department_ks.ks_id-->
+    <!--    </select>-->
 </mapper>

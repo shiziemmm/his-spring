@@ -5,7 +5,7 @@ import lombok.Data;
 @Data//get  set方法
 public class TjCodeMiddle {
 
-  private long checkId;
-  private long codeId;
+    private long checkId;
+    private long codeId;
 
 }

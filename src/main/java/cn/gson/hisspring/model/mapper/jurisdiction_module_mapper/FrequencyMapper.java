@@ -11,8 +11,12 @@ import java.util.Map;
 @Mapper
 public interface FrequencyMapper extends BaseMapper<Frequency> {
     List<Frequency> selectById(long fid);
+
     int updateById(Frequency frequency);
+
     List<Frequency> selectAllId(long fcId);
-  List<Frequency> selectAll();
-    void addRoleInfo(@Param("mapList")List<Map> mapList, @Param("fcId") Integer fcId);
+
+    List<Frequency> selectAll();
+
+    void addRoleInfo(@Param("mapList") List<Map> mapList, @Param("fcId") Integer fcId);
 }

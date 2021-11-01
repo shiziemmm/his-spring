@@ -17,23 +17,27 @@ public class UserService {
     StaffService ss;
 
 
-    public User login(User user){
+    public User login(User user) {
         return us.login(user);
     }
-    public User cha(User user){
+
+    public User cha(User user) {
         return us.cha(user);
     }
+
     @Transactional
-    public void addStaff(User user , Staff staff){
+    public void addStaff(User user, Staff staff) {
         us.insert(user);
         staff.setUId(user.getUId());
         ss.addStaff(staff);
     }
-    public int upa(User user){
-        System.err.println(user+"Service++");
-        return  us.updateById(user);
+
+    public int upa(User user) {
+        System.err.println(user + "Service++");
+        return us.updateById(user);
     }
-    public int reset(String upswd,Long uid){
-        return us.reset(upswd,uid);
+
+    public int reset(String upswd, Long uid) {
+        return us.reset(upswd, uid);
     }
 }

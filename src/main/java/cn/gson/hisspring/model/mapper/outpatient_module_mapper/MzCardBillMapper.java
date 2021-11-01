@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- *  门诊账单表 mapper
+ * 门诊账单表 mapper
  */
 @Mapper
 public interface MzCardBillMapper extends BaseMapper<MzCardBill> {

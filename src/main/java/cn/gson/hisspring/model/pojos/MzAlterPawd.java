@@ -12,13 +12,13 @@ import java.util.Date;
 
 @Data//get  set方法
 public class MzAlterPawd {
-  @TableId(type = IdType.AUTO)
-  private long apNumber;
-  private String apCause;
-  private Date apTime;
-  private long sId;
-  private long mcNumberCard;
-  private long sickNumber;
+    @TableId(type = IdType.AUTO)
+    private long apNumber;
+    private String apCause;
+    private Date apTime;
+    private long sId;
+    private long mcNumberCard;
+    private long sickNumber;
 
 
 }

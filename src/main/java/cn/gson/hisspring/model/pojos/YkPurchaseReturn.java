@@ -7,9 +7,9 @@ import lombok.Data;
 @Data//get  set方法
 public class YkPurchaseReturn {
 
-  private long ykReturnId;
-  private java.sql.Timestamp ykReturnTime;
-  private long sId;
-  private String ykReturnName;
+    private long ykReturnId;
+    private java.sql.Timestamp ykReturnTime;
+    private long sId;
+    private String ykReturnName;
 
 }

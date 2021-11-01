@@ -11,7 +11,8 @@ import java.util.List;
 public class FrequencyCategoryService {
     @Autowired
     FrequencyCategoryMapper fre;
-    public List<FrequencyCategory> dome(){
+
+    public List<FrequencyCategory> dome() {
         return fre.selectList(null);
     }
 }

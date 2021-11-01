@@ -20,25 +20,40 @@ public class RoleService {
     public List<Role> selectList() {
         return roleMapper.selectAll();
     }
+
     public List<Role> chaxun() {
         return roleMapper.chaxun();
     }
+
     public List<FunctionJurisdiction> select() {
         return roleMapper.select();
     }
 
-    public List<Integer> roleFuns(Integer roleId){
-       return  roleMapper.roleFuns(roleId);
+    public List<Integer> roleFuns(Integer roleId) {
+        return roleMapper.roleFuns(roleId);
     }
-    public List<FunctionJurisdiction> homeMenu(Integer userId){
+
+    public List<FunctionJurisdiction> homeMenu(Integer userId) {
         return roleMapper.homeMenu(userId);
     }
-    public int addRole(Role role){
+
+    public int addRole(Role role) {
         return roleMapper.insert(role);
-    };
-    public int addRoles(Role role){return roleMapper.insert(role);}
-    public List<Role> selectStaff(){return roleMapper.selectStaff();}
-    public List<Integer> staffFuns(Integer id){return roleMapper.staffFuns(id);}
+    }
+
+    ;
+
+    public int addRoles(Role role) {
+        return roleMapper.insert(role);
+    }
+
+    public List<Role> selectStaff() {
+        return roleMapper.selectStaff();
+    }
+
+    public List<Integer> staffFuns(Integer id) {
+        return roleMapper.staffFuns(id);
+    }
 
 
 }

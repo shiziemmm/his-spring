@@ -14,24 +14,24 @@ import java.util.Date;
 
 @Data
 public class MzCaseHistory {
-  @TableId(type = IdType.AUTO)
-  private long chNumber;
-  @TableField(fill = FieldFill.INSERT_UPDATE)//丢到处理器handler中新增去
-  private Date chTime;
+    @TableId(type = IdType.AUTO)
+    private long chNumber;
+    @TableField(fill = FieldFill.INSERT_UPDATE)//丢到处理器handler中新增去
+    private Date chTime;
 
-  private String chDoctor;
-  private String chComplaint;
-  private String chHistory;
-  private String chFamilyHistory;
-  private String chCause;
-  private String chDoctorText;
-  private long sickNumber;
-  private Long chIs;//1是门诊病例 2是住院病例
-  private Long chZyMzId;//住院号编号  就诊记录编号
-  private Long chSid;//添加医生
+    private String chDoctor;
+    private String chComplaint;
+    private String chHistory;
+    private String chFamilyHistory;
+    private String chCause;
+    private String chDoctorText;
+    private long sickNumber;
+    private Long chIs;//1是门诊病例 2是住院病例
+    private Long chZyMzId;//住院号编号  就诊记录编号
+    private Long chSid;//添加医生
 
-  @TableField(exist = false)
-  private Staff staff;
+    @TableField(exist = false)
+    private Staff staff;
 
 
 }

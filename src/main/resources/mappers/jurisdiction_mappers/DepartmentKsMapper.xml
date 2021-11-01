@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.DepartmentKsMapper">
-  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.DepartmentKs">
-    <id column="ks_id" jdbcType="INTEGER" property="ksId" />
-    <result column="ks_name" jdbcType="VARCHAR" property="ksName" />
-    <result column="ks_dz" jdbcType="VARCHAR" property="ksDz" />
-    <result column="de_id" jdbcType="TIMESTAMP" property="deId" />
-    <association property="dept"  javaType="cn.gson.hisspring.model.pojos.Department">
-      <id column="de_id" jdbcType="INTEGER" property="deId" />
-      <result column="de_name" jdbcType="VARCHAR" property="deName" />
-      <result column="de_date" jdbcType="TIMESTAMP" property="deDate" />
-    </association>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.DepartmentKs">
+        <id column="ks_id" jdbcType="INTEGER" property="ksId"/>
+        <result column="ks_name" jdbcType="VARCHAR" property="ksName"/>
+        <result column="ks_dz" jdbcType="VARCHAR" property="ksDz"/>
+        <result column="de_id" jdbcType="TIMESTAMP" property="deId"/>
+        <association property="dept" javaType="cn.gson.hisspring.model.pojos.Department">
+            <id column="de_id" jdbcType="INTEGER" property="deId"/>
+            <result column="de_name" jdbcType="VARCHAR" property="deName"/>
+            <result column="de_date" jdbcType="TIMESTAMP" property="deDate"/>
+        </association>
+    </resultMap>
 
 
-  <select id="selectlist" resultMap="BaseResultMap">
-    select * from  department_ks k left JOIN department d on k.de_id= d.de_id
-  </select>
+    <select id="selectlist" resultMap="BaseResultMap">
+        select * from department_ks k left JOIN department d on k.de_id= d.de_id
+    </select>
 
-  <select id="selectZyKs" resultMap="BaseResultMap">
-    select * from department_ks where de_id =  (select de_id from department where de_name = '住院部')
-  </select>
-  <select id="selectId" resultMap="BaseResultMap">
-    select * from department_ks k left join department d on k.de_id=d.de_id WHERE k.de_id=#{ksId} and k.de_id is not null
-  </select>
-  <select id="selectName" resultMap="BaseResultMap">
-    select * from  department_ks k left JOIN department d on k.de_id= d.de_id where k.de_id is null
-  </select>
-  <!-- 去除空格 -->
-  <select id="selectdome" resultMap="BaseResultMap">
-    select * from department_ks d
-    <where>
+    <select id="selectZyKs" resultMap="BaseResultMap">
+        select * from department_ks where de_id = (select de_id from department where de_name = '住院部')
+    </select>
+    <select id="selectId" resultMap="BaseResultMap">
+        select * from department_ks k left join department d on k.de_id=d.de_id WHERE k.de_id=#{ksId} and k.de_id is not
+        null
+    </select>
+    <select id="selectName" resultMap="BaseResultMap">
+        select * from department_ks k left JOIN department d on k.de_id= d.de_id where k.de_id is null
+    </select>
+    <!-- 去除空格 -->
+    <select id="selectdome" resultMap="BaseResultMap">
+        select * from department_ks d
+        <where>
 
-      <if test="ksName!=null">
-        trim(
-        REPLACE (d.ks_name, ' ', '')
-        ) LIKE trim(
-        REPLACE (
-        CONCAT(
-        '%',
-        #{ksName},'%'),' ',''))
-      </if>
+            <if test="ksName!=null">
+                trim(
+                REPLACE (d.ks_name, ' ', '')
+                ) LIKE trim(
+                REPLACE (
+                CONCAT(
+                '%',
+                #{ksName},'%'),' ',''))
+            </if>
 
-    </where>
-  </select>
+        </where>
+    </select>
 
 </mapper>

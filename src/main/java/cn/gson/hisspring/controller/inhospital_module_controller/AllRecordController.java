@@ -23,13 +23,13 @@ public class AllRecordController {
     AllRecordService ars;
 
     @RequestMapping("seltzychangeksrecord")
-    public List<ZyChangeDeptRecord> seltZyChangeKsRecord(@RequestBody String str){
+    public List<ZyChangeDeptRecord> seltZyChangeKsRecord(@RequestBody String str) {
         SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
         return ars.seltZyChangeKsRecord(selectExecuteVo);
     }
 
     @RequestMapping("seltZyChangeBedRecord")
-    public List<ZyBedChangeRecord> seltZyChangeBedRecord(@RequestBody String str){
+    public List<ZyBedChangeRecord> seltZyChangeBedRecord(@RequestBody String str) {
         SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
         return ars.seltZyChangeBedRecord(selectExecuteVo);
     }

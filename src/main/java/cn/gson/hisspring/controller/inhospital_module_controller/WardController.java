@@ -25,10 +25,11 @@ public class WardController {
 
     /**
      * 查询所有病房加病床
+     *
      * @return
      */
     @RequestMapping("zyWard")
-    public List<ZyWard> selectWardAllPage(@RequestBody String str)  {
+    public List<ZyWard> selectWardAllPage(@RequestBody String str) {
         SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
         return wds.selectWardAllPage(selectExecuteVo);
     }
@@ -37,7 +38,7 @@ public class WardController {
      * 新增修改病房
      */
     @RequestMapping("addOrUpdataWard")
-    public boolean wardAddOrUpdate(@RequestBody String wardStr){
+    public boolean wardAddOrUpdate(@RequestBody String wardStr) {
         ZyWard ward = JSON.parseObject(wardStr, ZyWard.class);//将病房对象字符串转换为病房对象
         return wds.wardInsertOrUpdate(ward);
     }
@@ -46,16 +47,15 @@ public class WardController {
      * 判断病房名称是否存在
      */
     @RequestMapping("wdNameSelectRepetition")
-    public boolean selectWdNameRepetition(String wdName){
+    public boolean selectWdNameRepetition(String wdName) {
         return wds.selectWdNameRepetition(wdName);
     }
 
     /**
      * 根据科室编号查询病房信息
-     *
      */
     @RequestMapping("wardByKsId")
-    public List<ZyWard> selectWardByKsId(String ksId){
+    public List<ZyWard> selectWardByKsId(String ksId) {
         return wds.selectWardByKsId(ksId);
     }
 

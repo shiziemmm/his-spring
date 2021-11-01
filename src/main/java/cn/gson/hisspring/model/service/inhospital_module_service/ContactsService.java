@@ -18,20 +18,21 @@ public class ContactsService {
 
     /**
      * 新增联系人
+     *
      * @param contacts
      * @return
      */
-    public boolean insertContacts(ZyContacts contacts){
+    public boolean insertContacts(ZyContacts contacts) {
         int i = 0;
-        if(contacts.getCtsId() == 0){
+        if (contacts.getCtsId() == 0) {
             cm.insert(contacts);
-        }else{
+        } else {
             cm.updateById(contacts);
         }
         return i > 0 ? true : false;
     }
 
-    public boolean deleteContacts(Long ctsId){
+    public boolean deleteContacts(Long ctsId) {
         int i = cm.deleteById(ctsId);
         return i > 0 ? true : false;
     }
@@ -39,21 +40,22 @@ public class ContactsService {
 
     /**
      * 根据住院号循环新增联系人
+     *
      * @param list 联系人集合
      * @param ptNo 住院号
      * @return
      */
-    public int insertContactsList(List<ZyContacts> list, Long ptNo){
-      return cm.insertContactsList(list,ptNo);
+    public int insertContactsList(List<ZyContacts> list, Long ptNo) {
+        return cm.insertContactsList(list, ptNo);
     }
 
 
     /**
      * 根据病人住院号查询病人联系人
      */
-    public List<ZyContacts> selectContactsByPtId(Long ptNo){
+    public List<ZyContacts> selectContactsByPtId(Long ptNo) {
         QueryWrapper<ZyContacts> qw = new QueryWrapper<>();
-        qw.eq("pt_no",ptNo);
+        qw.eq("pt_no", ptNo);
         return cm.selectList(qw);
     }
 }

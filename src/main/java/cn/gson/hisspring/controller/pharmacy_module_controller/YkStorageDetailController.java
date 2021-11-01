@@ -14,9 +14,10 @@ import java.util.List;
 public class YkStorageDetailController {
     @Autowired
     YkStorageDetailService deser;
+
     //查询出入库记录详表
     @RequestMapping("allstoragedetail")
-    public List<YkStorageDetail> allstoragedetail(Float ykStorageId){
+    public List<YkStorageDetail> allstoragedetail(Float ykStorageId) {
         return deser.allstoragedetail(ykStorageId);
     }
 }

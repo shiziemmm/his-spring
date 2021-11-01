@@ -8,10 +8,10 @@ import lombok.Data;
 @Data//get  set方法
 public class YkDrugspecifcations {
 
-  @TableId
-  private long specId;
-  private String specSpecification;
-  private String specPack;
+    @TableId
+    private long specId;
+    private String specSpecification;
+    private String specPack;
 
 
 }

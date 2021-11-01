@@ -9,15 +9,14 @@ import lombok.Data;
 @Data
 public class ZyContacts {
 
-  @TableId("cts_id")
-  private long ctsId;
+    @TableId("cts_id")
+    private long ctsId;
 
 
-  private String ctsName;
-  private String ctsIphone;
-  private String ctsRelation;
-  private Long ptNo;
-
+    private String ctsName;
+    private String ctsIphone;
+    private String ctsRelation;
+    private Long ptNo;
 
 
 }

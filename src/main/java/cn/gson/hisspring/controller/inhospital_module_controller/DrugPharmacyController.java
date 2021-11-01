@@ -25,29 +25,31 @@ public class DrugPharmacyController {
      * 根据科室编号查询当前科室所有药品库存
      */
     @RequestMapping("select-drug-pharmacyByKsId")
-    public List<ZyDrugPharmacy> selectDrugPharmacyAll(Long ksId){
+    public List<ZyDrugPharmacy> selectDrugPharmacyAll(Long ksId) {
         return dps.selectDrugPharmacyAll(ksId);
     }
 
 
     /**
      * 查询医嘱需要发的药品
+     *
      * @param ksId
      * @return
      */
     @RequestMapping("select-doctor-pharmacyByKsId")
-    public List<PharmacyVo> selectPharmacyByKsOrAll(Long ksId){
-       return dps.selectPharmacyByKsOrAll(ksId);
+    public List<PharmacyVo> selectPharmacyByKsOrAll(Long ksId) {
+        return dps.selectPharmacyByKsOrAll(ksId);
     }
 
 
     /**
      * 根据科室编号和药品编号或者药品编号发药
+     *
      * @param
      * @return
      */
     @RequestMapping("dispensing-drug")
-    public boolean dispensingByKsOrDrug(@RequestBody String str){
+    public boolean dispensingByKsOrDrug(@RequestBody String str) {
         Map map = JSON.parseObject(str, Map.class);
         DispensingVo dispensingVo = JSON.parseObject(map.get("DispensingVo").toString(), DispensingVo.class);
         return dps.dispensingByKsOrDrug(dispensingVo);

@@ -14,9 +14,10 @@ public class YfDispensingService {
 
     /**
      * 发药记录查询
+     *
      * @param yfDispensing
      */
-    public List<YfDispensing> allyfdisng(YfDispensing yfDispensing){
+    public List<YfDispensing> allyfdisng(YfDispensing yfDispensing) {
         return disMap.allyfdisng(yfDispensing);
     }
 }

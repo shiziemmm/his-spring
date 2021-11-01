@@ -12,25 +12,33 @@ public class DepartmentKsService {
     @Autowired
     DepartmentKsMapper d;
 
-    public List<DepartmentKs> selectlist(){
+    public List<DepartmentKs> selectlist() {
         return d.selectlist();
-    };
+    }
 
-    public int addlist(DepartmentKs departmentKs){
+    ;
+
+    public int addlist(DepartmentKs departmentKs) {
         return d.insert(departmentKs);
     }
-    public int upalist(DepartmentKs departmentKs){
+
+    public int upalist(DepartmentKs departmentKs) {
         return d.updateById(departmentKs);
     }
 
     public List<DepartmentKs> selectId(Long id) {
         return d.selectId(id);
     }
-    public List<DepartmentKs> selectName(){
+
+    public List<DepartmentKs> selectName() {
         return d.selectName();
     }
-    public List<DepartmentKs> selectZyKs(){
+
+    public List<DepartmentKs> selectZyKs() {
         return d.selectZyKs();
     }
-   public List<DepartmentKs> selectdome(DepartmentKs departmentKs){return d.selectdome(departmentKs);}
+
+    public List<DepartmentKs> selectdome(DepartmentKs departmentKs) {
+        return d.selectdome(departmentKs);
+    }
 }

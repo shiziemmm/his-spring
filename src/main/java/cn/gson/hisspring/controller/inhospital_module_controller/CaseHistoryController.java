@@ -26,20 +26,21 @@ public class CaseHistoryController {
      * 添加病人病例方法
      */
     @RequestMapping("zy-add-caseHistory")
-    public boolean addCaseHistory(@RequestBody MzCaseHistory mzCaseHistory){
+    public boolean addCaseHistory(@RequestBody MzCaseHistory mzCaseHistory) {
         System.err.println(mzCaseHistory);
         return chs.addCaseHistory(mzCaseHistory);
     }
 
     /**
      * 根据病人住院号查询病例
+     *
      * @return
      */
     @RequestMapping("select-byPtNo-case")
-    public List<MzCaseHistory> selectByPtNoCase(@RequestBody String str){
+    public List<MzCaseHistory> selectByPtNoCase(@RequestBody String str) {
         System.err.println(str);
-        SelectExecuteVo selectExecuteVo = JSON.parseObject(str,SelectExecuteVo.class);
-       return chs.selectBySickNumberPtNoCase(selectExecuteVo);
+        SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
+        return chs.selectBySickNumberPtNoCase(selectExecuteVo);
     }
 
 
@@ -47,7 +48,7 @@ public class CaseHistoryController {
      * 根据病人信息编号查询出开立病历所有意思信息
      */
     @RequestMapping("select-by-sickNumber-staff")
-    public List<Staff> selectCaseStaff(Long sickNumber){
+    public List<Staff> selectCaseStaff(Long sickNumber) {
         return chs.selectCaseStaff(sickNumber);
     }
 

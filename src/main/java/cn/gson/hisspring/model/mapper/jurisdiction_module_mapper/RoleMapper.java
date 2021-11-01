@@ -14,12 +14,19 @@ import java.util.List;
 public interface RoleMapper extends BaseMapper<Role> {
     @Select("select * from role")
     public List<Role> selectAll();
-     public List<Role> chaxun();
+
+    public List<Role> chaxun();
+
     public List<FunctionJurisdiction> select();
-    public  List<Integer> roleFuns(Integer roId);
+
+    public List<Integer> roleFuns(Integer roId);
+
     public List<FunctionJurisdiction> homeMenu(Integer userId);
-     int addRoles(Role role);
-     public List<Role> selectStaff();
-     public List<Integer>staffFuns(Integer id);
+
+    int addRoles(Role role);
+
+    public List<Role> selectStaff();
+
+    public List<Integer> staffFuns(Integer id);
 
 }

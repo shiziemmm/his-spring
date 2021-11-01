@@ -33,50 +33,55 @@ public class BedController {
 
     /**
      * 新增或者修改病房
+     *
      * @param bed
      * @return
      */
     @RequestMapping("bedAddOrUpdate")
-    public boolean bedAddOrUpdate(@RequestBody String bed){
+    public boolean bedAddOrUpdate(@RequestBody String bed) {
         ZyBed beds = JSON.parseObject(bed, ZyBed.class);
         System.out.println(beds);
 //        return false;
-       return bs.bedAddOrUpdate(beds);
-    };
+        return bs.bedAddOrUpdate(beds);
+    }
+
+    ;
 
     /**
      * 判断病床名称是否重复
      */
     @RequestMapping("selectBdNameRepetition")
-    public boolean selectBdNameRepetition(String bdName){
+    public boolean selectBdNameRepetition(String bdName) {
         return bs.selectBdNameRepetition(bdName);
     }
 
     /**
      * 根据病床编号修改病床状态
+     *
      * @param bd
      * @return
      */
     @RequestMapping("bedUpdateBdIs")
-    public boolean bedUpdateBdIs(@RequestBody String bd){
+    public boolean bedUpdateBdIs(@RequestBody String bd) {
         Map map = JSON.parseObject(bd, Map.class);
-        return bs.bedUpdateBdIs(Long.parseLong(map.get("bdId").toString()),Long.parseLong(map.get("bdIs").toString()));
+        return bs.bedUpdateBdIs(Long.parseLong(map.get("bdId").toString()), Long.parseLong(map.get("bdIs").toString()));
     }
 
 
     /**
      * 根据病房编号查询病床
+     *
      * @param wdId
      * @return
      */
     @RequestMapping("bedSelectByWdId")
-    public List<ZyBed> bedSelectByWdId(Long wdId){
-       return bs.bedSelectByWdId(wdId);
+    public List<ZyBed> bedSelectByWdId(Long wdId) {
+        return bs.bedSelectByWdId(wdId);
     }
 
 
     @RequestMapping("bedUpdatePatient")
-    public boolean patientUpdateBed(@RequestBody String str){
+    public boolean patientUpdateBed(@RequestBody String str) {
         System.out.println(str);
         PatientUpdateBedVo bedVo = JSON.parseObject(str, PatientUpdateBedVo.class);
         System.out.println(bedVo);

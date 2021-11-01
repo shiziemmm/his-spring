@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface YKStorageMapper extends BaseMapper<YkStorage> {
     //查询全部的出入库记录
-    List<YkStorage>allStorage();
+    List<YkStorage> allStorage();
 
 
 }

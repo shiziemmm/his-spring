@@ -22,20 +22,22 @@ public class AllRecordService {
 
     /**
      * 根据病人编号查询转科记录
+     *
      * @param selectExecuteVo
      * @return
      */
-   public List<ZyChangeDeptRecord> seltZyChangeKsRecord(SelectExecuteVo selectExecuteVo){
+    public List<ZyChangeDeptRecord> seltZyChangeKsRecord(SelectExecuteVo selectExecuteVo) {
         return arm.seltzychangeksrecord(selectExecuteVo);
     }
 
 
     /**
      * 根据病人编号查询转病房记录
+     *
      * @param selectExecuteVo
      * @return
      */
-   public List<ZyBedChangeRecord> seltZyChangeBedRecord(SelectExecuteVo selectExecuteVo){
+    public List<ZyBedChangeRecord> seltZyChangeBedRecord(SelectExecuteVo selectExecuteVo) {
         return arm.seltzychangebedrecord(selectExecuteVo);
     }
 

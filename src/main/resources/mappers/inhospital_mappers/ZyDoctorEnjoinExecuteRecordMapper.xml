@@ -4,19 +4,19 @@
 <mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinExecuteRecordMapper">
 
 
-<!--    <insert id="insertDoctorEnjoinExecuteRecordFor">-->
-<!--        insert into zy_doctor_enjoin_execute_record(-->
-<!--                                                    Des_id,-->
-<!--                                                    Der_execute_date,-->
-<!--                                                    Der_drug_price,-->
-<!--                                                    Pt_no-->
-<!--                                                    S_id-->
-<!--                                                    )-->
-<!--                                                    values-->
-<!--                                                    <foreach collection="list" item="des">-->
-<!--                                                        -->
-<!--                                                    </foreach>-->
-<!--    </insert>-->
+    <!--    <insert id="insertDoctorEnjoinExecuteRecordFor">-->
+    <!--        insert into zy_doctor_enjoin_execute_record(-->
+    <!--                                                    Des_id,-->
+    <!--                                                    Der_execute_date,-->
+    <!--                                                    Der_drug_price,-->
+    <!--                                                    Pt_no-->
+    <!--                                                    S_id-->
+    <!--                                                    )-->
+    <!--                                                    values-->
+    <!--                                                    <foreach collection="list" item="des">-->
+    <!--                                                        -->
+    <!--                                                    </foreach>-->
+    <!--    </insert>-->
 
     <resultMap id="dExecuteIdMap" type="cn.gson.hisspring.model.pojos.ZyDoctorEnjoinExecuteRecord">
         <result property="desId" column="des_id"/>
@@ -32,7 +32,7 @@
         <result property="executeSname" column="executeSname"/>
 
         <association property="zyDoctorEnjoinDetails" javaType="cn.gson.hisspring.model.pojos.ZyDoctorEnjoinDetails">
-            <result column="des_Execute_Date" property="desExecuteDate" />
+            <result column="des_Execute_Date" property="desExecuteDate"/>
             <result column="des_end_date" property="desEndDate"/>
 
             <result column="Des_id" property="desId"/>
@@ -48,9 +48,9 @@
             <result column="Des_usage" property="desUsage"/>
             <result column="des_entering_date" property="desEnteringDate"/>
             <result column="des_count" property="desCount"/>
-            <result column="Des_price" property="desPrice" />
-            <result column="Des_is" property="desIs" />
-            <result column="Des_present_date" property="desPresentDate" />
+            <result column="Des_price" property="desPrice"/>
+            <result column="Des_is" property="desIs"/>
+            <result column="Des_present_date" property="desPresentDate"/>
             <result property="deLongorshort" column="de_longorshort"/>
         </association>
     </resultMap>
@@ -74,7 +74,6 @@
     </select>
 
 
-
     <update id="updateDoctorExecuteIs">
         update zy_doctor_enjoin_execute_record set der_is = 1 where Des_id in
         (
@@ -89,11 +88,13 @@
     <select id="selectExecuteDoctor" resultMap="doctorExecuteMap">
         select * from seltYesExecute
         <where>
-        
+
             <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(Der_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(Der_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                and (DATE_FORMAT(Der_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(Der_execute_date,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
             </if>
-            
+
             <if test="(startDate != null) and (endDate == null)">
                 and DATE_FORMAT(Der_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
             </if>
@@ -101,11 +102,11 @@
             <if test="(startDate == null) and (endDate != null)">
                 and DATE_FORMAT(Der_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
             </if>
-            
+
             <if test="searchLike != null and searchLike != ''">
                 and Des_drug_name like '%${searchLike}%'
             </if>
-            
+
             <if test="doctorType != null and doctorType != '' ">
                 and de_longorshort = #{doctorType}
             </if>

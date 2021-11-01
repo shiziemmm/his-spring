@@ -18,8 +18,12 @@ public class MzCardBillController {
 
 
     @GetMapping("billCard")
-    public List<MzCardBill> select(long card){
+    public List<MzCardBill> select(long card) {
         return paymentService.select(card);
-    };
+
+
+    }
+
+    ;
 
 }

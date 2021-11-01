@@ -30,56 +30,34 @@ public class SchedulingController {
     SchedulingService schedulingService;
     @Autowired
     SchedulingMapper schedulingMapper;
-  //验证排班
+
+    //验证排班
     @RequestMapping("addSch")
-    public Object addSch(String grants){
+    public Object addSch(String grants) {
         JSONObject o = JSONObject.parseObject(grants);
         Integer bcId = Integer.parseInt(o.get("bcId").toString());
-        String rq=(o.get("rq").toString());
-        List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(),Integer.TYPE);
-        List<Scheduling> schedulings = schedulingMapper.seletSch(rq,funs);
+        String rq = (o.get("rq").toString());
+        List<Integer> funs = JSONArray.parseArray(o.get("funs").toString(), Integer.TYPE);
+        List<Scheduling> schedulings = schedulingMapper.seletSch(rq, funs);
         System.err.println(schedulings.size());
-        if(schedulings.size()==0){
+        if (schedulings.size() == 0) {
             return "ok";
-        }else{
+        } else {
             return "false";
         }
     }
-      //根据科室显示员工
+
+    //根据科室显示员工
     @GetMapping("staff-ks")
-    public  List<Staff> selectksId(long id){
+    public List<Staff> selectksId(long id) {
         return staffMapper.selectksId(id);
     }
+
     //根据职称显示员工
     @GetMapping("staff-t")
-    public  List<Staff> selecttId(long id){
+    public List<Staff> selecttId(long id) {
         return staffMapper.selecttId(id);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

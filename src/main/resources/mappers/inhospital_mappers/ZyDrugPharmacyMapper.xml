@@ -30,7 +30,9 @@
         INNER JOIN zy_doctor_enjoin_details ON zy_doctor_enjoin.De_id = zy_doctor_enjoin_details.De_id
         INNER JOIN zy_patient_base ON zy_doctor_enjoin.Pt_no = zy_patient_base.Pt_no
         INNER JOIN department_ks ON zy_patient_base.ks_id = department_ks.ks_id
-        INNER JOIN zy_doctor_enjoin_execute_record ON zy_doctor_enjoin_execute_record.Des_id = zy_doctor_enjoin_details.Des_id and DATE_FORMAT(zy_doctor_enjoin_execute_record.Der_execute_date,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+        INNER JOIN zy_doctor_enjoin_execute_record ON zy_doctor_enjoin_execute_record.Des_id =
+        zy_doctor_enjoin_details.Des_id and DATE_FORMAT(zy_doctor_enjoin_execute_record.Der_execute_date,'%Y-%m-%d') =
+        DATE_FORMAT(NOW(),'%Y-%m-%d')
         WHERE
         (zy_doctor_enjoin.De_longorshort = 1 AND zy_doctor_enjoin_details.des_is = 1) -- 把长期医嘱和没有停嘱的医嘱筛选出来
         AND
@@ -43,14 +45,15 @@
         AND
         ((zy_doctor_enjoin_details.Des_end_date IS null OR
         DATE_FORMAT(zy_doctor_enjoin_details.Des_end_date,'%Y-%m-%d') >= DATE_FORMAT(NOW(),'%Y-%m-%d')) AND
-        DATE_FORMAT(zy_doctor_enjoin_details.Des_execute_date,'%Y-%m-%d') &lt;= DATE_FORMAT(NOW(),'%Y-%m-%d')) -- 把长期医嘱没有到截止日期的医嘱筛选出来
+        DATE_FORMAT(zy_doctor_enjoin_details.Des_execute_date,'%Y-%m-%d') &lt;= DATE_FORMAT(NOW(),'%Y-%m-%d')) --
+        把长期医嘱没有到截止日期的医嘱筛选出来
 
         group by
 
         <if test="ksId != '' and ksId != null">
             zy_patient_base.ks_id,
         </if>
-         zy_doctor_enjoin_details.des_drug_id
+        zy_doctor_enjoin_details.des_drug_id
     </select>
 
 
@@ -71,8 +74,6 @@
             </if>
         </where>
     </select>
-
-
 
 
 </mapper>

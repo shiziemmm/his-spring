@@ -10,7 +10,7 @@
         <result column="s_Id" property="sId"></result>
         <result column="mc_Number" property="mcNumber"></result>
         <association property="staff" javaType="cn.gson.hisspring.model.pojos.Staff">
-            <result column="s_name" property="sName" ></result>
+            <result column="s_name" property="sName"></result>
         </association>
     </resultMap>
 

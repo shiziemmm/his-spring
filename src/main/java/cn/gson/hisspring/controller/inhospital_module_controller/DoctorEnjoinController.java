@@ -23,18 +23,20 @@ public class DoctorEnjoinController {
     DoctorEnjoinService des;//医嘱service
 
     @RequestMapping("add-doctorEnjoin")
-    public boolean addDoctorEnjoin(@RequestBody String str){
+    public boolean addDoctorEnjoin(@RequestBody String str) {
         ZyDoctorEnjoin zyDoctorEnjoin = JSON.parseObject(str, ZyDoctorEnjoin.class);
         return des.addDoctorEnjoin(zyDoctorEnjoin);
     }
 
 
-    /**VC
+    /**
+     * VC
      * 根据住院号查询医嘱信息
+     *
      * @return
      */
     @RequestMapping("select-doctorEnjoin-ByPtNo")
-    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(@RequestBody String str){
+    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(@RequestBody String str) {
         SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
         System.err.println(selectExecuteVo);
         return des.doctorEnjoinSelectByPtId(selectExecuteVo);

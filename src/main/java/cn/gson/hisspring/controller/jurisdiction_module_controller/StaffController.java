@@ -30,34 +30,38 @@ public class StaffController {
 
     /**
      * 根据科室编号查询
+     *
      * @param ksId 科室编号
      * @return
      */
     @RequestMapping("select-staff-all")
-    public List<Staff> selectStaffAll(Integer ksId){
+    public List<Staff> selectStaffAll(Integer ksId) {
         return ss.selectStaffAll(ksId);
     }
+
     /*
     查询员工所有有信息
      */
     @RequestMapping("selectall-staff")
-    public  List<Staff>  selectALl(){
+    public List<Staff> selectALl() {
         List<Staff> staff = ss.selectALl();
         return staff;
     }
+
     @RequestMapping("selectall-staffs")
-    public  int  selectALls(){
+    public int selectALls() {
         List<Staff> staff = ss.selectALl();
         return staff.size();
     }
+
     //新增员工
     @RequestMapping("add-staff")
-    public void dome(YongGoneVo from){
+    public void dome(YongGoneVo from) {
         System.err.println(from);
-        User user=new User();
+        User user = new User();
         user.setUName(from.getUName());
         user.setUPswd(convertMD5(from.getUPswd()));
-        Staff s= new Staff();
+        Staff s = new Staff();
         s.setSName(from.getSName());
         s.setSSore(from.getSSore());
         s.setSPhone(from.getSPhone());
@@ -67,16 +71,17 @@ public class StaffController {
         System.err.println(s);
         System.err.println(user);
         System.err.println("新增");
-        us.addStaff(user,s);
+        us.addStaff(user, s);
     }
+
     @RequestMapping("upa-staff")
-    public void upa(YongGoneVo from){
-        System.err.println(from+"修改信息");
-        User user=new User();
+    public void upa(YongGoneVo from) {
+        System.err.println(from + "修改信息");
+        User user = new User();
         user.setUId(from.getUId());
         user.setUName(from.getUName());
         user.setUPswd(convertMD5(from.getUPswd()));
-        Staff s= new Staff();
+        Staff s = new Staff();
         s.setSId(from.getSId());
         s.setSName(from.getSName());
         s.setSSore(from.getSSore());
@@ -90,39 +95,43 @@ public class StaffController {
         ss.upa(s);
 
     }
+
     @RequestMapping("quit-staff")
-    public String quit(long id){
-        int i= ss.upa(id);
-        if(i>0){
+    public String quit(long id) {
+        int i = ss.upa(id);
+        if (i > 0) {
             return "ok";
-        }else{
+        } else {
             return "false";
         }
     }
+
     @RequestMapping("reset")
-    public int  reset(Long uid , String ssore){
-        String upswd=convertMD5(ssore.substring(ssore.length() - 6));
-        System.err.println(upswd+"转");
+    public int reset(Long uid, String ssore) {
+        String upswd = convertMD5(ssore.substring(ssore.length() - 6));
+        System.err.println(upswd + "转");
         int reset = us.reset(upswd, uid);
-        if(reset>0){
+        if (reset > 0) {
             return 0;
-        }else{
+        } else {
             return 1;
         }
     }
+
     @RequestMapping("gitee")
-    public List<Staff> gitee(Long uId){
-       return ss.selectRole(uId);
+    public List<Staff> gitee(Long uId) {
+        return ss.selectRole(uId);
     }
 
     /**
      * MD5加密
+     *
      * @param inStr
      * @return
      */
-    public static String convertMD5(String inStr){
+    public static String convertMD5(String inStr) {
         char[] a = inStr.toCharArray();
-        for (int i = 0; i < a.length; i++){
+        for (int i = 0; i < a.length; i++) {
             a[i] = (char) (a[i] ^ 't');
         }
         String s = new String(a);

@@ -22,19 +22,18 @@ public class ZyDrugInFormationController {
     ZyDrugInFormationService zds;
 
     @RequestMapping("select-drug-drugName")
-    public List<DrugVo> selectDrugByDrugName(@RequestBody DrugSearchVo drugSearchVo){
+    public List<DrugVo> selectDrugByDrugName(@RequestBody DrugSearchVo drugSearchVo) {
         return zds.selectDrugByDrugName(drugSearchVo);
     }
 
 
-
     @RequestMapping("select-drug-unit")
-    public List<Object> selectDrugUnit(){
+    public List<Object> selectDrugUnit() {
         return zds.selectDrugUnit();
     }
 
     @RequestMapping("select-drug-usage")
-    public List<Object> selectDrugUsage(){
+    public List<Object> selectDrugUsage() {
         return zds.selectDrugUsage();
     }
 }

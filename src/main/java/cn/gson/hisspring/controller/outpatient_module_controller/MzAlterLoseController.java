@@ -14,13 +14,13 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-public class  MzAlterLoseController {
+public class MzAlterLoseController {
     @Autowired
     MzAlterLoseService loseService;
 
     //查询所有诊疗卡操作记录like不等于null就模糊查询
     @GetMapping("likeAlterLose")
-    public List<MzAlterLose> likeAlterLose(String like){
+    public List<MzAlterLose> likeAlterLose(String like) {
         return loseService.allLikeAlterLose(like);
     }
 

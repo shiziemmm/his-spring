@@ -28,7 +28,7 @@
         rd_State_Price,
         drug_Id,
         recipe_Number
-        )  values
+        ) values
         <foreach collection="list" separator="," item="xp">
             (
             #{xp.rdName},

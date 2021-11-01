@@ -22,6 +22,7 @@ import java.util.Map;
 public class DrugStorageController {
     @Autowired
     DrugStorageService drugStorageService;
+
     /*查询药库*/
     @RequestMapping("YK-repertory")
     public List<YkDruginventory> allDrugStorg() {
@@ -30,16 +31,16 @@ public class DrugStorageController {
 
     /*药品入库*/
     @RequestMapping("putstorage")
-    public void putstorage(@RequestBody String grant){
+    public void putstorage(@RequestBody String grant) {
         Map map = JSON.parseObject(grant, Map.class);
         String id = map.get("ykPurchaseId").toString();
-        System.err.println(id+"idid");
+        System.err.println(id + "idid");
         List<YkDrugpurchasePlanDetails> ykDrugpurchasePlanDetails = JSON.parseArray(map.get("list").toString(), YkDrugpurchasePlanDetails.class);
-        System.err.println(ykDrugpurchasePlanDetails+"77777777777777777777777777777");
+        System.err.println(ykDrugpurchasePlanDetails + "77777777777777777777777777777");
 //        List<YkDrugpurchasePlanDetails> objList3 = JSON.parseArray(grant, YkDrugpurchasePlanDetails.class);// 取一个Lis
 //        List<YkDrugpurchasePlanDetails> ykDrugpurchasePlanDetails = JSON.parseArray(str, YkDrugpurchasePlanDetails.class);
 //        System.err.println(str);
 //        System.err.println(funs);
-        drugStorageService.putstorage(ykDrugpurchasePlanDetails,id);
+        drugStorageService.putstorage(ykDrugpurchasePlanDetails, id);
     }
 }

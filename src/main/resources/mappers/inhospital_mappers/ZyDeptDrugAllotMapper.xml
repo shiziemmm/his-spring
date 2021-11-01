@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DeptDrugAllotMapper">
-    
+
     <resultMap id="DeptDrugAllotMap" type="cn.gson.hisspring.model.pojos.ZyDeptDrugAllot">
         <result property="ksId" column="ks_id"/>
         <result property="ksName" column="ks_name"/>
         <result property="ddaDate" column="dda_date"/>
         <result property="ddaDrugId" column="dda_drug_id"/>
         <result property="ddaDrugName" column="dda_drug_name"/>
-        <result  property="ddaId" column="dda_id"/>
+        <result property="ddaId" column="dda_id"/>
         <result property="ddaIs" column="dda_id"/>
         <result property="ddaMaxUnitCount" column="dda_max_unit_count"/>
         <result property="ddaMinUnitCount" column="dda_min_unit_count"/>
@@ -18,7 +18,7 @@
     </resultMap>
 
     <select resultMap="DeptDrugAllotMap" id="selectByKsId">
-        select * from seltdDeptDrugAllotAndStaffAndKs 
+        select * from seltdDeptDrugAllotAndStaffAndKs
         <where>
             <if test="ksId != '' and ksId != null ">
                 ks_id = #{ksId}
@@ -29,29 +29,29 @@
     <!--===========循环新增科室库存调拨-->
     <insert id="addDeptDrugAllotList">
         insert into Zy_dept_drug_allot(
-                                        ks_id,
-                                        dda_sid_allot,
-                                        dda_date,
-                                        dda_is,
-                                        dda_max_unit_count,
-                                        dda_min_unit_count,
-                                        dda_drug_name,
-                                        dda_drug_id)
+        ks_id,
+        dda_sid_allot,
+        dda_date,
+        dda_is,
+        dda_max_unit_count,
+        dda_min_unit_count,
+        dda_drug_name,
+        dda_drug_id)
 
-                                        values
+        values
 
-                                        <foreach collection="list" separator="," item="dda">
-                                            (
-                                            #{dda.ksId},
-                                            #{dda.ddaSidAllot},
-                                            #{dda.ddaDate},
-                                            1,
-                                            #{dda.ddaMaxUnitCount},
-                                            #{dda.ddaMinUnitCount},
-                                            #{dda.daaDrugName},
-                                            #{dda.ddaDrugId}
-                                            )
-                                        </foreach>
+        <foreach collection="list" separator="," item="dda">
+            (
+            #{dda.ksId},
+            #{dda.ddaSidAllot},
+            #{dda.ddaDate},
+            1,
+            #{dda.ddaMaxUnitCount},
+            #{dda.ddaMinUnitCount},
+            #{dda.daaDrugName},
+            #{dda.ddaDrugId}
+            )
+        </foreach>
 
     </insert>
 </mapper>

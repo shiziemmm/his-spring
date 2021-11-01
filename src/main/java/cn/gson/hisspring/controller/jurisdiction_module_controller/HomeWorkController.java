@@ -28,38 +28,40 @@ import java.util.*;
 @CrossOrigin
 @RestController
 public class HomeWorkController {
-    static  List list=new ArrayList();
+    static List list = new ArrayList();
     @Autowired
     SchedulingMapper schedulingMapper;
     @Autowired
     echatrsMapper echatrsMapper;
     @Autowired
     MzMedicalRecordMapper mzMedicalRecordMapper;
+
     //今日排班
     @RequestMapping("home-sch")
-    public List<Scheduling> homeSch(){
+    public List<Scheduling> homeSch() {
         List<Scheduling> schedulings = schedulingMapper.selectDate();
         return schedulings;
     }
+
     @RequestMapping("home-sch-name")
-    public  List<Scheduling> homeSch(String ksFrom){
+    public List<Scheduling> homeSch(String ksFrom) {
         System.err.println(ksFrom);
-        ReportForm dome= JSONObject.parseObject(ksFrom, ReportForm.class);
+        ReportForm dome = JSONObject.parseObject(ksFrom, ReportForm.class);
         List<Scheduling> list = schedulingMapper.selectKsName(dome);
         System.err.println(list);
         return list;
     }
 
     @RequestMapping("echarts")
-    public String getAllEcharts(){
+    public String getAllEcharts() {
         List<echartsVo> echarts = echatrsMapper.getAllEcharts();
         List<echartsVo> echartss = echatrsMapper.getList();
         System.err.println(echarts);
         HashMap<Object, Object> res = new HashMap<>();
         List<Double> name = new ArrayList<>();
         List<Double> num = new ArrayList<>();
-        String dome=JSON.toJSONString(res);
-        if(echarts.size()!=0){
+        String dome = JSON.toJSONString(res);
+        if (echarts.size() != 0) {
             num.add(Double.parseDouble(echarts.get(0).getC1()));
             num.add(Double.parseDouble(echarts.get(0).getC2()));
             num.add(Double.parseDouble(echarts.get(0).getC3()));
@@ -73,7 +75,7 @@ public class HomeWorkController {
             num.add(Double.parseDouble(echarts.get(0).getC11()));
             num.add(Double.parseDouble(echarts.get(0).getC12()));
         }
-        if(echartss.size()!=0){
+        if (echartss.size() != 0) {
             name.add(Double.parseDouble(echartss.get(0).getC1()));
             name.add(Double.parseDouble(echartss.get(0).getC2()));
             name.add(Double.parseDouble(echartss.get(0).getC3()));
@@ -89,47 +91,47 @@ public class HomeWorkController {
         }
 
 
-
-        res.put("name",name);
-        res.put("num",num);
+        res.put("name", name);
+        res.put("num", num);
         System.err.println(res);
         String res_string = JSON.toJSONString(res);
         System.err.println(res_string);
         return res_string;
 
     }
+
     @RequestMapping("chaxunnums")
-    public int nums(){
-        List<MzMedicalRecord> list=mzMedicalRecordMapper.chaxunnums();
+    public int nums() {
+        List<MzMedicalRecord> list = mzMedicalRecordMapper.chaxunnums();
         return list.size();
     }
+
     @RequestMapping("moneny")
-    public double moneny(){
-        List<echartsVo> list= echatrsMapper.zhuyu();
-        List<echartsVo> map= echatrsMapper.menzhen();
-        System.err.println(list+"1");
-        System.err.println(map+"2");
-        double nums=0.00;
-        double  mapnums=0.00;
-        if(!list.isEmpty()){
+    public double moneny() {
+        List<echartsVo> list = echatrsMapper.zhuyu();
+        List<echartsVo> map = echatrsMapper.menzhen();
+        System.err.println(list + "1");
+        System.err.println(map + "2");
+        double nums = 0.00;
+        double mapnums = 0.00;
+        if (!list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
-                    nums=list.get(i).getPcdPrice()+0;
-                }
+                nums = list.get(i).getPcdPrice() + 0;
+            }
         }
-        if(map!=null || !map.isEmpty()){
-                for (int j = 0; j < map.size(); j++) {
-                    mapnums=0+map.get(j).getPcdPrice();
-                }
+        if (map != null || !map.isEmpty()) {
+            for (int j = 0; j < map.size(); j++) {
+                mapnums = 0 + map.get(j).getPcdPrice();
+            }
         }
-        double moeny=nums+mapnums;
-        BigDecimal b   =   new   BigDecimal(moeny);
-        double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+        double moeny = nums + mapnums;
+        BigDecimal b = new BigDecimal(moeny);
+        double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         return f1;
-        }
-
-
-
     }
+
+
+}
 
 
 

@@ -39,7 +39,7 @@ public class YKAllotService {
     DrugInformationMapper difm;//药品信息mapper
 
 
-    public void  addyf(List<YkAllot> allotList,Long sId){
+    public void addyf(List<YkAllot> allotList, Long sId) {
         //变量
         Long ykStorageId = getOrderIdByTime();//出库编号
 
@@ -54,19 +54,19 @@ public class YKAllotService {
         for (YkAllot ykAllot : allotList) {//循环查询调拨详表
 
             System.err.println(ykAllot.getYkAllotId());
-            QueryWrapper<YkAllotdetail> qwAl = new QueryWrapper<YkAllotdetail>().eq("yk_Allotdetail_Is",1).eq("yk_allot_id",ykAllot.getYkAllotId());
+            QueryWrapper<YkAllotdetail> qwAl = new QueryWrapper<YkAllotdetail>().eq("yk_Allotdetail_Is", 1).eq("yk_allot_id", ykAllot.getYkAllotId());
             List<YkAllotdetail> allotdetails = yam.selectList(qwAl);
-            System.err.println("调拨详表"+allotdetails);
+            System.err.println("调拨详表" + allotdetails);
             for (YkAllotdetail allotdetail : allotdetails) {//循环调拨详单
                 Long drugCount = allotdetail.getYkAllotdetailCount();//需要发药的数量
                 //根据调拨详单里面的药品编号查询出药库的药品集合
-                QueryWrapper<YkDruginventory> DruginventoryQW = new QueryWrapper<YkDruginventory>().eq("drug_id",allotdetail.getYkDrugId())
+                QueryWrapper<YkDruginventory> DruginventoryQW = new QueryWrapper<YkDruginventory>().eq("drug_id", allotdetail.getYkDrugId())
                         .orderByAsc("YK_drven_mftDate");
                 List<YkDruginventory> ykDruginventoryList = dsm.selectList(DruginventoryQW);//查询药库所有一样药品编号的数据
                 for (YkDruginventory ykList : ykDruginventoryList) {
-                    if (drugCount <= ykList.getYkDrvenCount() && ykList.getYkDrvenCount() >0){//如果进这边说明可以扣除库存
+                    if (drugCount <= ykList.getYkDrvenCount() && ykList.getYkDrvenCount() > 0) {//如果进这边说明可以扣除库存
                         //先减药库库存
-                        YkDruginventory ykdObj = new YkDruginventory(ykList.getYkDrvenId(),ykList.getYkDrvenCount()-drugCount);
+                        YkDruginventory ykdObj = new YkDruginventory(ykList.getYkDrvenId(), ykList.getYkDrvenCount() - drugCount);
                         dsm.updateById(ykdObj);//修改药库库存
 
                         //新增出库记录详情表
@@ -80,13 +80,13 @@ public class YKAllotService {
 
                         //先查询药房是否存在这一批次的药品
                         QueryWrapper<YfDruginventory> yfDruginventoryQW = new QueryWrapper<YfDruginventory>()
-                                .eq("YF_drven_batch",ykList.getYkDrvenBatch()).eq("drug_id",ykList.getDrugId());
+                                .eq("YF_drven_batch", ykList.getYkDrvenBatch()).eq("drug_id", ykList.getDrugId());
                         List<YfDruginventory> yfDruginventoriesList = ydtm.selectList(yfDruginventoryQW);
 
                         //根据药品编号查询药品信息
                         YfDruginventory yfDrugObj = new YfDruginventory();
                         YfDruginformation yfDruginformation = difm.selectById(ykList.getDrugId());//药品信息对象
-                        if (yfDruginventoriesList.isEmpty()){//如果为空就说明药房现在没有这个批次的库数据
+                        if (yfDruginventoriesList.isEmpty()) {//如果为空就说明药房现在没有这个批次的库数据
                             //新增药房数据
                             yfDrugObj.setDrugId(ykList.getDrugId());
                             yfDrugObj.setDrugPrescription(yfDruginformation.getDrugPrescription().toString());
@@ -98,17 +98,17 @@ public class YKAllotService {
                             yfDrugObj.setYfDrvenMftdate(ykList.getYkDrvenMftdate());
                             yfDrugObj.setYfSellingprice(ykList.getYkSellingprice());
                             ydtm.insert(yfDrugObj);//新增药房数据
-                        }else{
+                        } else {
                             //修改药房该批次的库存数量
                             yfDrugObj.setYfDrvenId(yfDruginventoriesList.get(0).getYfDrvenId());
-                            yfDrugObj.setYfDrvenCount(yfDruginventoriesList.get(0).getYfDrvenCount()+drugCount);
+                            yfDrugObj.setYfDrvenCount(yfDruginventoriesList.get(0).getYfDrvenCount() + drugCount);
                             ydtm.updateById(yfDrugObj);//修改药房数据
                         }
                         break;
-                    }else{//如果进这里就说明当前这批次的药库库存不足以扣除出库所需的数量 就先减去药库当前这批次的数量 然后继续减
+                    } else {//如果进这里就说明当前这批次的药库库存不足以扣除出库所需的数量 就先减去药库当前这批次的数量 然后继续减
                         drugCount = drugCount - ykList.getYkDrvenCount();
                         //先减药库库存
-                        YkDruginventory ykdObj = new YkDruginventory(ykList.getYkDrvenId(),ykList.getYkDrvenCount()-drugCount);
+                        YkDruginventory ykdObj = new YkDruginventory(ykList.getYkDrvenId(), ykList.getYkDrvenCount() - drugCount);
                         dsm.updateById(ykdObj);//修改药库库存
 
                         //新增出库记录详情表
@@ -121,12 +121,12 @@ public class YKAllotService {
 
                         //先查询药房是否存在这一批次的药品
                         QueryWrapper<YfDruginventory> yfDruginventoryQW = new QueryWrapper<YfDruginventory>()
-                                .eq("YF_drven_batch",ykList.getYkDrvenBatch()).eq("drug_id",ykList.getDrugId());
+                                .eq("YF_drven_batch", ykList.getYkDrvenBatch()).eq("drug_id", ykList.getDrugId());
                         List<YfDruginventory> yfDruginventoriesList = ydtm.selectList(yfDruginventoryQW);
                         //根据药品编号查询药品信息
                         YfDruginventory yfDrugObj = new YfDruginventory();
                         YfDruginformation yfDruginformation = difm.selectById(ykList.getDrugId());//药品信息对象
-                        if (yfDruginventoriesList.isEmpty()){//如果为空就说明药房现在没有这个批次的库数据
+                        if (yfDruginventoriesList.isEmpty()) {//如果为空就说明药房现在没有这个批次的库数据
                             //新增药房数据
                             yfDrugObj.setDrugId(ykList.getDrugId());
                             yfDrugObj.setDrugPrescription(yfDruginformation.getDrugPrescription().toString());
@@ -137,10 +137,10 @@ public class YKAllotService {
                             yfDrugObj.setYfDrvenCount(ykList.getYkDrvenCount());
                             yfDrugObj.setYfDrvenMftdate(ykList.getYkDrvenMftdate());
                             ydtm.insert(yfDrugObj);//新增药房数据
-                        }else{
+                        } else {
                             //修改药房该批次的库存数量
                             yfDrugObj.setYfDrvenId(yfDruginventoriesList.get(0).getYfDrvenId());
-                            yfDrugObj.setYfDrvenCount(yfDruginventoriesList.get(0).getYfDrvenCount()+drugCount);
+                            yfDrugObj.setYfDrvenCount(yfDruginventoriesList.get(0).getYfDrvenCount() + drugCount);
                             ydtm.updateById(yfDrugObj);//修改药房数据
                         }
                     }
@@ -153,28 +153,28 @@ public class YKAllotService {
 
     //生成随机单号
     public static Long getOrderIdByTime() {
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-        Long newDate= Long.parseLong(sdf.format(new Date()));
-        String result="";
-        Random random=new Random();
-        for(int i=0;i<5;i++){
-            result+=random.nextInt(20);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Long newDate = Long.parseLong(sdf.format(new Date()));
+        String result = "";
+        Random random = new Random();
+        for (int i = 0; i < 5; i++) {
+            result += random.nextInt(20);
         }
-        return newDate+Long.parseLong(result);
+        return newDate + Long.parseLong(result);
     }
 
     //查询调拨申请
-    public List<YkAllot> allykallot(){
+    public List<YkAllot> allykallot() {
         return ykAllotMapper.allykallot();
     }
 
     //查询调拨详表
-    public List<YkAllotdetail> alldetail(String ykAllotId){
+    public List<YkAllotdetail> alldetail(String ykAllotId) {
         return ykAllotMapper.alldetail(ykAllotId);
     }
 
     //新增调拨记录
-    public void adddykallot(YkAllot ykAllot){
+    public void adddykallot(YkAllot ykAllot) {
 
         YkAllot allot = new YkAllot();
 
@@ -189,14 +189,14 @@ public class YKAllotService {
 
         for (YfDruginventory y : ykAllot.getYfDruginventories()) {
 
-           YkAllotdetail a=new YkAllotdetail();
+            YkAllotdetail a = new YkAllotdetail();
 
             a.setYkAllotId(allot.getYkAllotId());
-           a.setYkDrugId(y.getDrugId());
-           a.setYkAllotdetailCount(y.getYfNumbers());
-           a.setYkAllotdetailIs(1);
+            a.setYkDrugId(y.getDrugId());
+            a.setYkAllotdetailCount(y.getYfNumbers());
+            a.setYkAllotdetailIs(1);
 
-           ykAllotMapper.addykallotdetail(a);
+            ykAllotMapper.addykallotdetail(a);
 
         }
 
@@ -217,7 +217,6 @@ public class YKAllotService {
     public void addykallotdetail(YkAllotdetail ykAllotdetail){
         ykAllotMapper.addykallotdetail(ykAllotdetail);
     }*/
-
 
 
 }

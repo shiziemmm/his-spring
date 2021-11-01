@@ -6,15 +6,17 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- *供应商
+ * 供应商
  */
 
 @Mapper
 public interface SupplierMapper {
     //    查询供应商
-    List <YkSupplier> selectAllSupplier();
+    List<YkSupplier> selectAllSupplier();
+
     //  新增供应商
     void insertSupplier(YkSupplier ykSupplier);
+
     //修改供应商信息
     void updateSupplier(YkSupplier ykSupplier);
 }

@@ -35,13 +35,13 @@ public class JwtTokenUtil {
      * @param userName 用户
      * @return 令token牌
      */
-    public String generateToken(String userName,String userId) {
+    public String generateToken(String userName, String userId) {
         Map<String, Object> claims = new HashMap<>(2);
         claims.put("sub", "jwtdemo");
-        claims.put("uname",userName);
-        claims.put("uid",userId);
+        claims.put("uname", userName);
+        claims.put("uid", userId);
 
-        Date iatDate=new Date();
+        Date iatDate = new Date();
         claims.put("iat", iatDate);
         return generateToken(claims);
     }
@@ -62,6 +62,7 @@ public class JwtTokenUtil {
         }
         return username;
     }
+
     /**
      * 从令牌中获取用户ID
      *
@@ -90,9 +91,9 @@ public class JwtTokenUtil {
             Claims claims = getClaimsFromToken(token);
             Date expiration = claims.getExpiration();
             log.debug("临牌过期----------------------------------------");
-            log.info("in isTokenExpired date:{}",expiration.toLocaleString());
-            Date date=new Date();
-            log.info("in isTokenExpired now:{},exp:{} ,{}",date.toLocaleString(),expiration.toLocaleString(),expiration.before(date));
+            log.info("in isTokenExpired date:{}", expiration.toLocaleString());
+            Date date = new Date();
+            log.info("in isTokenExpired now:{},exp:{} ,{}", date.toLocaleString(), expiration.toLocaleString(), expiration.before(date));
             return expiration.before(date);
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,10 +103,11 @@ public class JwtTokenUtil {
 
     /**
      * 得到token的过期时间，测试用
+     *
      * @param token
      * @return
      */
-    public Date  expirationDate(String token){
+    public Date expirationDate(String token) {
         Claims claims = getClaimsFromToken(token);
         Date expiration = claims.getExpiration();
         return expiration;
@@ -113,6 +115,7 @@ public class JwtTokenUtil {
 
     /**
      * 刷新令牌
+     *
      * @param token 原令牌
      * @return 新令牌
      */
@@ -120,7 +123,7 @@ public class JwtTokenUtil {
         String refreshedToken;
         try {
             Claims claims = getClaimsFromToken(token);
-            Date iatDate=new Date();
+            Date iatDate = new Date();
             claims.put("iat", iatDate);
             refreshedToken = generateToken(claims);
         } catch (Exception e) {
@@ -133,7 +136,7 @@ public class JwtTokenUtil {
     /**
      * 验证令牌
      *
-     * @param token       令牌
+     * @param token    令牌
      * @param userName 用户
      * @return 是否有效
      */
@@ -145,7 +148,7 @@ public class JwtTokenUtil {
 
 
     /**
-     *x`x`
+     * x`x`
      */
     public String generateToken(Map<String, Object> claims) {
         Date expirationDate = new Date(System.currentTimeMillis() + expire);
@@ -157,8 +160,8 @@ public class JwtTokenUtil {
          * compact() 生成JWT
          */
 
-        Date iatDate= (Date) claims.get("iat");
-        log.debug("创建时间:{},过期时间:{}",iatDate.toLocaleString(),expirationDate.toLocaleString());
+        Date iatDate = (Date) claims.get("iat");
+        log.debug("创建时间:{},过期时间:{}", iatDate.toLocaleString(), expirationDate.toLocaleString());
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setClaims(claims)

@@ -27,11 +27,12 @@ public class PayController {
 
     /**
      * 添加病人缴费记录
+     *
      * @param str
      * @return
      */
     @RequestMapping("addPay")
-    public boolean addPay(@RequestBody String str){
+    public boolean addPay(@RequestBody String str) {
         System.out.println(str);
         ZyPay pay = JSON.parseObject(str, ZyPay.class);
         System.out.println(pay);
@@ -42,13 +43,13 @@ public class PayController {
      * 根据住院号查询病人缴费记录
      */
     @RequestMapping("select-pay-byPtId")
-    public List<ZyPay> selectPayByPtId(@RequestBody String str){
+    public List<ZyPay> selectPayByPtId(@RequestBody String str) {
         System.err.println(str);
         Map map = JSON.parseObject(str, Map.class);
 
-        Long ptNo = JSON.parseObject(map.get("ptNo").toString(),Long.class);//住院编号
-        SelectExecuteVo executeVo = JSON.parseObject(map.get("payWhere").toString(),SelectExecuteVo.class);//条件
-       return ps.selectPayByPtNo(ptNo,executeVo);
+        Long ptNo = JSON.parseObject(map.get("ptNo").toString(), Long.class);//住院编号
+        SelectExecuteVo executeVo = JSON.parseObject(map.get("payWhere").toString(), SelectExecuteVo.class);//条件
+        return ps.selectPayByPtNo(ptNo, executeVo);
     }
 
 
@@ -56,7 +57,7 @@ public class PayController {
      * 根据住院号查询操作员工
      */
     @RequestMapping("selectBy-ptno-staff")
-    public List<Staff> selectByPtNoStaff(Long ptNo){
+    public List<Staff> selectByPtNoStaff(Long ptNo) {
         return ps.selectByPtNoStaff(ptNo);
     }
 
@@ -65,7 +66,7 @@ public class PayController {
      * 根据住院号查询病人缴费余额
      */
     @RequestMapping("select-PayBy-PtNoPrice")
-    public Double selectPayByPtNoPrice(Long ptNo){
+    public Double selectPayByPtNoPrice(Long ptNo) {
         return ps.selectPayByPtNoPrice(ptNo);
     }
 }

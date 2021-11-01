@@ -7,14 +7,14 @@ import lombok.Data;
 @Data//get  set方法
 public class YkDestroy {
 
-  private long ykDestId;
-  private java.sql.Timestamp ykDestTime;
-  private String ykDestCause;
-  private String ykDestName;
-  private long sId;
-  private long ykDrvenId;
+    private long ykDestId;
+    private java.sql.Timestamp ykDestTime;
+    private String ykDestCause;
+    private String ykDestName;
+    private long sId;
+    private long ykDrvenId;
 
-  private Staff staff;//员工对象
+    private Staff staff;//员工对象
 
 
 }

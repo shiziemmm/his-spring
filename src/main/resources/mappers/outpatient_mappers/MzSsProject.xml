@@ -32,7 +32,8 @@
         <result column="sus_Message" property="susMessage"></result>
         <result column="sus_pay_state" property="susPayState"></result>
         <result column="sus_Doctor_Text" property="susDoctorText"></result>
-        <association property="ssObject" resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper.allProject"></association>
+        <association property="ssObject"
+                     resultMap="cn.gson.hisspring.model.mapper.checkout_module_mapper.SprojectMapper.allProject"></association>
     </resultMap>
 
 </mapper>

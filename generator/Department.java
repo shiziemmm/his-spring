@@ -2,11 +2,13 @@ package generator;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import lombok.Data;
 
 /**
  * department
- * @author 
+ *
+ * @author
  */
 @Data
 public class Department implements Serializable {

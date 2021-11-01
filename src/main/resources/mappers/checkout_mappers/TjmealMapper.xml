@@ -4,21 +4,21 @@
 <mapper namespace="cn.gson.hisspring.model.mapper.checkout_module_mapper.TjmealMapper">
     <resultMap id="TjMeal" type="cn.gson.hisspring.model.pojos.TjCodeMeal">
         <id column="Code_id" property="codeId"></id>
-        <result  column="Code_name" property="codeName"></result>
-        <result  column="Code_pay" property="codePay"></result>
-        <result  column="Code_type" property="codeType"></result>
+        <result column="Code_name" property="codeName"></result>
+        <result column="Code_pay" property="codePay"></result>
+        <result column="Code_type" property="codeType"></result>
         <result column="check_index" property="checkIndex"></result>
     </resultMap>
     <select id="selectAllTjMeal" resultMap="TjMeal">
-        SELECT * FROM tj_code_meal a  left join  tj_code_type b on b.type_id=a.code_type
-        <where> 1=1
-            <if test ="codeType !=null and '' != codeType">/*类型*/
+        SELECT * FROM tj_code_meal a left join tj_code_type b on b.type_id=a.code_type
+        <where>1=1
+            <if test="codeType !=null and '' != codeType">/*类型*/
                 and Code_type like'%${codeType}%'
             </if>
-            <if test ="codeName !=null and '' != codeName"> /*名称like*/
+            <if test="codeName !=null and '' != codeName">/*名称like*/
                 or Code_name like'%${codeName}%'
             </if>
-            <if test ="checkIndex !=null and '' != checkIndex">/*指标*/
+            <if test="checkIndex !=null and '' != checkIndex">/*指标*/
                 or check_index like'%${checkIndex}%'
             </if>
 
@@ -28,7 +28,7 @@
     <!--    体检套餐中间表批量新增-->
     <insert id="insertTjmid">
         insert into tj_code_middle values
-        <foreach collection="listArr" index="index"  item="i" separator=",">
+        <foreach collection="listArr" index="index" item="i" separator=",">
             (#{i},#{codeId})
         </foreach>
     </insert>

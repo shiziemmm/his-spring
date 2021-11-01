@@ -29,22 +29,25 @@
         <association property="staff" resultMap="staffMaps"></association>
 
         <!--病床信息-->
-        <association property="bed" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper.bedMap"></association>
+        <association property="bed"
+                     resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper.bedMap"></association>
 
         <!--缴费信息-->
-        <collection property="listPay" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PayMapper.payMap"></collection>
+        <collection property="listPay"
+                    resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PayMapper.payMap"></collection>
 
         <!--病人关系联系人-->
-        <collection property="listContacts" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.ContactsMapper.contactsMap"></collection>
+        <collection property="listContacts"
+                    resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.ContactsMapper.contactsMap"></collection>
     </resultMap>
 
     <resultMap id="staffMaps" type="cn.gson.hisspring.model.pojos.Staff">
-        <id column="s_id" jdbcType="INTEGER" property="sId" />
-        <result column="s_name" jdbcType="VARCHAR" property="sName" />
-        <result column="s_sore" jdbcType="VARCHAR" property="sSore" />
-        <result column="s_phone" jdbcType="VARCHAR" property="sPhone" />
-        <result column="s_date" jdbcType="VARCHAR" property="sDate" />
-        <result column="s_zt" jdbcType="VARCHAR" property="sZt" />
+        <id column="s_id" jdbcType="INTEGER" property="sId"/>
+        <result column="s_name" jdbcType="VARCHAR" property="sName"/>
+        <result column="s_sore" jdbcType="VARCHAR" property="sSore"/>
+        <result column="s_phone" jdbcType="VARCHAR" property="sPhone"/>
+        <result column="s_date" jdbcType="VARCHAR" property="sDate"/>
+        <result column="s_zt" jdbcType="VARCHAR" property="sZt"/>
     </resultMap>
 
     <!--封装住院登记信息-->
@@ -67,7 +70,8 @@
         <result column="ks_name" property="ksName"/>
 
         <!--缴费信息-->
-        <collection property="listPay" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PayMapper.payMap"></collection>
+        <collection property="listPay"
+                    resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PayMapper.payMap"></collection>
     </resultMap>
 
 
@@ -97,46 +101,48 @@
         <association property="staff" resultMap="staffMaps"></association>
 
         <!--病床信息-->
-        <association property="bed" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper.bedMap"></association>
+        <association property="bed"
+                     resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.WardMapper.bedMap"></association>
     </resultMap>
 
     <!--体检项目map-->
     <resultMap id="manResultMap" type="cn.gson.hisspring.model.pojos.pojos_vo.ResultManVo">
         <id column="man_result_id" property="manResultId"></id>
-        <result  column="check_id" property="checkId"></result>
-        <result  column="man_result" property="manResult"></result>
-        <result  column="man_id" property="manId"></result>
+        <result column="check_id" property="checkId"></result>
+        <result column="man_result" property="manResult"></result>
+        <result column="man_id" property="manId"></result>
         <result column="man_date" property="manDate"></result>
         <result column="man_time" property="manTime"></result>
         <result property="sName" column="s_name"/>
         <result property="iss" column="iss"/>
         <association property="tjCodeProject" javaType="cn.gson.hisspring.model.pojos.TjCodeProject">
             <id column="check_id" property="checkId"></id>
-            <result  column="check_name" property="checkName"></result>
-            <result  column="check_pay" property="checkPay"></result>
-            <result  column="index_name" property="indexName"></result>
-            <result  column="index_significance" property="indexSignificance"></result>
+            <result column="check_name" property="checkName"></result>
+            <result column="check_pay" property="checkPay"></result>
+            <result column="index_name" property="indexName"></result>
+            <result column="index_significance" property="indexSignificance"></result>
         </association>
     </resultMap>
 
 
-
     <!--根据科室查询该科室今天排班医生-->
-    <select id="selectDateByKsId" resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMapper.BaseResultMap">
-        select * from staff yg  inner join scheduling pb  on pb.s_id=yg.s_id inner join frequency f on f.F_id=pb.fr_id inner join department_ks d on yg.ks_id=d.ks_id
-            inner join title t on  yg.t_id=t.t_id
-            <where>
-                to_days(pb.rq) = to_days(now()) and
-                <if test="ksId != null and ksId != ''">
-                     yg.ks_Id = #{ksId}
-                </if>
-            </where>
+    <select id="selectDateByKsId"
+            resultMap="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.SchedulingMapper.BaseResultMap">
+        select * from staff yg inner join scheduling pb on pb.s_id=yg.s_id inner join frequency f on f.F_id=pb.fr_id
+        inner join department_ks d on yg.ks_id=d.ks_id
+        inner join title t on yg.t_id=t.t_id
+        <where>
+            to_days(pb.rq) = to_days(now()) and
+            <if test="ksId != null and ksId != ''">
+                yg.ks_Id = #{ksId}
+            </if>
+        </where>
     </select>
 
     <!--根据检验人员编号查询-->
     <select id="selectResultByManIdStaff" resultMap="staffMaps">
         select * from staff where s_id in(
-            select s_id from seltresultpatient where man_id = #{manId}
+        select s_id from seltresultpatient where man_id = #{manId}
         )
     </select>
 
@@ -148,12 +154,14 @@
                 man_id = #{ptNo}
             </if>
             <if test="sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
-                and s_id in (<foreach collection="sIdArr" item="sId"  separator=",">
+                and s_id in (<foreach collection="sIdArr" item="sId" separator=",">
                     #{sId}
                 </foreach>)
             </if>
             <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(man_time,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(man_time,'%Y-%m-%d') between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                and (DATE_FORMAT(man_time,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(man_time,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
             </if>
 
             <if test="(startDate != null) and (endDate == null)">
@@ -181,23 +189,22 @@
     </insert>
 
 
-
-
     <!--修改余额-->
     <update id="updatePatientBasePrice">
-        update Zy_patient_base set pt_price = pt_price - #{price}  where pt_no = #{ptNo}
+        update Zy_patient_base set pt_price = pt_price - #{price} where pt_no = #{ptNo}
     </update>
 
 
     <!--修改余额以及病人的已交余额-->
     <update id="updatePatientBasePriceAndMoney">
-        update Zy_patient_base set pt_price = pt_price - #{price}  , pt_pay_money = pt_pay_money + #{price}  where pt_no = #{ptNo}
+        update Zy_patient_base set pt_price = pt_price - #{price} , pt_pay_money = pt_pay_money + #{price} where pt_no =
+        #{ptNo}
     </update>
 
 
     <!--查询病人以及病人下面的医嘱信息-->
     <select resultMap="patientsMap" id="doctorEnjoinExecute">
-       select * from seltpatientdoctorenjoin
+        select * from seltpatientdoctorenjoin
         <where>
             <if test="sId != null and sId != ''">
                 and s_id = #{sId}
@@ -211,7 +218,6 @@
             and pt_is = 1
         </where>
     </select>
-
 
 
     <!--根据治疗医生查询病人-->
@@ -256,18 +262,18 @@
         LEFT JOIN department_ks ON zy_patient_base.ks_id = department_ks.ks_id
         inner JOIN zy_bed ON zy_patient_base.Bd_id = zy_bed.Bd_id
 
-    <where>
-        <if test="sId != null and sId != ''">
-           and zy_patient_base.s_id = #{sId}
-        </if>
-        <if test="ksId != null and ksId != ''">
-           and zy_patient_base.ks_id = #{ksId}
-        </if>
-        <if test="text != null and text != ''">
-            and (zy_patient_base.pt_no like '%${text}%' or zy_patient_base.pt_name like '%{text}%')
-        </if>
-          and zy_patient_base.pt_is = 1
-    </where>
+        <where>
+            <if test="sId != null and sId != ''">
+                and zy_patient_base.s_id = #{sId}
+            </if>
+            <if test="ksId != null and ksId != ''">
+                and zy_patient_base.ks_id = #{ksId}
+            </if>
+            <if test="text != null and text != ''">
+                and (zy_patient_base.pt_no like '%${text}%' or zy_patient_base.pt_name like '%{text}%')
+            </if>
+            and zy_patient_base.pt_is = 1
+        </where>
 
     </select>
 
@@ -322,15 +328,15 @@
 
         <where>
 
-                zy_patient_base.Pt_Out_date is null
+            zy_patient_base.Pt_Out_date is null
 
             <if test="sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
-                and zy_patient_base.s_id in (<foreach collection="sIdArr" item="sId"  separator=",">
+                and zy_patient_base.s_id in (<foreach collection="sIdArr" item="sId" separator=",">
                     #{sId}
                 </foreach>)
             </if>
             <if test="ksIdArr != null and sIdArr != '' and ksIdArr.size() > 0"><!--如果不是病床费用就根据科室编号查询-->
-                and zy_patient_base.ks_id in (<foreach collection="ksIdArr" item="ksId"  separator=",">
+                and zy_patient_base.ks_id in (<foreach collection="ksIdArr" item="ksId" separator=",">
                     #{ksId}
                 </foreach>)
             </if>
@@ -340,7 +346,9 @@
             </if>
 
             <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(pt_In_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pt_In_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                and (DATE_FORMAT(pt_In_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pt_In_date,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
             </if>
 
             <if test="(startDate != null) and (endDate == null)">
@@ -406,7 +414,7 @@
 
 
         <where>
-             zy_patient_base.pt_is = 1
+            zy_patient_base.pt_is = 1
             <if test="is != ''">
                 and zy_patient_base.Bd_id = 0 and zy_patient_base.Pt_Out_date is null
             </if>
@@ -420,7 +428,9 @@
             </if>
 
             <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(pt_In_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pt_In_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                and (DATE_FORMAT(pt_In_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pt_In_date,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
             </if>
 
             <if test="(startDate != null) and (endDate == null)">
@@ -441,7 +451,8 @@
         <where>
             <if test="doctorType == 1">
                 <if test="(startPrice != null) and (endPrice != null)">
-                    and ( pt_pay_money between #{startPrice} and #{endPrice} or pt_pay_money between #{endPrice} and  #{startPrice} )
+                    and ( pt_pay_money between #{startPrice} and #{endPrice} or pt_pay_money between #{endPrice} and
+                    #{startPrice} )
                 </if>
 
                 <if test="(startPrice != null) and (endPrice == null)">
@@ -452,10 +463,11 @@
                     and pt_pay_money = #{endDate}
                 </if>
             </if>
-            
+
             <if test="doctorType == 2">
                 <if test="(startPrice != null) and (endPrice != null)">
-                    and ( pt_price between #{startPrice} and #{endPrice} or pt_pay_money between #{endPrice} and  #{startPrice} )
+                    and ( pt_price between #{startPrice} and #{endPrice} or pt_pay_money between #{endPrice} and
+                    #{startPrice} )
                 </if>
                 <if test="(startPrice != null) and (endPrice == null)">
                     and pt_price = #{startPrice}

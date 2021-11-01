@@ -11,11 +11,18 @@ import java.util.List;
 public class RoleMinddleUserService {
     @Autowired
     RoleMinddleUserMapper ro;
-    public int addRoleMinddle(RoleMiddleUser roleMiddleUser){
+
+    public int addRoleMinddle(RoleMiddleUser roleMiddleUser) {
         return ro.insert(roleMiddleUser);
     }
-    public int upa(long uId,long rId){
-        return ro.upa(uId,rId);
+
+    public int upa(long uId, long rId) {
+        return ro.upa(uId, rId);
     }
-    public List<RoleMiddleUser> select(Integer uId){return ro.select(uId);};
+
+    public List<RoleMiddleUser> select(Integer uId) {
+        return ro.select(uId);
+    }
+
+    ;
 }

@@ -19,5 +19,5 @@ public interface InHospitalApplyMapper extends BaseMapper<ZyInhospitalApply> {
 
     List<Staff> selectPatientStaffAll();
 
-    List<ZyInhospitalApply> selectHspApplyByInIs(@Param("inIs") String inIs, @Param("doctorType") Long doctorType, @Param("searchLike") String searchLike, @Param("startDate") Date startDate,@Param("endDate") Date endDate);
+    List<ZyInhospitalApply> selectHspApplyByInIs(@Param("inIs") String inIs, @Param("doctorType") Long doctorType, @Param("searchLike") String searchLike, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

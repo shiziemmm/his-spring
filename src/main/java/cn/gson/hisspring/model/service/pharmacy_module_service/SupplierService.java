@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- *供应商
+ * 供应商
  */
 
 @Service
@@ -17,15 +17,17 @@ public class SupplierService {
     SupplierMapper supplier_mapper;
 
     /*查询供应商*/
-    public List<YkSupplier> selectAllSupplier(){
+    public List<YkSupplier> selectAllSupplier() {
         return supplier_mapper.selectAllSupplier();
     }
+
     /*新增供应商*/
-    public void insertSupplier(YkSupplier ykSupplier){
+    public void insertSupplier(YkSupplier ykSupplier) {
         supplier_mapper.insertSupplier(ykSupplier);
     }
+
     /*修改供应商信息*/
-    public void updateSupplier(YkSupplier ykSupplier){
+    public void updateSupplier(YkSupplier ykSupplier) {
         supplier_mapper.updateSupplier(ykSupplier);
     }
 }

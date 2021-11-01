@@ -23,8 +23,8 @@
     <!--修改供应商信息-->
     <update id="updateSupplier" parameterType="cn.gson.hisspring.model.pojos.YkSupplier">
         update yk_supplier set Supplier_name=#{supplierName},Supplier_site=#{supplierSite},
-                               Supplier_phone=#{supplierPhone},Supplier_linkman=#{supplierLinkman}
-                                WHERE Supplier_id=#{supplierId}
+        Supplier_phone=#{supplierPhone},Supplier_linkman=#{supplierLinkman}
+        WHERE Supplier_id=#{supplierId}
     </update>
 
 </mapper>

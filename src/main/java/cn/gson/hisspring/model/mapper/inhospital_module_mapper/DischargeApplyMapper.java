@@ -17,6 +17,6 @@ public interface DischargeApplyMapper extends BaseMapper<ZyDischargeApply> {
 
     List<ZyDischargeApply> selectDischargeApplyAll(String search);
 
-    List<PatientCostVo> costDischargeAllByPtNo(@Param("ptNo") Long ptNo,@Param("text") String text);
+    List<PatientCostVo> costDischargeAllByPtNo(@Param("ptNo") Long ptNo, @Param("text") String text);
 
 }

@@ -41,31 +41,31 @@ public class DoctorEnjoinService {
     /**
      * 添加医嘱以及医嘱详表数据
      */
-    public boolean addDoctorEnjoin(ZyDoctorEnjoin zyDoctorEnjoin){
-            //===================================新增医嘱主表
-            dem.insert(zyDoctorEnjoin);
+    public boolean addDoctorEnjoin(ZyDoctorEnjoin zyDoctorEnjoin) {
+        //===================================新增医嘱主表
+        dem.insert(zyDoctorEnjoin);
 
 
-            if(zyDoctorEnjoin.getDeLongorshort() == 2){
-                for (ZyDoctorEnjoinDetails zyDoctorEnjoinDetails : zyDoctorEnjoin.getDedList()) {
-                    YfDruginformation yfDruginformation = dfm.selectById(zyDoctorEnjoinDetails.getDesDrugId());
-                    YkDrugspecifcations ykDrugspecifcations = ydptm.selectById(yfDruginformation.getYkSpecId());
-                    System.err.println("规格"+ykDrugspecifcations);
-                    zyDoctorEnjoinDetails.setDesPrice(yfDruginformation.getDrugPrice());
-                    zyDoctorEnjoinDetails.setDesUnit(ykDrugspecifcations.getSpecSpecification());
-                }
-
+        if (zyDoctorEnjoin.getDeLongorshort() == 2) {
+            for (ZyDoctorEnjoinDetails zyDoctorEnjoinDetails : zyDoctorEnjoin.getDedList()) {
+                YfDruginformation yfDruginformation = dfm.selectById(zyDoctorEnjoinDetails.getDesDrugId());
+                YkDrugspecifcations ykDrugspecifcations = ydptm.selectById(yfDruginformation.getYkSpecId());
+                System.err.println("规格" + ykDrugspecifcations);
+                zyDoctorEnjoinDetails.setDesPrice(yfDruginformation.getDrugPrice());
+                zyDoctorEnjoinDetails.setDesUnit(ykDrugspecifcations.getSpecSpecification());
             }
-            //===================================新增医嘱详情表
-            dedm.insertDeDetailsFor(zyDoctorEnjoin.getDedList(),zyDoctorEnjoin.getDeId(),zyDoctorEnjoin.getDeExecuteDate());//循环新增
-            return true;
+
+        }
+        //===================================新增医嘱详情表
+        dedm.insertDeDetailsFor(zyDoctorEnjoin.getDedList(), zyDoctorEnjoin.getDeId(), zyDoctorEnjoin.getDeExecuteDate());//循环新增
+        return true;
     }
 
 
     /**
      * 根据住院号查询医嘱信息
      */
-    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(SelectExecuteVo selectExecuteVo){
+    public List<ZyDoctorEnjoin> doctorEnjoinSelectByPtId(SelectExecuteVo selectExecuteVo) {
         return dem.doctorEnjoinSelectByPtId(selectExecuteVo);
     }
 

@@ -22,7 +22,7 @@ public class MzSickController {
     MzSickService mzSickService;
 
     @PostMapping("/addMzSick")//添加病人信息
-    public String addMzSick(@RequestBody MzSick mzSick){
+    public String addMzSick(@RequestBody MzSick mzSick) {
         try {
             mzSickService.addMzSick(mzSick);
             return "ok";

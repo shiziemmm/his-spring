@@ -25,14 +25,6 @@ public class ReCordAllVO {
     private List<MzPayment> paymentList;
 
 
-
-
-
-
-
-
-
-
     public List<MzPayment> getPaymentList() {
         return paymentList;
     }

@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCenterSurgeryMapper">
-    <insert id="addCenterSurgery" >
-        insert  into mz_center_surgery
-            (
-            project_id,
-            sus_number,
-            sus_message,
-            sus_doctor_text,
-            sus_pay_state
-            )
+    <insert id="addCenterSurgery">
+        insert into mz_center_surgery
+        (
+        project_id,
+        sus_number,
+        sus_message,
+        sus_doctor_text,
+        sus_pay_state
+        )
         values
-        <foreach collection="list"  item="ss" separator=",">
+        <foreach collection="list" item="ss" separator=",">
             (
             #{ss.projectId},
             #{ss.susNumber},

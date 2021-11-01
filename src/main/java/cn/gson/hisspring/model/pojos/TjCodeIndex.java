@@ -6,10 +6,10 @@ import lombok.Data;
 
 @Data//get  set方法
 public class TjCodeIndex {
-  @TableId(value = "index_id",type = IdType.AUTO)
-  private long indexId;
-  private String indexName;
-  private String indexSignificance;
+    @TableId(value = "index_id", type = IdType.AUTO)
+    private long indexId;
+    private String indexName;
+    private String indexSignificance;
 
 
 }

@@ -5,7 +5,7 @@
 
     <resultMap id="zyBedMap" type="cn.gson.hisspring.model.pojos.ZyBed">
         <result column="bd_id" property="bdId"/>
-        <result column="bd_name" property="bdName" />
+        <result column="bd_name" property="bdName"/>
     </resultMap>
 
 

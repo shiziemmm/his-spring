@@ -8,18 +8,18 @@ import lombok.Data;
 @Data
 public class ZyDeptDrugAllot {
 
-  private long ddaId;
-  private Long ksId;
-  private Long ddaSidAllot;
-  private java.sql.Timestamp ddaDate;
-  private Long ddaIs;
-  private Double ddaMaxUnitCount;
-  private Double ddaMinUnitCount;
-  private String ddaDrugName;
-  private Long ddaDrugId;
+    private long ddaId;
+    private Long ksId;
+    private Long ddaSidAllot;
+    private java.sql.Timestamp ddaDate;
+    private Long ddaIs;
+    private Double ddaMaxUnitCount;
+    private Double ddaMinUnitCount;
+    private String ddaDrugName;
+    private Long ddaDrugId;
 
-  //关系
-  private String ksName;//科室名称
-  private String sName;//员工名称
+    //关系
+    private String ksName;//科室名称
+    private String sName;//员工名称
 
 }

@@ -19,18 +19,18 @@
 
 
     <insert id="addListZp">
-        insert  into Mz_Zprescription(
-            zp_name,
-            Zp_specification,
-            Zp_Count,
-            Zp_usage,
-            Zp_Price,
-            zp_entrust,
-            zp_state_price,
-            drug_id,
-            recipe_number
+        insert into Mz_Zprescription(
+        zp_name,
+        Zp_specification,
+        Zp_Count,
+        Zp_usage,
+        Zp_Price,
+        zp_entrust,
+        zp_state_price,
+        drug_id,
+        recipe_number
         ) values
-        <foreach collection="list" separator=","  item="zp">
+        <foreach collection="list" separator="," item="zp">
             (
             #{zp.zpName},
             #{zp.zpSpecification},

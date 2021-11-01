@@ -19,40 +19,46 @@
     </resultMap>
 
     <select id="selectPayAll" resultMap="payCostMap">
-        select sum(pcd_price)as pcd_price,if(pcd_cause = '医嘱药品费用' || pcd_cause = '床位费用' || pcd_cause = '化验项目费用' || pcd_cause = '手术费用' ,pcd_cause,'其他费用') AS cause from seltpatientcostbreakdown
-         <where>
-             <if test="(startDate != null) and (endDate != null)">
-                 and (DATE_FORMAT(pcd_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pcd_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
-             </if>
+        select sum(pcd_price)as pcd_price,if(pcd_cause = '医嘱药品费用' || pcd_cause = '床位费用' || pcd_cause = '化验项目费用' ||
+        pcd_cause = '手术费用' ,pcd_cause,'其他费用') AS cause from seltpatientcostbreakdown
+        <where>
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(pcd_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pcd_date,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
 
-             <if test="(startDate != null) and (endDate == null)">
-                 and DATE_FORMAT(pcd_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
-             </if>
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(pcd_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
 
-             <if test="(startDate == null) and (endDate != null)">
-                 and DATE_FORMAT(pcd_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
-             </if>
-             <if test="ptNo != null and ptNo != ''">
-                 and pt_no = #{ptNo}
-             </if>
-             <if test="sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
-                 and pcd_sid in (<foreach collection="sIdArr" item="sId"  separator=",">
-                     #{sId}
-                 </foreach>)
-             </if>
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(pcd_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+            <if test="ptNo != null and ptNo != ''">
+                and pt_no = #{ptNo}
+            </if>
+            <if test="sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
+                and pcd_sid in (<foreach collection="sIdArr" item="sId" separator=",">
+                    #{sId}
+                </foreach>)
+            </if>
 
 
-         </where>
+        </where>
 
-         group by cause
+        group by cause
     </select>
 
 
     <select id="selectPayByWhereDischarge" resultMap="payCostMaps">
-        select * from seltpatientcostbreakdownDischarge left join staff on seltpatientcostbreakdownDischarge.pcd_sid = staff.s_id
+        select * from seltpatientcostbreakdownDischarge left join staff on seltpatientcostbreakdownDischarge.pcd_sid =
+        staff.s_id
         <where>
             <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(pcd_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pcd_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                and (DATE_FORMAT(pcd_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pcd_date,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
             </if>
 
             <if test="(startDate != null) and (endDate == null)">
@@ -64,7 +70,7 @@
             </if>
 
             <if test="text != '病床费用'and sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
-                and pcd_sid in (<foreach collection="sIdArr" item="sId"  separator=",">
+                and pcd_sid in (<foreach collection="sIdArr" item="sId" separator=",">
                     #{sId}
                 </foreach>)
             </if>
@@ -88,7 +94,9 @@
         select * from seltpatientcostbreakdown left join staff on seltpatientcostbreakdown.pcd_sid = staff.s_id
         <where>
             <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(pcd_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pcd_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                and (DATE_FORMAT(pcd_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pcd_date,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
             </if>
 
             <if test="(startDate != null) and (endDate == null)">
@@ -100,7 +108,7 @@
             </if>
 
             <if test="text != '病床费用'and sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
-                and pcd_sid in (<foreach collection="sIdArr" item="sId"  separator=",">
+                and pcd_sid in (<foreach collection="sIdArr" item="sId" separator=",">
                     #{sId}
                 </foreach>)
             </if>

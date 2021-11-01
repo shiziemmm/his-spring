@@ -15,9 +15,9 @@ import java.util.List;
 public class SelectExecuteVo {
 
 
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")//将数据库的类型返回成指定类型
     private Date startDate;//开始日期
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Shanghai")//将数据库的类型返回成指定类型
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")//将数据库的类型返回成指定类型
     private Date endDate;//结束日期
 
     private String searchLike;//模糊搜索

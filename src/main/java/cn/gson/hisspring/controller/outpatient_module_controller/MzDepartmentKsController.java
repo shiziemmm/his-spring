@@ -20,7 +20,7 @@ public class MzDepartmentKsController {
     MzDepartmentKsService departmentKsService;
 
     @GetMapping("allAepartmentKs")
-    public List<DepartmentKs> allDepartmentKs(){
+    public List<DepartmentKs> allDepartmentKs() {
         return departmentKsService.selectDepartmentKs();
     }
 

@@ -18,40 +18,46 @@ import java.util.Map;
 public class YkDrugpurchasePlanController {
     @Autowired
     YkDrugpurchasePlanService planService;
+
     /*查询所有的采购计划*/
     @RequestMapping("all-plan")
-    public List<YkDrugpurchasePlan> allplan(){
+    public List<YkDrugpurchasePlan> allplan() {
         List<YkDrugpurchasePlan> allplan = planService.allplan();
-       return allplan;
+        return allplan;
     }
+
     /*查询员工   采购计划经手人*/
     @RequestMapping("all-stall")
-    public List<Staff> allstall(){
+    public List<Staff> allstall() {
         return planService.staff();
     }
+
     /*查询采购计划详单*/
     @RequestMapping("all-ydpd")
-    public List<YkDrugpurchasePlanDetails> allydpd(String ykPurchaseId){
+    public List<YkDrugpurchasePlanDetails> allydpd(String ykPurchaseId) {
         List<YkDrugpurchasePlanDetails> allydpd = planService.allydpd(ykPurchaseId);
-        for(YkDrugpurchasePlanDetails aa:allydpd){
-            System.err.println("wozoule"+aa);
+        for (YkDrugpurchasePlanDetails aa : allydpd) {
+            System.err.println("wozoule" + aa);
         }
         return allydpd;
     }
+
     /*查询药品信息*/
     @RequestMapping("drug")
-    public List<YfDruginformation> durg(){
+    public List<YfDruginformation> durg() {
         return planService.allDrug();
     }
+
     /*新增采购计划*/
     @RequestMapping("add-plan")
-    public void addplan(@RequestBody String str){
+    public void addplan(@RequestBody String str) {
         YkDrugpurchasePlan drugpurchasePlan = JSON.parseObject(str, YkDrugpurchasePlan.class);
-      planService.addplan(drugpurchasePlan);
+        planService.addplan(drugpurchasePlan);
     }
+
     /*查询待入库的药品*/
     @RequestMapping("dairuku")
-    public List<YkDrugpurchasePlan> alldairuku(){
+    public List<YkDrugpurchasePlan> alldairuku() {
         return planService.alldairuku();
     }
 
@@ -69,16 +75,15 @@ public class YkDrugpurchasePlanController {
 
     /*执行采购计划*/
     @RequestMapping("zhixing")
-    public void zhixing(String ykPurchaseId){
-         planService.zhixing(ykPurchaseId);
+    public void zhixing(String ykPurchaseId) {
+        planService.zhixing(ykPurchaseId);
     }
-
 
 
     /*保存入库的药品*/
     @RequestMapping("preserve")
-    public String preserve(@RequestBody String str){
-        List<YkDrugpurchasePlanDetails> planDetails = JSON.parseArray(str,YkDrugpurchasePlanDetails.class);
+    public String preserve(@RequestBody String str) {
+        List<YkDrugpurchasePlanDetails> planDetails = JSON.parseArray(str, YkDrugpurchasePlanDetails.class);
         System.out.println(planDetails);
         planService.preserve(planDetails);
         return "ok";

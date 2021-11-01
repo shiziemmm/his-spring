@@ -13,7 +13,7 @@ public class YfDruglnventoryService {
     YFDruglnventoryMapper yfDruglnventoryMapper;
 
     /*查询药品药房库存*/
-    public List<YfDruginventory> allYFlnventory(){
-        return  yfDruglnventoryMapper.allYFlnventory();
+    public List<YfDruginventory> allYFlnventory() {
+        return yfDruglnventoryMapper.allYFlnventory();
     }
 }

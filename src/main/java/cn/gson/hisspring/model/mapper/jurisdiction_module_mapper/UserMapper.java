@@ -7,9 +7,12 @@ import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
+
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     User login(User user);
+
     User cha(User us);
-   int reset(@Param("upswd") String upswd,@Param("uid") Long uid);
+
+    int reset(@Param("upswd") String upswd, @Param("uid") Long uid);
 }

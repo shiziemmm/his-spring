@@ -25,42 +25,46 @@ public class DepartmentController {
 
 
     @RequestMapping("bm-list")
-    public List<Department> dept(){
+    public List<Department> dept() {
         List<Department> bm = dept.selectList();
         return bm;
     }
+
     @RequestMapping("add-dept")
-    public String addlist(String depts){
+    public String addlist(String depts) {
         System.out.println(depts);
         Department user1 = JSONObject.parseObject(depts, Department.class);
         System.out.println(user1);
-        int i=dept.add(user1);
-        if(i>0){
+        int i = dept.add(user1);
+        if (i > 0) {
             return "ok";
-        }else{
+        } else {
             return "fasle";
         }
     }
+
     @PostMapping("upa-list")
-    public String upalist(@RequestBody Department de){
-        int i=dept.upa(de);
-        if(i>0){
+    public String upalist(@RequestBody Department de) {
+        int i = dept.upa(de);
+        if (i > 0) {
             return "ok";
-        }else{
+        } else {
             return "false";
         }
     }
+
     @PostMapping("delet-list")
-    public String deletlist(@RequestBody Department de){
-        int i=dept.dete(de.getDeId());
-        if(i>0){
+    public String deletlist(@RequestBody Department de) {
+        int i = dept.dete(de.getDeId());
+        if (i > 0) {
             return "ok";
-        }else{
+        } else {
             return "false";
         }
     }
+
     @RequestMapping("selectlike")
-    public List<Department> selectlike(@RequestBody Department d){
+    public List<Department> selectlike(@RequestBody Department d) {
         List<Department> selectlike = dept.selectlike(d);
         return selectlike;
 

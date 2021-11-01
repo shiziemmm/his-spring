@@ -9,5 +9,5 @@ import java.util.List;
 @Mapper
 public interface YFDruglnventoryMapper extends BaseMapper<YfDruginventory> {
     /*查询药品药房库存*/
-    List <YfDruginventory> allYFlnventory();
+    List<YfDruginventory> allYFlnventory();
 }

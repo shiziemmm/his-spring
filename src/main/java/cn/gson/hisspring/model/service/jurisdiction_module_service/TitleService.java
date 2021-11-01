@@ -11,7 +11,8 @@ import java.util.List;
 public class TitleService {
     @Autowired
     TitleMapper titleMapper;
-    public List<Title> selectList(){
+
+    public List<Title> selectList() {
         return titleMapper.selectList(null);
     }
 }

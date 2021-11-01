@@ -15,23 +15,25 @@ import java.util.List;
 public class ConsumableController {
     @Autowired
     ConsumableService consumableService;
+
     //查询耗材
     @RequestMapping("all-mables")
-    public List<HcIndConsumables> allConsumables(){
+    public List<HcIndConsumables> allConsumables() {
         return consumableService.allConsumables();
     }
+
     //新增修改
     @RequestMapping("add-mables")
-    public String addConsumables(@RequestBody HcIndConsumables hcIndConsumables){
+    public String addConsumables(@RequestBody HcIndConsumables hcIndConsumables) {
         System.err.println(hcIndConsumables);
-        try{
-            if (hcIndConsumables.getConsumablesId()==0) {
+        try {
+            if (hcIndConsumables.getConsumablesId() == 0) {
                 consumableService.addConsumables(hcIndConsumables);
-            }else {
+            } else {
                 consumableService.updateConsumables(hcIndConsumables);
             }
             return "ok";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "false";
         }

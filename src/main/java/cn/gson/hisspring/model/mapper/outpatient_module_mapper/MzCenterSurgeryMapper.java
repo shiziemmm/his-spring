@@ -8,10 +8,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- *  手术中间表集合mapper
+ * 手术中间表集合mapper
  */
 @Mapper
 public interface MzCenterSurgeryMapper extends BaseMapper<MzCenterSurgery> {
     /*循环添加手术集合表*/
-    public void addCenterSurgery (List<MzCenterSurgery> list);
+    public void addCenterSurgery(List<MzCenterSurgery> list);
 }

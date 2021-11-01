@@ -13,70 +13,70 @@
         <result property="supplierId" column="Supplier_id"/>
         <result property="ykSupplierName" column="YK_Supplier_name"/>
         <result property="ykSellingprice" column="YK_Sellingprice"/>
-            <!--仓库-->
-            <association property="ykWarehouse" javaType="cn.gson.hisspring.model.pojos.YkWarehouse">
-                <result property="ykWareId" column="YK_ware_id"/>
-                <result property="ykWareName" column="YK_ware_name"/>
-                <result property="ykWareType" column="YK_ware_type"/>
+        <!--仓库-->
+        <association property="ykWarehouse" javaType="cn.gson.hisspring.model.pojos.YkWarehouse">
+            <result property="ykWareId" column="YK_ware_id"/>
+            <result property="ykWareName" column="YK_ware_name"/>
+            <result property="ykWareType" column="YK_ware_type"/>
+        </association>
+        <!--药品信息-->
+        <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
+            <result property="drugId" column="Drug_id"/>
+            <result property="drugName" column="Drug_name"/>
+            <result property="drugBarcode" column="Drug_barCode"/>
+            <result property="drugPrice" column="Drug_price"/>
+            <result property="drugUsage" column="Drug_usage"/>
+            <result property="ykSpecId" column="YK_spec_id"/>
+            <result property="ykSupplierId" column="YK_Supplier_id"/>
+            <result property="yfDrcaId" column="YF_drca_id"/>
+            <result property="drugUpper" column="Drug_upper"/>
+            <result property="drugRemark" column="Drug_remark"/>
+            <result property="drugUnit" column="Drug_unit"/>
+            <result property="drugSpecification" column="Drug_specification"/>
+            <result property="drugPastdate" column="Drug_pastDate"/>
+            <result property="drugParticle" column="Drug_particle"/>
+            <result property="drugQuantity" column="Drug_quantity"/>
+            <result property="drugPrescription" column="Drug_prescription"/>
+            <!--供应商-->
+            <association property="ykSupplier" javaType="cn.gson.hisspring.model.pojos.YkSupplier">
+                <result property="supplierId" column="Supplier_id"/>
+                <result property="supplierName" column="Supplier_name"/>
+                <result property="supplierSite" column="Supplier_site"/>
+                <result property="supplierPhone" column="Supplier_phone"/>
+                <result property="supplierLinkman" column="Supplier_linkman"/>
             </association>
-            <!--药品信息-->
-            <association property="yfDruginformation" javaType="cn.gson.hisspring.model.pojos.YfDruginformation">
-                <result property="drugId" column="Drug_id" />
-                <result property="drugName" column="Drug_name" />
-                <result property="drugBarcode" column="Drug_barCode" />
-                <result property="drugPrice" column="Drug_price" />
-                <result property="drugUsage" column="Drug_usage" />
-                <result property="ykSpecId" column="YK_spec_id" />
-                <result property="ykSupplierId" column="YK_Supplier_id" />
-                <result property="yfDrcaId" column="YF_drca_id" />
-                <result property="drugUpper" column="Drug_upper" />
-                <result property="drugRemark" column="Drug_remark" />
-                <result property="drugUnit" column="Drug_unit" />
-                <result property="drugSpecification" column="Drug_specification" />
-                <result property="drugPastdate" column="Drug_pastDate" />
-                <result property="drugParticle" column="Drug_particle"/>
-                <result property="drugQuantity" column="Drug_quantity"/>
-                <result property="drugPrescription" column="Drug_prescription"/>
-                <!--供应商-->
-                <association property="ykSupplier" javaType="cn.gson.hisspring.model.pojos.YkSupplier">
-                    <result property="supplierId" column="Supplier_id"/>
-                    <result property="supplierName" column="Supplier_name"/>
-                    <result property="supplierSite" column="Supplier_site"/>
-                    <result property="supplierPhone" column="Supplier_phone"/>
-                    <result property="supplierLinkman" column="Supplier_linkman"/>
-                </association>
-            </association>
+        </association>
     </resultMap>
     <!--药库查询-->
     <select id="allDrugStorg" resultMap="DrugStorageMap">
         select * from yk_druginventory tory
-            left join yk_warehouse house on tory.YK_ware_id = house.YK_ware_id
-            left join yf_druginformation drug on tory.Drug_id = drug.Drug_id
-            left join yk_supplier supp on drug.YK_Supplier_id = supp.Supplier_id
+        left join yk_warehouse house on tory.YK_ware_id = house.YK_ware_id
+        left join yf_druginformation drug on tory.Drug_id = drug.Drug_id
+        left join yk_supplier supp on drug.YK_Supplier_id = supp.Supplier_id
     </select>
 
     <insert id="putstorage" parameterType="cn.gson.hisspring.model.pojos.YkDruginventory">
         insert yk_druginventory(YK_drven_id,
-                                Drug_id,
-                                YK_drven_name,
-                                YK_ware_id,
-                                YK_drven_batch,
-                                YK_drven_count,
-                                YK_drven_mftDate,
-                                Supplier_id,
-                                YK_Supplier_name,
-                                YK_Sellingprice)
-                                values
-                                (#{ykDrvenId},
-                                #{drugId},
-                                #{ykDrvenName},
-                                #{ykWareId},
-                                #{ykDrvenBatch},
-                                #{ykDrvenCount},
-                                #{ykDrvenMftdate},
-                                #{supplierId},
-                                #{ykSupplierName},
-                                #{ykSelingprice})
+        Drug_id,
+        YK_drven_name,
+        YK_ware_id,
+        YK_drven_batch,
+        YK_drven_count,
+        YK_drven_mftDate,
+        Supplier_id,
+        YK_Supplier_name,
+        YK_Sellingprice)
+        values
+        (#{ykDrvenId},
+        #{drugId},
+        #{ykDrvenName},
+        #{ykWareId},
+        #{ykDrvenBatch},
+        #{ykDrvenCount},
+        #{ykDrvenMftdate},
+        #{supplierId},
+        #{ykSupplierName},
+        #{ykSelingprice})
     </insert>
 
 </mapper>

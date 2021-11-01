@@ -6,10 +6,10 @@ import lombok.Data;
 @Data//get  set方法
 public class SsOperationAnaesthesia {
 
-  private long anaesthesiaId;
-  private String operationAnaesthesia;
-  @TableField(exist = false)
-  private double projectPay;
+    private long anaesthesiaId;
+    private String operationAnaesthesia;
+    @TableField(exist = false)
+    private double projectPay;
 
 
 }

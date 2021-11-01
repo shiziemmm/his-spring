@@ -19,7 +19,7 @@ public class ZyHCindConsumables {
 
     private String consumablesName;//耗材名称
     private long consumablesPhy;//耗材数量
-    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Timestamp consumablesPurchase;//保质期
     private String consumablesUnit;//耗材规格
     private Double consumablesPrice;//耗材价格

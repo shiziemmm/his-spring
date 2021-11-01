@@ -42,33 +42,36 @@ public class MzOpcService {
     DepartmentKsMapper departmentKsMapper;//科室mapper
     @Autowired
     TjprojectMapper major;
+
     //检查项目模糊查询与传参
-    public List<TjCodeProject> selectAllTjObjects(String seach){
+    public List<TjCodeProject> selectAllTjObjects(String seach) {
         System.err.println(seach);
         List<TjCodeProject> listjc = major.selectAllTjObject2(seach);
-        return  listjc;
+        return listjc;
     }
+
     /**
      * 添加住院申请
+     *
      * @param inhospitalApply
      */
-    public void addInHospitalApply(ZyInhospitalApply inhospitalApply,String rtNumber,String mrNumber){
+    public void addInHospitalApply(ZyInhospitalApply inhospitalApply, String rtNumber, String mrNumber) {
         //修改排号状态
         opcNumberService.upRtNumber(rtNumber);
         inhospitalApply.setInIs(1L);
         QueryWrapper qw = new QueryWrapper();
-        qw.eq("rt_Number",rtNumber);
+        qw.eq("rt_Number", rtNumber);
         MzOpcNumber opcNumber = opcNumberMapper.selectOne(qw);
         opcNumber.setBnState(1);
         opcNumberMapper.updateById(opcNumber);
 
         inhospitalApply.setInApplyDate(new Date());
         inHospitalApplyMapper.insert(inhospitalApply);
-        if(mrNumber != null){
+        if (mrNumber != null) {
             QueryWrapper qwRecod = new QueryWrapper();
-            qwRecod.eq("mr_Number",mrNumber);
+            qwRecod.eq("mr_Number", mrNumber);
             MzMedicalRecord mzMedicalRecord = medicalRecordMapper.selectOne(qwRecod);
-            if(mzMedicalRecord !=null){
+            if (mzMedicalRecord != null) {
                 mzMedicalRecord.setMrState(2);
                 medicalRecordMapper.updateById(mzMedicalRecord);
             }
@@ -78,20 +81,22 @@ public class MzOpcService {
 
     /**
      * 住院申请查询所有的科室
+     *
      * @return
      */
-    public List<DepartmentKs> selectKs(Integer index){
+    public List<DepartmentKs> selectKs(Integer index) {
         QueryWrapper qw = new QueryWrapper();
-        qw.eq("de_id",index);
+        qw.eq("de_id", index);
         List<DepartmentKs> list = departmentKsMapper.selectList(qw);
         return list;
     }
+
     /**
      * 病例表查询
      */
-    public List<MzCaseHistory> selectCaseHistory(Integer index){
+    public List<MzCaseHistory> selectCaseHistory(Integer index) {
         QueryWrapper qw = new QueryWrapper();
-        qw.eq("sick_Number",index);
+        qw.eq("sick_Number", index);
         List<MzCaseHistory> list = historyMapper.selectList(qw);
         return list;
     }

@@ -20,7 +20,7 @@ public class StopDoctorEnjoinController {
     StopDoctorEnjoinService sdes;//停用医嘱service
 
     @RequestMapping("stop-doctor-enjoin")
-    public boolean stopDoctorEnjoinOrDoctorEnjoinDetails(@RequestBody String str){
+    public boolean stopDoctorEnjoinOrDoctorEnjoinDetails(@RequestBody String str) {
         System.err.println(str);
         ZyStopDoctorEnjoin zyStopDoctorEnjoin = JSON.parseObject(str, ZyStopDoctorEnjoin.class);
         System.out.println(str);

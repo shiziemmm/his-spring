@@ -14,34 +14,32 @@ import java.util.List;
  * 病房实体类
  */
 @Data//get  set方法
-public class ZyWard{
+public class ZyWard {
 
-  @TableId(value = "wd_id",type = IdType.AUTO)
-  private long wdId;//病房编号
+    @TableId(value = "wd_id", type = IdType.AUTO)
+    private long wdId;//病房编号
 
-//  @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-  private String wdName;//病房名称
+    //  @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+    private String wdName;//病房名称
 
-//  @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-  private Long ksId;//科室编号
+    //  @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+    private Long ksId;//科室编号
 
-//  @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-  private Long sId;//员工编号
+    //  @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+    private Long sId;//员工编号
 
-  //关系
-  @TableField(exist = false)
-  private List<ZyBed> listBed;//病床集合
+    //关系
+    @TableField(exist = false)
+    private List<ZyBed> listBed;//病床集合
 
-  @TableField(exist = false)
-  private Staff staff;//员工对象
+    @TableField(exist = false)
+    private Staff staff;//员工对象
 
-  @TableField(exist = false)
-  private String ksName;//科室名称
+    @TableField(exist = false)
+    private String ksName;//科室名称
 
-  @TableField(exist = false)
-  private Integer bedCount;//该病房的入住病人数量
-
-
+    @TableField(exist = false)
+    private Integer bedCount;//该病房的入住病人数量
 
 
 }

@@ -3,6 +3,7 @@ package cn.gson.hisspring.model.pojos;
 import lombok.Data;
 
 import java.sql.Timestamp;
+
 @Data
 public class User_Staff {
     private long uid;

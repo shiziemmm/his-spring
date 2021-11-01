@@ -23,7 +23,7 @@ public class MzRecipController {
 
     //查询所有已经缴费的处方单
     @RequestMapping("allMzRecipe")
-    public List<MzRecipe> allMzRecipe(){
+    public List<MzRecipe> allMzRecipe() {
         return mzser.allMzRecipe();
     }
 
@@ -31,13 +31,13 @@ public class MzRecipController {
     @RequestMapping("fayao")
     public String fayao(@RequestBody String str) {
         try {
-            Map map = JSON.parseObject(str,Map.class);
+            Map map = JSON.parseObject(str, Map.class);
             MzRecipe mzRecipe = JSON.parseObject(map.get("mzRecipe").toString(), MzRecipe.class);
             System.err.println(mzRecipe);
-            Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);
-            mzser.fayao(mzRecipe,sId);
+            Long sId = JSON.parseObject(map.get("sId").toString(), Long.class);
+            mzser.fayao(mzRecipe, sId);
             return "ok";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "fail";
         }

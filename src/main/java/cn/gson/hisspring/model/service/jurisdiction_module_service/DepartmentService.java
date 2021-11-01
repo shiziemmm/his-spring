@@ -12,23 +12,28 @@ import java.util.List;
 public class DepartmentService {
     @Autowired
     DepartmentMapper ds;
+
     //部门查询
-    public List<Department> selectList(){
+    public List<Department> selectList() {
         return ds.selectList(null);
     }
+
     //部门新增
-    public int  add(Department dept){
+    public int add(Department dept) {
         return ds.insert(dept);
     }
+
     //部门修改
-    public int upa(Department dept){
+    public int upa(Department dept) {
         return ds.updateById(dept);
     }
+
     //部门删除
-    public int dete(long id){
+    public int dete(long id) {
         return ds.deleteById(id);
     }
-   public List<Department> selectlike(Department dept){
+
+    public List<Department> selectlike(Department dept) {
         return ds.selectlike(dept);
     }
 }

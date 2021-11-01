@@ -22,20 +22,22 @@ public class DeptDrugAllotController {
 
     /**
      * 根据科室编号查询调拨记录
+     *
      * @param ksId
      * @return
      */
     @RequestMapping(value = "select-by-ksId")
-    public List<ZyDeptDrugAllot> selectByKsId(Long ksId){
+    public List<ZyDeptDrugAllot> selectByKsId(Long ksId) {
         return ddas.selectByKsId(ksId);
     }
 
     /**
      * 循环新增科室库存调拨记录
+     *
      * @param str
      * @return
      */
-    public boolean addDeptDrugAllotList(@RequestBody String str){
+    public boolean addDeptDrugAllotList(@RequestBody String str) {
 
         return false;
 //        return ddas.addDeptDrugAllotFor()

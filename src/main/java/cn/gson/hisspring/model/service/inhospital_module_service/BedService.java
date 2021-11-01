@@ -20,10 +20,10 @@ public class BedService {
     /**
      * 判断病房床名称是否重复
      */
-    public boolean selectBdNameRepetition(String bdName){
-        QueryWrapper<ZyBed> zyBedQueryWrapper = new QueryWrapper<ZyBed>().eq("bd_name",bdName);
+    public boolean selectBdNameRepetition(String bdName) {
+        QueryWrapper<ZyBed> zyBedQueryWrapper = new QueryWrapper<ZyBed>().eq("bd_name", bdName);
         List<ZyBed> zyBeds = bm.selectList(zyBedQueryWrapper);
-        if (zyBeds.isEmpty()){
+        if (zyBeds.isEmpty()) {
             return false;
         }
         return true;
@@ -33,39 +33,42 @@ public class BedService {
 
     /**
      * 新增或者修改病床方法
+     *
      * @param bed
      * @return
      */
-    public boolean bedAddOrUpdate(ZyBed bed){
+    public boolean bedAddOrUpdate(ZyBed bed) {
         int is = 0;//判断是否新增成功
-        if(bed.getBdId() == 0){//新增
+        if (bed.getBdId() == 0) {//新增
             is = bm.insert(bed);
-        }else{//修改
+        } else {//修改
             is = bm.updateById(bed);
         }
-        return is == 0?false:true;
+        return is == 0 ? false : true;
     }
 
 
     /**
      * 根据病床编号修改病床状态
+     *
      * @param bdId 病床编号
      * @param bdIs 病床状态 1表示可用  2表示停用  3表示已有病人入住
      * @return
      */
-    public boolean bedUpdateBdIs(long bdId,long bdIs){
-        ZyBed bed = new ZyBed(bdId,bdIs);
+    public boolean bedUpdateBdIs(long bdId, long bdIs) {
+        ZyBed bed = new ZyBed(bdId, bdIs);
         int i = bm.updateById(bed);
         return i > 0 ? true : false;
     }
 
     /**
      * 根据病房编号查询病床
+     *
      * @param wdId 病房编号
      */
-    public List<ZyBed> bedSelectByWdId(long wdId){
+    public List<ZyBed> bedSelectByWdId(long wdId) {
         QueryWrapper<ZyBed> qw = new QueryWrapper<>();
-        qw.eq("wd_id",wdId);
+        qw.eq("wd_id", wdId);
         List<ZyBed> list = bm.selectList(qw);
         return list.isEmpty() ? null : list;
     }

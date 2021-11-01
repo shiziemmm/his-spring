@@ -24,12 +24,13 @@ public class CaseHistoryService {
 
     /**
      * 新增病人病例
+     *
      * @param mzCaseHistory
      * @return
      */
-    public boolean addCaseHistory(MzCaseHistory mzCaseHistory){
+    public boolean addCaseHistory(MzCaseHistory mzCaseHistory) {
         int insert = historyMapper.insert(mzCaseHistory);
-        if(insert > 0)
+        if (insert > 0)
             return true;
         return false;
     }
@@ -37,14 +38,14 @@ public class CaseHistoryService {
     /**
      * 根据病人的信息编号查询所有的病历
      */
-    public List<MzCaseHistory> selectBySickNumberPtNoCase(SelectExecuteVo selectExecuteVo){
+    public List<MzCaseHistory> selectBySickNumberPtNoCase(SelectExecuteVo selectExecuteVo) {
         return historyMapper.selectCaseByWhere(selectExecuteVo);
     }
 
     /**
      * 根据病人信息编号查询出所有开病历的医生
      */
-    public List<Staff> selectCaseStaff(Long sickNumber){
+    public List<Staff> selectCaseStaff(Long sickNumber) {
         return historyMapper.selectCaseStaff(sickNumber);
     }
 

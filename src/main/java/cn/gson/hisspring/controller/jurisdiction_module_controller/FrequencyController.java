@@ -22,41 +22,44 @@ public class FrequencyController {
 
     /**
      * 查看班次
+     *
      * @return
      */
     @RequestMapping("select-fre")
-    public List<Frequency> selectAll(){
+    public List<Frequency> selectAll() {
         return fs.selectAll();
     }
 
     /**
      * 新增班次
+     *
      * @param grant
      */
     @RequestMapping("add-fre")
-    public void addFre(@RequestParam("grant") String grant){
+    public void addFre(@RequestParam("grant") String grant) {
         Map map = JSON.parseObject(grant, Map.class);
         //类别id
         Integer fcId = Integer.parseInt(map.get("bcId").toString());
         //开始时间
-        List<String> start=  (List<String>) map.get("start");
+        List<String> start = (List<String>) map.get("start");
         //结束时间
-        List<String> end=  (List<String>) map.get("end");
+        List<String> end = (List<String>) map.get("end");
         List<Map> mapList = new ArrayList<>();
-        for(int i =0 ;i<start.size(); i++){
+        for (int i = 0; i < start.size(); i++) {
             Map map1 = new HashMap();
-            map1.put("start",start.get(i));
-            map1.put("end",end.get(i));
+            map1.put("start", start.get(i));
+            map1.put("end", end.get(i));
             mapList.add(map1);
         }
-        fs.addRoleInfo(mapList,fcId);
+        fs.addRoleInfo(mapList, fcId);
     }
+
     @PostMapping("edit-fre")
-    public int editFre(@RequestBody Frequency frequency){
+    public int editFre(@RequestBody Frequency frequency) {
         int i = fs.editFre(frequency);
-        if(i>0){
+        if (i > 0) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }

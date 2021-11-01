@@ -3,42 +3,46 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.inhospital_module_mapper.ZyCaseHistoryMapper">
 
-    <select id="selectCaseByWhere" resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMap">
+    <select id="selectCaseByWhere"
+            resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzCaseHistoryMapper.historyMap">
         SELECT
-           *
-            FROM
-            mz_case_history
-            inner join staff on staff.s_id = mz_case_history.ch_sid
+        *
+        FROM
+        mz_case_history
+        inner join staff on staff.s_id = mz_case_history.ch_sid
 
-            <where>
-                <if test="(startDate != null) and (endDate != null)">
-                    and (DATE_FORMAT(ch_time,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(ch_time,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
-                </if>
+        <where>
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(ch_time,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(ch_time,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
 
-                <if test="(startDate != null) and (endDate == null)">
-                    and DATE_FORMAT(ch_time,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
-                </if>
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(ch_time,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
 
-                <if test="(startDate == null) and (endDate != null)">
-                    and DATE_FORMAT(ch_time,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
-                </if>
-                <if test="ptNo != null and ptNo != ''">
-                    and sick_number = #{ptNo}
-                </if>
-                <if test="sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
-                    and ch_sid in (<foreach collection="sIdArr" item="sId"  separator=",">
-                        #{sId}
-                    </foreach>)
-                </if>
-                
-                <if test="doctorType != null and doctorType != ''">
-                    and ch_is = #{doctorType}
-                </if>
-            </where>
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(ch_time,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
+            <if test="ptNo != null and ptNo != ''">
+                and sick_number = #{ptNo}
+            </if>
+            <if test="sIdArr != null and sIdArr != '' and sIdArr.size() > 0"><!--如果不是病床费用就根据员工编号查询-->
+                and ch_sid in (<foreach collection="sIdArr" item="sId" separator=",">
+                    #{sId}
+                </foreach>)
+            </if>
+
+            <if test="doctorType != null and doctorType != ''">
+                and ch_is = #{doctorType}
+            </if>
+        </where>
 
     </select>
 
-    <select id="selectCaseStaff" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps">
+    <select id="selectCaseStaff"
+            resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps">
         select * from staff where s_id in (
         select ch_sid from mz_case_history
 

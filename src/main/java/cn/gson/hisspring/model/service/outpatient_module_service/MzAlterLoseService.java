@@ -19,7 +19,7 @@ public class MzAlterLoseService {
     MzAlterLoseMapper alterLose;
 
     //查询所有加like查询
-    public List<MzAlterLose> allLikeAlterLose(String like){
+    public List<MzAlterLose> allLikeAlterLose(String like) {
         List<MzAlterLose> lose = alterLose.selectMzAlterLose(like);
         return lose;
     }

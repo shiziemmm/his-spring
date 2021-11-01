@@ -12,21 +12,29 @@ import java.util.List;
 @Mapper
 public interface YkDrugpurchasePlanMapper extends BaseMapper<YkDrugpurchasePlan> {
     //查询采购计划
-    List <YkDrugpurchasePlan> allplan();
+    List<YkDrugpurchasePlan> allplan();
+
     //查询采购的员工
-    List <Staff> staff();
+    List<Staff> staff();
+
     //查询采购计划详单
-    List <YkDrugpurchasePlanDetails> allydpd(String ykPurchaseId);
+    List<YkDrugpurchasePlanDetails> allydpd(String ykPurchaseId);
+
     //查询药品信息
-    List <YfDruginformation> allDrug();
+    List<YfDruginformation> allDrug();
+
     //新增采购计划
     void addplan(YkDrugpurchasePlan ykDrugpurchasePlan);
+
     /*新增采购详单*/
-    void  addplandeta(YkDrugpurchasePlanDetails ykDrugpurchasePlanDetails);
+    void addplandeta(YkDrugpurchasePlanDetails ykDrugpurchasePlanDetails);
+
     /*查询待入库的药品*/
-    List <YkDrugpurchasePlan>alldairuku();
+    List<YkDrugpurchasePlan> alldairuku();
+
     /*执行采购计划*/
     void zhixing(String ykPurchaseId);
+
     /*保存入库的药品*/
     void preserve(YkDrugpurchasePlanDetails ykDrugpurchasePlanDetails);
 }

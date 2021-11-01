@@ -13,11 +13,13 @@ import java.util.List;
 
 //手术记录mapper
 @Mapper
-public interface SsDetailsMapper  extends BaseMapper<SsOperationDetails> {
+public interface SsDetailsMapper extends BaseMapper<SsOperationDetails> {
     //查询手术记录
     List<SsOperationDetails> selectAllsDetails(String seach);
+
     //查询单手术记录
     List<SsOperationDetails> selectAloneDetails(Integer operationNum);
+
     //根据手术id查记录
     @Select("select * from ss_operation_details  where project_id=#{projectId}")
     List<SsOperationDetails> selectDat(Integer projectId);

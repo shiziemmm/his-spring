@@ -9,9 +9,13 @@ import java.util.List;
 @Repository
 public interface StaffMapper extends BaseMapper<Staff> {
     List<Staff> selectALl();
+
     List<Staff> selectksId(long ksId);
+
     List<Staff> selecttId(long tId);
+
     int upa(long sid);
+
     List<Staff> selectRole(long uId);
 
 }

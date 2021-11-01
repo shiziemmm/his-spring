@@ -8,10 +8,10 @@ import java.util.List;
 
 @Data//get  set方法
 public class RoleMiddleJurisdiction {
-  @TableId(value = "r_id")
-  private long rId;
-  private long fctionId;
-  @TableField(exist = false)
-  List<FunctionJurisdiction> funs;
+    @TableId(value = "r_id")
+    private long rId;
+    private long fctionId;
+    @TableField(exist = false)
+    List<FunctionJurisdiction> funs;
 
 }

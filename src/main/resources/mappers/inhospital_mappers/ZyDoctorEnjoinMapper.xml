@@ -17,7 +17,8 @@
         <result column="De_end_date" property="deEndDate"/>
 
         <!--封装医嘱详情数据-->
-        <collection property="dedList" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinDetailsMapper.desMap"></collection>
+        <collection property="dedList"
+                    resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.DoctorEnjoinDetailsMapper.desMap"></collection>
     </resultMap>
 
     <!--封装医嘱信息-->
@@ -25,37 +26,39 @@
         select * from seltDoctorEnjoin
         <where>
             <if test=" ptNo != '' and ptNo != null">
-                pt_no  = #{ptNo}
+                pt_no = #{ptNo}
             </if>
 
-                <if test="(startDate != null) and (endDate != null)">
-                    and (DATE_FORMAT(De_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(De_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
-                </if>
+            <if test="(startDate != null) and (endDate != null)">
+                and (DATE_FORMAT(De_execute_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(De_execute_date,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+            </if>
 
-                <if test="(startDate != null) and (endDate == null)">
-                    and DATE_FORMAT(De_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
-                </if>
+            <if test="(startDate != null) and (endDate == null)">
+                and DATE_FORMAT(De_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
 
-                <if test="(startDate == null) and (endDate != null)">
-                    and DATE_FORMAT(De_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
-                </if>
+            <if test="(startDate == null) and (endDate != null)">
+                and DATE_FORMAT(De_execute_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+            </if>
 
-                <if test="doctorType != null and doctorType != '' ">
-                    and de_longorshort = #{doctorType}
-                </if>
+            <if test="doctorType != null and doctorType != '' ">
+                and de_longorshort = #{doctorType}
+            </if>
 
         </where>
         order by de_execute_date desc,De_end_date desc
     </select>
 
     <!--封装医嘱信息-->
-<!--    <select resultMap="deMap" id="doctorEnjoinDetailsSelectByPtId">-->
-<!--        select * from seltDoctorEnjoin-->
-<!--        <where>-->
-<!--            <if test=" ptNo != '' and ptNo != null">-->
-<!--                pt_no  = #{ptNo}-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
+    <!--    <select resultMap="deMap" id="doctorEnjoinDetailsSelectByPtId">-->
+    <!--        select * from seltDoctorEnjoin-->
+    <!--        <where>-->
+    <!--            <if test=" ptNo != '' and ptNo != null">-->
+    <!--                pt_no  = #{ptNo}-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--    </select>-->
 
 </mapper>

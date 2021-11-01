@@ -19,22 +19,23 @@ public class DrugStorageService {
     YkDrugpurchasePlanMapper ydpm;
 
     /*查询药库的药品库存*/
-    public List<YkDruginventory> allDrugStorg(){
+    public List<YkDruginventory> allDrugStorg() {
         return drugStorageMapper.allDrugStorg();
     }
 
     /**
      * 药品入库
+     *
      * @param ykDrugpurchasePlanDetails 药品入库详情集合
-     * @param id 入库编号
+     * @param id                        入库编号
      */
-    public void putstorage(List<YkDrugpurchasePlanDetails> ykDrugpurchasePlanDetails,String id){
+    public void putstorage(List<YkDrugpurchasePlanDetails> ykDrugpurchasePlanDetails, String id) {
         System.err.println(ykDrugpurchasePlanDetails);
         for (int j = 0; j < ykDrugpurchasePlanDetails.size(); j++) {
-            System.err.println(ykDrugpurchasePlanDetails.get(j).getYfDruginformation().getDrugName()+"name");
+            System.err.println(ykDrugpurchasePlanDetails.get(j).getYfDruginformation().getDrugName() + "name");
         }
         for (YkDrugpurchasePlanDetails ykdpd : ykDrugpurchasePlanDetails) {
-            YkDruginventory ykdrug= new YkDruginventory();
+            YkDruginventory ykdrug = new YkDruginventory();
             System.err.println(ykdpd.getDrugPrice());
             ykdrug.setDrugId(ykdpd.getDrugId());
             ykdrug.setYkDrvenName(ykdpd.getYfDruginformation().getDrugName());

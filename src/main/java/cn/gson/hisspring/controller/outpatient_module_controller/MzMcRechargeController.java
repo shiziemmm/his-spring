@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- *  门诊充值记录表-controller
+ * 门诊充值记录表-controller
  */
 
 @CrossOrigin
@@ -21,7 +21,7 @@ public class MzMcRechargeController {
     MzMcRechargeService mcRechargeService;
 
     @GetMapping("allMzMcRecharge")
-    public List<MzMcRecharge> allMzMcRecharge(String like){
+    public List<MzMcRecharge> allMzMcRecharge(String like) {
         return mcRechargeService.allLikeMzMcRecharge(like);
     }
 }

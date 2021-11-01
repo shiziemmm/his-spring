@@ -1,11 +1,13 @@
 package generator;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
  * user
- * @author 
+ *
+ * @author
  */
 @Data
 public class User implements Serializable {

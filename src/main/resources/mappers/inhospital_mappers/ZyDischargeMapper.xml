@@ -41,22 +41,26 @@
     <select id="selectDischargeAll" resultMap="dischargeMap">
         select * from zy_discharge inner join zy_patient_base on zy_discharge.pt_no = zy_patient_base.pt_no
         <where>
-        <if test="doctorType == 1">
-            <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(Pt_Out_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
-            </if>
+            <if test="doctorType == 1">
+                <if test="(startDate != null) and (endDate != null)">
+                    and (DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                    DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') between
+                    DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                </if>
 
-            <if test="(startDate != null) and (endDate == null)">
-                and DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
-            </if>
+                <if test="(startDate != null) and (endDate == null)">
+                    and DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') = DATE_FORMAT(#{startDate},'%Y-%m-%d')
+                </if>
 
-            <if test="(startDate == null) and (endDate != null)">
-                and DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+                <if test="(startDate == null) and (endDate != null)">
+                    and DATE_FORMAT(Pt_Out_date,'%Y-%m-%d') = DATE_FORMAT(#{endDate},'%Y-%m-%d')
+                </if>
             </if>
-        </if>
             <if test="doctorType == 2">
                 <if test="(startDate != null) and (endDate != null)">
-                    and (DATE_FORMAT(pt_In_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pt_In_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                    and (DATE_FORMAT(pt_In_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                    DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(pt_In_date,'%Y-%m-%d') between
+                    DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
                 </if>
 
                 <if test="(startDate != null) and (endDate == null)">

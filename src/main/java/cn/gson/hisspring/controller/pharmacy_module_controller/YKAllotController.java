@@ -19,19 +19,21 @@ public class YKAllotController {
 
     /*调拨申请查询*/
     @RequestMapping("all-ykallot")
-    public List<YkAllot> allykallot(){
-        List <YkAllot> allykallot = ykAllotService.allykallot();
-        return  allykallot;
+    public List<YkAllot> allykallot() {
+        List<YkAllot> allykallot = ykAllotService.allykallot();
+        return allykallot;
     }
+
     /*调拨详表查询*/
     @RequestMapping("all-detail")
-    public List<YkAllotdetail> alldetail(String ykAllotId){
+    public List<YkAllotdetail> alldetail(String ykAllotId) {
         List<YkAllotdetail> allotdetails = ykAllotService.alldetail(ykAllotId);
         return allotdetails;
     }
+
     /*新增调拨*/
     @PostMapping("add-YkAllot")
-    public void adddykallot( @RequestBody YkAllot ykAllot){
+    public void adddykallot(@RequestBody YkAllot ykAllot) {
         for (YfDruginventory yfDruginventory : ykAllot.getYfDruginventories()) {
             System.out.println(yfDruginventory.getYfDrvenName());
         }
@@ -43,13 +45,13 @@ public class YKAllotController {
      * 批量从药库调到药房
      */
     @RequestMapping("yk-batch-ykyf")
-    public boolean batchYkYf(@RequestBody String str){
+    public boolean batchYkYf(@RequestBody String str) {
         Map map = JSON.parseObject(str, Map.class);
 
-        List<YkAllot> list = JSON.parseArray(map.get("allotDetail").toString(),YkAllot.class);//药库调拨集合
-        Long sId = JSON.parseObject(map.get("sId").toString(),Long.class);//员工编号
+        List<YkAllot> list = JSON.parseArray(map.get("allotDetail").toString(), YkAllot.class);//药库调拨集合
+        Long sId = JSON.parseObject(map.get("sId").toString(), Long.class);//员工编号
         System.err.println(list);
-        ykAllotService.addyf(list,sId);
+        ykAllotService.addyf(list, sId);
         return false;
     }
 }

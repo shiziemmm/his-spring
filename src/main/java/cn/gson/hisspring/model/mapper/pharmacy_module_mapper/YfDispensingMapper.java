@@ -10,6 +10,7 @@ import java.util.List;
 public interface YfDispensingMapper extends BaseMapper<YfDispensing> {
     /**
      * 查询发药记录
+     *
      * @param yfDispensing
      */
     List<YfDispensing> allyfdisng(YfDispensing yfDispensing);

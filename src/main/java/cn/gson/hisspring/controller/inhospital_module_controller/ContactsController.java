@@ -22,10 +22,10 @@ public class ContactsController {
     ContactsService cs;
 
     /**
-     *新增或者修改联系人
+     * 新增或者修改联系人
      */
     @RequestMapping("insert-update-cts")
-    public boolean insertContacts(@RequestBody ZyContacts contacts){
+    public boolean insertContacts(@RequestBody ZyContacts contacts) {
         System.out.println(contacts);
         return cs.insertContacts(contacts);
     }
@@ -35,16 +35,17 @@ public class ContactsController {
      * 根据联系人删除数据
      */
     @RequestMapping("delete-cts")
-    public boolean deleteContacts(Long ctsId){
+    public boolean deleteContacts(Long ctsId) {
         return cs.deleteContacts(ctsId);
     }
 
     /**
      * 根据病人住院号查询联系人
+     *
      * @param ptNo 病人住院号
      */
     @RequestMapping("select-byPtNo")
-    public List<ZyContacts> selectContactsByPtId(Long ptNo){
+    public List<ZyContacts> selectContactsByPtId(Long ptNo) {
         return cs.selectContactsByPtId(ptNo);
     }
 }

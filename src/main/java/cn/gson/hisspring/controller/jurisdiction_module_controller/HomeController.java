@@ -24,7 +24,7 @@ public class HomeController {
     private static final int FIRST_DAY = Calendar.MONDAY;
 
     @RequestMapping("now-date")
-    public Object newDate(long ksId,long sId) {
+    public Object newDate(long ksId, long sId) {
         List<WeekVo> ban2List = new ArrayList<>();
         //获取当前时间
         Calendar calendar = Calendar.getInstance();
@@ -35,7 +35,7 @@ public class HomeController {
 //           将星期，日期，赋值
             paiBan2 = printDay(calendar, paiBan2);
             //查询这个科室的排班信息，并赋值
-            List<Scheduling> panBan = sl.selectNow(paiBan2.getRq(),ksId,sId);
+            List<Scheduling> panBan = sl.selectNow(paiBan2.getRq(), ksId, sId);
             paiBan2.setSlist(panBan);
             //将查询出来的结果赋值给需要返回出去的集合
             ban2List.add(paiBan2);

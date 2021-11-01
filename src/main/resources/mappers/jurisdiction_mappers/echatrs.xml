@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.gson.hisspring.model.mapper.jurisdiction_module_mapper.echatrsMapper">
-  <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.pojos_vo.echartsVo">
-<!--    <id column="pcd_id"  property="pcdId" />-->
-<!--    <result column="pcdDate"  property="pcdDate" />-->
-    <result column="moeny"  property="pcdPrice" />
-<!--    <result column="c1"  property="c1" />-->
-  </resultMap>
+    <resultMap id="BaseResultMap" type="cn.gson.hisspring.model.pojos.pojos_vo.echartsVo">
+        <!--    <id column="pcd_id"  property="pcdId" />-->
+        <!--    <result column="pcdDate"  property="pcdDate" />-->
+        <result column="moeny" property="pcdPrice"/>
+        <!--    <result column="c1"  property="c1" />-->
+    </resultMap>
 
-  <select id="getAllEcharts" resultMap="BaseResultMap">
-    SELECT SUM(CASE WHEN MONTH(pcd_date) =1 THEN pcd_price  ELSE 0 END) as c1 ,
-           SUM(CASE WHEN MONTH(pcd_date) =2 THEN pcd_price ELSE 0 END) as c2,
-           SUM(CASE WHEN MONTH(pcd_date) =3 THEN pcd_price ELSE 0 END) as c3,
-           SUM(CASE WHEN MONTH(pcd_date) =4 THEN pcd_price ELSE 0 END) as c4,
-           SUM(CASE WHEN MONTH(pcd_date) =5 THEN pcd_price ELSE 0 END) as c5,
-           SUM(CASE WHEN MONTH(pcd_date) =6 THEN pcd_price ELSE 0 END) as c6,
-           SUM(CASE WHEN MONTH(pcd_date) =7 THEN pcd_price ELSE 0 END) as c7,
-           SUM(CASE WHEN MONTH(pcd_date) =8 THEN pcd_price ELSE 0 END) as c8,
-           SUM(CASE WHEN MONTH(pcd_date) =9 THEN pcd_price ELSE 0 END) as c9,
-           SUM(CASE WHEN MONTH(pcd_date) =10 THEN pcd_price ELSE 0 END) as c10,
-           SUM(CASE WHEN MONTH(pcd_date) =11 THEN pcd_price ELSE 0 END) as c11,
-           SUM(CASE WHEN MONTH(pcd_date) =12 THEN pcd_price ELSE 0 END) as c12
-    FROM seltpatientcostbreakdown
-    GROUP BY YEAR(pcd_date)
-  </select>
-<select id="getList" resultMap="BaseResultMap">
-    SELECT SUM(CASE WHEN MONTH(pm_time) =1 THEN pm_sum  ELSE 0 END) as c1 ,
-           SUM(CASE WHEN MONTH(pm_time) =2 THEN pm_sum ELSE 0 END) as c2,
-           SUM(CASE WHEN MONTH(pm_time) =3 THEN pm_sum ELSE 0 END) as c3,
-           SUM(CASE WHEN MONTH(pm_time) =4 THEN pm_sum ELSE 0 END) as c4,
-           SUM(CASE WHEN MONTH(pm_time) =5 THEN pm_sum ELSE 0 END) as c5,
-           SUM(CASE WHEN MONTH(pm_time) =6 THEN pm_sum ELSE 0 END) as c6,
-           SUM(CASE WHEN MONTH(pm_time) =7 THEN pm_sum ELSE 0 END) as c7,
-           SUM(CASE WHEN MONTH(pm_time) =8 THEN pm_sum ELSE 0 END) as c8,
-           SUM(CASE WHEN MONTH(pm_time) =9 THEN pm_sum ELSE 0 END) as c9,
-           SUM(CASE WHEN MONTH(pm_time) =10 THEN pm_sum ELSE 0 END) as c10,
-           SUM(CASE WHEN MONTH(pm_time) =11 THEN pm_sum ELSE 0 END) as c11,
-           SUM(CASE WHEN MONTH(pm_time) =12 THEN pm_sum ELSE 0 END) as c12
-    FROM mz_payment
-    GROUP BY YEAR(pm_time)
-</select>
+    <select id="getAllEcharts" resultMap="BaseResultMap">
+        SELECT SUM(CASE WHEN MONTH(pcd_date) =1 THEN pcd_price ELSE 0 END) as c1 ,
+        SUM(CASE WHEN MONTH(pcd_date) =2 THEN pcd_price ELSE 0 END) as c2,
+        SUM(CASE WHEN MONTH(pcd_date) =3 THEN pcd_price ELSE 0 END) as c3,
+        SUM(CASE WHEN MONTH(pcd_date) =4 THEN pcd_price ELSE 0 END) as c4,
+        SUM(CASE WHEN MONTH(pcd_date) =5 THEN pcd_price ELSE 0 END) as c5,
+        SUM(CASE WHEN MONTH(pcd_date) =6 THEN pcd_price ELSE 0 END) as c6,
+        SUM(CASE WHEN MONTH(pcd_date) =7 THEN pcd_price ELSE 0 END) as c7,
+        SUM(CASE WHEN MONTH(pcd_date) =8 THEN pcd_price ELSE 0 END) as c8,
+        SUM(CASE WHEN MONTH(pcd_date) =9 THEN pcd_price ELSE 0 END) as c9,
+        SUM(CASE WHEN MONTH(pcd_date) =10 THEN pcd_price ELSE 0 END) as c10,
+        SUM(CASE WHEN MONTH(pcd_date) =11 THEN pcd_price ELSE 0 END) as c11,
+        SUM(CASE WHEN MONTH(pcd_date) =12 THEN pcd_price ELSE 0 END) as c12
+        FROM seltpatientcostbreakdown
+        GROUP BY YEAR(pcd_date)
+    </select>
+    <select id="getList" resultMap="BaseResultMap">
+        SELECT SUM(CASE WHEN MONTH(pm_time) =1 THEN pm_sum ELSE 0 END) as c1 ,
+        SUM(CASE WHEN MONTH(pm_time) =2 THEN pm_sum ELSE 0 END) as c2,
+        SUM(CASE WHEN MONTH(pm_time) =3 THEN pm_sum ELSE 0 END) as c3,
+        SUM(CASE WHEN MONTH(pm_time) =4 THEN pm_sum ELSE 0 END) as c4,
+        SUM(CASE WHEN MONTH(pm_time) =5 THEN pm_sum ELSE 0 END) as c5,
+        SUM(CASE WHEN MONTH(pm_time) =6 THEN pm_sum ELSE 0 END) as c6,
+        SUM(CASE WHEN MONTH(pm_time) =7 THEN pm_sum ELSE 0 END) as c7,
+        SUM(CASE WHEN MONTH(pm_time) =8 THEN pm_sum ELSE 0 END) as c8,
+        SUM(CASE WHEN MONTH(pm_time) =9 THEN pm_sum ELSE 0 END) as c9,
+        SUM(CASE WHEN MONTH(pm_time) =10 THEN pm_sum ELSE 0 END) as c10,
+        SUM(CASE WHEN MONTH(pm_time) =11 THEN pm_sum ELSE 0 END) as c11,
+        SUM(CASE WHEN MONTH(pm_time) =12 THEN pm_sum ELSE 0 END) as c12
+        FROM mz_payment
+        GROUP BY YEAR(pm_time)
+    </select>
     <select id="zhuyu" resultMap="BaseResultMap">
-        SELECT sum(pcd_price) moeny  FROM seltpatientcostbreakdown WHERE DATE_FORMAT( pcd_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+        SELECT sum(pcd_price) moeny FROM seltpatientcostbreakdown WHERE DATE_FORMAT( pcd_date, '%Y%m' ) = DATE_FORMAT(
+        CURDATE( ) , '%Y%m' )
     </select>
     <select id="menzhen" resultMap="BaseResultMap">
-        SELECT sum(pm_sum) moeny  FROM mz_payment WHERE DATE_FORMAT( pm_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+        SELECT sum(pm_sum) moeny FROM mz_payment WHERE DATE_FORMAT( pm_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m'
+        )
     </select>
 </mapper>

@@ -27,16 +27,16 @@ class HisSpringApplicationTests {
     ZyDrugInFormationService zds;
 
     @Test
-    void test123(){
+    void test123() {
         List<Object> objects = zds.selectDrugUnit();
-        objects.forEach(s->{
+        objects.forEach(s -> {
             System.out.println(s);
         });
 
     }
 
     @Test
-    void text9(){
+    void text9() {
         ZyPay py = new ZyPay();
         py.setPtNo(101L);
         py.setPyPrice(2990d);
@@ -47,9 +47,10 @@ class HisSpringApplicationTests {
 
     @Autowired
     DischargeApplyService das;
+
     @Test
-    void text11(){
-        das.callPatientApply(101L,"还需要留院观察");
+    void text11() {
+        das.callPatientApply(101L, "还需要留院观察");
     }
 
 
@@ -57,7 +58,7 @@ class HisSpringApplicationTests {
     InHospitalApplyService ihas;
 
     @Test
-    void text3(){
+    void text3() {
 //        List<ZyInhospitalApply> list = ihas.selectHspApply();
 //        list.forEach(i->{
 //            System.out.println(i);
@@ -68,7 +69,7 @@ class HisSpringApplicationTests {
     PatientBaseService pbs;
 
     @Test
-    void text10(){
+    void text10() {
         ZyChangeDeptRecord c = new ZyChangeDeptRecord();
         c.setCdrBeforeKs(1L);
         c.setCdrAfterKs(2L);
@@ -82,7 +83,7 @@ class HisSpringApplicationTests {
     }
 
     @Test
-    void text7(){
+    void text7() {
         PatientUpdateBedVo vo = new PatientUpdateBedVo();
         vo.setPtNo(101L);
         vo.setBcCurrentBdId(1L);
@@ -92,8 +93,8 @@ class HisSpringApplicationTests {
     }
 
     @Test
-    void Text6(){
-        pbs.PatientUpdateBdIdAndBedUpdateBdIsAndPtNo(3L,101L,200d);
+    void Text6() {
+        pbs.PatientUpdateBdIdAndBedUpdateBdIsAndPtNo(3L, 101L, 200d);
     }
 
 
@@ -107,21 +108,21 @@ class HisSpringApplicationTests {
     BedService bs;
 
     @Test
-    void text4(){
+    void text4() {
         List<ZyBed> list = bs.bedSelectByWdId(1);
-        list.forEach(i->{
+        list.forEach(i -> {
             System.out.println(i);
         });
     }
 
 
     @Test
-    void text2(){
-        bs.bedUpdateBdIs(1,3);
+    void text2() {
+        bs.bedUpdateBdIs(1, 3);
     }
 
     @Test
-    void text1(){
+    void text1() {
         ZyBed b = new ZyBed();
         b.setBdId(16);
         b.setBdName("shisihsizii");
@@ -139,7 +140,7 @@ class HisSpringApplicationTests {
 
 
         List<ZyWard> list = wds.selectWardByKsId("1");
-        for (ZyWard z:list){
+        for (ZyWard z : list) {
             System.out.println(z);
         }
 
@@ -147,9 +148,10 @@ class HisSpringApplicationTests {
 
     @Autowired
     MzMedicalRecordService se;
+
     @Test
-    void  yy (){
-        List<ReCordAllVO> mzMedicalRecords = se.selectAllRecord(null,null);
+    void yy() {
+        List<ReCordAllVO> mzMedicalRecords = se.selectAllRecord(null, null);
         for (ReCordAllVO mzMedicalRecord : mzMedicalRecords) {
             System.err.println(mzMedicalRecord);
         }

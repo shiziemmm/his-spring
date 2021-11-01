@@ -30,7 +30,7 @@ public class InHospitalController {
      * 查询所有未审核的住院申请信息
      */
     @RequestMapping("selectNoHspApply")
-    public List<ZyInhospitalApply> selectHspApplyByInIs(@RequestBody String str){
+    public List<ZyInhospitalApply> selectHspApplyByInIs(@RequestBody String str) {
         SelectExecuteVo selectExecuteVo = JSON.parseObject(str, SelectExecuteVo.class);
         System.err.println(selectExecuteVo);
         return has.selectHspApplyByInIs(selectExecuteVo);
@@ -38,15 +38,16 @@ public class InHospitalController {
 
     /**
      * 查询出所有主治医生
+     *
      * @return
      */
     @RequestMapping("select-patient-staffAll")
-    public List<Staff> selectPatientStaffAll(){
+    public List<Staff> selectPatientStaffAll() {
         return has.selectPatientStaffAll();
     }
 
     @RequestMapping("updateHspInIs")
-    public boolean HspApplyByInIdUpdateInIs(Long inId){
+    public boolean HspApplyByInIdUpdateInIs(Long inId) {
 
         return has.HspApplyByInIdUpdateInIs(inId);
     }
@@ -55,7 +56,7 @@ public class InHospitalController {
      * 新增住院申请
      */
     @RequestMapping("add-inHospital-mzSick")
-    public boolean addHospital(@RequestBody String str){
+    public boolean addHospital(@RequestBody String str) {
         InHospitalMzVo inHospitalMzVo = JSON.parseObject(str, InHospitalMzVo.class);
         System.err.println(inHospitalMzVo);
         return has.addHospital(inHospitalMzVo);

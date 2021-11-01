@@ -19,13 +19,13 @@ import java.util.List;
 public interface DoctorEnjoinDetailsMapper extends BaseMapper<ZyDoctorEnjoinDetails> {
 
 
-    int insertDeDetailsFor(@Param("dedList") List<ZyDoctorEnjoinDetails> doctorEnjoinDetails, @Param("deId") Long deId,@Param("DesExecuteDate") Timestamp date);
+    int insertDeDetailsFor(@Param("dedList") List<ZyDoctorEnjoinDetails> doctorEnjoinDetails, @Param("deId") Long deId, @Param("DesExecuteDate") Timestamp date);
 
-    int updateDesByDeIdOrDesId(@Param("desId") Long desId,@Param("deId") Long deId);
+    int updateDesByDeIdOrDesId(@Param("desId") Long desId, @Param("deId") Long deId);
 
     List<ZyDoctorEnjoinDetails> doctorEnjoinDetailsSelectByPtId(SelectExecuteVo selectExecuteVo);
 
-    int updateDoctorEnjoinDetailsFor(@Param("sde")ZyStopDoctorEnjoin sde);
+    int updateDoctorEnjoinDetailsFor(@Param("sde") ZyStopDoctorEnjoin sde);
 
     List<ZyDoctorEnjoinDetails> patientDoctorByPtNo(Long ptNo);
 

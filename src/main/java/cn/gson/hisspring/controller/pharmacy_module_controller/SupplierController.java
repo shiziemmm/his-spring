@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- *供应商
+ * 供应商
  */
 
 @RestController
@@ -19,27 +19,30 @@ import java.util.List;
 public class SupplierController {
     @Autowired
     SupplierService supser;
+
     /*查询供应商*/
     @RequestMapping("gys-all")
-    public List<YkSupplier> Allgys(){
+    public List<YkSupplier> Allgys() {
         return supser.selectAllSupplier();
     }
+
     /*新增或修改供应商*/
     @RequestMapping("gys-add")
-    public String addSupplier( String ykSupplier){
-        YkSupplier ykSupplier1 = JSONObject.parseObject(ykSupplier,YkSupplier.class);
+    public String addSupplier(String ykSupplier) {
+        YkSupplier ykSupplier1 = JSONObject.parseObject(ykSupplier, YkSupplier.class);
         System.out.println(ykSupplier1.getSupplierId());
         try {
-             supser.insertSupplier(ykSupplier1);
+            supser.insertSupplier(ykSupplier1);
             return "ok";
         } catch (Exception e) {
             e.printStackTrace();
             return "fail";
         }
     }
+
     @RequestMapping("gys-update")
-    public String updateSupplier( String ykSupplier){
-        YkSupplier ykSupplier1 = JSONObject.parseObject(ykSupplier,YkSupplier.class);
+    public String updateSupplier(String ykSupplier) {
+        YkSupplier ykSupplier1 = JSONObject.parseObject(ykSupplier, YkSupplier.class);
         System.out.println(ykSupplier1.getSupplierId());
         try {
             supser.updateSupplier(ykSupplier1);

@@ -20,27 +20,29 @@
         <result column="mr_Number" property="mrNumber"/>
         <result column="pt_No" property="ptNo"/>
 
-        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap" property="sick"></association>
+        <association resultMap="cn.gson.hisspring.model.mapper.outpatient_module_mapper.MzSickMapper.MzSickMap"
+                     property="sick"></association>
 
-        <association property="staff" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps"></association>
+        <association property="staff"
+                     resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps"></association>
     </resultMap>
 
 
     <!--查询出所有的主治医生-->
-    <select id="selectPatientStaffAll" resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps">
+    <select id="selectPatientStaffAll"
+            resultMap="cn.gson.hisspring.model.mapper.inhospital_module_mapper.PatientBaseMapper.staffMaps">
         select * from staff where s_id in(
-            select s_id from seltInHospitalAndMzSickAndStaffAndKs where in_is = 1 group by s_id
+        select s_id from seltInHospitalAndMzSickAndStaffAndKs where in_is = 1 group by s_id
         )
     </select>
 
 
-
     <!--视图-->
     <select resultMap="haMap" id="selectHspApplyByInIs">
-                SELECT
-                *
+        SELECT
+        *
         FROM
-            seltInHospitalAndMzSickAndStaffAndKs
+        seltInHospitalAndMzSickAndStaffAndKs
         <where>
             <if test="inIs != '' ">
                 and In_is = #{inIs}
@@ -49,11 +51,13 @@
                 and ks_id = #{doctorType}
             </if>
             <if test="searchLike != null and searchLike != ''">
-                and  (sick_phone = #{searchLike} or sick_name like '%${searchLike}%' or sick_id_card = #{searchLike})
+                and (sick_phone = #{searchLike} or sick_name like '%${searchLike}%' or sick_id_card = #{searchLike})
             </if>
 
             <if test="(startDate != null) and (endDate != null)">
-                and (DATE_FORMAT(in_apply_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(in_apply_date,'%Y-%m-%d')  between DATE_FORMAT(#{endDate},'%Y-%m-%d') and  DATE_FORMAT(#{startDate},'%Y-%m-%d'))
+                and (DATE_FORMAT(in_apply_date,'%Y-%m-%d') between DATE_FORMAT(#{startDate},'%Y-%m-%d') and
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') or DATE_FORMAT(in_apply_date,'%Y-%m-%d') between
+                DATE_FORMAT(#{endDate},'%Y-%m-%d') and DATE_FORMAT(#{startDate},'%Y-%m-%d'))
             </if>
 
             <if test="(startDate != null) and (endDate == null)">

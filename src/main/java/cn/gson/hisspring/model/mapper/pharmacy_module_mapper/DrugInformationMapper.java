@@ -12,15 +12,20 @@ import java.util.List;
 @Mapper
 public interface DrugInformationMapper extends BaseMapper<YfDruginformation> {
     //查询药品信息
-    List <YfDruginformation> queryById();
+    List<YfDruginformation> queryById();
+
     //新增药品信息
     void addDrug(YfDruginformation yfDruginformation);
+
     //修改药品信息
     void updaDrug(YfDruginformation yfDruginformation);
+
     //查询规格
     List<YkDrugspecifcations> allspec();
+
     //查询供应商
     List<YkSupplier> allsupp();
+
     //查询类别
     List<YfDrugcategory> alldrca();
 }

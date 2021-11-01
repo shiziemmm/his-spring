@@ -17,10 +17,11 @@ public class YfDispensingController {
 
     /**
      * 发药记查询
+     *
      * @param yfDispensing
      */
     @RequestMapping("allyfdisng")
-    public List<YfDispensing> allyfdisng(YfDispensing yfDispensing){
+    public List<YfDispensing> allyfdisng(YfDispensing yfDispensing) {
         return disser.allyfdisng(yfDispensing);
     }
 

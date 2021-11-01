@@ -8,12 +8,12 @@ import java.util.List;
 
 @Data//get  set方法
 public class Frequency {
-  @TableId(value = "f_id")
-  private long fId;
-  private String fStartTime;
-  private String fEndTime;
-  private long fcId;
-  @TableField(exist = false)
-  private FrequencyCategory fc;
+    @TableId(value = "f_id")
+    private long fId;
+    private String fStartTime;
+    private String fEndTime;
+    private long fcId;
+    @TableField(exist = false)
+    private FrequencyCategory fc;
 
 }
