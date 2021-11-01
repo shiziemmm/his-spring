@@ -10,9 +10,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/hisdata?useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true
-    username: root
-    password:
+    url: jdbc:mysql://8.142.190.42:3306/hisdata?useUnicode=true&characterEncoding=utf-8&useOldAliasMetadataBehavior=true
+    username: shizi
+    password: 123456
   jackson:
     date-format: yyyy-MM-dd hh:mm
   mvc:
